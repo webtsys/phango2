@@ -78,14 +78,7 @@ class PhangoDef {
 	*/
 
 	static public $utility_cli=0;
-
-	/**
-	* DEPRECATED $yes_entities is a deprecated variable used on internal things for check html entities on functions.
-	* @deprecated Deprecated variable used on internal things for check html entities on functions.
-	*/
-
-	static public $yes_entities=1;
-
+	
 	/**
 	*This variable is needed for add new fields to models without lost when you execute load_model without extension. Is saved in optional file added_fields.php
 	*
@@ -4003,8 +3996,6 @@ else
 function form_text( $text ,$br=1)
 {
 
-    global $yes_entities;
-	
     settype( $text, "string" );
 
     $text = trim( $text );
@@ -4067,8 +4058,6 @@ function form_text( $text ,$br=1)
 
 function form_text_html( $text , $allowedtags=array())
 {
-
-	global $yes_entities;
 
 	settype( $text, "string" );
 	
@@ -5573,7 +5562,6 @@ function set_csrf_key()
 function show_error($txt_error_normal, $txt_error_debug, $output_external='')
 {
 
-	global $utility_cli;
 	
 	$arr_error[0]='<p>'.$txt_error_normal.'</p>';    
 	$arr_error[1]='<p>'.$txt_error_debug.'</p>';
@@ -5585,14 +5573,14 @@ function show_error($txt_error_normal, $txt_error_debug, $output_external='')
 	$arr_view[0]='common';
 	$arr_view[1]='commontxt';
 	
-	if($utility_cli==0)
+	if(PhangoDef::$utility_cli==0)
 	{
 
 		ob_clean();
 
 	}
 
-	echo load_view(array('Phango site is down', $arr_error[DEBUG]), 'common/'.$arr_view[$utility_cli]);
+	echo load_view(array('Phango site is down', $arr_error[DEBUG]), 'common/'.$arr_view[PhangoDef::$utility_cli]);
 
 	die();
 
