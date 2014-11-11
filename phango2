@@ -1,0 +1,27 @@
+- Phango 2
+
+- Un autentico framework, eliminar todas las mierdas de cms que lastran el sistema desce hace años.
+
+- Nuevo sistema de urls, parecido a django. Cada módulo tiene un urls.php en su base, de este estilo.
+
+Los get pueden ser slugify(con mayusculas) o integer, así me ahorro los settype. 
+
+ConfigData::urls['module_name'][]=array('pattern' => '^module_name/([0-9]+)$', 'module' => 'module_name', 'controller' => 'index', 'action' => 'index', 'settype' => array('integer'));
+
+Ahora la clase switchclass, cada metodo tendrá el tema de los parametros. 
+
+- En Admin, listado de modulos que habría en la config del modulo admin.
+
+- En framework, listado de modulos, sin db. 
+
+- En webmodel, ahora sólo se conecta a la base de datos en caso de query, en webmodel habrá uan vcariable yes_connect_db que cambie el nombre del método para conectar a la db, habrá uno que no haga nada, y otro que conecte. Sin query, nada. No installer. 
+
+- Todas variables del config, en ConfigData class. 
+
+- LoginAdmin usará la clase login. 
+
+- Theme se define en config.php y ya no tiene el rollazo de los bloques que no sirve para mucho en el mundo real. 
+
+- namespace Phango
+
+- Classes, libraries,
