@@ -19,7 +19,12 @@ namespace Phango;
 //Class for basic variables for phango. 
 //This variables is used for internal functions in phango
 
-class PhangoDef {
+class PhangoVar {
+
+	/**
+	* Database hosts array.
+	*
+	*/
 
 	static public $host_db=array();
 
@@ -105,6 +110,13 @@ class PhangoDef {
 	static public $captcha_type='';
 	
 	static public $mailer_type='';
+	
+	/**
+	* Model, in this array you have access to the all models registered on your system with load_model
+	* 
+	*/
+	
+	static public $model=array();
 	
 }
 
@@ -222,7 +234,7 @@ $std_error='';
 //Classes
 
 //Webmodel is the base class for all models
-//This class is the base for construct all models. Models are saved in $models array
+//This class is the base for construct all models. Models are saved in PhangoVar::$model array
 
 /**
 * The most important class for the framework
@@ -410,8 +422,6 @@ class Webmodel {
 
 	public function insert($post)
 	{
-
-		global $lang;
 		
 		$post=$this->unset_no_required($post);
 		
@@ -452,7 +462,7 @@ class Webmodel {
 			if( !( $query=webtsys_query('insert into '.$this->name.' (`'.implode("`, `", array_keys($fields)).'`) VALUES ('.implode(", ",$arr_fields).') ', $this->db_selected) ) )
 			{
 			
-				$this->std_error.=$lang['error_model']['cant_insert'].' ';
+				$this->std_error.=PhangoVar::$lang['error_model']['cant_insert'].' ';
 				return 0;
 			
 			}
@@ -466,7 +476,7 @@ class Webmodel {
 		else
 		{	
 			
-			$this->std_error.=$lang['error_model']['cant_insert'].' ';
+			$this->std_error.=PhangoVar::$lang['error_model']['cant_insert'].' ';
 
 			return 0;
 
@@ -489,8 +499,6 @@ class Webmodel {
 	
 	public function update($post, $conditions="")
 	{
-
-		global $lang;
 
 		//Check if minimal fields are fill and if fields exists in components.
 
@@ -546,7 +554,7 @@ class Webmodel {
 					if(!$component->process_update_field($this, $name_field, $conditions, $fields[$name_field]))
 					{
 						
-						$this->std_error.=$lang['error_model']['cant_update'].' ';
+						$this->std_error.=PhangoVar::$lang['error_model']['cant_update'].' ';
 
 						return 0;
 					
@@ -561,7 +569,7 @@ class Webmodel {
 			if(!($query=webtsys_query('update '.$this->name.' set '.implode(', ' , $arr_fields).' '.$conditions, $this->db_selected) ) )
 			{
 				
-				$this->std_error.=$lang['error_model']['cant_update'].' ';
+				$this->std_error.=PhangoVar::$lang['error_model']['cant_update'].' ';
 				return 0;
 			
 			}
@@ -576,7 +584,7 @@ class Webmodel {
 		{
 			//Validation of $post fail, add error to $model->std_error
 			
-			$this->std_error.=$lang['error_model']['cant_update'].' ';
+			$this->std_error.=PhangoVar::$lang['error_model']['cant_update'].' ';
 
 			return 0;
 
@@ -604,7 +612,6 @@ class Webmodel {
 	{
 		//Check conditions.., script must check, i can't make all things!, i am not a machine!
 
-		global $model;
 		
 		if(count($arr_select)==0)
 		{
@@ -679,7 +686,7 @@ class Webmodel {
 				
 				//Set the where connection
 				
-				$arr_where[]=$this->name.'.`'.$my_field.'`='.$model_name_related.'.`'.$model[$model_name_related]->idmodel.'`';
+				$arr_where[]=$this->name.'.`'.$my_field.'`='.$model_name_related.'.`'.PhangoVar::$model[$model_name_related]->idmodel.'`';
 			
 			}
 			
@@ -764,8 +771,6 @@ class Webmodel {
 
 	public function select_count($conditions, $field='', $fields_for_count=array())
 	{
-	
-		global $model;
 		
 		if($field=='')
 		{
@@ -801,7 +806,7 @@ class Webmodel {
 				
 					$arr_model[]=$component->related_model.' as '.$table_name;
 			
-					$arr_where[]=$this->name.'.`'.$key_component.'`='.$table_name.'.`'.$model[$component->related_model]->idmodel.'`';
+					$arr_where[]=$this->name.'.`'.$key_component.'`='.$table_name.'.`'.PhangoVar::$model[$component->related_model]->idmodel.'`';
 					
 					$arr_check_count[$table_name]=1;
 				
@@ -856,8 +861,6 @@ class Webmodel {
 	public function delete($conditions="")
 	{
 	
-		global $model;
-	
 		foreach($this->components as $name_field => $component)
 		{
 		
@@ -885,10 +888,10 @@ class Webmodel {
 			foreach($this->related_models_delete as $arr_set_model)
 			{
 				
-				if( isset( $model[ $arr_set_model['model'] ]->components[ $arr_set_model['related_field'] ] ) )
+				if( isset( PhangoVar::$model[ $arr_set_model['model'] ]->components[ $arr_set_model['related_field'] ] ) )
 				{
 					
-					$model[ $arr_set_model['model'] ]->delete('where '.$arr_set_model['related_field'].' IN ('.implode(', ', $arr_id).')');
+					PhangoVar::$model[ $arr_set_model['model'] ]->delete('where '.$arr_set_model['related_field'].' IN ('.implode(', ', $arr_id).')');
 				
 				}
 			
@@ -1014,8 +1017,6 @@ class Webmodel {
 
 	public function check_all($post)
 	{
-
-		global $lang;
 		
 		load_lang('error_model');
 	
@@ -1060,11 +1061,11 @@ class Webmodel {
 					if($this->components[$key]->std_error=='')
 					{
 
-						$this->components[$key]->std_error=$lang['common']['field_required'];
+						$this->components[$key]->std_error=PhangoVar::$lang['common']['field_required'];
 
 					}
 
-					$arr_std_error[]=$lang['error_model']['check_error_field'].' '.$key.' -> '.$this->components[$key]->std_error. ' ';
+					$arr_std_error[]=PhangoVar::$lang['error_model']['check_error_field'].' '.$key.' -> '.$this->components[$key]->std_error. ' ';
 					$set_error++;
 	
 				}
@@ -1075,12 +1076,12 @@ class Webmodel {
 	
 				//If isn't set the value and this value is required set std_error.
 
-				$arr_std_error[]=$lang['error_model']['check_error_field_required'].' '.$key.' ';
+				$arr_std_error[]=PhangoVar::$lang['error_model']['check_error_field_required'].' '.$key.' ';
 	
 				if($this->components[$key]->std_error=='')
 				{
 
-					$this->components[$key]->std_error=$lang['common']['field_required'];
+					$this->components[$key]->std_error=PhangoVar::$lang['common']['field_required'];
 
 				}
 	
@@ -1401,8 +1402,6 @@ class Webmodel {
 
 function SetValuesForm($post, $arr_form, $show_error=1)
 {
-
-	global $lang;
 	
 	//Foreach to $post values
 	
@@ -1558,7 +1557,7 @@ class ModelForm {
 
 	function __construct($name_form, $name_field, $form, $label, $type, $required=0, $parameters='')
 	{
-		global $lang, $arr_form_public;
+		global $arr_form_public;
 
 		$this->name_form = $name_form;
 		$this->name = $name_field;
@@ -1566,7 +1565,7 @@ class ModelForm {
 		$this->type = $type;
 		$this->label = $label;
 		$this->std_error = '';
-		$this->txt_error = $lang['common']['error_in_field'];
+		$this->txt_error = PhangoVar::$lang['common']['error_in_field'];
 		$this->required = $required;
 
 		$html_field_name=$name_field;
@@ -1775,14 +1774,14 @@ class ControllerSwitchClass {
 	{
 	
 	
-		$this->user_data=&PhangoDef::$user_data;
-		$this->model=&PhangoDef::$model;
-		$this->ip=&PhangoDef::$ip;
-		$this->lang=&PhangoDef::$lang;
-		$this->base_path=&PhangoDef::$base_path;
-		$this->base_url=&PhangoDef::$base_url;
-		$this->cookie_path=&PhangoDef::$cookie_path;
-		$this->prefix_key=&PhangoDef::$prefix_key;
+		$this->user_data=&PhangoVar::$user_data;
+		$this->model=&PhangoVar::$model;
+		$this->ip=&PhangoVar::$ip;
+		$this->lang=&PhangoVar::$lang;
+		$this->base_path=&PhangoVar::$base_path;
+		$this->base_url=&PhangoVar::$base_url;
+		$this->cookie_path=&PhangoVar::$cookie_path;
+		$this->prefix_key=&PhangoVar::$prefix_key;
 	
 	}
 	
@@ -2236,19 +2235,17 @@ class BooleanField extends PhangoField {
 	function show_formatted($value)
 	{
 
-		global $lang;
-
 		switch($value)
 		{
 			default:
 
-				return $lang['common']['no'];
+				return PhangoVar::$lang['common']['no'];
 
 			break;
 
 			case 1:
 
-				return $lang['common']['yes'];
+				return PhangoVar::$lang['common']['yes'];
 
 			break;
 
@@ -2260,9 +2257,7 @@ class BooleanField extends PhangoField {
 	function get_parameters_default()
 	{
 
-		global $lang;
-
-		return array($this->default_value, $lang['common']['no'], 0, $lang['common']['yes'], 1);
+		return array($this->default_value, PhangoVar::$lang['common']['no'], 0, PhangoVar::$lang['common']['yes'], 1);
 
 	}
 
@@ -2566,7 +2561,7 @@ class TextHTMLField extends PhangoField {
 		
 		}
 
-		if(PhangoDef::$textbb_type=='')
+		if(PhangoVar::$textbb_type=='')
 		{
 			
 			$this->value=unform_text($value);
@@ -2634,7 +2629,7 @@ class TextHTMLField extends PhangoField {
 		$this->allowedtags['i']=array('pattern' => '/&lt;i.*?&gt;(.*?)&lt;\/i&gt;/s', 'replace' => '<i_tmp>$1</i_tmp>', 'example' => '<i></i>');
 		$this->allowedtags['u']=array('pattern' => '/&lt;u.*?&gt;(.*?)&lt;\/u&gt;/s', 'replace' => '<u_tmp>$1</u_tmp>', 'example' => '<u></u>');
 		$this->allowedtags['blockquote']=array('pattern' => '/&lt;blockquote.*?&gt;(.*?)&lt;\/blockquote&gt;/s', 'replace' => '<blockquote_tmp>$1</blockquote_tmp>', 'example' => '<blockquote></blockquote>', 'recursive' => 1);
-		$this->allowedtags['img']=array('pattern' => '/&lt;img.*?alt=&quot;([aA-zZ]+)&quot;.*?src=&quot;('.str_replace('/', '\/', PhangoDef::$base_url).'\/media\/smileys\/[^\r\n\t<"].*?)&quot;.*?\/&gt;/', 'replace' => '<img_tmp alt="$1" src="$2"/>', 'example' => '<img alt="emoticon" src="" />');	
+		$this->allowedtags['img']=array('pattern' => '/&lt;img.*?alt=&quot;([aA-zZ]+)&quot;.*?src=&quot;('.str_replace('/', '\/', PhangoVar::$base_url).'\/media\/smileys\/[^\r\n\t<"].*?)&quot;.*?\/&gt;/', 'replace' => '<img_tmp alt="$1" src="$2"/>', 'example' => '<img alt="emoticon" src="" />');	
 
 	}
 	
@@ -2730,8 +2725,6 @@ class SerializeField extends PhangoField {
 	
 	static function unserialize($value)
 	{
-	
-		global $lang;
 
 		$real_value=@unserialize($value);
 		
@@ -2924,8 +2917,6 @@ class FileField extends PhangoField {
 	function check($file)
 	{	
 		
-		global $lang;
-		
 		$file_field=$this->name_file;
 
 		settype($_POST['delete_'.$file_field], 'integer');
@@ -2963,7 +2954,7 @@ class FileField extends PhangoField {
 				else
 				{
 
-					$this->std_error=$lang['common']['error_cannot_upload_this_file_to_the_server'];
+					$this->std_error=PhangoVar::$lang['common']['error_cannot_upload_this_file_to_the_server'];
 
 					return '';
 
@@ -2982,7 +2973,7 @@ class FileField extends PhangoField {
 		else
 		{
 		
-			$this->std_error=$lang['error_model']['check_error_enctype_for_upload_file'];
+			$this->std_error=PhangoVar::$lang['error_model']['check_error_enctype_for_upload_file'];
 		
 			return '';
 		
@@ -3035,7 +3026,7 @@ class FileField extends PhangoField {
 			if(!unlink($this->path.'/'.$file_name))
 			{
 			
-				$this->std_error=$lang['common']['cannot_delete_file'];
+				$this->std_error=PhangoVar::$lang['common']['cannot_delete_file'];
 			
 			}
 		
@@ -3088,7 +3079,7 @@ class ImageField extends PhangoField {
 	{	
 		//Only accept jpeg, gif y png
 		
-		global $lang;
+		
 		
 		$file=$this->name_file;
 		$image=basename($image);
@@ -3150,7 +3141,7 @@ class ImageField extends PhangoField {
 					if($arr_image[0]<$this->min_size[0] || $arr_image[1]<$this->min_size[1])
 					{
 					
-						$this->std_error=$lang['common']['image_size_is_not_correct'].'<br />'.$lang['common']['min_size'].': '.$this->min_size[0].'x'.$this->min_size[1];
+						$this->std_error=PhangoVar::$lang['common']['image_size_is_not_correct'].'<br />'.PhangoVar::$lang['common']['min_size'].': '.$this->min_size[0].'x'.$this->min_size[1];
 						
 						$this->value='';
 						return '';
@@ -3165,7 +3156,7 @@ class ImageField extends PhangoField {
 				if(file_exists($this->path.'/'.$_FILES[$file]['name']))
 				{
 				
-					$this->std_error=$lang['common']['a_image_with_same_name_exists'];
+					$this->std_error=PhangoVar::$lang['common']['a_image_with_same_name_exists'];
 					
 					return $image;
 				
@@ -3346,7 +3337,7 @@ class ImageField extends PhangoField {
 					else
 					{
 
-						$this->std_error=$lang['common']['error_cannot_upload_this_image_to_the_server'];
+						$this->std_error=PhangoVar::$lang['common']['error_cannot_upload_this_image_to_the_server'];
 
 						return '';
 
@@ -3357,7 +3348,7 @@ class ImageField extends PhangoField {
 				else
 				{
 
-					$this->std_error.=$lang['error_model']['img_format_error'];
+					$this->std_error.=PhangoVar::$lang['error_model']['img_format_error'];
 
 				}
 
@@ -3385,7 +3376,7 @@ class ImageField extends PhangoField {
 			else
 			{
 			
-				$this->std_error=$lang['error_model']['check_error_enctype_for_upload_file'];
+				$this->std_error=PhangoVar::$lang['error_model']['check_error_enctype_for_upload_file'];
 				return '';
 			
 			}
@@ -3396,7 +3387,7 @@ class ImageField extends PhangoField {
 		else
 		{
 		
-			$this->std_error=$lang['error_model']['check_error_enctype_for_upload_file'];
+			$this->std_error=PhangoVar::$lang['error_model']['check_error_enctype_for_upload_file'];
 		
 		}
 
@@ -3438,7 +3429,7 @@ class ImageField extends PhangoField {
 	function process_delete_field($model, $name_field, $conditions)
 	{
 	
-		global $lang;
+		
 		
 		//die;
 		$query=$model->select($conditions, array($name_field));
@@ -3461,19 +3452,19 @@ class ImageField extends PhangoField {
 						if(!unlink($this->path.'/'.$key.'_'.$image_name))
 						{
 							
-							$this->std_error.=$lang['common']['cannot_delete_image'].': '.$key.'_'.$image_name;
+							$this->std_error.=PhangoVar::$lang['common']['cannot_delete_image'].': '.$key.'_'.$image_name;
 						
 						}
 					
 					}
 				
-					$this->std_error.=$lang['common']['cannot_delete_image'].': '.$image_name;
+					$this->std_error.=PhangoVar::$lang['common']['cannot_delete_image'].': '.$image_name;
 				
 				}
 				else
 				{
 				
-					$this->std_error.=$lang['common']['cannot_delete_image'].': '.$image_name;
+					$this->std_error.=PhangoVar::$lang['common']['cannot_delete_image'].': '.$image_name;
 				
 				}
 				
@@ -3481,7 +3472,7 @@ class ImageField extends PhangoField {
 			else
 			{
 			
-				$this->std_error.=$lang['common']['cannot_delete_image'].': '.$image_name;
+				$this->std_error.=PhangoVar::$lang['common']['cannot_delete_image'].': '.$image_name;
 			
 			}
 		
@@ -3577,7 +3568,7 @@ class ForeignKeyField extends IntegerField{
 		$this->null_relation=$null_relation;
 		$this->default_id=$default;
 		
-		//$model[$related_model]->related_models_delete[]=array('model' => $this->name_model, 'related_field' => $this->name_component);
+		//PhangoVar::$model[$related_model]->related_models_delete[]=array('model' => $this->name_model, 'related_field' => $this->name_component);
 		
 		//echo get_parent_class();
 
@@ -3585,14 +3576,12 @@ class ForeignKeyField extends IntegerField{
 	
 	function set_relationships()
 	{
-	
-		global $model;
 		
 		//We need the model loaded...
 		
-		if(isset($model[$this->related_model]))
+		if(isset(PhangoVar::$model[$this->related_model]))
 		{
-			$model[$this->related_model]->related_models_delete[]=array('model' => $this->name_model, 'related_field' => $this->name_component);
+			PhangoVar::$model[$this->related_model]->related_models_delete[]=array('model' => $this->name_model, 'related_field' => $this->name_component);
 		}
 		else
 		{
@@ -3607,13 +3596,11 @@ class ForeignKeyField extends IntegerField{
 	function check($value)
 	{
 		
-		global $model;
-		
 		settype($value, "integer");
 
 		//Reload related model if not exists, if exists, only check cache models...
 
-		if(!isset($model[$this->related_model]))
+		if(!isset(PhangoVar::$model[$this->related_model]))
 		{
 
 			load_model($this->container_model);
@@ -3622,7 +3609,7 @@ class ForeignKeyField extends IntegerField{
 
 		//Need checking if the value exists with a select_count
 		
-		$num_rows=$model[$this->related_model]->select_count('where '.$this->related_model.'.'.$model[$this->related_model]->idmodel.'='.$value, $model[$this->related_model]->idmodel);
+		$num_rows=PhangoVar::$model[$this->related_model]->select_count('where '.$this->related_model.'.'.PhangoVar::$model[$this->related_model]->idmodel.'='.$value, PhangoVar::$model[$this->related_model]->idmodel);
 		
 		if($num_rows>0)
 		{
@@ -3670,10 +3657,8 @@ class ForeignKeyField extends IntegerField{
 
 	function show_formatted($value)
 	{
-	
-		global $model;
 		
-		return $model[$this->related_model]->components[$this->name_field_to_field]->show_formatted($value);
+		return PhangoVar::$model[$this->related_model]->components[$this->name_field_to_field]->show_formatted($value);
 
 		//return $value;
 
@@ -3681,7 +3666,7 @@ class ForeignKeyField extends IntegerField{
 
 	function get_parameters_default()
 	{
-		global $lang;
+		
 		
 		load_libraries(array('forms/selectmodelform'));
 		
@@ -3700,7 +3685,7 @@ class ForeignKeyField extends IntegerField{
 		else
 		{*/
 		
-		return array('', $lang['common']['any_option_chosen'], '');
+		return array('', PhangoVar::$lang['common']['any_option_chosen'], '');
 			
 		//}
 
@@ -3708,10 +3693,8 @@ class ForeignKeyField extends IntegerField{
 	
 	function get_all_fields()
 	{
-	
-		global $model;
 		
-		return array_keys($model[$this->related_model]->components);
+		return array_keys(PhangoVar::$model[$this->related_model]->components);
 	
 	}
 
@@ -3734,13 +3717,11 @@ class ParentField extends IntegerField{
 	function check($value)
 	{
 		
-		global $model;
-		
 		settype($value, "integer");
 
 		//Check model
 		
-		$num_rows=$model[$this->parent_model]->select_count('where '.$model[$this->parent_model]->idmodel.'='.$value, $model[$this->parent_model]->idmodel);
+		$num_rows=PhangoVar::$model[$this->parent_model]->select_count('where '.PhangoVar::$model[$this->parent_model]->idmodel.'='.$value, PhangoVar::$model[$this->parent_model]->idmodel);
 		
 		if($num_rows>0)
 		{
@@ -3767,9 +3748,9 @@ class ParentField extends IntegerField{
 
 	function get_parameters_default()
 	{
-		global $lang;
+		
 
-		return array('', $lang['common']['any_option_chosen'], '');
+		return array('', PhangoVar::$lang['common']['any_option_chosen'], '');
 
 	}
 	
@@ -3795,13 +3776,11 @@ class ParentField extends IntegerField{
 	
 	public function obtain_parent_tree($id, $field_ident, $url_op)
 	{
-	
-		global $model;
 		
 		$arr_parent=array();
 		$arr_link_parent=array();
 		
-		$query=$model[$this->parent_model]->select('', array( $model[$this->parent_model]->idmodel, $this->name_component, $field_ident) );
+		$query=PhangoVar::$model[$this->parent_model]->select('', array( PhangoVar::$model[$this->parent_model]->idmodel, $this->name_component, $field_ident) );
 		
 		while(list($id_block, $parent, $name)=webtsys_fetch_row($query))
 		{
@@ -3822,14 +3801,13 @@ class ParentField extends IntegerField{
 	{
 	
 		//$arr_link_parent[]=array('nombre', 'enlace');
-		global $model;
 		
 		//$arr_link_parent=array();
 		
 		if($id>0)
 		{
 			
-			$arr_link_parent[$id]=array($model[$this->parent_model]->components[$field_ident]->show_formatted($arr_parent[$id][1]), add_extra_fancy_url($url_op, array($this->name_component => $id) ) );
+			$arr_link_parent[$id]=array(PhangoVar::$model[$this->parent_model]->components[$field_ident]->show_formatted($arr_parent[$id][1]), add_extra_fancy_url($url_op, array($this->name_component => $id) ) );
 			
 			if($arr_parent[$id][0]>0)
 			{
@@ -3875,7 +3853,7 @@ class EmailField extends PhangoField {
 		
 		//Delete Javascript tags and simple quotes.
 
-		global $lang;
+		
 
 		$value=form_text($value);
 
@@ -3892,7 +3870,7 @@ class EmailField extends PhangoField {
 		else
 		{
 			
-			$this->std_error.=$lang['error_model']['email_format_error'].' ';
+			$this->std_error.=PhangoVar::$lang['error_model']['email_format_error'].' ';
 			
 			return '';
 
@@ -4065,7 +4043,7 @@ function form_text_html( $text , $allowedtags=array())
 
 	/*$text=preg_replace("/<br.*?>/", "\n", $text);*/
 	
-	if(PhangoDef::$textbb_type!='')
+	if(PhangoVar::$textbb_type!='')
 	{
 		
 		$text=str_replace("\r", '', $text);
@@ -4306,7 +4284,7 @@ function PasswordFormSet($post, $value)
 function FileForm($name="", $class='', $value='', $delete_inline=0, $path_file='')
 {
 	
-	global $base_path, $lang;
+	
 
 	$file_url=$path_file.'/'.$value;
 	
@@ -4320,7 +4298,7 @@ function FileForm($name="", $class='', $value='', $delete_inline=0, $path_file='
 		if($delete_inline==1)
 		{
 
-			$file_exist.=$lang['common']['delete_file'].' <input type="checkbox" name="delete_'.$name.'" class="'.$class.'" value="1" />';
+			$file_exist.=PhangoVar::$lang['common']['delete_file'].' <input type="checkbox" name="delete_'.$name.'" class="'.$class.'" value="1" />';
 
 		}
 
@@ -4346,8 +4324,6 @@ function FileFormSet($post, $value)
 
 function ImageForm($name="", $class='', $value='', $delete_inline=0, $path_image='')
 {
-	
-	global $base_url, $base_path, $lang;
 
 	$image_url=$path_image.'/'.$value;
 	
@@ -4361,7 +4337,7 @@ function ImageForm($name="", $class='', $value='', $delete_inline=0, $path_image
 		if($delete_inline==1)
 		{
 
-			$image_exist.=$lang['common']['delete_image'].' <input type="checkbox" name="delete_'.$name.'" class="'.$class.'" value="1" />';
+			$image_exist.=PhangoVar::$lang['common']['delete_image'].' <input type="checkbox" name="delete_'.$name.'" class="'.$class.'" value="1" />';
 
 		}
 
@@ -4594,7 +4570,7 @@ function SelectManyFormSet($post, $value)
 function DateForm($field, $class='', $value='', $set_time=1, $see_title=1)
 {
 
-	global $lang, $user_data;
+	global $user_data;
 	
 	if($value==0)
 	{
@@ -4634,9 +4610,9 @@ function DateForm($field, $class='', $value='', $set_time=1, $see_title=1)
 	if($set_time>0)
 	{
 	
-		$hour_txt=$lang['common']['hour'];
-		$minute_txt=$lang['common']['minute'];
-		$second_txt=$lang['common']['second'];
+		$hour_txt=PhangoVar::$lang['common']['hour'];
+		$minute_txt=PhangoVar::$lang['common']['minute'];
+		$second_txt=PhangoVar::$lang['common']['second'];
 		
 		if($see_title==0)
 		{
@@ -4803,7 +4779,7 @@ function add_extra_fancy_url($url_fancy, $arr_data)
 function controller_fancy_url($func_name, $description_text, $arr_data=array(), $respect_upper=0)
 {
 
-	return make_fancy_url(PhangoDef::$base_url, PHANGO_SCRIPT_BASE_CONTROLLER, $func_name, $description_text, $arr_data, $respect_upper);
+	return make_fancy_url(PhangoVar::$base_url, PHANGO_SCRIPT_BASE_CONTROLLER, $func_name, $description_text, $arr_data, $respect_upper);
 
 }
 
@@ -4866,11 +4842,11 @@ function load_view($arr_template, $template, $module_theme='', $load_if_no_cache
 
 	//First see in controller/view/template, if not see in /views/template
 
-	global $base_path, $lang, $language, $index_set, $title_page, $cache_template, $script_base_controller;
+	global $index_set, $title_page, $cache_template, $script_base_controller;
 	
-	$theme=PhangoDef::$dir_theme;
+	$theme=PhangoVar::$dir_theme;
 	
-	$container_theme=PhangoDef::$module_theme;
+	$container_theme=PhangoVar::$module_theme;
 	
 	$view='';
 	
@@ -4883,7 +4859,7 @@ function load_view($arr_template, $template, $module_theme='', $load_if_no_cache
 		
 		//Load view from theme...
 		
-		if(!include($base_path.$container_theme.'views/'.$theme.'/'.strtolower($template).'.php')) 
+		if(!include(PhangoVar::$base_path.$container_theme.'views/'.$theme.'/'.strtolower($template).'.php')) 
 		{
 
 			$output_error_view=ob_get_contents();
@@ -4892,7 +4868,7 @@ function load_view($arr_template, $template, $module_theme='', $load_if_no_cache
 
 			//No exists view in theme, load view respect to the $script_base_controller views
 			
-			if(!include($base_path.'modules/'.$script_base_controller.'/views/'.strtolower($template).'.php')) 
+			if(!include(PhangoVar::$base_path.'modules/'.$script_base_controller.'/views/'.strtolower($template).'.php')) 
 			{
 
 				$output_error_view.=ob_get_contents();
@@ -4901,7 +4877,7 @@ function load_view($arr_template, $template, $module_theme='', $load_if_no_cache
 
 				//No exists view in module where , load view respect to the module_theme variable...
 
-				if(!include($base_path.'modules/'.$module_theme.'/views/'.strtolower($template).'.php')) 
+				if(!include(PhangoVar::$base_path.'modules/'.$module_theme.'/views/'.strtolower($template).'.php')) 
 				{
 
 					//No exists view, see error from phango framework
@@ -4910,7 +4886,7 @@ function load_view($arr_template, $template, $module_theme='', $load_if_no_cache
 
 					ob_clean();
 					
-					include($base_path.'views/default/common/common.php');
+					include(PhangoVar::$base_path.'views/default/common/common.php');
 				
 					$template=@form_text($template);
 
@@ -4970,11 +4946,11 @@ function load_view($arr_template, $template, $module_theme='', $load_if_no_cache
 function load_libraries_views($template, $func_views=array())
 {
 
-	global $base_path, $lang, $language, $index_set, $title_page, $cache_template, $script_base_controller;
+	global $index_set, $title_page, $cache_template, $script_base_controller;
 	
-	$theme=PhangoDef::$dir_theme;
+	$theme=PhangoVar::$dir_theme;
 
-	$container_theme=PhangoDef::$module_theme;
+	$container_theme=PhangoVar::$module_theme;
 	
 	$view='';
 
@@ -4999,21 +4975,21 @@ function load_libraries_views($template, $func_views=array())
 	
 	if($no_loaded==0)
 	{	
-		if(!include_once($base_path.$container_theme.'views/'.$theme.'/'.strtolower($template).'.php')) 
+		if(!include_once(PhangoVar::$base_path.$container_theme.'views/'.$theme.'/'.strtolower($template).'.php')) 
 		{
 			
 			$output_error_view=ob_get_contents();
 
 			ob_clean();
 
-			if(!include_once($base_path.'modules/'.$script_base_controller.'/views/'.strtolower($template).'.php')) 
+			if(!include_once(PhangoVar::$base_path.'modules/'.$script_base_controller.'/views/'.strtolower($template).'.php')) 
 			{
 
 				$output=ob_get_contents();
 
 				ob_clean();
 
-				include($base_path.'views/default/common/common.php');
+				include(PhangoVar::$base_path.'views/default/common/common.php');
 				
 				CommonView('Phango Framework error','<p>Error while loading template library <strong>'.$template.'</strong>, check config.php or that template library exists... </p><p>Output: '.$output_error_view.$output.'</p>');
 				
@@ -5054,9 +5030,9 @@ $arr_check_table=array();
 
 function check_model($model_name)
 {
-	global $arr_check_table, $model;
+	global $arr_check_table;
 
-	// || !isset( $model[$model_name] ) 
+	// || !isset( PhangoVar::$model[$model_name] ) 
 
 	if( !isset($arr_check_table[$model_name]) )
 	{
@@ -5092,9 +5068,9 @@ function check_model($model_name)
 function check_model_exists()
 {
 
-	global $arr_check_table, $model;
+	global $arr_check_table;
 	
-	$arr_keys_model=array_keys($model);
+	$arr_keys_model=array_keys(PhangoVar::$model);
 
 	$error_model=array();
 
@@ -5158,7 +5134,7 @@ $cache_model=array();
 function load_model($name_model='')
 {
 	
-	global $base_path, $model, $lang, $cache_model, $arr_module_insert, $arr_extension_model;
+	global $cache_model, $arr_module_insert, $arr_extension_model;
 	
 	$names=func_get_args();
 	
@@ -5182,7 +5158,7 @@ function load_model($name_model='')
 		if( !isset($cache_model[$my_model]) )
 		{
 
-			$path_model=$base_path.'modules/'.$my_path.'/models/models_'.$my_model.'.php';
+			$path_model=PhangoVar::$base_path.'modules/'.$my_path.'/models/models_'.$my_model.'.php';
 		
 			if(!include($path_model)) 
 			{
@@ -5239,13 +5215,11 @@ function load_model($name_model='')
 function load_config($module, $name_config='config_module')
 {
 
-	global $base_path;
-
-	//load_libraries(array($name_config), $base_path.'/modules/'.$module.'/config/');
+	//load_libraries(array($name_config), PhangoVar::$base_path.'/modules/'.$module.'/config/');
 	
-	if(is_file($base_path.'/modules/'.$module.'/config/'.$name_config.'.php'))
+	if(is_file(PhangoVar::$base_path.'/modules/'.$module.'/config/'.$name_config.'.php'))
 	{
-		include($base_path.'/modules/'.$module.'/config/'.$name_config.'.php');
+		include(PhangoVar::$base_path.'/modules/'.$module.'/config/'.$name_config.'.php');
 	}
 	
 }
@@ -5258,7 +5232,7 @@ function load_config($module, $name_config='config_module')
 function load_extension()
 {
 
-	global $base_path, $model, $lang, $cache_model;
+	global $cache_model;
 	
 	$names=func_get_args();
 	
@@ -5281,7 +5255,7 @@ function load_extension()
 	if( !isset($cache_model['extension_'.$my_model]) )
 	{
 		
-		$path_model=$base_path.'modules/'.$my_path.'/models/extension_'.$my_model.'.php';
+		$path_model=PhangoVar::$base_path.'modules/'.$my_path.'/models/extension_'.$my_model.'.php';
 		
 		if(!include($path_model)) 
 		{
@@ -5322,7 +5296,7 @@ $cache_libraries=array();
 function load_libraries($names, $path='')
 {
 
-	global $base_path, $cache_libraries;
+	global $cache_libraries;
 	
 	if(gettype($names)!='array')
 	{
@@ -5338,7 +5312,7 @@ function load_libraries($names, $path='')
 	if($path=='')
 	{
 
-		$path=$base_path.'libraries/';
+		$path=PhangoVar::$base_path.'libraries/';
 
 	}
 	
@@ -5387,12 +5361,12 @@ $cache_lang=array();
 function load_lang()
 {
 	
-	global $base_path, $lang, $cache_lang, $script_base_controller, $language;
+	global $cache_lang, $script_base_controller;
 	
 	if(isset($_SESSION['language']))
 	{
 
-		$language=$_SESSION['language'];
+		PhangoVar::$language=$_SESSION['language'];
 
 	}
 	
@@ -5408,7 +5382,7 @@ function load_lang()
 
 			//First search in module, after in root i18n.
 
-			//echo $base_path.'modules/'.$lang_file.'/i18n/'.$language.'/'.$lang_file.'.php';
+			//echo PhangoVar::$base_path.'modules/'.$lang_file.'/i18n/'.PhangoVar::$language.'/'.$lang_file.'.php';
 
 			ob_start();
 
@@ -5425,12 +5399,12 @@ function load_lang()
 				
 			}
 			
-			if(!@include($base_path.'modules/'.$module_path.'/i18n/'.$language.'/'.$lang_file.'.php'))
+			if(!@include(PhangoVar::$base_path.'modules/'.$module_path.'/i18n/'.PhangoVar::$language.'/'.$lang_file.'.php'))
 			{
 
 				$output_error_lang=ob_get_contents();
 			
-				if(!include($base_path.'i18n/'.$language.'/'.$lang_file.'.php')) 
+				if(!include(PhangoVar::$base_path.'i18n/'.PhangoVar::$language.'/'.$lang_file.'.php')) 
 				{
 					
 					$output=ob_get_contents();
@@ -5438,7 +5412,7 @@ function load_lang()
 					ob_end_clean();
 					ob_end_clean();
 					//'.$output_error_lang.' '.$output.'
-					$check_error_lang[1]='Error: Don\'t exists $lang['.$lang_file.']variable. Do you execute <strong>check_language.php</strong>?.<p></p>';
+					$check_error_lang[1]='Error: Don\'t exists PhangoVar::$lang['.$lang_file.']variable. Do you execute <strong>check_language.php</strong>?.<p></p>';
 					$check_error_lang[0]='Error: Do you execute <strong>check_language.php</strong>?.';
 
 					/*echo load_view(array('Internationalization error', $check_error_lang[DEBUG]), 'common/common');
@@ -5573,14 +5547,14 @@ function show_error($txt_error_normal, $txt_error_debug, $output_external='')
 	$arr_view[0]='common';
 	$arr_view[1]='commontxt';
 	
-	if(PhangoDef::$utility_cli==0)
+	if(PhangoVar::$utility_cli==0)
 	{
 
 		ob_clean();
 
 	}
 
-	echo load_view(array('Phango site is down', $arr_error[DEBUG]), 'common/'.$arr_view[PhangoDef::$utility_cli]);
+	echo load_view(array('Phango site is down', $arr_error[DEBUG]), 'common/'.$arr_view[PhangoVar::$utility_cli]);
 
 	die();
 
@@ -5612,7 +5586,7 @@ $arr_cache_jscript_module=array();
 function load_jscript_view()
 {
 
-	global $arr_cache_jscript, $arr_cache_jscript_module, $arr_cache_jscript_gzipped, PhangoDef::$base_url;
+	global $arr_cache_jscript, $arr_cache_jscript_module, $arr_cache_jscript_gzipped, PhangoVar::$base_url;
 	
 	//Delete repeat scripts...
 
@@ -5626,7 +5600,7 @@ function load_jscript_view()
 		settype($arr_cache_jscript_gzipped[$idscript], 'integer');
 		settype($arr_cache_jscript_module[$idscript], 'string');
 		
-		$arr_final_jscript[]='<script type="text/javascript" src="'.make_fancy_url(PhangoDef::$base_url, 'jscript', 'load_jscript', 'script', array('no_compression' => $arr_cache_jscript_gzipped[$idscript], 'module' => $arr_cache_jscript_module[$idscript], 'input_script' => $jscript)).'"></script>'."\n";
+		$arr_final_jscript[]='<script type="text/javascript" src="'.make_fancy_url(PhangoVar::$base_url, 'jscript', 'load_jscript', 'script', array('no_compression' => $arr_cache_jscript_gzipped[$idscript], 'module' => $arr_cache_jscript_module[$idscript], 'input_script' => $jscript)).'"></script>'."\n";
 
 	}
 
@@ -5670,7 +5644,7 @@ $arr_cache_local_css=array();
 function load_css_local_view()
 {
 
-	global $arr_cache_local_css, $arr_media_modules_set, $arr_cache_css, $base_path;
+	global $arr_cache_local_css, $arr_media_modules_set, $arr_cache_css;
 
 	//Delete repeat scripts...
 
@@ -5688,31 +5662,31 @@ function load_css_local_view()
 			if(isset($arr_media_modules_set[$module_css]['css']))
 			{
 			
-				$url=PhangoDef::$base_url.'/media/'.PhangoDef::$dir_theme.'/'.$module_css.'/css/'.$css;
+				$url=PhangoVar::$base_url.'/media/'.PhangoVar::$dir_theme.'/'.$module_css.'/css/'.$css;
 				$arr_final_css[]='<link href="'.$url.'" rel="stylesheet" type="text/css"/>';
 				
 				//$arr_cache_css[$module_css]=$css;
 				
-				/*$url=make_fancy_url(PhangoDef::$base_url, 'media', 'showmedia', 'directory', array('css' => urlencode_redirect($css, 1)));
+				/*$url=make_fancy_url(PhangoVar::$base_url, 'media', 'showmedia', 'directory', array('css' => urlencode_redirect($css, 1)));
 				$arr_final_css[]='<link href="'.$url.'" rel="stylesheet" type="text/css"/>';
 				*/
 			}
 			else
 			{
 			
-				$url=make_fancy_url(PhangoDef::$base_url, 'media', 'showmedia', 'directory', array('module' => $module_css, 'css' => urlencode_redirect($css, 1)));
+				$url=make_fancy_url(PhangoVar::$base_url, 'media', 'showmedia', 'directory', array('module' => $module_css, 'css' => urlencode_redirect($css, 1)));
 				$arr_final_css[]='<link href="'.$url.'" rel="stylesheet" type="text/css"/>';
 			
 			}
 		
-			/*if(!file_exists($base_path.PhangoDef::$module_theme.'media/css/'.$module_css.'/'.$css))
+			/*if(!file_exists(PhangoVar::$base_path.PhangoVar::$module_theme.'media/css/'.$module_css.'/'.$css))
 			{
 			
-				//$url=make_fancy_url(PhangoDef::$base_url, 'media', 'showmedia', 'directory', array('css' => $css, 'module' => $module_css));
-				if(file_exists($base_path.'application/media/'.$module_css.'/css/'.$css))
+				//$url=make_fancy_url(PhangoVar::$base_url, 'media', 'showmedia', 'directory', array('css' => $css, 'module' => $module_css));
+				if(file_exists(PhangoVar::$base_path.'application/media/'.$module_css.'/css/'.$css))
 				{
-					//$url=make_fancy_url(PhangoDef::$base_url, 'media', 'showmedia', 'directory', array('css' => $css));
-					$url=PhangoDef::$base_url.'/media/'.$module_css.'/css/'.$css;
+					//$url=make_fancy_url(PhangoVar::$base_url, 'media', 'showmedia', 'directory', array('css' => $css));
+					$url=PhangoVar::$base_url.'/media/'.$module_css.'/css/'.$css;
 					$arr_final_css[]='<link href="'.$url.'" rel="stylesheet" type="text/css"/>';
 
 				}
@@ -5721,7 +5695,7 @@ function load_css_local_view()
 					
 					$css=urlencode_redirect($css);
 					
-					$url=make_fancy_url(PhangoDef::$base_url, 'media', 'showmedia', 'directory', array('module' => $module_css, 'css' => $css));
+					$url=make_fancy_url(PhangoVar::$base_url, 'media', 'showmedia', 'directory', array('module' => $module_css, 'css' => $css));
 					$arr_final_css[]='<link href="'.$url.'" rel="stylesheet" type="text/css"/>';
 
 					
@@ -5745,12 +5719,12 @@ function load_css_local_view()
 function get_url_local_image($img_name, $module, $respect_upper=1)
 {
 
-	global $base_path, $arr_media_modules_set;
+	global $arr_media_modules_set;
 
 	/*if(isset($arr_media_modules_set[$module]['image']))
 	{
 	
-		//$url=PhangoDef::$base_url.PhangoDef::$dir_theme.'/media/'.$module.'/images/'.$img_name;
+		//$url=PhangoVar::$base_url.PhangoVar::$dir_theme.'/media/'.$module.'/images/'.$img_name;
 	
 		$url=get_url_image($module.'/'.$img_name);
 	
@@ -5760,21 +5734,21 @@ function get_url_local_image($img_name, $module, $respect_upper=1)
 	
 		$img_name=urlencode_redirect(slugify($img_name, $respect_upper));
 		
-		return make_fancy_url(PhangoDef::$base_url, 'media', 'showmedia', 'directory', array('module' => $module, 'images' => $img_name));
+		return make_fancy_url(PhangoVar::$base_url, 'media', 'showmedia', 'directory', array('module' => $module, 'images' => $img_name));
 	
 	}*/
 	
 	if(isset($arr_media_modules_set[$module_css]['image']))
 	{
 	
-		$url=PhangoDef::$base_url.'/media/'.PhangoDef::$dir_theme.'/'.$module.'/images/'.$img_name;
+		$url=PhangoVar::$base_url.'/media/'.PhangoVar::$dir_theme.'/'.$module.'/images/'.$img_name;
 		//$arr_final_css[]='<link href="'.$url.'" rel="stylesheet" type="text/css"/>';
 		
 		$url=get_url_image($module.'/'.$img_name);
 		
 		//$arr_cache_css[$module_css]=$css;
 		
-		/*$url=make_fancy_url(PhangoDef::$base_url, 'media', 'showmedia', 'directory', array('css' => urlencode_redirect($css, 1)));
+		/*$url=make_fancy_url(PhangoVar::$base_url, 'media', 'showmedia', 'directory', array('css' => urlencode_redirect($css, 1)));
 		$arr_final_css[]='<link href="'.$url.'" rel="stylesheet" type="text/css"/>';
 		*/
 	}
@@ -5783,17 +5757,17 @@ function get_url_local_image($img_name, $module, $respect_upper=1)
 	
 		$img_name=urlencode_redirect(slugify($img_name, $respect_upper));
 		
-		return make_fancy_url(PhangoDef::$base_url, 'media', 'showmedia', 'directory', array('module' => $module, 'images' => $img_name));
+		return make_fancy_url(PhangoVar::$base_url, 'media', 'showmedia', 'directory', array('module' => $module, 'images' => $img_name));
 	
 	}
 	
-	/*if(!file_exists($base_path.PhangoDef::$module_theme.'media/images/'.$module.'/'.$img_name))
+	/*if(!file_exists(PhangoVar::$base_path.PhangoVar::$module_theme.'media/images/'.$module.'/'.$img_name))
 	{
 
-		if(file_exists($base_path.'application/media/'.$module.'/images/'.$img_name))
+		if(file_exists(PhangoVar::$base_path.'application/media/'.$module.'/images/'.$img_name))
 		{
 		
-			$url=PhangoDef::$base_url.'/media/'.$module.'/images/'.$img_name;
+			$url=PhangoVar::$base_url.'/media/'.$module.'/images/'.$img_name;
 		
 		}
 		else
@@ -5801,7 +5775,7 @@ function get_url_local_image($img_name, $module, $respect_upper=1)
 		
 			$img_name=urlencode_redirect(slugify($img_name, $respect_upper));
 		
-			return make_fancy_url(PhangoDef::$base_url, 'media', 'showmedia', 'directory', array('module' => $module, 'images' => $img_name));
+			return make_fancy_url(PhangoVar::$base_url, 'media', 'showmedia', 'directory', array('module' => $module, 'images' => $img_name));
 			
 		}
 
@@ -5839,7 +5813,7 @@ if(defined('THEME_MODULE'))
 		
 		}
 		
-		return make_fancy_url(PhangoDef::$base_url, 'media', 'showmedia', 'directory', $arr_image_def);
+		return make_fancy_url(PhangoVar::$base_url, 'media', 'showmedia', 'directory', $arr_image_def);
 	
 	}
 	
@@ -5867,7 +5841,7 @@ if(defined('THEME_MODULE'))
 				{
 					$css_item=slugify(urlencode_redirect($css_item, 1), 1);
 				
-					$url=make_fancy_url(PhangoDef::$base_url, 'media', 'showmedia', 'directory', array('module' => $module_css, 'css' => $css_item));
+					$url=make_fancy_url(PhangoVar::$base_url, 'media', 'showmedia', 'directory', array('module' => $module_css, 'css' => $css_item));
 					
 					$arr_final_css[]='<link href="'.$url.'" rel="stylesheet" type="text/css"/>'."\n";
 				}
@@ -5877,7 +5851,7 @@ if(defined('THEME_MODULE'))
 				
 				$css=slugify(urlencode_redirect($css, 1), 1);
 				
-				$url=make_fancy_url(PhangoDef::$base_url, 'media', 'showmedia', 'directory', array('css' => $css));
+				$url=make_fancy_url(PhangoVar::$base_url, 'media', 'showmedia', 'directory', array('css' => $css));
 				
 				$arr_final_css[]='<link href="'.$url.'" rel="stylesheet" type="text/css"/>'."\n";
 
@@ -5912,7 +5886,7 @@ if(defined('THEME_MODULE'))
 				{
 					$jscript_item=slugify(urlencode_redirect($jscript_item, 1), 1);
 				
-					$url=make_fancy_url(PhangoDef::$base_url, 'media', 'showmedia', 'directory', array('module' => $module_jscript, 'jscript' => $jscript_item));
+					$url=make_fancy_url(PhangoVar::$base_url, 'media', 'showmedia', 'directory', array('module' => $module_jscript, 'jscript' => $jscript_item));
 					
 					$arr_final_jscript[]='<script language="javascript" src="'.$url.'"></script>'."\n";
 				}
@@ -5922,7 +5896,7 @@ if(defined('THEME_MODULE'))
 				
 				$jscript=slugify(urlencode_redirect($jscript, 1), 1);
 				
-				$url=make_fancy_url(PhangoDef::$base_url, 'media', 'showmedia', 'directory', array('jscript' => $jscript));
+				$url=make_fancy_url(PhangoVar::$base_url, 'media', 'showmedia', 'directory', array('jscript' => $jscript));
 				
 				$arr_final_jscript[]='<script language="javascript" src="'.$url.'"></script>'."\n";
 
@@ -5942,7 +5916,7 @@ else
 		//Redirect to image
 		//media/default/images
 		
-		return PhangoDef::$base_url.'/media/'.PhangoDef::$dir_theme.'/'.$module.'/images/'.$img_name;
+		return PhangoVar::$base_url.'/media/'.PhangoVar::$dir_theme.'/'.$module.'/images/'.$img_name;
 	
 	}
 	
@@ -5965,14 +5939,14 @@ else
 				foreach($css as $css_item)
 				{
 				
-					$arr_final_css[]='<link href="'.PhangoDef::$base_url.'/media/'.PhangoDef::$dir_theme.'/'.$idcss.'/css/'.$css_item.'" rel="stylesheet" type="text/css"/>'."\n";
+					$arr_final_css[]='<link href="'.PhangoVar::$base_url.'/media/'.PhangoVar::$dir_theme.'/'.$idcss.'/css/'.$css_item.'" rel="stylesheet" type="text/css"/>'."\n";
 				
 				}
 			
 			}
 			else
 			{
-				$arr_final_css[]='<link href="'.PhangoDef::$base_url.'/media/'.PhangoDef::$dir_theme.'/css/'.$css.'" rel="stylesheet" type="text/css"/>'."\n";
+				$arr_final_css[]='<link href="'.PhangoVar::$base_url.'/media/'.PhangoVar::$dir_theme.'/css/'.$css.'" rel="stylesheet" type="text/css"/>'."\n";
 			}
 		}
 
@@ -5999,14 +5973,14 @@ else
 				foreach($jscript as $jscript_item)
 				{
 				
-					$arr_final_jscript[]='<script language="javascript" src="'.PhangoDef::$base_url.'/media/'.PhangoDef::$dir_theme.'/'.$idjscript.'/jscript/'.$jscript_item.'"></script>'."\n";
+					$arr_final_jscript[]='<script language="javascript" src="'.PhangoVar::$base_url.'/media/'.PhangoVar::$dir_theme.'/'.$idjscript.'/jscript/'.$jscript_item.'"></script>'."\n";
 				
 				}
 			
 			}
 			else
 			{
-				$arr_final_jscript[]='<script language="Javascript" src="'.PhangoDef::$base_url.'/media/jscript/'.$jscript.'"></script>'."\n";
+				$arr_final_jscript[]='<script language="Javascript" src="'.PhangoVar::$base_url.'/media/jscript/'.$jscript.'"></script>'."\n";
 			}
 		}
 
