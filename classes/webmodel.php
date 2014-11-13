@@ -118,6 +118,80 @@ class PhangoVar {
 	
 	static public $model=array();
 	
+	/**
+	* Global Internal Array for save the field codified for use in public forms.
+	*
+	*/
+
+	static public $arr_form_public=array();
+	
+	/** 
+	* Array for check if a model exists searching in arr_check_table array created in framework.php file.
+	*
+	*/
+
+	static public $arr_check_table=array();
+	
+	/**
+	* An internal variable used for internal cache for load_view.
+	*/
+
+	static public $cache_template=array();
+
+	/**
+	* An internal variable used for save the actual module that is used for construct the base directory for controllers.
+	*/
+	
+	static public $script_base_controller='';
+	
+	/**
+	* Internal global variable used for load_model for cache loaded models.
+	*/
+
+	static public $cache_model=array();
+	
+	/**
+	* Internal variable used for load model extensions.
+	*
+	*/
+	
+	static public $arr_extension_model=array();
+	
+	/**
+	* An array used for control the loaded libraries previously.
+	*/
+
+	static public $cache_libraries=array();
+
+	/**
+	* Array used for know about language filed loaded.
+	*
+	*/
+	
+	static public $cache_lang=array();
+	
+	/**
+	* Array used for load contents for html headers on home views...
+	*
+	*/
+	
+	static public $arr_cache_header=array();
+	
+	/**
+	*
+	* Global variable that control the css cache
+	*
+	*/
+
+	static public $arr_cache_css=array();
+	
+	/**
+	* Variable used for load the jscript files.
+	*
+	*/
+
+	static public $arr_cache_jscript=array();
+	
 }
 
 
@@ -1452,12 +1526,6 @@ function SetValuesForm($post, $arr_form, $show_error=1)
 	}
 }
 
-/**
-* Global Internal Array for save the field codified for use in public forms.
-*
-*/
-
-$arr_form_public=array();
 
 //Class ModelForm is the base class for create forms...
 
@@ -1557,7 +1625,6 @@ class ModelForm {
 
 	function __construct($name_form, $name_field, $form, $label, $type, $required=0, $parameters='')
 	{
-		global $arr_form_public;
 
 		$this->name_form = $name_form;
 		$this->name = $name_field;
@@ -1603,7 +1670,7 @@ class ModelForm {
 			break;
 		}
 
-		$arr_form_public[$html_field_name]=$name_field;
+		PhangoVar::$arr_form_public[$html_field_name]=$name_field;
 
 		$this->parameters = array($html_field_name, $class='', $parameters);
 
@@ -1768,13 +1835,13 @@ class ControllerSwitchClass {
 
 	public $op_var='action';
 	public $controller=PHANGO_SCRIPT_BASE_CONTROLLER;
-	public $user_data, $model, $ip, $lang, $base_path, $base_url, $cookie_path, $arr_block, $prefix_key, $block_title, $block_content, $block_urls, $block_type, $block_id, $text_url;
+	public $model, $ip, $lang, $base_path, $base_url, $cookie_path, $arr_block, $prefix_key, $block_title, $block_content, $block_urls, $block_type, $block_id, $text_url, $key_csrf;
 	
 	public function __construct()
 	{
 	
 	
-		$this->user_data=&PhangoVar::$user_data;
+		//$this->user_data=&PhangoVar::$user_data;
 		$this->model=&PhangoVar::$model;
 		$this->ip=&PhangoVar::$ip;
 		$this->lang=&PhangoVar::$lang;
@@ -1782,6 +1849,7 @@ class ControllerSwitchClass {
 		$this->base_url=&PhangoVar::$base_url;
 		$this->cookie_path=&PhangoVar::$cookie_path;
 		$this->prefix_key=&PhangoVar::$prefix_key;
+		$this->key_csrf=&PhangoVar::$key_csrf;
 	
 	}
 	
@@ -1798,21 +1866,16 @@ class ControllerSwitchClass {
 	
 	public function redirect($direction,$l_text,$text,$ifno)
 	{
-		global $arr_block;
-	
-		$arr_block=select_view(array('none'));
 		
 		load_libraries(array('redirect'));
-		die( redirect_webtsys( $direction, $l_text, $text, $ifno , $arr_block) );
+		die( redirect_webtsys( $direction, $l_text, $text, $ifno ) );
 	
 	}
 	
-	public function load_theme($module, $title, $cont_index)
+	public function load_theme($title, $cont_index)
 	{
-	
-		$arr_block=select_view(array($module));
 		
-		echo load_view(array($title, $cont_index, $this->block_title, $this->block_content, $this->block_urls, $this->block_type, $this->block_id, $this->config_data, ''), $arr_block);
+		echo load_view(array($title, $cont_index),'home');
 	
 	}
 	
@@ -2780,8 +2843,6 @@ class DateField extends PhangoField {
 	function check($value)
 	{
 
-		global $user_data;
-
 		$final_value=0;
 
 		if($this->set_default_time==0)
@@ -2870,12 +2931,10 @@ class DateField extends PhangoField {
 	
 	static public function format_date($value)
 	{
-	
-		global $user_data;
 
 		load_libraries(array('form_date'));
 		
-		return form_date( $value, $user_data['format_date'] , $user_data['format_time']);
+		return form_date( $value, PhangoVar::$format_date , PhangoVar::$format_time);
 	
 	}
 
@@ -4569,8 +4628,6 @@ function SelectManyFormSet($post, $value)
 
 function DateForm($field, $class='', $value='', $set_time=1, $see_title=1)
 {
-
-	global $user_data;
 	
 	if($value==0)
 	{
@@ -4719,7 +4776,6 @@ function RadioIntFormSet($post, $value)
 
 function make_fancy_url($url, $controller, $func_controller, $description_text, $arr_data=array(), $respect_upper=0)
 {
-	global $arr_func_encode_url;
 
 	$description_text=slugify($description_text, $respect_upper);
 
@@ -4728,7 +4784,7 @@ function make_fancy_url($url, $controller, $func_controller, $description_text, 
 	foreach($arr_data as $key => $value)
 	{
 
-		$arr_get[]=$key.'/'.$value;//$arr_func_encode_url[DEBUG]($key).'/'.$value;
+		$arr_get[]=$key.'/'.$value;
 
 	}
 	
@@ -4750,14 +4806,12 @@ function make_fancy_url($url, $controller, $func_controller, $description_text, 
 function add_extra_fancy_url($url_fancy, $arr_data)
 {
 
-	global $arr_func_encode_url;
-
 	$arr_get=array();
 
 	foreach($arr_data as $key => $value)
 	{
 
-		$arr_get[]=$key.'/'.$value;//$arr_func_encode_url[DEBUG]($key).'/'.$value;
+		$arr_get[]=$key.'/'.$value;
 
 	}
 
@@ -4821,12 +4875,6 @@ function slugify($text, $respect_upper=0, $replace='-')
 //Load_view is a very important function. Phango is an MVC framework and has separate code and html.
 
 /**
-* An internal variable used for internal cache for load_view.
-*/
-
-$cache_template=array();
-
-/**
 * Very important function used for load views. Is the V in the MVC paradigm.
 *
 * load_view is used for load the views. Views in Phango are php files with a function that have a special name with "View" suffix. For example, if you create a view file with the name blog.php, inside you need create a php function called BlogView(). The arguments of this function can be that you want, how on any normal php function. The view files need to be saved on a "view" folders inside of a theme folder, or a "views/module_name" folder inside of a module being "module_name" the name of the module.
@@ -4841,8 +4889,6 @@ function load_view($arr_template, $template, $module_theme='', $load_if_no_cache
 {
 
 	//First see in controller/view/template, if not see in /views/template
-
-	global $index_set, $title_page, $cache_template, $script_base_controller;
 	
 	$theme=PhangoVar::$dir_theme;
 	
@@ -4850,7 +4896,7 @@ function load_view($arr_template, $template, $module_theme='', $load_if_no_cache
 	
 	$view='';
 	
-	if(!isset($cache_template[$template])) 
+	if(!isset(PhangoVar::$cache_template[$template])) 
 	{
 
 		//First, load view from module...
@@ -4866,9 +4912,9 @@ function load_view($arr_template, $template, $module_theme='', $load_if_no_cache
 
 			ob_clean();
 
-			//No exists view in theme, load view respect to the $script_base_controller views
+			//No exists view in theme, load view respect to the PhangoVar::$script_base_controller views
 			
-			if(!include(PhangoVar::$base_path.'modules/'.$script_base_controller.'/views/'.strtolower($template).'.php')) 
+			if(!include(PhangoVar::$base_path.'modules/'.PhangoVar::$script_base_controller.'/views/'.strtolower($template).'.php')) 
 			{
 
 				$output_error_view.=ob_get_contents();
@@ -4906,7 +4952,7 @@ function load_view($arr_template, $template, $module_theme='', $load_if_no_cache
 
 		//If load view, save function name for call write the html again without call include view too
 		
-		$cache_template[$template]=basename($template).'View';
+		PhangoVar::$cache_template[$template]=basename($template).'View';
 
 	}
 	else 
@@ -4920,7 +4966,7 @@ function load_view($arr_template, $template, $module_theme='', $load_if_no_cache
 	
 	ob_start();
 
-	$func_view=$cache_template[$template];
+	$func_view=PhangoVar::$cache_template[$template];
 	
 	//Load function from loaded view with his parameters
 
@@ -4945,8 +4991,6 @@ function load_view($arr_template, $template, $module_theme='', $load_if_no_cache
 
 function load_libraries_views($template, $func_views=array())
 {
-
-	global $index_set, $title_page, $cache_template, $script_base_controller;
 	
 	$theme=PhangoVar::$dir_theme;
 
@@ -4963,7 +5007,7 @@ function load_libraries_views($template, $func_views=array())
 	foreach($func_views as $template_check)
 	{
 
-		if(isset($cache_template[$template_check]))
+		if(isset(PhangoVar::$cache_template[$template_check]))
 		{
 			//Function view loaded, return because load_view load the function automatically.
 		
@@ -4982,7 +5026,7 @@ function load_libraries_views($template, $func_views=array())
 
 			ob_clean();
 
-			if(!include_once(PhangoVar::$base_path.'modules/'.$script_base_controller.'/views/'.strtolower($template).'.php')) 
+			if(!include_once(PhangoVar::$base_path.'modules/'.PhangoVar::$script_base_controller.'/views/'.strtolower($template).'.php')) 
 			{
 
 				$output=ob_get_contents();
@@ -5008,19 +5052,13 @@ function load_libraries_views($template, $func_views=array())
 	foreach($func_views as $template)
 	{
 
-		$cache_template[$template]=basename($template).'View';
+		PhangoVar::$cache_template[$template]=basename($template).'View';
 
 	}
 
 
 }
 
-/** 
-* Array for check if a model exists searching in arr_check_table array created in framework.php file.
-*
-*/
-
-$arr_check_table=array();
 
 /**
 * Internal function used for check if model is loaded in framework.
@@ -5030,11 +5068,10 @@ $arr_check_table=array();
 
 function check_model($model_name)
 {
-	global $arr_check_table;
 
 	// || !isset( PhangoVar::$model[$model_name] ) 
 
-	if( !isset($arr_check_table[$model_name]) )
+	if( !isset(PhangoVar::$arr_check_table[$model_name]) )
 	{
 
 		/*$output=ob_get_contents();
@@ -5067,8 +5104,6 @@ function check_model($model_name)
 
 function check_model_exists()
 {
-
-	global $arr_check_table;
 	
 	$arr_keys_model=array_keys(PhangoVar::$model);
 
@@ -5079,7 +5114,7 @@ function check_model_exists()
 	foreach($arr_keys_model as $key)
 	{
 
-		if(!isset($arr_check_table[$key]))
+		if(!isset(PhangoVar::$arr_check_table[$key]))
 		{
 
 			$error_model[]=$key;
@@ -5114,12 +5149,6 @@ function check_model_exists()
 //Function for load the models..., if the model_file != models_path.php put model in format path/model_file
 
 /**
-* Internal global variable used for load_model for cache loaded models.
-*/
-
-$cache_model=array();
-
-/**
 *
 * Function used for load models on controllers (or where you like, ;) ).
 *
@@ -5133,8 +5162,6 @@ $cache_model=array();
 
 function load_model($name_model='')
 {
-	
-	global $cache_model, $arr_module_insert, $arr_extension_model;
 	
 	$names=func_get_args();
 	
@@ -5155,7 +5182,7 @@ function load_model($name_model='')
 		}
 
 		
-		if( !isset($cache_model[$my_model]) )
+		if( !isset(PhangoVar::$cache_model[$my_model]) )
 		{
 
 			$path_model=PhangoVar::$base_path.'modules/'.$my_path.'/models/models_'.$my_model.'.php';
@@ -5180,13 +5207,13 @@ function load_model($name_model='')
 			else
 			{
 				
-				$cache_model[$my_model]=1;
+				PhangoVar::$cache_model[$my_model]=1;
 
 			}
 			
 			//Now, load extension if necessary
 			
-			if(isset($arr_extension_model[$my_model]))
+			if(isset(PhangoVar::$arr_extension_model[$my_model]))
 			{
 				
 				load_extension($my_model);
@@ -5225,14 +5252,12 @@ function load_config($module, $name_config='config_module')
 }
 
 /**
-* Internal function used for load_model for load extensions to the models. You can specific your extensions using $arr_extension_model array. The name of an extension file is extension_name.php where name is the name given how $arr_extension_model item.
+* Internal function used for load_model for load extensions to the models. You can specific your extensions using PhangoVar::$arr_extension_model array. The name of an extension file is extension_name.php where name is the name given how PhangoVar::$arr_extension_model item.
 *
 */
 
 function load_extension()
 {
-
-	global $cache_model;
 	
 	$names=func_get_args();
 	
@@ -5252,7 +5277,7 @@ function load_extension()
 		
 	}
 	
-	if( !isset($cache_model['extension_'.$my_model]) )
+	if( !isset(PhangoVar::$cache_model['extension_'.$my_model]) )
 	{
 		
 		$path_model=PhangoVar::$base_path.'modules/'.$my_path.'/models/extension_'.$my_model.'.php';
@@ -5277,7 +5302,7 @@ function load_extension()
 		else
 		{
 		
-			$cache_model['extension_'.$my_model]=1;
+			PhangoVar::$cache_model['extension_'.$my_model]=1;
 		
 		}
 	
@@ -5287,16 +5312,8 @@ function load_extension()
 
 //Load libraries, well, simply a elegant include
 
-/**
-* An array used for control the loaded libraries previously.
-*/
-
-$cache_libraries=array();
-
 function load_libraries($names, $path='')
 {
-
-	global $cache_libraries;
 	
 	if(gettype($names)!='array')
 	{
@@ -5320,7 +5337,7 @@ function load_libraries($names, $path='')
 	{
 		
 
-		if(!isset($cache_libraries[$library]))
+		if(!isset(PhangoVar::$cache_libraries[$library]))
 		{
 		
 			if(!include($path.$library.'.php')) 
@@ -5341,7 +5358,7 @@ function load_libraries($names, $path='')
 			else
 			{
 
-				$cache_libraries[$library]=1;
+				PhangoVar::$cache_libraries[$library]=1;
 
 			}
 
@@ -5356,12 +5373,8 @@ function load_libraries($names, $path='')
 //Load a language file...
 //Other elegant include...
 
-$cache_lang=array();
-
 function load_lang()
 {
-	
-	global $cache_lang, $script_base_controller;
 	
 	if(isset($_SESSION['language']))
 	{
@@ -5377,7 +5390,7 @@ function load_lang()
 
 		$lang_file=basename($lang_file);
 
-		if(!isset($cache_lang[$lang_file]))
+		if(!isset(PhangoVar::$cache_lang[$lang_file]))
 		{
 
 			//First search in module, after in root i18n.
@@ -5425,7 +5438,7 @@ function load_lang()
 
 			ob_end_clean();
 
-			$cache_lang[$lang_file]=1;
+			PhangoVar::$cache_lang[$lang_file]=1;
 
 		}
 
@@ -5464,18 +5477,18 @@ function load_check_model()
 {
 
 	$table='';
-	$arr_check_table=array();
+	PhangoVar::$arr_check_table=array();
 
 	$query=webtsys_query(SQL_SHOW_TABLES);
 
 	while(list($table)=webtsys_fetch_row($query))
 	{
 
-		$arr_check_table[$table]=1;
+		PhangoVar::$arr_check_table[$table]=1;
 
 	}
 
-	return $arr_check_table;
+	return PhangoVar::$arr_check_table;
 
 }
 
@@ -5527,9 +5540,7 @@ function filter_fields_array($array_strip, $array_source)
 function set_csrf_key()
 {
 
-	global $user_data;
-
-        echo "\n".HiddenForm('csrf_token', '', $user_data['key_csrf'])."\n";
+        echo "\n".HiddenForm('csrf_token', '', PhangoVar::$key_csrf)."\n";
 
 }
 
@@ -5560,233 +5571,17 @@ function show_error($txt_error_normal, $txt_error_debug, $output_external='')
 
 }
 
-/**
-* Global Array for load jscripts on views.
-* 
-*/
-
-$arr_cache_jscript=array();
-
-/**
-* Array for indicate gzipped javascript.
-*
-* @deprecated
-*/
-
-$arr_cache_jscript_gzipped=array();
-
-/**
-* Array for indicate jscript module.
-*
-* @deprecated
-*/
-
-$arr_cache_jscript_module=array();
-/*
-function load_jscript_view()
-{
-
-	global $arr_cache_jscript, $arr_cache_jscript_module, $arr_cache_jscript_gzipped, PhangoVar::$base_url;
-	
-	//Delete repeat scripts...
-
-	$arr_cache_jscript=array_unique($arr_cache_jscript, SORT_STRING);
-
-	$arr_final_jscript=array();
-
-	foreach($arr_cache_jscript as $idscript => $jscript)
-	{
-
-		settype($arr_cache_jscript_gzipped[$idscript], 'integer');
-		settype($arr_cache_jscript_module[$idscript], 'string');
-		
-		$arr_final_jscript[]='<script type="text/javascript" src="'.make_fancy_url(PhangoVar::$base_url, 'jscript', 'load_jscript', 'script', array('no_compression' => $arr_cache_jscript_gzipped[$idscript], 'module' => $arr_cache_jscript_module[$idscript], 'input_script' => $jscript)).'"></script>'."\n";
-
-	}
-
-	return implode("\n", $arr_final_jscript)."\n";
-
-}*/
-
-$arr_cache_header=array();
-
 function load_header_view()
 {
 
-	global $arr_cache_header;
-
 	//Delete repeat scripts...
 
-	$arr_cache_header=array_unique($arr_cache_header, SORT_STRING);
+	PhangoVar::$arr_cache_header=array_unique(PhangoVar::$arr_cache_header, SORT_STRING);
 	
-	ksort($arr_cache_header);
+	ksort(PhangoVar::$arr_cache_header);
 
-	return implode("\n", $arr_cache_header)."\n";
+	return implode("\n", PhangoVar::$arr_cache_header)."\n";
 
-}
-
-/**
-*
-* Global variable that control the css cache
-*
-*/
-
-$arr_cache_css=array();
-$arr_cache_local_css=array();
-
-/**
-*
-* Function for load css
-*
-* @deprecated
-*/
-
-function load_css_local_view()
-{
-
-	global $arr_cache_local_css, $arr_media_modules_set, $arr_cache_css;
-
-	//Delete repeat scripts...
-
-	$arr_cache_local_css=array_unique($arr_cache_local_css, SORT_STRING);
-	$arr_final_css=array();
-
-	//First on media folder, after on module, finally, i put the theme
-	
-	foreach($arr_cache_local_css as $module_css => $arr_css)
-	{
-	
-		foreach($arr_css as $css)
-		{
-		
-			if(isset($arr_media_modules_set[$module_css]['css']))
-			{
-			
-				$url=PhangoVar::$base_url.'/media/'.PhangoVar::$dir_theme.'/'.$module_css.'/css/'.$css;
-				$arr_final_css[]='<link href="'.$url.'" rel="stylesheet" type="text/css"/>';
-				
-				//$arr_cache_css[$module_css]=$css;
-				
-				/*$url=make_fancy_url(PhangoVar::$base_url, 'media', 'showmedia', 'directory', array('css' => urlencode_redirect($css, 1)));
-				$arr_final_css[]='<link href="'.$url.'" rel="stylesheet" type="text/css"/>';
-				*/
-			}
-			else
-			{
-			
-				$url=make_fancy_url(PhangoVar::$base_url, 'media', 'showmedia', 'directory', array('module' => $module_css, 'css' => urlencode_redirect($css, 1)));
-				$arr_final_css[]='<link href="'.$url.'" rel="stylesheet" type="text/css"/>';
-			
-			}
-		
-			/*if(!file_exists(PhangoVar::$base_path.PhangoVar::$module_theme.'media/css/'.$module_css.'/'.$css))
-			{
-			
-				//$url=make_fancy_url(PhangoVar::$base_url, 'media', 'showmedia', 'directory', array('css' => $css, 'module' => $module_css));
-				if(file_exists(PhangoVar::$base_path.'application/media/'.$module_css.'/css/'.$css))
-				{
-					//$url=make_fancy_url(PhangoVar::$base_url, 'media', 'showmedia', 'directory', array('css' => $css));
-					$url=PhangoVar::$base_url.'/media/'.$module_css.'/css/'.$css;
-					$arr_final_css[]='<link href="'.$url.'" rel="stylesheet" type="text/css"/>';
-
-				}
-				else
-				{
-					
-					$css=urlencode_redirect($css);
-					
-					$url=make_fancy_url(PhangoVar::$base_url, 'media', 'showmedia', 'directory', array('module' => $module_css, 'css' => $css));
-					$arr_final_css[]='<link href="'.$url.'" rel="stylesheet" type="text/css"/>';
-
-					
-				}
-			}
-			else
-			{
-			
-				$arr_cache_css[]=$css;
-			
-			}*/
-			
-			
-		}
-	}
-
-	return implode("\n", $arr_final_css);
-
-}
-
-function get_url_local_image($img_name, $module, $respect_upper=1)
-{
-
-	global $arr_media_modules_set;
-
-	/*if(isset($arr_media_modules_set[$module]['image']))
-	{
-	
-		//$url=PhangoVar::$base_url.PhangoVar::$dir_theme.'/media/'.$module.'/images/'.$img_name;
-	
-		$url=get_url_image($module.'/'.$img_name);
-	
-	}
-	else
-	{
-	
-		$img_name=urlencode_redirect(slugify($img_name, $respect_upper));
-		
-		return make_fancy_url(PhangoVar::$base_url, 'media', 'showmedia', 'directory', array('module' => $module, 'images' => $img_name));
-	
-	}*/
-	
-	if(isset($arr_media_modules_set[$module_css]['image']))
-	{
-	
-		$url=PhangoVar::$base_url.'/media/'.PhangoVar::$dir_theme.'/'.$module.'/images/'.$img_name;
-		//$arr_final_css[]='<link href="'.$url.'" rel="stylesheet" type="text/css"/>';
-		
-		$url=get_url_image($module.'/'.$img_name);
-		
-		//$arr_cache_css[$module_css]=$css;
-		
-		/*$url=make_fancy_url(PhangoVar::$base_url, 'media', 'showmedia', 'directory', array('css' => urlencode_redirect($css, 1)));
-		$arr_final_css[]='<link href="'.$url.'" rel="stylesheet" type="text/css"/>';
-		*/
-	}
-	else
-	{
-	
-		$img_name=urlencode_redirect(slugify($img_name, $respect_upper));
-		
-		return make_fancy_url(PhangoVar::$base_url, 'media', 'showmedia', 'directory', array('module' => $module, 'images' => $img_name));
-	
-	}
-	
-	/*if(!file_exists(PhangoVar::$base_path.PhangoVar::$module_theme.'media/images/'.$module.'/'.$img_name))
-	{
-
-		if(file_exists(PhangoVar::$base_path.'application/media/'.$module.'/images/'.$img_name))
-		{
-		
-			$url=PhangoVar::$base_url.'/media/'.$module.'/images/'.$img_name;
-		
-		}
-		else
-		{
-		
-			$img_name=urlencode_redirect(slugify($img_name, $respect_upper));
-		
-			return make_fancy_url(PhangoVar::$base_url, 'media', 'showmedia', 'directory', array('module' => $module, 'images' => $img_name));
-			
-		}
-
-	}
-	else
-	{
-	
-		return get_url_image($img_name, $set_encode=1, $directory_encode='', $respect_upper=1);
-	
-	}*/
-		
 }
 
 if(defined('THEME_MODULE'))
@@ -5819,15 +5614,13 @@ if(defined('THEME_MODULE'))
 	
 	function load_css_view()
 	{
-
-		global $arr_cache_css;
 		
 		//Delete repeat scripts...
 
-		$arr_cache_css=array_unique($arr_cache_css, SORT_STRING);
+		PhangoVar::$arr_cache_css=array_unique(PhangoVar::$arr_cache_css, SORT_STRING);
 		$arr_final_css=array();
 
-		foreach($arr_cache_css as $idcss => $css)
+		foreach(PhangoVar::$arr_cache_css as $idcss => $css)
 		{
 			
 			$module_css='';
@@ -5865,14 +5658,12 @@ if(defined('THEME_MODULE'))
 	function load_jscript_view()
 	{
 		
-		global $arr_cache_jscript;
-		
 		//Delete repeat scripts...
 
-		$arr_cache_jscript=array_unique($arr_cache_jscript, SORT_STRING);
+		PhangoVar::$arr_cache_jscript=array_unique(PhangoVar::$arr_cache_jscript, SORT_STRING);
 		$arr_final_jscript=array();
 
-		foreach($arr_cache_jscript as $idjscript => $jscript)
+		foreach(PhangoVar::$arr_cache_jscript as $idjscript => $jscript)
 		{
 			
 			$module_jscript='';
@@ -5923,14 +5714,12 @@ else
 	function load_css_view()
 	{
 
-		global $arr_cache_css;
-
 		//Delete repeat scripts...
 
-		$arr_cache_css=array_unique($arr_cache_css, SORT_STRING);
+		PhangoVar::$arr_cache_css=array_unique(PhangoVar::$arr_cache_css, SORT_STRING);
 		$arr_final_css=array();
 
-		foreach($arr_cache_css as $idcss => $css)
+		foreach(PhangoVar::$arr_cache_css as $idcss => $css)
 		{
 		
 			if(gettype($css)=='array')
@@ -5957,14 +5746,13 @@ else
 	function load_jscript_view()
 	{
 
-		global $arr_cache_jscript;
 
 		//Delete repeat scripts...
 
-		$arr_cache_jscript=array_unique($arr_cache_jscript, SORT_STRING);
+		PhangoVar::$arr_cache_jscript=array_unique(PhangoVar::$arr_cache_jscript, SORT_STRING);
 		$arr_final_jscript=array();
 
-		foreach($arr_cache_jscript as $idjscript => $jscript)
+		foreach(PhangoVar::$arr_cache_jscript as $idjscript => $jscript)
 		{
 		
 			if(gettype($jscript)=='array')
