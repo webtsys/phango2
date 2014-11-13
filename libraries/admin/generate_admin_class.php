@@ -13,13 +13,11 @@ class GenerateAdminClass {
 	function __construct($model_name)
 	{
 	
-		global $model, $lang, $base_url;
-	
 		$this->model_name=$model_name;
 		$this->arr_fields=array(); 
 		$this->arr_fields_edit=array();
 		$this->url_options=''; 
-		//make_fancy_url($base_url, PHANGO_SCRIPT_BASE_CONTROLLER, PHANGO_SCRIPT_FUNC_NAME, TEXT_FUNCTION_CONTROLLER, array());
+		//make_fancy_url(PhangoVar::$base_url, PHANGO_SCRIPT_BASE_CONTROLLER, PHANGO_SCRIPT_FUNC_NAME, TEXT_FUNCTION_CONTROLLER, array());
 		$this->url_back=$this->url_options;
 		$this->no_search=false;
 		$this->options_func='BasicOptionsListModel';
@@ -29,16 +27,16 @@ class GenerateAdminClass {
 		$this->show_id=1;
 		$this->yes_options=1;
 		$this->extra_fields=array();
-		$this->txt_list_new=$lang['common']['listing_new'].': '.$model[$this->model_name]->label;
-		$this->txt_add_new_item=$lang['common']['add_new_item'].': '.$model[$this->model_name]->label;
-		$this->txt_edit_item=$lang['common']['edit'];
+		$this->txt_list_new=PhangoVar::$lang[['common']['listing_new'].': '.PhangoVar::$model[$this->model_name]->label;
+		$this->txt_add_new_item=PhangoVar::$lang[['common']['add_new_item'].': '.PhangoVar::$model[$this->model_name]->label;
+		$this->txt_edit_item=PhangoVar::$lang[['common']['edit'];
 		$this->simple_redirect=0;
 		$this->class_add='add_class_item_link';
 		$this->goback_class='add_class_item_link';
 		$this->separator_element_opt='<br />';
 		$this->extra_menu_create='';
-		$this->search_asc=$lang['common']['ascent'];
-		$this->search_desc=$lang['common']['descent'];
+		$this->search_asc=PhangoVar::$lang[['common']['ascent'];
+		$this->search_desc=PhangoVar::$lang[['common']['descent'];
 		$this->show_goback=1;
 		$this->arr_fields_order=array();
 		$this->arr_fields_search=array();
@@ -58,13 +56,13 @@ class GenerateAdminClass {
 	function show()
 	{
 	
-		//$model[$this->model_name]->generate_admin($this->arr_fields, $this->arr_fields_edit, $this->url_options, $this->options_func, $this->where_sql, $this->arr_fields_form, $this->type_list, $this->no_search);
+		//PhangoVar::$model[$this->model_name]->generate_admin($this->arr_fields, $this->arr_fields_edit, $this->url_options, $this->options_func, $this->where_sql, $this->arr_fields_form, $this->type_list, $this->no_search);
 		
-		global $model, $arr_cache_header, $arr_cache_jscript, $lang;
+		global $arr_cache_header, $arr_cache_jscript;
 		
 		settype($_GET['op_edit'], 'integer');
 		settype($_GET['op_action'], 'integer');
-		settype($_GET[$model[$this->model_name]->idmodel], 'integer');
+		settype($_GET[PhangoVar::$model[$this->model_name]->idmodel], 'integer');
 
 		$url_admin=add_extra_fancy_url($this->url_options, array('op_action' => 1));
 		
@@ -166,14 +164,12 @@ class GenerateAdminClass {
 	function show_config_mode($post=array())
 	{
 	
-		global $base_url, $model;
-		
-		$model[$this->model_name]->func_update='Config';
+		PhangoVar::$model[$this->model_name]->func_update='Config';
 
-		if(count($model[$this->model_name]->forms)==0)
+		if(count(PhangoVar::$model[$this->model_name]->forms)==0)
 		{
 		
-			$model[$this->model_name]->create_form();
+			PhangoVar::$model[$this->model_name]->create_form();
 		
 		}
 		//Obtain data
@@ -181,11 +177,11 @@ class GenerateAdminClass {
 		if(count($post)==0)
 		{
 		
-			$post=$model[$this->model_name]->select_a_row_where($this->where_sql, $this->arr_fields_edit, 1);
+			$post=PhangoVar::$model[$this->model_name]->select_a_row_where($this->where_sql, $this->arr_fields_edit, 1);
 		
 		}
 		
-		SetValuesForm($post, $model[$this->model_name]->forms, 0);
+		SetValuesForm($post, PhangoVar::$model[$this->model_name]->forms, 0);
 		
 		//nsertModelForm($model_name, $url_admin, $url_back, $arr_fields=array(), $id=0, $goback=1)
 		
@@ -206,7 +202,7 @@ class GenerateAdminClass {
 	function insert_model_form()
 	{
 	
-		global $model, $lang, $std_error, $arr_block, $base_url;
+		global $std_error, $arr_block;
 		//Setting op variable to integer for use in switch
 		
 		//function InsertModelForm($model_name, $url_admin, $url_back, $arr_fields=array(), $id=0, $goback=1, $simple_redirect=0, $where_sql='')
@@ -221,7 +217,7 @@ class GenerateAdminClass {
 		$simple_redirect=$this->simple_redirect;
 		$where_sql=$this->where_sql;
 		
-		if(isset($model[$model_name]))
+		if(isset(PhangoVar::$model[$model_name]))
 		{
 
 			settype($_GET['op_update'], 'integer');
@@ -229,9 +225,9 @@ class GenerateAdminClass {
 
 			$url_post=add_extra_fancy_url($url_admin, array('op_update' =>1));
 			
-			if( count($model[$model_name]->forms)==0)
+			if( count(PhangoVar::$model[$model_name]->forms)==0)
 			{	
-				$model[$model_name]->create_form();
+				PhangoVar::$model[$model_name]->create_form();
 			}
 			
 			//UpdateModelFormView($model_form, $arr_fields=array(), $url_post)
@@ -239,7 +235,7 @@ class GenerateAdminClass {
 			if(count($arr_fields)==0)
 			{
 
-				$arr_fields=array_keys($model[$model_name]->forms);
+				$arr_fields=array_keys(PhangoVar::$model[$model_name]->forms);
 
 			}
 			
@@ -250,20 +246,20 @@ class GenerateAdminClass {
 
 					ob_start();
 					
-					echo load_view(array($model[$model_name]->forms, $arr_fields, $url_post, $model[$model_name]->enctype, '_generate_admin_'.$model_name, $this->arr_categories), 'common/forms/updatemodelform');
+					echo load_view(array(PhangoVar::$model[$model_name]->forms, $arr_fields, $url_post, PhangoVar::$model[$model_name]->enctype, '_generate_admin_'.$model_name, $this->arr_categories), 'common/forms/updatemodelform');
 
 					$cont_index=ob_get_contents();
 
 					ob_end_clean();
 
-					echo load_view(array($lang['common']['edit'], $cont_index), 'content');
+					echo load_view(array(PhangoVar::$lang[['common']['edit'], $cont_index), 'content');
 					
 				break;
 
 				case 1:
 			
-					$arr_update[$id]=$model[$model_name]->func_update.'UpdateModel';
-					$arr_update[0]=$model[$model_name]->func_update.'InsertModel';
+					$arr_update[$id]=PhangoVar::$model[$model_name]->func_update.'UpdateModel';
+					$arr_update[0]=PhangoVar::$model[$model_name]->func_update.'InsertModel';
 
 					$func_update=$arr_update[$id];
 					
@@ -272,19 +268,19 @@ class GenerateAdminClass {
 
 						ob_start();
 						
-						echo '<p class="error">'.$lang['common']['cannot_update_insert_in_model'].' '.$model_name.': '.$model[$model_name]->std_error.'</p>';
+						echo '<p class="error">'.PhangoVar::$lang[['common']['cannot_update_insert_in_model'].' '.$model_name.': '.PhangoVar::$model[$model_name]->std_error.'</p>';
 
 						$post=filter_fields_array($arr_fields, $_POST);
 						
-						SetValuesForm($post, $model[$model_name]->forms);
+						SetValuesForm($post, PhangoVar::$model[$model_name]->forms);
 
-						echo load_view(array($model[$model_name]->forms, $arr_fields, $url_post, $model[$model_name]->enctype, '_generate_admin_'.$model_name, $this->arr_categories), 'common/forms/updatemodelform');
+						echo load_view(array(PhangoVar::$model[$model_name]->forms, $arr_fields, $url_post, PhangoVar::$model[$model_name]->enctype, '_generate_admin_'.$model_name, $this->arr_categories), 'common/forms/updatemodelform');
 
 						$cont_index=ob_get_contents();
 
 						ob_end_clean();
 
-						echo load_view(array($lang['common']['edit'], $cont_index), 'content');
+						echo load_view(array(PhangoVar::$lang[['common']['edit'], $cont_index), 'content');
 
 					}
 					else
@@ -293,7 +289,7 @@ class GenerateAdminClass {
 						//die(header('Location: '.$url_admin.'/success/1'));
 						
 						
-						$text_output=$lang['common']['success'];
+						$text_output=PhangoVar::$lang[['common']['success'];
 						
 						ob_end_clean();
 						
@@ -301,13 +297,13 @@ class GenerateAdminClass {
 						{
 							
 							load_libraries(array('redirect'));
-							die( redirect_webtsys( $url_back, $lang['common']['redirect'], $text_output, $lang['common']['press_here_redirecting'] , $arr_block) );
+							die( redirect_webtsys( $url_back, PhangoVar::$lang[['common']['redirect'], $text_output, PhangoVar::$lang[['common']['press_here_redirecting'] , $arr_block) );
 						}
 						else
 						{
 						
 							load_libraries(array('redirect'));
-							simple_redirect( $url_back, $lang['common']['redirect'], $lang['common']['success'], $lang['common']['press_here_redirecting']);
+							simple_redirect( $url_back, PhangoVar::$lang[['common']['redirect'], PhangoVar::$lang[['common']['success'], PhangoVar::$lang[['common']['press_here_redirecting']);
 
 						}
 						
@@ -321,7 +317,7 @@ class GenerateAdminClass {
 			{
 		
 				?>
-				<p><a href="<?php echo $url_back; ?>" class="<?php echo $this->goback_class; ?>"><?php echo $lang['common']['go_back']; ?></a></p>
+				<p><a href="<?php echo $url_back; ?>" class="<?php echo $this->goback_class; ?>"><?php echo PhangoVar::$lang[['common']['go_back']; ?></a></p>
 				<?php
 
 			}
@@ -363,8 +359,6 @@ class ListModelClass {
 	function __construct($model_name, $arr_fields, $url_options, $options_func='BasicOptionsListModel', $where_sql='', $arr_fields_form=array(), $type_list='Basic', $no_search=false, $yes_id=1, $yes_options=1, $extra_fields=array(), $separator_element='<br />', $simple_redirect=0)
 	{
 	
-		global $lang;
-	
 		$this->model_name=$model_name;
 		$this->arr_fields=$arr_fields;
 		$this->url_options=$url_options;
@@ -378,8 +372,8 @@ class ListModelClass {
 		$this->extra_fields=$extra_fields; 
 		$this->separator_element=$separator_element; 
 		$this->simple_redirect=$simple_redirect;
-		$this->search_asc=$lang['common']['ascent'];
-		$this->search_desc=$lang['common']['descent'];
+		$this->search_asc=PhangoVar::$lang[['common']['ascent'];
+		$this->search_desc=PhangoVar::$lang[['common']['descent'];
 		$this->show_goback=1;
 		$this->separator_element_opt='<br />';
 		$this->arr_fields_order=$this->arr_fields;
@@ -397,13 +391,13 @@ class ListModelClass {
 	public function show()
 	{
 	
-		global $model, $lang, $std_error, $arr_block;
+		global $std_error, $arr_block;
 
 		settype($_GET['op_edit'], 'integer');
 
-		if( count($model[$this->model_name]->forms)==0)
+		if( count(PhangoVar::$model[$this->model_name]->forms)==0)
 		{	
-			$model[$this->model_name]->create_form();
+			PhangoVar::$model[$this->model_name]->create_form();
 		}
 		
 		switch($_GET['op_edit'])
@@ -439,7 +433,7 @@ class ListModelClass {
 			//}
 			//Num elements in page
 			/*
-			if(!function_exists($model[$this->model_name]->func_update.'List'))
+			if(!function_exists(PhangoVar::$model[$this->model_name]->func_update.'List'))
 			{
 				
 				BasicList($this->model_name, $this->where_sql, $arr_where_sql, $location, $arr_order, $this->arr_fields, $cell_sizes, $this->options_func, $this->url_options, $this->yes_id, $this->yes_options, $this->extra_fields, $this->separator_element);
@@ -448,7 +442,7 @@ class ListModelClass {
 			else
 			{
 				
-				$func_list=$model[$this->model_name]->func_update.'List';
+				$func_list=PhangoVar::$model[$this->model_name]->func_update.'List';
 
 				$func_list($this->model_name, $this->where_sql, $arr_where_sql, $location, $arr_order, $this->arr_fields, $cell_sizes, $this->options_func, $this->url_options, $this->yes_id, $this->yes_options, $this->extra_fields, $this->separator_element);
 
@@ -461,13 +455,13 @@ class ListModelClass {
 			if($this->yes_id)
 			{
 			
-				array_unshift($list->arr_fields, $model[$this->model_name]->idmodel);
+				array_unshift($list->arr_fields, PhangoVar::$model[$this->model_name]->idmodel);
 				
-				$model[$this->model_name]->components[$model[$this->model_name]->idmodel]->label='#Id';
+				PhangoVar::$model[$this->model_name]->components[PhangoVar::$model[$this->model_name]->idmodel]->label='#Id';
 				
 			}
 			
-			$list->arr_cell_sizes=array($model[$this->model_name]->idmodel => ' width="25"');
+			$list->arr_cell_sizes=array(PhangoVar::$model[$this->model_name]->idmodel => ' width="25"');
 			
 			$list->num_by_page=$this->num_by_page;
 			
@@ -492,17 +486,17 @@ class ListModelClass {
 
 		case 1:
 			
-			settype($_GET[$model[$this->model_name]->idmodel], 'integer');
+			settype($_GET[PhangoVar::$model[$this->model_name]->idmodel], 'integer');
 			
-			$query=$model[$this->model_name]->select('where '.$model[$this->model_name]->idmodel.'='.$_GET[$model[$this->model_name]->idmodel], $this->arr_fields_form, true);
+			$query=PhangoVar::$model[$this->model_name]->select('where '.PhangoVar::$model[$this->model_name]->idmodel.'='.$_GET[PhangoVar::$model[$this->model_name]->idmodel], $this->arr_fields_form, true);
 			
 			$post=webtsys_fetch_array($query);
 			
 			//model_set_form($this->model_name, $post, NO_SHOW_ERROR);
 			
-			SetValuesForm($post, $model[$this->model_name]->forms, 0);
+			SetValuesForm($post, PhangoVar::$model[$this->model_name]->forms, 0);
 			
-			$url_options_edit=add_extra_fancy_url($this->url_options, array('op_edit' =>1, $model[$this->model_name]->idmodel => $_GET[$model[$this->model_name]->idmodel]) );
+			$url_options_edit=add_extra_fancy_url($this->url_options, array('op_edit' =>1, PhangoVar::$model[$this->model_name]->idmodel => $_GET[PhangoVar::$model[$this->model_name]->idmodel]) );
 			
 			//$this->admin_class->url_back=$this->url_options;
 			//echo $this->admin_class->url_back; die;
@@ -515,41 +509,41 @@ class ListModelClass {
 			
 			}
 			
-			//InsertModelForm($this->model_name, $url_options_edit, $this->url_options, $this->arr_fields_form, $_GET[$model[$this->model_name]->idmodel], $this->show_goback, $this->simple_redirect);
+			//InsertModelForm($this->model_name, $url_options_edit, $this->url_options, $this->arr_fields_form, $_GET[PhangoVar::$model[$this->model_name]->idmodel], $this->show_goback, $this->simple_redirect);
 			
-			$this->admin_class->number_id=$_GET[$model[$this->model_name]->idmodel];
+			$this->admin_class->number_id=$_GET[PhangoVar::$model[$this->model_name]->idmodel];
 			
 			$this->admin_class->insert_model_form();
 			
 			/*ob_start();
 			
-			echo load_view(array($model[$this->model_name]->forms, $this->arr_fields_form, $this->url_options, $model[$this->model_name]->enctype, '_generate_admin_'.$this->model_name), 'common/forms/updatemodelform');
+			echo load_view(array(PhangoVar::$model[$this->model_name]->forms, $this->arr_fields_form, $this->url_options, PhangoVar::$model[$this->model_name]->enctype, '_generate_admin_'.$this->model_name), 'common/forms/updatemodelform');
 
 			$cont_index=ob_get_contents();
 
 			ob_end_clean();
 
-			echo load_view(array($lang['common']['edit'], $cont_index), 'content');*/
+			echo load_view(array(PhangoVar::$lang[['common']['edit'], $cont_index), 'content');*/
 			
 		break;
 
 		case 2:
 
-			settype($_GET[$model[$this->model_name]->idmodel], 'integer');
+			settype($_GET[PhangoVar::$model[$this->model_name]->idmodel], 'integer');
 
-			$func_delete=$model[$this->model_name]->func_update.'DeleteModel';
+			$func_delete=PhangoVar::$model[$this->model_name]->func_update.'DeleteModel';
 			
 			$url_options_delete=add_extra_fancy_url($this->url_options, array('success_delete' => 1) );
 
-			if($func_delete($this->model_name, $_GET[ $model[$this->model_name]->idmodel ]))
+			if($func_delete($this->model_name, $_GET[ PhangoVar::$model[$this->model_name]->idmodel ]))
 			{	
 				//die(header('Location: '.$url_options_delete));
 				/*ob_end_clean();
 				load_libraries(array('redirect'));
-				die( redirect_webtsys( $url_options_delete, $lang['common']['redirect'], $lang['common']['success'], $lang['common']['press_here_redirecting'] , $arr_block) );*/
+				die( redirect_webtsys( $url_options_delete, PhangoVar::$lang[['common']['redirect'], PhangoVar::$lang[['common']['success'], PhangoVar::$lang[['common']['press_here_redirecting'] , $arr_block) );*/
 				
 				load_libraries(array('redirect'));
-				simple_redirect( $url_options_delete, $lang['common']['redirect'], $lang['common']['success'], $lang['common']['press_here_redirecting']);
+				simple_redirect( $url_options_delete, PhangoVar::$lang[['common']['redirect'], PhangoVar::$lang[['common']['success'], PhangoVar::$lang[['common']['press_here_redirecting']);
 
 			}
 			else
@@ -593,23 +587,19 @@ class SimpleList
 	function __construct($model_name)
 	{
 	
-		global $model;
-	
 		$this->model_name=$model_name;
 		
 		$this->begin_page=$_GET['begin_page'];
 		
-		if( count($model[$this->model_name]->forms)==0)
+		if( count(PhangoVar::$model[$this->model_name]->forms)==0)
 		{	
-			$model[$this->model_name]->create_form();
+			PhangoVar::$model[$this->model_name]->create_form();
 		}
 	
 	}
 	
 	public function show()
 	{
-	
-		global $model, $lang;
 		
 		load_libraries(array('table_config'));
 		
@@ -618,15 +608,15 @@ class SimpleList
 		if(count($this->arr_fields)==0)
 		{
 			
-			$this->arr_fields=array_keys($model[$this->model_name]->components);
+			$this->arr_fields=array_keys(PhangoVar::$model[$this->model_name]->components);
 		
 		}
 		
-		if(!in_array($model[$this->model_name]->idmodel, $this->arr_fields))
+		if(!in_array(PhangoVar::$model[$this->model_name]->idmodel, $this->arr_fields))
 		{
 		
-			$this->arr_fields[]=$model[$this->model_name]->idmodel;
-			$this->arr_fields_no_showed[]=$model[$this->model_name]->idmodel;
+			$this->arr_fields[]=PhangoVar::$model[$this->model_name]->idmodel;
+			$this->arr_fields_no_showed[]=PhangoVar::$model[$this->model_name]->idmodel;
 		
 		}
 		
@@ -635,7 +625,7 @@ class SimpleList
 		foreach($arr_fields_showed as $field)
 		{
 		
-			$arr_fields_show[$field]=$model[$this->model_name]->forms[$field]->label;
+			$arr_fields_show[$field]=PhangoVar::$model[$this->model_name]->forms[$field]->label;
 		
 		}
 		
@@ -653,7 +643,7 @@ class SimpleList
 		if($this->yes_options)
 		{
 		
-			$arr_fields_show[]=$lang['common']['options'];
+			$arr_fields_show[]=PhangoVar::$lang[['common']['options'];
 			$options_method='yes_add_options';
 		
 		}
@@ -669,7 +659,7 @@ class SimpleList
 		
 		up_table_config($arr_fields_show, $this->arr_cell_sizes);
 		
-		$query=$model[$this->model_name]->select($this->where_sql, $this->arr_fields, $this->raw_query);
+		$query=PhangoVar::$model[$this->model_name]->select($this->where_sql, $this->arr_fields, $this->raw_query);
 		
 		while($arr_row=webtsys_fetch_array($query))
 		{
@@ -679,7 +669,7 @@ class SimpleList
 			foreach($arr_fields_showed as $field)
 			{
 			
-				$arr_row_final[$field]=$model[$this->model_name]->components[$field]->show_formatted($arr_row[$field]);
+				$arr_row_final[$field]=PhangoVar::$model[$this->model_name]->components[$field]->show_formatted($arr_row[$field]);
 			
 			}
 			
@@ -692,7 +682,7 @@ class SimpleList
 				
 			}
 			
-			$arr_row_final=$this->$options_method($arr_row_final, $arr_row, $this->options_func, $this->url_options, $this->model_name, $model[$this->model_name]->idmodel, $this->separator_element);
+			$arr_row_final=$this->$options_method($arr_row_final, $arr_row, $this->options_func, $this->url_options, $this->model_name, PhangoVar::$model[$this->model_name]->idmodel, $this->separator_element);
 		
 			middle_table_config($arr_row_final, $cell_sizes=array());
 		
@@ -705,9 +695,9 @@ class SimpleList
 		
 			load_libraries(array('pages'));
 			
-			$total_elements=$model[$this->model_name]->select_count($this->where_sql);
+			$total_elements=PhangoVar::$model[$this->model_name]->select_count($this->where_sql);
 			
-			echo '<p>'.$lang['common']['pages'].': '.pages( $this->begin_page, $total_elements, $this->num_by_page, $this->url_options ,$this->initial_num_pages, $this->variable_page, $label='', $func_jscript='').'</p>';
+			echo '<p>'.PhangoVar::$lang[['common']['pages'].': '.pages( $this->begin_page, $total_elements, $this->num_by_page, $this->url_options ,$this->initial_num_pages, $this->variable_page, $label='', $func_jscript='').'</p>';
 		
 		}
 	
@@ -756,9 +746,9 @@ class ListModelAjaxClass {
 	
 		//The limit is defined in query...
 	
-		$total_elements=$model[$this->model_name]->select_count($this->where_sql);
+		$total_elements=PhangoVar::$model[$this->model_name]->select_count($this->where_sql);
 		
-		$query=$model[$this->model_name]->select($this->where_sql, $arr_fields);
+		$query=PhangoVar::$model[$this->model_name]->select($this->where_sql, $arr_fields);
 	
 		echo load_view(array($query, $this), 'utilities/list');
 		
