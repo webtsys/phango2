@@ -230,6 +230,8 @@ class PhangoVar {
 	
 	static public $urls=array();
 	
+	static public $rurls=array();
+	
 	static public $key_csrf='';
 	
 	static public $get=array();
@@ -5988,15 +5990,6 @@ function load_controller()
 					
 					$arr_param['string']='slugify_get';
 					$arr_param['integer']='integer_get';
-					
-					/*
-					foreach($arr_url['paremeters'] as $key_param => $type_param)
-					{
-					
-						
-					
-					}
-					*/
 					
 					$str_param=implode('|', array_keys($arr_url['parameters']));
 					
