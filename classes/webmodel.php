@@ -4885,13 +4885,13 @@ function controller_fancy_url($func_name, $description_text, $arr_data=array(), 
 *
 */
 
-function slugify($text, $respect_upper=0, $replace='-')
+function slugify($text, $respect_upper=0, $replace_space='-')
 {
 
-	$from='àáâãäåæçèéêëìíîïðòóôõöøùúûýþÿŕñÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÐÒÓÔÕÖØÙÚÛÝỲŸÞŔÑ/?¿"';
-	$to=  'aaaaaaaceeeeiiiidoooooouuuybyrnAAAAAACEEEEIIIIDOOOOOOUUUYYYBRN----';
+	$from='àáâãäåæçèéêëìíîïðòóôõöøùúûýþÿŕñÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÐÒÓÔÕÖØÙÚÛÝỲŸÞŔÑ/?¿!¡()"|#*%';
+	$to=  'aaaaaaaceeeeiiiidoooooouuuybyrnAAAAAACEEEEIIIIDOOOOOOUUUYYYBRN------------';
 
-	$text=trim(str_replace(" ", $replace, $text));
+	$text=trim(str_replace(" ", $replace_space, $text));
 
 	$text = utf8_decode($text);    
 	$text = strtr($text, utf8_decode($from), $to);
@@ -5980,6 +5980,41 @@ function load_controller()
 					
 					PhangoVar::$script_action=$action;
 					
+					//Obtain get parameters.
+					
+					//Prepare string
+					
+					$arr_param['string']='slugify_get';
+					$arr_param['integer']='integer_get';
+					
+					/*
+					foreach($arr_url['paremeters'] as $key_param => $type_param)
+					{
+					
+						
+					
+					}
+					*/
+					
+					$str_param=implode('|', array_keys($arr_url['parameters']));
+					
+					$str_parameters=preg_replace($pattern, $str_param, $request_uri);
+					
+					PhangoVar::$get=explode('|', $str_parameters);
+					
+					$z=0;
+					
+					foreach($arr_url['parameters'] as $key => $value)
+					{
+					
+						$check_param_func=$arr_param[ $value ];
+						
+						PhangoVar::$get[$z]=$check_param_func(PhangoVar::$get[$z]);
+					
+						$z++;
+					
+					}
+					
 					break;
 				
 				}
@@ -6056,6 +6091,22 @@ function load_controller()
 	
 	
 	
+
+}
+
+function slugify_get($value)
+{
+
+	return slugify($value, 1);
+
+}
+
+function integer_get($value)
+{
+
+	settype($value, 'integer');
+	
+	return $value;
 
 }
 
