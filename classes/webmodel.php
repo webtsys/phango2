@@ -24,6 +24,8 @@ class PhangoVar {
 	*
 	*/
 
+	static public $ip='';
+	
 	static public $host_db=array();
 
 	static public $db=array();
@@ -39,6 +41,8 @@ class PhangoVar {
 	static public $base_path='../';
     
 	static public $language='';
+	
+	static public $lang=array();
     
 	static public $arr_i18n=array();
     
@@ -225,6 +229,10 @@ class PhangoVar {
 	*/
 	
 	static public $urls=array();
+	
+	static public $key_csrf='';
+	
+	static public $get=array();
 	
 }
 
@@ -5890,26 +5898,7 @@ function load_controller()
 	
 	//$server_host_php='http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . "{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 	
-	if(preg_match('/index.php$/', $_SERVER['REQUEST_URI']) || preg_match('/index.php\/$/', $_SERVER['REQUEST_URI']))
-	{
-		
-		PhangoVar::$script_module=PhangoVar::$app_index;
-		
-		PhangoVar::$script_controller='index';
-		
-		PhangoVar::$script_action='index';
-		
-		//Dummy function.
-		
-		function search_url()
-		{
-		
-			return PhangoVar::$base_path.'modules/'.PhangoVar::$script_module.'/controllers/controller_'.PhangoVar::$script_controller.'.php';
-		
-		}
-	
-	}
-	else
+	/*else
 	{
 	
 		//Function for search the url...
@@ -5917,11 +5906,13 @@ function load_controller()
 		function search_url()
 		{
 		
-			
+			return array('', array());
 		
 		}
 	
-	}
+	}*/
+	
+	//Load urls, you need load this for make_fancy_url
 	
 	foreach(PhangoVar::$activated_modules as $module)
 	{
@@ -5934,18 +5925,72 @@ function load_controller()
 			die;
 		
 		}
-		
-		//Format is...
-		
-		//PhangoVar::urls['module_name']['controller']=array('pattern' => '^module_name/([0-9]+)$', 'module' => 'module_name', 'action' => 'index', 'settype' => array('integer'));
-		
-		//Check the urls of this module...
-		
-		
+				
 	
 	}
 	
-	$path_script_controller=search_url();
+	$request_uri=$_SERVER['REQUEST_URI'];
+	
+	$request_uri=str_replace(PhangoVar::$cookie_path, '', $request_uri);
+	
+	$request_uri=str_replace('index.php/', '', $request_uri);
+	
+	//Delete $_GET elements.
+	
+	$request_uri=preg_replace('/\/\?.*$/', '', $request_uri);
+	
+	if($request_uri=='' || $request_uri=='index.php')
+	{
+		
+		PhangoVar::$script_module=PhangoVar::$app_index;
+		
+		PhangoVar::$script_controller='index';
+		
+		PhangoVar::$script_action='index';
+	
+	}
+	else
+	{
+	
+		//Search in 
+		
+		$arr_uri=explode('/', $request_uri);
+		
+		$search_in=$arr_uri[0];
+		
+		if(isset(PhangoVar::$urls[$search_in]))
+		{
+			foreach(PhangoVar::$urls[$search_in] as $arr_url)
+			{
+				
+				$pattern=$arr_url['pattern'];
+			
+				$module=$arr_url['module'];
+			
+				$controller=$arr_url['controller'];
+				
+				$action=$arr_url['action'];
+			
+				if(preg_match($pattern, $request_uri))
+				{
+				
+					PhangoVar::$script_module=$module;
+		
+					PhangoVar::$script_controller=$controller;
+					
+					PhangoVar::$script_action=$action;
+					
+					break;
+				
+				}
+			
+			}
+			
+		}
+	
+	}
+	
+	$path_script_controller=PhangoVar::$base_path.'modules/'.PhangoVar::$script_module.'/controllers/controller_'.PhangoVar::$script_controller.'.php';
 	
 	$script_class_name=ucfirst(PhangoVar::$script_controller).'SwitchClass';
 	
@@ -5954,29 +5999,65 @@ function load_controller()
 		if(class_exists($script_class_name))
 		{
 		
-			echo 'pepe';
+			//echo 'pepe';
+			
+			$script_class=new $script_class_name();
+			
+			if(call_user_func_array(array($script_class, PhangoVar::$script_action), PhangoVar::$get)===false)
+			{
+			
+				$output=ob_get_contents();
+
+				ob_clean();
+
+				$arr_no_controller[0]='<p>Don\'t exist controller method</p>';
+				$arr_no_controller[1]='<p>Don\'t exist '.PhangoVar::$script_action.' on <strong>'.$path_script_controller.'.php</strong></p><p>Output: '.$output.'</p>';
+
+				echo show_error($arr_no_controller[0], $arr_no_controller[0], $output_external=$output);
+				
+				die;
+			
+			}
 		
 		
 		}
 		else 
 		{
 
-			/*$output=ob_get_contents();
+			$output=ob_get_contents();
 
 			ob_clean();
 
-			$arr_no_controller[0]='<p>Don\'t exist controller function</p>';
-			$arr_no_controller[1]='<p>Don\'t exist '.$script_function.' on <strong>'.$script_file.'.php</strong> on <strong>'.$script_controller.'</strong> controller folder</p><p>Output: '.$output.'</p>';
+			$arr_no_controller[0]='<p>Don\'t exist controller class</p>';
+			$arr_no_controller[1]='<p>Don\'t exist '.$script_class.'.php on <strong>'.PhangoVar::$script_controller.' folder</strong></p><p>Output: '.$output.'</p>';
 
-			echo load_view(array('title' => 'Phango site is down', 'content' => $arr_no_controller[DEBUG]), 'common/common');*/
+			echo show_error($arr_no_controller[0], $arr_no_controller[0], $output_external=$output);
+			
+			die;
 
 		}
 		
-	 }
+	}
+	else
+	{
+	
+		$output=ob_get_contents();
+
+		ob_clean();
+
+		$arr_no_controller[0]='<p>Don\'t exist controller file</p>';
+		$arr_no_controller[1]='<p>Don\'t exist '.$path_script_controller.' on </p><p>Output: '.$output.'</p>';
+
+		echo show_error($arr_no_controller[0], $arr_no_controller[0], $output_external=$output);
+		
+		die;
+	
+	}
 	
 	
 	
 
 }
+
 
 ?>

@@ -560,6 +560,22 @@ session_set_cookie_params(0, PhangoVar::$cookie_path);
 
 session_start();
 
+//Add ip
+
+//We need the ip
+
+
+if ( getenv( "HTTP_X_FORWARDED_FOR" ) )
+{
+	PhangoVar::$ip = trim( nl2br( htmlentities( getenv( "HTTP_X_FORWARDED_FOR" ), ENT_QUOTES) ) );
+} 
+else
+{
+	PhangoVar::$ip = trim( nl2br( htmlentities( getenv( "REMOTE_ADDR" ), ENT_QUOTES) ) );
+}
+
+load_lang('common', 'error_model');
+
 load_controller();
 
 ob_end_flush();
