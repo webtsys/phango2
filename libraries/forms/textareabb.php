@@ -3,8 +3,6 @@
 function TextAreaBBForm($name="", $class='', $value='', $profile='all')
 {
 
-	global $lang, $base_path, $base_url, $config_data;
-
 	ob_start();
 	
 	?>
@@ -12,7 +10,7 @@ function TextAreaBBForm($name="", $class='', $value='', $profile='all')
 
 	$paragraph="\n<p></p>";
 
-	if($config_data['textbb_type']=='')
+	if(PhangoVar::$textbb_type=='')
 	{
 
 		$paragraph='';
@@ -21,12 +19,12 @@ function TextAreaBBForm($name="", $class='', $value='', $profile='all')
 
 	echo TextAreaForm($name, $class, $value.$paragraph)."<p />";
 
-	if($config_data['textbb_type']!='')
+	if(PhangoVar::$textbb_type!='')
 	{
 
-		$config_data['textbb_type']=basename(str_replace('.php', '', $config_data['textbb_type']));
+		PhangoVar::$textbb_type=basename(str_replace('.php', '', PhangoVar::$textbb_type));
 
-		load_libraries(array('textbb/'.$config_data['textbb_type'].'/'.$config_data['textbb_type'].'_'.$profile));
+		load_libraries(array('textbb/'.PhangoVar::$textbb_type.'/'.PhangoVar::$textbb_type.'_'.$profile));
 
 		//Load script profile for jscript, is a function called load_profile
 

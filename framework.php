@@ -1,20 +1,8 @@
 <?php
 //Basic framework
+
 ob_start();
-
-//Set basic arrays...
-
-$arr_extension_model=array();
-$arr_module_list_js=array();
-
-/**
-* An array used for check if the module media is in document root.
-*
-* Use the name of the module how key for an new array with the keys 'image' and 'css' that define the m
-*
-*/
-
-$arr_media_modules_set=array();
+/*
 
 //Adding config...
 
@@ -231,12 +219,7 @@ if($cget % 2 ==0 )
 
 }
 
-/*if($cget>0)
-{*/
-
 $text_url=slugify($arr_url[1]);
-
-//}
 
 //Get variables very used
 
@@ -298,44 +281,14 @@ if($connection!==false  && $select_db==1)
 		while(list($idmodule, $module, $load_module)=webtsys_fetch_row($query)) 
 		{
 			
-			/*if($yes_config==0)
-			{*/
+			
 			
 				$module_names[0][$idmodule]=basename($module);
 				$general_modules[$idmodule]=basename($load_module);
 			
-			/*}
-			else
-			{
 			
-				$module_names_config[$idmodule]=basename($module);
-			
-			}*/
 		}
 		
-		/*foreach($module_names[1] as $idmodule => $module)
-		{
-		
-			if(!include($base_path.'modules/'.$module.'/config/config_module.php'))
-			{
-			
-				$arr_error_sql[0]='<p>Error: Cannot load config for this module.</p>';    
-				$arr_error_sql[1]='<p>Error: Cannot load '.$base_path.'modules/'.$module.'/config/config_module.php'.' config for this module.</p>';
-				
-				$output=ob_get_contents();
-
-				$arr_error_sql[1].='<p>Output: '.$output.'</p>';
-
-				ob_clean();
-			
-				echo load_view(array('Phango site is down', $arr_error_sql[DEBUG]), 'common/common');
-
-				die();
-			
-			}
-			
-		
-		}*/
 
 		foreach($module_names[0] as $idmodule => $module) 
 		{
@@ -541,6 +494,73 @@ else
 	echo load_view(array('title' => 'Phango site is down', 'content' => $arr_no_controller[DEBUG]), 'common/common');
 	
 }
+*/
+
+include('../classes/webmodel.php');
+
+//Adding config...
+
+if(!include("config.php")) 
+{
+
+
+	PhangoVar::$base_path=str_replace('application/index.php', '', $_SERVER['SCRIPT_FILENAME']);
+
+	$port=':'.$_SERVER['SERVER_PORT'];
+
+	if($port==':80')
+	{
+
+		$port='';
+
+	}
+
+	$http='http://';
+
+	if(isset($_SERVER['HTTPS']))
+	{
+
+		$http='https://';
+
+	}
+
+	PhangoVar::$cookie_path=str_replace('/index.php', '', $_SERVER['SCRIPT_NAME']);
+
+	PhangoVar::$base_url=$http.$_SERVER['SERVER_NAME'].$port.''.str_replace('/index.php', '', PhangoVar::$cookie_path);
+
+	PhangoVar::$cookie_path=PhangoVar::$cookie_path.'/';
+
+	//If no config error message
+	//This site is no configured...
+	
+	$error=ob_get_contents();
+	
+	ob_clean();
+	
+	echo load_view(array('Phango Framework is installed', '<p>Phango Framework is installed, but you need create config.php</p><p>Copy config_sample.php  to config.php and edit the file</p>'), 'common/common');
+	
+	die();
+
+}
+
+//start session
+
+//Check session_id, if exists $_COOKIE[COOKIE_NAME], change id to COOKIE_NAME id...
+
+if(isset($_COOKIE[COOKIE_NAME]))
+{
+
+	session_id($_COOKIE[COOKIE_NAME]);
+
+}
+
+session_name(COOKIE_NAME.'_session');
+
+session_set_cookie_params(0, PhangoVar::$cookie_path);
+
+session_start();
+
+load_controller();
 
 ob_end_flush();
 

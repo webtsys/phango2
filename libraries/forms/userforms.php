@@ -3,13 +3,11 @@
 function RankForm($name="", $class='', $value='')
 {
 
-	global $lang, $model;
-
 	load_model('rank');
 	
-	$arr_rank=array($value[0], $lang['user']['without_special_rank'], 0);
+	$arr_rank=array($value[0], PhangoVar::$lang['user']['without_special_rank'], 0);
 	
-	$query=$model['rank']->select('where IdRank>0 and fixed=1', array('IdRank', 'name'));
+	$query=PhangoVar::$model['rank']->select('where IdRank>0 and fixed=1', array('IdRank', 'name'));
 
 	while(list($idrank, $name_rank)=webtsys_fetch_row($query))
 	{

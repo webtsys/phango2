@@ -85,7 +85,6 @@ function menu_barr_hierarchy_control($arr_menus)
 {
 
 	//Begin process
-	global $base_url;
 	
 	$arr_final_menu=array();
 	
@@ -142,8 +141,6 @@ function menu_barr_hierarchy_control($arr_menus)
 function check_arr_menu($arr_menu, $arr_final_menu)
 {
 
-	global $base_url;
-
 	$return_break=0;
 
 	if($arr_menu['module']==PHANGO_SCRIPT_BASE_CONTROLLER && $arr_menu['controller']==PHANGO_SCRIPT_FUNC_NAME && $arr_menu['params'][$arr_menu['name_op']]==$_GET[$arr_menu['name_op']])
@@ -156,7 +153,7 @@ function check_arr_menu($arr_menu, $arr_final_menu)
 	else
 	{
 	
-		$arr_final_menu[]='<a href="'.make_fancy_url($base_url, $arr_menu['module'], $arr_menu['controller'], $arr_menu['text'], $arr_menu['params']).'">'.$arr_menu['text'].'</a>';
+		$arr_final_menu[]='<a href="'.make_fancy_url(PhangoVar::$base_url, $arr_menu['module'], $arr_menu['controller'], $arr_menu['text'], $arr_menu['params']).'">'.$arr_menu['text'].'</a>';
 	
 	}
 	

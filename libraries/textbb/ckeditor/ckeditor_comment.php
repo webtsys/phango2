@@ -2,15 +2,13 @@
 
 function load_jscript_editor($name_editor, $value, $profiles='all')
 {
-
-	global $base_url, $arr_i18n_ckeditor, $language, $arr_cache_jscript, $arr_cache_header;
 	
 	load_libraries(array('emoticons'));
 
 	list($smiley_text, $smiley_img)=set_emoticons();
 
-	$arr_cache_jscript[]='jquery.min.js';
-	$arr_cache_jscript[]='textbb/ckeditor/ckeditor.js';
+	PhangoVar::$arr_cache_jscript[]='jquery.min.js';
+	PhangoVar::$arr_cache_jscript[]='textbb/ckeditor/ckeditor.js';
 
 	$edit_image='';
 
@@ -44,7 +42,7 @@ function load_jscript_editor($name_editor, $value, $profiles='all')
 			//Here, function, load_profile
 			//extraPlugins : 'devtools',
 			//removePlugins: 'flash,div,filebrowser,flash,format,forms,horizontalrule,iframe',
-			language: '<?php echo $arr_i18n_ckeditor[$language]; ?>',
+			language: '<?php echo PhangoVar::$arr_i18n_ckeditor[PhangoVar::$language]; ?>',
 			enterMode : CKEDITOR.ENTER_BR,
 			toolbar :[
 
@@ -52,7 +50,7 @@ function load_jscript_editor($name_editor, $value, $profiles='all')
 
 				],
 			smiley_columns: 10,
-			smiley_path: [''], //['<?php echo $base_url; ?>/media/smileys/'],
+			smiley_path: [''], //['<?php echo PhangoVar::$base_url; ?>/media/smileys/'],
 			smiley_images :
 			[
 				
@@ -173,7 +171,7 @@ CKEDITOR.on( 'dialogDefinition', function( ev )
 
 	<?php
 	
-	$arr_cache_header[]=ob_get_contents();
+	PhangoVar::$arr_cache_header[]=ob_get_contents();
 
 	ob_end_clean();
 }

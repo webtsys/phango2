@@ -58,8 +58,6 @@ class GenerateAdminClass {
 	
 		//PhangoVar::$model[$this->model_name]->generate_admin($this->arr_fields, $this->arr_fields_edit, $this->url_options, $this->options_func, $this->where_sql, $this->arr_fields_form, $this->type_list, $this->no_search);
 		
-		global $arr_cache_header, $arr_cache_jscript;
-		
 		settype($_GET['op_edit'], 'integer');
 		settype($_GET['op_action'], 'integer');
 		settype($_GET[PhangoVar::$model[$this->model_name]->idmodel], 'integer');
@@ -136,7 +134,6 @@ class GenerateAdminClass {
 
 			case 1:
 			
-				$arr_block='none';
 			
 				if($_GET['op_edit']==0)
 				{
@@ -202,7 +199,6 @@ class GenerateAdminClass {
 	function insert_model_form()
 	{
 	
-		global $std_error, $arr_block;
 		//Setting op variable to integer for use in switch
 		
 		//function InsertModelForm($model_name, $url_admin, $url_back, $arr_fields=array(), $id=0, $goback=1, $simple_redirect=0, $where_sql='')
@@ -297,13 +293,13 @@ class GenerateAdminClass {
 						{
 							
 							load_libraries(array('redirect'));
-							die( redirect_webtsys( $url_back, PhangoVar::$lang[['common']['redirect'], $text_output, PhangoVar::$lang[['common']['press_here_redirecting'] , $arr_block) );
+							die( redirect_webtsys( $url_back, PhangoVar::$lang[['common']['redirect'], $text_output, PhangoVar::$lang[['common']['press_here_redirecting']) );
 						}
 						else
 						{
 						
 							load_libraries(array('redirect'));
-							simple_redirect( $url_back, PhangoVar::$lang[['common']['redirect'], PhangoVar::$lang[['common']['success'], PhangoVar::$lang[['common']['press_here_redirecting']);
+							die(simple_redirect( $url_back, PhangoVar::$lang[['common']['redirect'], PhangoVar::$lang[['common']['success'], PhangoVar::$lang[['common']['press_here_redirecting']));
 
 						}
 						
@@ -391,8 +387,6 @@ class ListModelClass {
 	public function show()
 	{
 	
-		global $std_error, $arr_block;
-
 		settype($_GET['op_edit'], 'integer');
 
 		if( count(PhangoVar::$model[$this->model_name]->forms)==0)
@@ -549,7 +543,7 @@ class ListModelClass {
 			else
 			{
 
-				echo 'Error: '.$std_error;
+				echo 'Error: '.PhangoVar::$std_error;
 
 			}
 		

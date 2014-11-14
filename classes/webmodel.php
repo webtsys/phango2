@@ -10,8 +10,6 @@
 *
 */
 
-namespace Phango;
-
 //Variables
 
 // First, define basic variables
@@ -38,7 +36,7 @@ class PhangoVar {
     
 	static public $base_url='';
     
-	static public $base_path='';
+	static public $base_path='../';
     
 	static public $language='';
     
@@ -50,11 +48,30 @@ class PhangoVar {
     
 	static public $app_index='';
  
-	static public $activated_controllers=array();
+	static public $activated_modules=array('media');
  
-	static public $dir_theme='';
+	/**
+	*
+	* Variable for define the theme, by default is 'default'
+	*/
+ 
+	static public $dir_theme='default';
 
+	/**
+	*
+	* Is theme are in a module, define the module here.
+	*
+	*/
+	
 	static public $module_theme='';
+	
+	/**
+	*
+	* This "constant" define that the media are in a module or view if is set to 1. If 0, phango search the media in a normal url.
+	*
+	*/
+	
+	static public $THEME_MODULE=1;
  
 	static public $prefix_key='';	
 	
@@ -101,7 +118,7 @@ class PhangoVar {
 	
 	static public $time_format='';
 	
-	static public $timezone=MY_TIMEZONE;
+	static public $timezone='';
 	
 	static public $ampm='';
 	
@@ -142,7 +159,11 @@ class PhangoVar {
 	* An internal variable used for save the actual module that is used for construct the base directory for controllers.
 	*/
 	
-	static public $script_base_controller='';
+	static public $script_module='';
+	
+	static public $script_controller='';
+	
+	static public $script_action='';
 	
 	/**
 	* Internal global variable used for load_model for cache loaded models.
@@ -191,6 +212,19 @@ class PhangoVar {
 	*/
 
 	static public $arr_cache_jscript=array();
+	
+	/**
+	*This variable is used for save general errors. 
+	*/
+
+	static public $std_error=''; 
+	
+	/**
+	* This variable is used for save the urls of different modules
+	*
+	*/
+	
+	static public $urls=array();
 	
 }
 
@@ -291,12 +325,6 @@ class DateTimeNow {
 	}
 	
 }
-
-/**
-*This variable is used for save general errors. 
-*/
-
-$std_error=''; 
 
 /* property string $name The name of the model.
 * property string $label A identifier used for show the name of model for humans.
@@ -1834,7 +1862,7 @@ class ModelForm {
 class ControllerSwitchClass {
 
 	public $op_var='action';
-	public $controller=PHANGO_SCRIPT_BASE_CONTROLLER;
+	public $controller;
 	public $model, $ip, $lang, $base_path, $base_url, $cookie_path, $arr_block, $prefix_key, $block_title, $block_content, $block_urls, $block_type, $block_id, $text_url, $key_csrf;
 	
 	public function __construct()
@@ -1850,6 +1878,7 @@ class ControllerSwitchClass {
 		$this->cookie_path=&PhangoVar::$cookie_path;
 		$this->prefix_key=&PhangoVar::$prefix_key;
 		$this->key_csrf=&PhangoVar::$key_csrf;
+		$this->controller=&PhangoVar::$script_controller;
 	
 	}
 	
@@ -4833,7 +4862,7 @@ function add_extra_fancy_url($url_fancy, $arr_data)
 function controller_fancy_url($func_name, $description_text, $arr_data=array(), $respect_upper=0)
 {
 
-	return make_fancy_url(PhangoVar::$base_url, PHANGO_SCRIPT_BASE_CONTROLLER, $func_name, $description_text, $arr_data, $respect_upper);
+	return make_fancy_url(PhangoVar::$base_url, PhangoVar::$script_module, $func_name, $description_text, $arr_data, $respect_upper);
 
 }
 
@@ -4912,9 +4941,9 @@ function load_view($arr_template, $template, $module_theme='', $load_if_no_cache
 
 			ob_clean();
 
-			//No exists view in theme, load view respect to the PhangoVar::$script_base_controller views
+			//No exists view in theme, load view respect to the PhangoVar::$script_module views
 			
-			if(!include(PhangoVar::$base_path.'modules/'.PhangoVar::$script_base_controller.'/views/'.strtolower($template).'.php')) 
+			if(!include(PhangoVar::$base_path.'modules/'.PhangoVar::$script_module.'/views/'.strtolower($template).'.php')) 
 			{
 
 				$output_error_view.=ob_get_contents();
@@ -5026,7 +5055,7 @@ function load_libraries_views($template, $func_views=array())
 
 			ob_clean();
 
-			if(!include_once(PhangoVar::$base_path.'modules/'.PhangoVar::$script_base_controller.'/views/'.strtolower($template).'.php')) 
+			if(!include_once(PhangoVar::$base_path.'modules/'.PhangoVar::$script_module.'/views/'.strtolower($template).'.php')) 
 			{
 
 				$output=ob_get_contents();
@@ -5584,7 +5613,7 @@ function load_header_view()
 
 }
 
-if(defined('THEME_MODULE'))
+if(PhangoVar::$THEME_MODULE==1)
 {
 
 	function get_url_image($img_name, $module='')
@@ -5846,6 +5875,107 @@ function get_token()
 	$rand_prefix=generate_random_password();
 	
 	return sha1( uniqid($rand_prefix, true) );
+
+}
+
+/**
+* Function for load the controller, first, load the urls, and check, with this info, load the controller from the module X and finally, the action.
+*
+*/
+
+function load_controller()
+{
+
+	//First, load and check urls. 
+	
+	//$server_host_php='http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . "{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+	
+	if(preg_match('/index.php$/', $_SERVER['REQUEST_URI']) || preg_match('/index.php\/$/', $_SERVER['REQUEST_URI']))
+	{
+		
+		PhangoVar::$script_module=PhangoVar::$app_index;
+		
+		PhangoVar::$script_controller='index';
+		
+		PhangoVar::$script_action='index';
+		
+		//Dummy function.
+		
+		function search_url()
+		{
+		
+			return PhangoVar::$base_path.'modules/'.PhangoVar::$script_module.'/controllers/controller_'.PhangoVar::$script_controller.'.php';
+		
+		}
+	
+	}
+	else
+	{
+	
+		//Function for search the url...
+		
+		function search_url()
+		{
+		
+			
+		
+		}
+	
+	}
+	
+	foreach(PhangoVar::$activated_modules as $module)
+	{
+	
+		if(!include(PhangoVar::$base_path.'modules/'.$module.'/urls.php'))
+		{
+		
+			echo show_error('Not found urls.php for the module '.$module, 'Not found urls.php for the module '.$module, $output_external='');
+			
+			die;
+		
+		}
+		
+		//Format is...
+		
+		//PhangoVar::urls['module_name']['controller']=array('pattern' => '^module_name/([0-9]+)$', 'module' => 'module_name', 'action' => 'index', 'settype' => array('integer'));
+		
+		//Check the urls of this module...
+		
+		
+	
+	}
+	
+	$path_script_controller=search_url();
+	
+	$script_class_name=ucfirst(PhangoVar::$script_controller).'SwitchClass';
+	
+	if(include($path_script_controller))
+	{
+		if(class_exists($script_class_name))
+		{
+		
+			echo 'pepe';
+		
+		
+		}
+		else 
+		{
+
+			/*$output=ob_get_contents();
+
+			ob_clean();
+
+			$arr_no_controller[0]='<p>Don\'t exist controller function</p>';
+			$arr_no_controller[1]='<p>Don\'t exist '.$script_function.' on <strong>'.$script_file.'.php</strong> on <strong>'.$script_controller.'</strong> controller folder</p><p>Output: '.$output.'</p>';
+
+			echo load_view(array('title' => 'Phango site is down', 'content' => $arr_no_controller[DEBUG]), 'common/common');*/
+
+		}
+		
+	 }
+	
+	
+	
 
 }
 

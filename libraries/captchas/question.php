@@ -11,7 +11,7 @@ if(!defined('QUESTION_CAPTCHA') || !defined('ANSWER_CAPTCHA'))
 
 function CaptchaForm($name="", $class='', $value='')
 {
-	global $key_recaptcha;
+	PhangoVar::$key_recaptcha;
 
 	echo QUESTION_CAPTCHA.'<br />'.TextForm($name, $class, $value);
 

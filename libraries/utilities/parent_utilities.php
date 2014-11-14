@@ -3,9 +3,7 @@
 function recursive_list($model_name, $arr_cat, $arr_list_father, $idfather, $url_cat, $arr_perm=array())
 {
 
-	global $base_url, $lang, $model;
-
-	$idfield=$model[$model_name]->idmodel;
+	$idfield=PhangoVar::$model[$model_name]->idmodel;
 	
 	$arr_hidden[0]='';
 	$arr_hidden[1]='';
@@ -19,8 +17,8 @@ function recursive_list($model_name, $arr_cat, $arr_list_father, $idfather, $url
 	if($idfather==0)
 	{
 	
-		$first_url[$_GET[$idfield]]='<ul><li><a href="'.$url_cat.'">'.$lang['common']['home'].'</a><ul>';
-		$first_url[0]='<ul><li><strong>'.$lang['common']['home'].'</strong></li><ul>';
+		$first_url[$_GET[$idfield]]='<ul><li><a href="'.$url_cat.'">'.PhangoVar::$lang['common']['home'].'</a><ul>';
+		$first_url[0]='<ul><li><strong>'.PhangoVar::$lang['common']['home'].'</strong></li><ul>';
 		
 		echo $first_url[$_GET[$idfield]];
 		
@@ -89,13 +87,11 @@ function recursive_select($arr_father, $arr_cat, $arr_list_father, $idfather, $s
 function obtain_parent_list($model_name, $title_field, $parent_field, $sql_father='')
 {
 
-	global $model;
-
 	$arr_list_father=array();
 	$arr_cat=array();
 	//$sql_father.=' order by '.$parent_field.' ASC';
 	
-	$query=$model[$model_name]->select($sql_father, array($model[$model_name]->idmodel, $title_field, $parent_field));
+	$query=PhangoVar::$model[$model_name]->select($sql_father, array(PhangoVar::$model[$model_name]->idmodel, $title_field, $parent_field));
 
 	while(list($idcat, $title, $idfather)=webtsys_fetch_row($query))
 	{
@@ -103,7 +99,7 @@ function obtain_parent_list($model_name, $title_field, $parent_field, $sql_fathe
 	
 		$arr_list_father[$idfather][]=$idcat;
 	
-		$title=$model[$model_name]->components[$title_field]->show_formatted($title);
+		$title=PhangoVar::$model[$model_name]->components[$title_field]->show_formatted($title);
 
 		$arr_cat[$idcat]=$title;
 

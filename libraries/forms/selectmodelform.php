@@ -3,8 +3,6 @@
 function SelectModelForm($name, $class, $value, $model_name, $identifier_field, $where='')
 {
 
-	global $lang, $model;
-
 	$model_select=$model_name;
 	
 	if(strpos($model_name, '|')!==false)
@@ -19,22 +17,22 @@ function SelectModelForm($name, $class, $value, $model_name, $identifier_field, 
 
 	}
 
-	if(!isset($model[$model_name]))
+	if(!isset(PhangoVar::$model[$model_name]))
 	{
 
 		load_model($model_name);
 
 	}
 	
-	$arr_model=array($value, $lang['common']['no_element_chosen'], 0);
+	$arr_model=array($value, PhangoVar::$lang['common']['no_element_chosen'], 0);
 	
-	$query=$model[$model_select]->select($where, array($model[$model_select]->idmodel, $identifier_field));
+	$query=PhangoVar::$model[$model_select]->select($where, array(PhangoVar::$model[$model_select]->idmodel, $identifier_field));
 
 	while($arr_field=webtsys_fetch_array($query))
 	{
 
-		$arr_model[]=$model[$model_select]->components[$identifier_field]->show_formatted($arr_field[ $identifier_field ]);
-		$arr_model[]=$arr_field[ $model[ $model_select]->idmodel ];
+		$arr_model[]=PhangoVar::$model[$model_select]->components[$identifier_field]->show_formatted($arr_field[ $identifier_field ]);
+		$arr_model[]=$arr_field[ PhangoVar::$model[ $model_select]->idmodel ];
 
 	}
 	

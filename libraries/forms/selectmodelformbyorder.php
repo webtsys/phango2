@@ -5,9 +5,7 @@ function SelectModelFormByOrder($name, $class, $value, $model_name, $identifier_
 
 	//Need here same thing that selectmodelform...
 
-	global $lang, $model;
-
-	if(!isset($model[$model_name]))
+	if(!isset(PhangoVar::$model[$model_name]))
 	{
 
 		load_model($model_name);
@@ -19,23 +17,23 @@ function SelectModelFormByOrder($name, $class, $value, $model_name, $identifier_
 	if($null_yes==1)
 	{
 	
-		$arr_model[]=$lang['common']['no_element_chosen'];
+		$arr_model[]=PhangoVar::$lang['common']['no_element_chosen'];
 		$arr_model[]=0;
 	
 	}
 	
 	$arr_elements=array();
 	
-	$query=$model[$model_name]->select($where, array($model[$model_name]->idmodel, $identifier_field, $field_parent));
+	$query=PhangoVar::$model[$model_name]->select($where, array(PhangoVar::$model[$model_name]->idmodel, $identifier_field, $field_parent));
 
 	while($arr_field=webtsys_fetch_array($query))
 	{
 		
 		$idparent=$arr_field[$field_parent];
 
-		$element_model=$model[$model_name]->components[$identifier_field]->show_formatted($arr_field[ $identifier_field ]);
+		$element_model=PhangoVar::$model[$model_name]->components[$identifier_field]->show_formatted($arr_field[ $identifier_field ]);
 
-		$arr_elements[$idparent][]=array($element_model, $arr_field[ $model[ $model_name]->idmodel ]);
+		$arr_elements[$idparent][]=array($element_model, $arr_field[ PhangoVar::$model[ $model_name]->idmodel ]);
 
 	}
 	

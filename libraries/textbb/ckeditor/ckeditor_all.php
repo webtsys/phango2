@@ -2,15 +2,13 @@
 
 function load_jscript_editor($name_editor, $value, $profiles='all')
 {
-
-	global $base_url, $arr_i18n_ckeditor, $language, $arr_cache_jscript, $arr_cache_header;
 	
 	load_libraries(array('emoticons'));
 
 	list($smiley_text, $smiley_img)=set_emoticons();
 	
-	$arr_cache_jscript[]='jquery.min.js';
-	$arr_cache_jscript[]='textbb/ckeditor/ckeditor.js';
+	PhangoVar::$arr_cache_jscript[]='jquery.min.js';
+	PhangoVar::$arr_cache_jscript[]='textbb/ckeditor/ckeditor.js';
 
 	ob_start();
 	
@@ -33,15 +31,15 @@ function load_jscript_editor($name_editor, $value, $profiles='all')
 			//Here, function, load_profile
 			//extraPlugins : 'bbcodeweb,devtools',
 			//removePlugins: 'flash,div,filebrowser,flash,format,forms,horizontalrule,iframe',
-			filebrowserImageBrowseUrl : '<?php echo make_fancy_url($base_url, 'jscript', 'browser_image', 'browser_image', array()); ?>',
-			//filebrowserImageUploadUrl : '<?php echo make_fancy_url($base_url, 'jscript', 'upload_image', 'upload_image', array()); ?>',
-			filebrowserBrowseUrl: '<?php echo make_fancy_url($base_url, 'jscript', 'browser_image', 'browser_image', array()); ?>',
+			filebrowserImageBrowseUrl : '<?php echo make_fancy_url(PhangoVar::$base_url, 'jscript', 'browser_image', 'browser_image', array()); ?>',
+			//filebrowserImageUploadUrl : '<?php echo make_fancy_url(PhangoVar::$base_url, 'jscript', 'upload_image', 'upload_image', array()); ?>',
+			filebrowserBrowseUrl: '<?php echo make_fancy_url(PhangoVar::$base_url, 'jscript', 'browser_image', 'browser_image', array()); ?>',
 			filebrowserWindowWidth : '800',
 			filebrowserWindowHeight : '600',
 			
 			removePlugins: 'div,forms,iframe',
 			enterMode : CKEDITOR.ENTER_BR,
-			language: '<?php echo $arr_i18n_ckeditor[$language]; ?>',
+			language: '<?php echo PhangoVar::$arr_i18n_ckeditor[PhangoVar::$language]; ?>',
 
 			/*toolbar :[
 
@@ -49,7 +47,7 @@ function load_jscript_editor($name_editor, $value, $profiles='all')
 
 				],*/
 			smiley_columns: 10,
-			smiley_path: [''], //['<?php echo $base_url; ?>/media/smileys/'],
+			smiley_path: [''], //['<?php echo PhangoVar::$base_url; ?>/media/smileys/'],
 			smiley_images :
 			[
 				
@@ -107,7 +105,7 @@ function load_jscript_editor($name_editor, $value, $profiles='all')
 
 	<?php
 
-$arr_cache_header[]=ob_get_contents();
+PhangoVar::$arr_cache_header[]=ob_get_contents();
 
 ob_end_clean();
 	

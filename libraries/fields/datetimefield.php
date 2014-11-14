@@ -12,7 +12,6 @@ class DateTimeField extends DateField
 
 	public function check($value)
 	{
-		global $user_data;
 	
 		$timestamp=parent::check($value);
 		
@@ -49,8 +48,6 @@ class DateTimeField extends DateField
 	static public function obtain_timestamp_datefield($value)
 	{
 
-		global $user_data;
-
 		$year=substr($value, 0, 4);
 		$month=substr($value, 4, 2);
 		$day=substr($value, 6, 2);
@@ -86,7 +83,6 @@ function DateTimeForm($field, $class='', $value='', $set_time=1)
 function DateTimeFormSet($post, $value)
 {
 	
-	global $user_data;
 	
 	//$value+=$user_data['format_time'];
 	

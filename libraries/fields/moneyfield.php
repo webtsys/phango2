@@ -8,7 +8,6 @@ class PercentField extends IntegerField{
 	function check($value)
 	{
 		
-		global $model, $lang;
 		
 		settype($value, "integer");
 
@@ -17,7 +16,7 @@ class PercentField extends IntegerField{
 		if($value>100 || $value<0)
 		{
 			
-			$this->std_error=$lang['common']['the_value_can_not_be_greater_than_100'];
+			$this->std_error=PhangoVar::$lang['common']['the_value_can_not_be_greater_than_100'];
 
 			return 0;
 
