@@ -4814,7 +4814,7 @@ function RadioIntFormSet($post, $value)
 function make_fancy_url($url, $controller, $func_controller, $description_text, $arr_data=array(), $respect_upper=0)
 {
 
-	$description_text=slugify($description_text, $respect_upper);
+	/*$description_text=slugify($description_text, $respect_upper);
 
 	$arr_get=array();
 
@@ -4836,7 +4836,9 @@ function make_fancy_url($url, $controller, $func_controller, $description_text, 
 	
 	}
 	
-	return $url.$index_php.'/'.$controller.'/show/'.$func_controller.'/'.$description_text.'/'.$get_final;
+	return $url.$index_php.'/'.$controller.'/show/'.$func_controller.'/'.$description_text.'/'.$get_final;*/
+	
+	return $url.$index_php;
 
 }
 
