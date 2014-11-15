@@ -1892,7 +1892,7 @@ class ControllerSwitchClass {
 	
 	}
 	
-	public function get_method_url($method_controller, $text, $arr_parameters)
+	/*public function get_method_url($method_controller, $text, $arr_parameters)
 	{
 		
 		$my_controller=strtolower(str_replace('SwitchClass', '', get_class($this)));
@@ -1901,7 +1901,7 @@ class ControllerSwitchClass {
 		
 		return make_fancy_url($this->base_url, $this->controller, $my_controller, $text, $arr_parameters);
 	
-	}
+	}*/
 	
 	public function redirect($direction,$l_text,$text,$ifno)
 	{
@@ -4813,7 +4813,7 @@ function RadioIntFormSet($post, $value)
 	
 //Url don't have final slash!!
 
-function make_fancy_url($url, $controller, $func_controller, $description_text, $arr_data=array(), $respect_upper=0)
+function make_fancy_url($url, $folder_url, $ident_url, $arr_params)
 {
 
 	/*$description_text=slugify($description_text, $respect_upper);
@@ -4829,6 +4829,8 @@ function make_fancy_url($url, $controller, $func_controller, $description_text, 
 	
 	$get_final=implode('/', $arr_get);
 	
+	return $url.$index_php.'/'.$controller.'/show/'.$func_controller.'/'.$description_text.'/'.$get_final;*/
+	
 	$index_php='/index.php';
 	
 	if(defined('NO_INDEX_PHP'))
@@ -4838,9 +4840,18 @@ function make_fancy_url($url, $controller, $func_controller, $description_text, 
 	
 	}
 	
-	return $url.$index_php.'/'.$controller.'/show/'.$func_controller.'/'.$description_text.'/'.$get_final;*/
+	$part_url=PhangoVar::$urls[$folder_url][$ident_url]['url'];
 	
-	return $url.$index_php;
+	$parameters='';
+	
+	if(count(PhangoVar::$urls[$folder_url][$ident_url]['parameters'])>0)
+	{
+	
+		$parameters='/'.implode('/', $arr_params);
+	
+	}
+	
+	return $url.$index_php.$part_url.$parameters;
 
 }
 
@@ -4870,13 +4881,14 @@ function add_extra_fancy_url($url_fancy, $arr_data)
 	return $url_fancy.$sep.$get_final;
 
 }
-
+/*
 function controller_fancy_url($func_name, $description_text, $arr_data=array(), $respect_upper=0)
 {
 
 	return make_fancy_url(PhangoVar::$base_url, PhangoVar::$script_module, $func_name, $description_text, $arr_data, $respect_upper);
 
 }
+*/
 
 /**
 *
@@ -5640,7 +5652,7 @@ if(PhangoVar::$THEME_MODULE==1)
 		
 		//}
 		
-		$arr_image_def=array('images' => $img_name);
+		$arr_image_def=array('image' => $img_name);
 		
 		if($module!='')
 		{
@@ -5649,7 +5661,7 @@ if(PhangoVar::$THEME_MODULE==1)
 		
 		}
 		
-		return make_fancy_url(PhangoVar::$base_url, 'media', 'showmedia', 'directory', $arr_image_def);
+		return make_fancy_url(PhangoVar::$base_url, 'media', 'images', $arr_image_def);
 	
 	}
 	
@@ -5675,7 +5687,7 @@ if(PhangoVar::$THEME_MODULE==1)
 				{
 					$css_item=slugify(urlencode_redirect($css_item, 1), 1);
 				
-					$url=make_fancy_url(PhangoVar::$base_url, 'media', 'showmedia', 'directory', array('module' => $module_css, 'css' => $css_item));
+					$url=make_fancy_url(PhangoVar::$base_url, 'media', 'css', array('css' => $css_item, 'module' => $module_css));
 					
 					$arr_final_css[]='<link href="'.$url.'" rel="stylesheet" type="text/css"/>'."\n";
 				}
@@ -5685,7 +5697,7 @@ if(PhangoVar::$THEME_MODULE==1)
 				
 				$css=slugify(urlencode_redirect($css, 1), 1);
 				
-				$url=make_fancy_url(PhangoVar::$base_url, 'media', 'showmedia', 'directory', array('css' => $css));
+				$url=make_fancy_url(PhangoVar::$base_url, 'media', 'css', array('css' => $css));
 				
 				$arr_final_css[]='<link href="'.$url.'" rel="stylesheet" type="text/css"/>'."\n";
 
@@ -5718,7 +5730,7 @@ if(PhangoVar::$THEME_MODULE==1)
 				{
 					$jscript_item=slugify(urlencode_redirect($jscript_item, 1), 1);
 				
-					$url=make_fancy_url(PhangoVar::$base_url, 'media', 'showmedia', 'directory', array('module' => $module_jscript, 'jscript' => $jscript_item));
+					$url=make_fancy_url(PhangoVar::$base_url, 'media', 'jscript', array( 'jscript' => $jscript_item, 'module' => $module_jscript,));
 					
 					$arr_final_jscript[]='<script language="javascript" src="'.$url.'"></script>'."\n";
 				}
@@ -5728,7 +5740,7 @@ if(PhangoVar::$THEME_MODULE==1)
 				
 				$jscript=slugify(urlencode_redirect($jscript, 1), 1);
 				
-				$url=make_fancy_url(PhangoVar::$base_url, 'media', 'showmedia', 'directory', array('jscript' => $jscript));
+				$url=make_fancy_url(PhangoVar::$base_url, 'media', 'jscript', array('jscript' => $jscript));
 				
 				$arr_final_jscript[]='<script language="javascript" src="'.$url.'"></script>'."\n";
 
@@ -5964,6 +5976,9 @@ function load_controller()
 		
 		if(isset(PhangoVar::$urls[$search_in]))
 		{
+		
+			$yes_match=0;
+		
 			foreach(PhangoVar::$urls[$search_in] as $arr_url)
 			{
 				
@@ -5974,45 +5989,54 @@ function load_controller()
 				$controller=$arr_url['controller'];
 				
 				$action=$arr_url['action'];
-			
-				if(preg_match($pattern, $request_uri))
-				{
 				
-					PhangoVar::$script_module=$module;
-		
-					PhangoVar::$script_controller=$controller;
-					
-					PhangoVar::$script_action=$action;
-					
-					//Obtain get parameters.
-					
-					//Prepare string
-					
-					$arr_param['string']='slugify_get';
-					$arr_param['integer']='integer_get';
-					
-					$str_param=implode('|', array_keys($arr_url['parameters']));
-					
-					$str_parameters=preg_replace($pattern, $str_param, $request_uri);
-					
-					PhangoVar::$get=explode('|', $str_parameters);
-					
-					$z=0;
-					
-					foreach($arr_url['parameters'] as $key => $value)
+				if($yes_match==0)
+				{
+			
+					if(preg_match($pattern, $request_uri))
 					{
 					
-						$check_param_func=$arr_param[ $value ];
+						PhangoVar::$script_module=$module;
+			
+						PhangoVar::$script_controller=$controller;
 						
-						PhangoVar::$get[$z]=$check_param_func(PhangoVar::$get[$z]);
-					
-						$z++;
+						PhangoVar::$script_action=$action;
+						
+						//Obtain get parameters.
+						
+						//Prepare string
+						
+						$arr_param['string']='slugify_get';
+						$arr_param['integer']='integer_get';
+						
+						$str_param=implode('|', array_keys($arr_url['parameters']));
+						
+						$str_parameters=preg_replace($pattern, $str_param, $request_uri);
+						
+						PhangoVar::$get=explode('|', $str_parameters);
+						
+						$z=0;
+						
+						foreach($arr_url['parameters'] as $key => $value)
+						{
+						
+							$check_param_func=$arr_param[ $value ];
+							
+							PhangoVar::$get[$z]=$check_param_func(PhangoVar::$get[$z]);
+						
+							$z++;
+						
+						}
+						
+						$yes_match=1;
 					
 					}
 					
-					break;
-				
 				}
+				
+				
+				
+				//PhangoVar::$rurls[$arr_url['module']][]
 			
 			}
 			
