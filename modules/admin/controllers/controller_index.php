@@ -3,7 +3,7 @@
 class IndexSwitchClass extends ControllerSwitchClass {
 
 
-	public function index()
+	public function index($module_id)
 	{
 		ob_start();
 
@@ -15,7 +15,7 @@ class IndexSwitchClass extends ControllerSwitchClass {
 		load_lang('admin');
 		load_libraries(array('check_admin', 'utilities/set_admin_link'));
 
-		settype($_GET['IdModule'], 'integer');
+		settype($module_id, 'integer');
 
 		$original_theme=PhangoVar::$dir_theme;
 
@@ -49,11 +49,11 @@ class IndexSwitchClass extends ControllerSwitchClass {
 
 			$arr_admin_script[0]=array('admin', 'admin');
 			
-			//Define $module_admin[$_GET['IdModule']] for check if exists in database the module
+			//Define $module_admin[$module_id] for check if exists in database the module
 
-			$module_admin[$_GET['IdModule']]='AdminIndex';
+			$module_admin[$module_id]='AdminIndex';
 
-			PhangoVar::$lang[$module_admin[$_GET['IdModule']].'_admin']['AdminIndex_admin_name']=ucfirst(PhangoVar::$lang['admin']['admin']);
+			PhangoVar::$lang[$module_admin[$module_id].'_admin']['AdminIndex_admin_name']=ucfirst(PhangoVar::$lang['admin']['admin']);
 
 			$query=PhangoVar::$model['module']->select('where admin=\'1\'', array('IdModule', 'name', 'admin_script'));
 
@@ -97,7 +97,7 @@ class IndexSwitchClass extends ControllerSwitchClass {
 
 			}
 
-			$file_include=PhangoVar::$base_path.'modules/'.$arr_admin_script[ $_GET['IdModule'] ][0].'/controllers/admin/admin_'.$arr_admin_script[ $_GET['IdModule'] ][1].'.php';
+			$file_include=PhangoVar::$base_path.'modules/'.$arr_admin_script[ $module_id ][0].'/controllers/admin/admin_'.$arr_admin_script[ $module_id ][1].'.php';
 			
 			if($user_data['privileges_user']==1)
 			{
@@ -106,7 +106,7 @@ class IndexSwitchClass extends ControllerSwitchClass {
 				//$arr_module_saved=array();
 				$arr_module_strip=array();
 				
-				$arr_permissions_admin[$_GET['IdModule']]=0;
+				$arr_permissions_admin[$module_id]=0;
 				$arr_permissions_admin[0]=1;
 			
 				$query=PhangoVar::$model['moderators_module']->select('where moderator='.$user_data['IdUser'], array('idmodule'), 1);
@@ -135,17 +135,17 @@ class IndexSwitchClass extends ControllerSwitchClass {
 				
 			}
 			
-			if(file_exists($file_include) && $module_admin[$_GET['IdModule']]!='' && $arr_permissions_admin[$_GET['IdModule']]==1)
+			if(file_exists($file_include) && $module_admin[$module_id]!='' && $arr_permissions_admin[$module_id]==1)
 			{
 				
 				include($file_include);
 
-				$func_admin=$module_admin[$_GET['IdModule']].'Admin';
+				$func_admin=$module_admin[$module_id].'Admin';
 				
 				if(function_exists($func_admin))
 				{	
 
-					echo '<h1>'.PhangoVar::$lang[$module_admin[$_GET['IdModule']].'_admin'][$module_admin[$_GET['IdModule']].'_admin_name'].'</h1>';
+					echo '<h1>'.PhangoVar::$lang[$module_admin[$module_id].'_admin'][$module_admin[$module_id].'_admin_name'].'</h1>';
 
 					$extra_data=$func_admin();
 
@@ -162,7 +162,7 @@ class IndexSwitchClass extends ControllerSwitchClass {
 				}
 
 			}
-			else if($module_admin[$_GET['IdModule']]!='')
+			else if($module_admin[$module_id]!='')
 			{
 
 				$arr_error[0]='Error: no exists file for admin application';

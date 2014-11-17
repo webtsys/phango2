@@ -20,19 +20,50 @@
 class PhangoVar {
 
 	/**
-	* Database hosts array.
+	* Variable for save ip
 	*
 	*/
 
 	static public $ip='';
 	
+	/**
+	* Database hosts array.
+	*
+	*/
+	
 	static public $host_db=array();
 
+	/**
+	* Database hosts array.
+	*
+	*/
+	
 	static public $db=array();
     
 	static public $login_db=array();
     
 	static public $pass_db=array();
+	
+	/**
+	* Connection to db.
+	*
+	*/
+	
+	static public $connection=array();
+	
+	/**
+	* String where save the query if error.
+	*
+	*/
+	
+	static public $save_query=array();
+	
+	/**
+	* Variable for the db prefix. For security, change this always.
+	*
+	*/
+	
+	static public $prefix_db='';
     
 	static public $cookie_path='';
     

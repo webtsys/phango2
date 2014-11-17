@@ -41,41 +41,41 @@ function update_table($model)
 		{
 			//If table not exists make this
 			
-			foreach($model[$key]->components as $key_data => $data)
+			foreach($model[$key]->components as $field => $data)
 			{
 			
-				$arr_table[]='`'.$key_data.'` '.$model[$key]->components[$key_data]->get_type_sql();
+				$arr_table[]='`'.$field.'` '.$model[$key]->components[$field]->get_type_sql();
 
 				//Check if indexed
 				
-				if($model[$key]->components[$key_data]->indexed==true)
+				if($model[$key]->components[$field]->indexed==true)
 				{
 				
-					$arr_sql_index[$key][$key_data]='CREATE INDEX `index_'.$key.'_'.$key_data.'` ON '.$key.'(`'.$key_data.'`);';
-					$arr_sql_set_index[$key][$key_data]='';
+					$arr_sql_index[$key][$field]='CREATE INDEX `index_'.$key.'_'.$field.'` ON '.$key.'(`'.$field.'`);';
+					$arr_sql_set_index[$key][$field]='';
 				
 				}
 				
 				//Check if foreignkeyfield...
-				if(isset($model[$key]->components[$key_data]->related_model))
+				if(isset($model[$key]->components[$field]->related_model))
 				{
 
 					//Create indexes...
 					
-					$arr_sql_index[$key][$key_data]='CREATE INDEX `index_'.$key.'_'.$key_data.'` ON '.$key.'(`'.$key_data.'`);';
+					$arr_sql_index[$key][$field]='CREATE INDEX `index_'.$key.'_'.$field.'` ON '.$key.'(`'.$field.'`);';
 					
-					$table_related=$model[$key]->components[$key_data]->related_model;
+					$table_related=$model[$key]->components[$field]->related_model;
 					
-					$id_table_related=load_id_model_related($model[$key]->components[$key_data]);
+					$id_table_related=load_id_model_related($model[$key]->components[$field]);
 
-					//'Id'.ucfirst($model[$key]->components[$key_data]->related_model);				
+					//'Id'.ucfirst($model[$key]->components[$field]->related_model);				
 					
-					$arr_sql_set_index[$key][$key_data]='ALTER TABLE `'.$key.'` ADD CONSTRAINT `'.$key_data.'_'.$key.'IDX` FOREIGN KEY ( `'.$key_data.'` ) REFERENCES `'.$table_related.'` (`'.$id_table_related.'`) ON DELETE RESTRICT ON UPDATE RESTRICT;';
+					$arr_sql_set_index[$key][$field]='ALTER TABLE `'.$key.'` ADD CONSTRAINT `'.$field.'_'.$key.'IDX` FOREIGN KEY ( `'.$field.'` ) REFERENCES `'.$table_related.'` (`'.$id_table_related.'`) ON DELETE RESTRICT ON UPDATE RESTRICT;';
 
 				}
 			}
 			
-			$sql_query="create table $key (\n".implode(",\n", $arr_table)."\n) DEFAULT CHARSET=utf8;\n";
+			$sql_query="create table `$key` (\n".implode(",\n", $arr_table)."\n) DEFAULT CHARSET=utf8;\n";
 			
 			echo "Creating table $key\n";
 			
@@ -110,7 +110,7 @@ function update_table($model)
 
 			unset($allfields[$model[$key]->idmodel]);
 		
-			$query=webtsys_query("describe ".$key);
+			$query=webtsys_query("describe `".$key."`");
 			
 			list($key_field_old, $type, $null, $key_db, $default, $extra)=webtsys_fetch_row($query);
 		
@@ -138,7 +138,7 @@ function update_table($model)
 					if($model[$key]->components[$field]->get_type_sql()!=($type.' '.$null_set[$field]))
 					{
 						
-						$query=webtsys_query('alter table '.$key.' modify `'.$field.'` '.$model[$key]->components[$field]->get_type_sql());
+						$query=webtsys_query('alter table `'.$key.'` modify `'.$field.'` '.$model[$key]->components[$field]->get_type_sql());
 						
 						echo "Upgrading ".$field." from ".$key."...\n";
 						
@@ -150,7 +150,7 @@ function update_table($model)
 					if($model[$key]->components[$field]->indexed==true && $keys[$field]=='')
 					{
 					
-						$arr_sql_index[$key][$field]='CREATE INDEX `index_'.$key.'_'.$field.'` ON '.$key.'(`'.$field.'`);';
+						$arr_sql_index[$key][$field]='CREATE INDEX `index_'.$key.'_'.$field.'` ON `'.$key.'`(`'.$field.'`);';
 						$arr_sql_set_index[$key][$field]='';
 					
 					}
@@ -161,7 +161,7 @@ function update_table($model)
 					{
 
 						
-						$arr_sql_index[$key][$field]='CREATE INDEX `index_'.$key.'_'.$field.'` ON '.$key.'(`'.$field.'`);';
+						$arr_sql_index[$key][$field]='CREATE INDEX `index_'.$key.'_'.$field.'` ON `'.$key.'`(`'.$field.'`);';
 					
 						$table_related=$model[$key]->components[$field]->related_model;
 						
@@ -200,7 +200,7 @@ function update_table($model)
 		if($key_field_old!=$model[$key]->idmodel)
 		{
 
-			$query=webtsys_query('alter table '.$key.' change `'.$key_field_old.'` `'.$model[$key]->idmodel.'` INT NOT NULL AUTO_INCREMENT');
+			$query=webtsys_query('alter table `'.$key.'` change `'.$key_field_old.'` `'.$model[$key]->idmodel.'` INT NOT NULL AUTO_INCREMENT');
 
 			echo "Renaming id for this model to ".$model[$key]->idmodel."...\n";
 
@@ -214,7 +214,7 @@ function update_table($model)
 			if($allfields[$new_field]==1)
 			{
 		
-				$query=webtsys_query('alter table '.$key.' add `'.$new_field.'` '.$model[$key]->components[$new_field]->get_type_sql());
+				$query=webtsys_query('alter table `'.$key.'` add `'.$new_field.'` '.$model[$key]->components[$new_field]->get_type_sql());
 
 				echo "Adding ".$new_field." to ".$key."...\n";
 				
@@ -223,7 +223,7 @@ function update_table($model)
 				if($model[$key]->components[$new_field]->indexed==true)
 				{
 				
-					$arr_sql_index[$key][$new_field]='CREATE INDEX `index_'.$key.'_'.$new_field.'` ON '.$key.'(`'.$new_field.'`);';
+					$arr_sql_index[$key][$new_field]='CREATE INDEX `index_'.$key.'_'.$new_field.'` ON `'.$key.'`(`'.$new_field.'`);';
 					$arr_sql_set_index[$key][$new_field]='';
 				
 				}
@@ -235,7 +235,7 @@ function update_table($model)
 
 					$query=webtsys_query('CREATE INDEX index_'.$key.'_'.$new_field.' ON '.$key.'('.$new_field.')');*/
 					
-					$arr_sql_index[$key][$new_field]='CREATE INDEX `index_'.$key.'_'.$new_field.'` ON '.$key.'(`'.$new_field.'`);';
+					$arr_sql_index[$key][$new_field]='CREATE INDEX `index_'.$key.'_'.$new_field.'` ON `'.$key.'`(`'.$new_field.'`);';
 					
 					$table_related=$model[$key]->components[$new_field]->related_model;
 					
@@ -256,11 +256,13 @@ function update_table($model)
 				
 					//Drop foreignkeyfield
 					
+				//Bug, need fixed.
+					
 				$query=webtsys_query('ALTER TABLE `'.$key.'` DROP FOREIGN KEY '.$new_field.'_'.$key.'IDX');
 				
 				//}
 
-				$query=webtsys_query('alter table '.$key.' drop `'.$new_field.'`');
+				$query=webtsys_query('alter table `'.$key.'` drop `'.$new_field.'`');
 			
 				echo "Deleting ".$new_field." from ".$key."...\n";
 		
