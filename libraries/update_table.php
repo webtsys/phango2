@@ -6,13 +6,22 @@ function update_table($model)
 	$arr_sql_index=array();
 	$arr_sql_set_index=array();
 	
+	$arr_etable=array();
+	
+	$query=webtsys_query("show tables");
+		
+	while(list($table)=webtsys_fetch_row($query))
+	{
+	
+		$arr_etable[$table]=1;
+	
+	}
+	
 	foreach($model as $key => $thing)
 	
 	{
 		
 		$arr_table=array();
-		
-		$arr_etable=array();
 		
 		$allfields=array();
 		$fields=array();
@@ -25,17 +34,6 @@ function update_table($model)
 		$default=""; 
 		$extra="";
 		$key_field_old=$model[$key]->idmodel;
-		
-		//$arr_multilang=array();
-	
-		$query=webtsys_query("show tables");
-		
-		while(list($table)=webtsys_fetch_row($query))
-		{
-		
-			$arr_etable[$table]=1;
-		
-		}
 		
 		if(!isset($arr_etable[$key]))
 		{
@@ -93,6 +91,7 @@ function update_table($model)
 
 		}
 		else
+		if(isset($model[$key]))
 		{
 			//Obtain all fields of model
 		
@@ -269,6 +268,8 @@ function update_table($model)
 			}
 		
 		}
+		
+		$arr_etable[$key]=0;
 	
 	}
 	
@@ -289,6 +290,20 @@ function update_table($model)
 			}
 
 		}
+	}
+	
+	foreach($arr_etable as $table => $value)
+	{
+	
+		if($value==1)
+		{
+		
+			$query=webtsys_query('DROP TABLE `'.$table.'`');
+			
+			echo 'Deleting table '.$table."\n";
+		
+		}
+	
 	}
 
 }
