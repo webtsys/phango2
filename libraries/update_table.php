@@ -292,7 +292,7 @@ function update_table($model)
 		}
 	}
 	
-	foreach($arr_etable as $table => $value)
+	/*foreach($arr_etable as $table => $value)
 	{
 	
 		if($value==1)
@@ -304,7 +304,7 @@ function update_table($model)
 		
 		}
 	
-	}
+	}*/
 
 }
 

@@ -52,6 +52,20 @@ class PhangoVar {
 	static public $connection=array();
 	
 	/**
+	* Variable for cache the connection.
+	*
+	*/
+
+	static public $connection_func=array();
+	
+	/**
+	*
+	*
+	*/
+	
+	static public $select_db=array();
+	
+	/**
 	* String where save the query if error.
 	*
 	*/
@@ -521,7 +535,70 @@ class Webmodel {
 		$this->idmodel='Id'.ucfirst($this->name);
 		$this->components[$this->idmodel]=new PrimaryField();
 		$this->label=$this->name;
+		
+		if(isset(PhangoVar::$connection_func[$this->db_selected]))
+		{
+		
+			PhangoVar::$connection_func[$this->db_selected]='connect_to_db';
+		
+		}
 
+	}
+	
+	/**
+	* Method for connect to the db
+	*
+	*/
+	
+	public function connect_to_db()
+	{
+	
+		PhangoVar::$connection[$this->db_selected]=webtsys_connect( PhangoVar::$host_db[$this->db_selected], PhangoVar::$login_db[$this->db_selected], PhangoVar::$pass_db[$this->db_selected] , $this->db_selected);
+
+		PhangoVar::$select_db[$this->db_selected]=webtsys_select_db( PhangoVar::$db[$this->db_selected] , $this->db_selected);
+		
+		if(PhangoVar::$select_db[$this->db_selected]!=false && PhangoVar::$connection[$this->db_selected]!=false)
+		{
+		
+			PhangoVar::$connection_func[$this->db_selected]='dummy_connect_to_db';
+			
+		}
+		else
+		{
+		
+			$output=ob_get_contents();
+
+			$text_error.='<p>Output: '.$output.'</p>';
+
+			$arr_error_sql[0]='<p>Error: Cannot connect to MySQL db.</p>';    
+			$arr_error_sql[1]='<p>Error: Cannot connect to MySQL db.'.$text_error.'</p>';
+		
+			show_error($arr_error_sql[0], $arr_error_sql[1]);
+		
+		}
+		
+	
+	}
+	
+	/**
+	* Dummy function for save an if by query.
+	*
+	*/
+	
+	public function dummy_connect_to_db()
+	{
+	
+		
+	
+	}
+	
+	public function set_phango_connection()
+	{
+	
+		$method_connection=PhangoVar::$connection_func[$this->db_selected];
+		
+		$this->$method_connection();
+	
 	}
 	
 	/**
@@ -549,6 +626,13 @@ class Webmodel {
 		$this->components[$this->idmodel]=new PrimaryField();
 
 	}
+	
+	/**
+	*
+	* A method for connect to the db.
+	*
+	*
+	*/
 
 	//This method insert a row in database using model data
 
@@ -565,6 +649,8 @@ class Webmodel {
 
 	public function insert($post)
 	{
+	
+		$this->set_phango_connection();
 		
 		$post=$this->unset_no_required($post);
 		
@@ -642,6 +728,8 @@ class Webmodel {
 	
 	public function update($post, $conditions="")
 	{
+	
+		$this->set_phango_connection();
 
 		//Check if minimal fields are fill and if fields exists in components.
 
@@ -755,6 +843,7 @@ class Webmodel {
 	{
 		//Check conditions.., script must check, i can't make all things!, i am not a machine!
 
+		$this->set_phango_connection();
 		
 		if(count($arr_select)==0)
 		{
@@ -914,6 +1003,8 @@ class Webmodel {
 
 	public function select_count($conditions, $field='', $fields_for_count=array())
 	{
+	
+		$this->set_phango_connection();
 		
 		if($field=='')
 		{
@@ -1004,6 +1095,8 @@ class Webmodel {
 	public function delete($conditions="")
 	{
 	
+		$this->set_phango_connection();
+	
 		foreach($this->components as $name_field => $component)
 		{
 		
@@ -1055,6 +1148,8 @@ class Webmodel {
 	public function fetch_row($query)
 	{
 	
+		$this->set_phango_connection();
+	
 		return webtsys_fetch_row($query);
 	
 	}
@@ -1068,6 +1163,8 @@ class Webmodel {
 	public function fetch_array($query)
 	{
 	
+		$this->set_phango_connection();
+	
 		return webtsys_fetch_array($query);
 	
 	}
@@ -1080,6 +1177,8 @@ class Webmodel {
 	
 	static public function insert_id()
 	{
+		
+		$this->set_phango_connection();
 	
 		return webtsys_insert_id();
 	
@@ -5311,7 +5410,7 @@ function load_model($name_model='')
 	}
 	//Check if model and db is synced
 
-	check_model_exists();
+	//check_model_exists();
 
 }
 
@@ -5426,17 +5525,32 @@ function load_libraries($names, $path='')
 		
 			if(!include($path.$library.'.php')) 
 			{
-
-				$output=ob_get_contents();
-
-				$check_error_lib[1]='Error: Don\'t exists '.$library.'.<p>Output: '.$output.'</p>';
-				$check_error_lib[0]='Error loading library.';
-
-				ob_end_clean();
 			
-		
-				echo load_view(array('Load libraries error', $check_error_lib[DEBUG]), 'common/common');
-				die();
+				//Libraries path
+				
+				$path=PhangoVar::$base_path.'/modules/'.PhangoVar::$script_module.'/libraries/';
+				
+				if(!include($path.$library.'.php')) 
+				{
+			
+					$output=ob_get_contents();
+
+					$check_error_lib[1]='Error: Don\'t exists '.$library.'.<p>Output: '.$output.'</p>';
+					$check_error_lib[0]='Error loading library.';
+
+					ob_end_clean();
+				
+			
+					echo load_view(array('Load libraries error', $check_error_lib[DEBUG]), 'common/common');
+					die();
+					
+				}
+				else
+				{
+
+					PhangoVar::$cache_libraries[$library]=1;
+
+				}
 			
 			}
 			else
@@ -6075,51 +6189,69 @@ function load_controller()
 	
 	}
 	
-	$path_script_controller=PhangoVar::$base_path.'modules/'.PhangoVar::$script_module.'/controllers/controller_'.PhangoVar::$script_controller.'.php';
-	
-	$script_class_name=ucfirst(PhangoVar::$script_controller).'SwitchClass';
-	
-	if(include($path_script_controller))
+	if(in_array(PhangoVar::$script_module, PhangoVar::$activated_modules)) 
 	{
-		if(class_exists($script_class_name))
-		{
 		
-			//echo 'pepe';
-			
-			$script_class=new $script_class_name();
-			
-			if(call_user_func_array(array($script_class, PhangoVar::$script_action), PhangoVar::$get)===false)
+		$path_script_controller=PhangoVar::$base_path.'modules/'.PhangoVar::$script_module.'/controllers/controller_'.PhangoVar::$script_controller.'.php';
+		
+		$script_class_name=ucfirst(PhangoVar::$script_controller).'SwitchClass';
+		
+		if(include($path_script_controller))
+		{
+			if(class_exists($script_class_name))
 			{
+				
+				$script_class=new $script_class_name();
+				
+				if(call_user_func_array(array($script_class, PhangoVar::$script_action), PhangoVar::$get)===false)
+				{
+				
+					$output=ob_get_contents();
+
+					ob_clean();
+
+					$arr_no_controller[0]='<p>Don\'t exist controller method</p>';
+					$arr_no_controller[1]='<p>Don\'t exist '.PhangoVar::$script_action.' on <strong>'.$path_script_controller.'.php</strong></p><p>Output: '.$output.'</p>';
+
+					echo show_error($arr_no_controller[0], $arr_no_controller[1], $output_external=$output);
+					
+					die;
+				
+				}
 			
+			
+			}
+			else 
+			{
+
 				$output=ob_get_contents();
 
 				ob_clean();
 
-				$arr_no_controller[0]='<p>Don\'t exist controller method</p>';
-				$arr_no_controller[1]='<p>Don\'t exist '.PhangoVar::$script_action.' on <strong>'.$path_script_controller.'.php</strong></p><p>Output: '.$output.'</p>';
+				$arr_no_controller[0]='<p>Don\'t exist controller class</p>';
+				$arr_no_controller[1]='<p>Don\'t exist '.$script_class.'.php on <strong>'.PhangoVar::$script_controller.' folder</strong></p>';
 
-				echo show_error($arr_no_controller[0], $arr_no_controller[0], $output_external=$output);
+				echo show_error($arr_no_controller[0], $arr_no_controller[1], $output_external=$output);
 				
 				die;
-			
-			}
-		
-		
-		}
-		else 
-		{
 
+			}
+			
+		}
+		else
+		{
+		
 			$output=ob_get_contents();
 
 			ob_clean();
 
-			$arr_no_controller[0]='<p>Don\'t exist controller class</p>';
-			$arr_no_controller[1]='<p>Don\'t exist '.$script_class.'.php on <strong>'.PhangoVar::$script_controller.' folder</strong></p><p>Output: '.$output.'</p>';
+			$arr_no_controller[0]='<p>Don\'t exist controller file</p>';
+			$arr_no_controller[1]='<p>Don\'t exist '.$path_script_controller.'</p>';
 
-			echo show_error($arr_no_controller[0], $arr_no_controller[0], $output_external=$output);
+			echo show_error($arr_no_controller[0], $arr_no_controller[1], $output_external=$output);
 			
 			die;
-
+		
 		}
 		
 	}
@@ -6131,9 +6263,9 @@ function load_controller()
 		ob_clean();
 
 		$arr_no_controller[0]='<p>Don\'t exist controller file</p>';
-		$arr_no_controller[1]='<p>Don\'t exist '.$path_script_controller.' on </p><p>Output: '.$output.'</p>';
+		$arr_no_controller[1]='<p>Don\'t exist module on PhangoVar::$activated_modules</p></p>';
 
-		echo show_error($arr_no_controller[0], $arr_no_controller[0], $output_external=$output);
+		echo show_error($arr_no_controller[0], $arr_no_controller[1], $output_external=$output);
 		
 		die;
 	

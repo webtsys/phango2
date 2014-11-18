@@ -27,3 +27,5 @@ Ahora la clase switchclass, cada metodo tendrá el tema de los parametros.
 - Classes, libraries,
 
 - A por padmin, check_language, etc. Añadir dependencias y sufijo a tabla.
+
+- El token para los csrf. En _SESSION.

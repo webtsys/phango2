@@ -154,7 +154,7 @@ class LoginClass {
 				
 				ModelForm::SetValuesForm($_POST, PhangoVar::$model[$this->model_login]->forms, 1);
 				
-				PhangoVar::$model[$this->model_login]->forms[$this->field_password]->std_error=PhangoVar::$lang['user']['user_error_nick_or_pass'];
+				PhangoVar::$model[$this->model_login]->forms[$this->field_password]->std_error= PhangoVar::$lang['users']['user_error_nick_or_pass'];
 			
 				return false;
 			
@@ -293,20 +293,20 @@ class LoginClass {
 				
 				$url_check_token=add_extra_fancy_url($this->url_recovery_send, array('token_recovery' => $token_recovery));
 				
-				$topic_email = PhangoVar::$lang['user']['lost_name'];
-				$body_email = PhangoVar::$lang['user']['hello_lost_pass']."\n\n".PhangoVar::$lang['user']['explain_code_pass']
-				."\n\n".PhangoVar::$lang['user']['copy_paste_code'].': '.$url_check_token."\n\n". PhangoVar::$lang['common']['thanks'];
+				$topic_email =  PhangoVar::$lang['users']['lost_name'];
+				$body_email =  PhangoVar::$lang['users']['hello_lost_pass']."\n\n". PhangoVar::$lang['users']['explain_code_pass']
+				."\n\n". PhangoVar::$lang['users']['copy_paste_code'].': '.$url_check_token."\n\n". PhangoVar::$lang['common']['thanks'];
 				
 				if ( send_mail($email, $topic_email, $body_email) )
 				{
 				
-					echo '<p>'.PhangoVar::$lang['user']['explain_email_code_pass'].'</p>';
+					echo '<p>'. PhangoVar::$lang['users']['explain_email_code_pass'].'</p>';
 				
 				}
 				else
 				{
 				
-					echo '<p>'.PhangoVar::$lang['user']['cannot_email_code_pass'].'</p>';
+					echo '<p>'. PhangoVar::$lang['users']['cannot_email_code_pass'].'</p>';
 				
 				}
 				
@@ -315,7 +315,7 @@ class LoginClass {
 			else
 			{
 
-				echo  "<p>" . PhangoVar::$lang['user']['error_db_pass'].'</p>';
+				echo  "<p>" .  PhangoVar::$lang['users']['error_db_pass'].'</p>';
 				
 				echo  "<p><a href=\"".$this->url_recovery."\"><b>" . PhangoVar::$lang['common']['go_back'] . "</b></a></p>";
 
@@ -344,8 +344,8 @@ class LoginClass {
 
 				$password=generate_random_password(); 
 
-				$topic_email = PhangoVar::$lang['user']['success_change_password'];
-				$body_email = PhangoVar::$lang['user']['hello_lost_pass_successful']."\n\n". PhangoVar::$lang['user']['user_data'] . "\n\n".PhangoVar::$lang['user']['user']." : $nick"."\n\n". PhangoVar::$lang['common']['email']." : $email"."\n\n"  . PhangoVar::$lang['user']['new_pass'] . " : $password" . "\n\n" . PhangoVar::$lang['common']['thanks'];
+				$topic_email =  PhangoVar::$lang['users']['success_change_password'];
+				$body_email =  PhangoVar::$lang['users']['hello_lost_pass_successful']."\n\n".  PhangoVar::$lang['users']['user_data'] . "\n\n". PhangoVar::$lang['users']['user']." : $nick"."\n\n". PhangoVar::$lang['common']['email']." : $email"."\n\n"  .  PhangoVar::$lang['users']['new_pass'] . " : $password" . "\n\n" . PhangoVar::$lang['common']['thanks'];
 					
 				if ( $email != "" )
 				{
@@ -361,16 +361,16 @@ class LoginClass {
 					if ( send_mail($email, $topic_email, $body_email) )
 					{
 						
-						echo  "<p>" . PhangoVar::$lang['user']['success_change_password'].'</p>';
-						echo  "<p>" . PhangoVar::$lang['user']['success_change_password_explain'].'</p>';
+						echo  "<p>" .  PhangoVar::$lang['users']['success_change_password'].'</p>';
+						echo  "<p>" .  PhangoVar::$lang['users']['success_change_password_explain'].'</p>';
 
 					} 
 					else
 					{
 
-						echo  "<p>" . PhangoVar::$lang['user']['success_change_password'].'</p>';
+						echo  "<p>" .  PhangoVar::$lang['users']['success_change_password'].'</p>';
 						
-						echo  "<p>" . PhangoVar::$lang['user']['error_sending_mail_change_password'].'</p>';
+						echo  "<p>" .  PhangoVar::$lang['users']['error_sending_mail_change_password'].'</p>';
 						
 						echo '<pre>';
 						
@@ -384,7 +384,7 @@ class LoginClass {
 				else
 				{
 
-					echo  "<p>" . PhangoVar::$lang['user']['error_db_pass'].'</p>';
+					echo  "<p>" .  PhangoVar::$lang['users']['error_db_pass'].'</p>';
 
 				}
 				
@@ -392,7 +392,7 @@ class LoginClass {
 			else
 			{
 			
-				echo  "<p>" . PhangoVar::$lang['user']['error_token_pass'].'</p>';
+				echo  "<p>" .  PhangoVar::$lang['users']['error_token_pass'].'</p>';
 			
 			}
 
@@ -467,7 +467,7 @@ class LoginClass {
 			if($no_user>0)
 			{
 				
-				PhangoVar::$model[$this->model_login]->forms[$this->field_user]->std_error=PhangoVar::$lang['user']['user_or_email_exists'];
+				PhangoVar::$model[$this->model_login]->forms[$this->field_user]->std_error= PhangoVar::$lang['users']['user_or_email_exists'];
 			
 			}
 		
@@ -484,7 +484,7 @@ class LoginClass {
 		
 		//$this->arr_user_insert[]='accept_conditions';
 		
-		PhangoVar::$model[$this->model_login]->forms['repeat_password']=new ModelForm('repeat_password', 'repeat_password', 'PasswordForm', PhangoVar::$lang['user']['repeat_password'], new PasswordField(), $required=1, $parameters='');
+		PhangoVar::$model[$this->model_login]->forms['repeat_password']=new ModelForm('repeat_password', 'repeat_password', 'PasswordForm',  PhangoVar::$lang['users']['repeat_password'], new PasswordField(), $required=1, $parameters='');
 	
 		$this->arr_user_insert[]='repeat_password';
 			
@@ -499,7 +499,7 @@ class LoginClass {
 			
 		}
 		
-		PhangoVar::$model[$this->model_login]->forms['accept_conditions']=new ModelForm('form_login', 'accept_conditions', 'CheckBoxForm', PhangoVar::$lang['user']['accept_cond_register']	, new BooleanField(), $required=1, $parameters='');
+		PhangoVar::$model[$this->model_login]->forms['accept_conditions']=new ModelForm('form_login', 'accept_conditions', 'CheckBoxForm',  PhangoVar::$lang['users']['accept_cond_register']	, new BooleanField(), $required=1, $parameters='');
 		
 		$this->arr_user_insert[]='accept_conditions';
 	
