@@ -1,23 +1,13 @@
 <?php
 
-$lang['admin']['admin']='Admin';
+PhangoVar::$lang['admin']['admin']='admin';
 
-$lang['admin']['home']='Home';
+PhangoVar::$lang['admin']['home']='home';
 
-$lang['admin']['admin_zone']='Admin zone';
+PhangoVar::$lang['admin']['admin_zone']='admin_zone';
 
-$lang['admin']['welcome_to_admin']='Welcome to admin';
+PhangoVar::$lang['admin']['welcome_text']='welcome_text';
 
-$lang['admin']['welcome_text']='From here you can configure all aspects of your website';
-
-$lang['admin']['applications']='Applications';
-
-$lang['admin']['welcome_admin']='Welcome admin';
-
-$lang['admin']['error_module']='Error in module';
-
-$lang['admin']['admin_block']='admin_block';
-
-$lang['admin']['pages']='Pages';
+PhangoVar::$lang['admin']['applications']='applications';
 
 ?>

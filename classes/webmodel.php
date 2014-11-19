@@ -290,7 +290,7 @@ class PhangoVar {
 *
 */
 
-define("TODAY", mktime( date('H'), date('i'), date('s') ) );
+//define("TODAY", mktime( date('H'), date('i'), date('s') ) );
 
 /**
 *
@@ -298,7 +298,7 @@ define("TODAY", mktime( date('H'), date('i'), date('s') ) );
 *
 */
 
-define("TODAY_FIRST", mktime(0, 0, 0));
+//define("TODAY_FIRST", mktime(0, 0, 0));
 
 /**
 *
@@ -306,7 +306,7 @@ define("TODAY_FIRST", mktime(0, 0, 0));
 *
 */
 
-define("TODAY_LAST", mktime(23, 59, 59));
+//define("TODAY_LAST", mktime(23, 59, 59));
 
 /**
 *
@@ -314,7 +314,7 @@ define("TODAY_LAST", mktime(23, 59, 59));
 *
 */
 
-define("TODAY_HOUR", mktime(date('H'), 0, 0));
+//define("TODAY_HOUR", mktime(date('H'), 0, 0));
 
 /**
 * Simple class for save datetime of the script.
@@ -323,56 +323,57 @@ define("TODAY_HOUR", mktime(date('H'), 0, 0));
 
 class DateTimeNow {
 
-    /**
-    *
-    * Actual timestamp
-    *
-    */
+	/**
+	*
+	* Actual timestamp
+	*
+	*/
 
-    static public $now=TODAY;
-	
-	/**
-    *
-    * Actual timestamp
-    *
-    */
-	
-	static public $today=TODAY;
-	
-	/**
-    *
-    * Timestamp today to 00:00:00 hours
-    *
-    */
-	
-	static public $today_first=TODAY_FIRST;
+	static public $now='';
 
 	/**
-    *
-    * Timestamp today to 23:59:59 hours
-    *
-    */
-	
-	static public $today_last=TODAY_LAST;
+	*
+	* Actual timestamp
+	*
+	*/
+
+	static public $today='';
 
 	/**
-    *
-    * Timestamp today in this hour
-    *
-    */
+	*
+	* Timestamp today to 00:00:00 hours
+	*
+	*/
 	
-	static public $today_hour=TODAY_HOUR;
+	static public $today_first='';
+
+	/**
+	*
+	* Timestamp today to 23:59:59 hours
+	*
+	*/
+	
+	static public $today_last='';
+
+	/**
+	*
+	* Timestamp today in this hour
+	*
+	*/
+	
+	static public $today_hour='';
 	
 	/**
-    *
-    * Method for update properties of this class if the timezone is changed.
-    *
-    */
+	*
+	* Method for update properties of this class if the timezone is changed.
+	*
+	*/
 	
 	static public function update_datetime()
 	{
 	
 		DateTimeNow::$today=mktime( date('H'), date('i'), date('s') );
+		DateTimeNow::$now=DateTimeNow::$today;
 		DateTimeNow::$today_first=mktime(0, 0, 0);
 		DateTimeNow::$today_last=mktime(23, 59, 59);
 		DateTimeNow::$today_hour=mktime(date('H'), 0, 0);
@@ -536,12 +537,12 @@ class Webmodel {
 		$this->components[$this->idmodel]=new PrimaryField();
 		$this->label=$this->name;
 		
-		if(isset(PhangoVar::$connection_func[$this->db_selected]))
-		{
+		/*if(isset(PhangoVar::$connection_func[$this->db_selected]))
+		{*/
 		
-			PhangoVar::$connection_func[$this->db_selected]='connect_to_db';
+		PhangoVar::$connection_func[$this->db_selected]='connect_to_db';
 		
-		}
+		//}
 
 	}
 	
@@ -553,7 +554,23 @@ class Webmodel {
 	public function connect_to_db()
 	{
 	
-		PhangoVar::$connection[$this->db_selected]=webtsys_connect( PhangoVar::$host_db[$this->db_selected], PhangoVar::$login_db[$this->db_selected], PhangoVar::$pass_db[$this->db_selected] , $this->db_selected);
+		include(PhangoVar::$base_path.'database/'.TYPE_DB.'.php');
+	
+		if(!webtsys_connect( PhangoVar::$host_db[$this->db_selected], PhangoVar::$login_db[$this->db_selected], PhangoVar::$pass_db[$this->db_selected] , $this->db_selected))
+		{
+		
+			$output=ob_get_contents();
+			
+			ob_clean();
+
+			//$text_error='<p>Output: '.$output.'</p>';
+
+			$arr_error_sql[0]='<p>Error: Cannot connect to MySQL db.</p>';    
+			$arr_error_sql[1]='<p>Error: Cannot connect to MySQL db, '.$output.'</p>';
+		
+			show_error($arr_error_sql[0], $arr_error_sql[1]);
+		
+		}
 
 		PhangoVar::$select_db[$this->db_selected]=webtsys_select_db( PhangoVar::$db[$this->db_selected] , $this->db_selected);
 		
@@ -567,11 +584,13 @@ class Webmodel {
 		{
 		
 			$output=ob_get_contents();
+			
+			ob_clean();
 
-			$text_error.='<p>Output: '.$output.'</p>';
+			//$text_error='<p>Output: '.$output.'</p>';
 
 			$arr_error_sql[0]='<p>Error: Cannot connect to MySQL db.</p>';    
-			$arr_error_sql[1]='<p>Error: Cannot connect to MySQL db.'.$text_error.'</p>';
+			$arr_error_sql[1]='<p>Error: Cannot connect to MySQL db, '.$output.'</p>';
 		
 			show_error($arr_error_sql[0], $arr_error_sql[1]);
 		
@@ -4943,7 +4962,7 @@ function RadioIntFormSet($post, $value)
 	
 //Url don't have final slash!!
 
-function make_fancy_url($url, $folder_url, $ident_url, $arr_params)
+function make_fancy_url($url, $folder_url, $ident_url, $arr_params=array())
 {
 
 	/*$description_text=slugify($description_text, $respect_upper);
@@ -6178,10 +6197,6 @@ function load_controller()
 					}
 					
 				}
-				
-				
-				
-				//PhangoVar::$rurls[$arr_url['module']][]
 			
 			}
 			
@@ -6262,8 +6277,8 @@ function load_controller()
 
 		ob_clean();
 
-		$arr_no_controller[0]='<p>Don\'t exist controller file</p>';
-		$arr_no_controller[1]='<p>Don\'t exist module on PhangoVar::$activated_modules</p></p>';
+		$arr_no_controller[0]='<p>Don\'t exist module</p>';
+		$arr_no_controller[1]='<p>Don\'t exist module '.PhangoVar::$script_module.' on PhangoVar::$activated_modules</p></p>';
 
 		echo show_error($arr_no_controller[0], $arr_no_controller[1], $output_external=$output);
 		

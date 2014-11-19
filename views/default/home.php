@@ -16,7 +16,8 @@ function HomeView($title, $content)
 	?>
 	</head>
 	<body>
-	</boby>
+		<?php echo $content; ?>
+	</body>
 </html>
 
 <?php

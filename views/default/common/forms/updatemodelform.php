@@ -3,11 +3,9 @@
 function UpdateModelFormView($model_form, $arr_fields=array(), $url_post, $enctype='', $form_html_id='', $arr_categories=array('default' => array()))
 {
 
-	global $lang, $arr_cache_jscript, $arr_cache_header;
-
 	load_libraries(array('generate_forms'));
 	
-	$arr_cache_jscript[]='jquery.min.js';
+	PhangoVar::$arr_cache_jscript[]='jquery.min.js';
 	
 	$hide_button_tab=0;
 	
@@ -84,7 +82,7 @@ function UpdateModelFormView($model_form, $arr_fields=array(), $url_post, $encty
 	</script>
 	<?php
 	
-	$arr_cache_header[]=ob_get_contents();
+	PhangoVar::$arr_cache_header[]=ob_get_contents();
 
 	ob_end_clean();
 	
@@ -157,8 +155,8 @@ function UpdateModelFormView($model_form, $arr_fields=array(), $url_post, $encty
 	echo $html_tabs;
 	
 	?>
-	<input type="submit" value="<?php echo $lang['common']['send']; ?>" />
-	<p class="error"><?php echo $lang['common']['with_*_field_required']; ?></p>
+	<input type="submit" value="<?php echo PhangoVar::$lang['common']['send']; ?>" />
+	<p class="error"><?php echo PhangoVar::$lang['common']['with_*_field_required']; ?></p>
 	</form>
 	<?php
 

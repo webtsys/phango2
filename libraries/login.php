@@ -32,6 +32,10 @@ class LoginClass {
 		$this->field_key=$field_key;
 		$this->arr_user_insert=array($field_user, $field_password);
 		
+		//Initialize form
+		
+		PhangoVar::$model[$this->model_login]->create_form();
+		
 		if(count($this->arr_user_session)==0)
 		{
 		
@@ -51,7 +55,7 @@ class LoginClass {
 	
 	}
 	
-	public function login($user, $password, $autologin=0, $yes_hash=0)
+	public function login($user, $password, $no_expire_session=0, $yes_hash=0)
 	{
 		load_libraries(array('fields/passwordfield'));
 	
@@ -124,7 +128,7 @@ class LoginClass {
 				
 					PhangoVar::$model[$this->model_login]->reload_require();
 					
-					if($autologin==1)
+					if($no_expire_session==1)
 					{
 						
 						$lifetime=31536000;

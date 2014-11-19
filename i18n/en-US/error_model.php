@@ -1,19 +1,17 @@
 <?php
 
-$lang['error_model']['cant_insert']='I can not insert the data';
+PhangoVar::$lang['error_model']['cant_insert']='cant_insert';
 
-$lang['error_model']['cant_update']='I can not update the data';
+PhangoVar::$lang['error_model']['cant_update']='cant_update';
 
-$lang['error_model']['check_error_field']='Error in field';
+PhangoVar::$lang['error_model']['check_error_field']='check_error_field';
 
-$lang['error_model']['check_error_field_required']='Error: field required';
+PhangoVar::$lang['error_model']['check_error_field_required']='check_error_field_required';
 
-$lang['error_model']['check_error_enctype_for_upload_file']='Please, check that you use enctype parameter on your form';
+PhangoVar::$lang['error_model']['check_error_enctype_for_upload_file']='check_error_enctype_for_upload_file';
 
-$lang['error_model']['img_format_error']='Error in image format';
+PhangoVar::$lang['error_model']['img_format_error']='img_format_error';
 
-$lang['error_model']['email_format_error']='Error in email format';
-
-$lang['error_model']['file_no_exists']='File don&amp;#39;t found';
+PhangoVar::$lang['error_model']['email_format_error']='email_format_error';
 
 ?>

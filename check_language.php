@@ -2,26 +2,9 @@
 <?php
 //Little script for create variables for i18n files.
 //Format variable Lang: lang['file']['variable']
+include('classes/webmodel.php');
 include('config.php');
-//include('classes/webmodel.php');
-
-function slugify($text)
-{
-
-	$from='àáâãäåæçèéêëìíîïðñòóôõöøùúûýýþÿŔŕñ';
-	$to='aaaaaaaceeeeiiiidnoooooouuuyybyRrn';
-
-	$text=strtolower($text);
-
-	$text=str_replace(" ", "-", $text);
-
-	$text = utf8_decode($text);    
-	$text = strtr($text, utf8_decode($from), $to);
-	$text = strtolower($text);
-
-	return utf8_encode($text); 
-
-}
+//
 
 echo "This script create language files...\n";
 echo "Scanning files and directories...\n";
@@ -37,7 +20,7 @@ if(isset($arr_options['status']))
 {
 
 	echo "Checking status...\n";
-	scan_directory_status($base_path);
+	scan_directory_status(PhangoVar::$base_path);
 	
 }
 else if(@$arr_options['f']!='')
@@ -77,22 +60,20 @@ else if(@$arr_options['f']!='')
 else
 {
 
-	scan_directory($base_path);
+	scan_directory(PhangoVar::$base_path);
 
 }
 
 function scan_directory($directory)
 {
-    
-	global $base_path, $arr_i18n;
 
-	foreach($arr_i18n as $language) 
+	foreach(PhangoVar::$arr_i18n as $language) 
 	{
 
-		if(!file_exists($base_path.'i18n/'.$language)) 
+		if(!file_exists(PhangoVar::$base_path.'i18n/'.$language)) 
 		{
 
-			mkdir($base_path.'i18n/'.$language);
+			mkdir(PhangoVar::$base_path.'i18n/'.$language);
 
 		}
 
@@ -148,7 +129,7 @@ function scan_directory($directory)
 
 function check_i18n_file($file_path)
 {
-	global $arr_i18n, $base_path;
+
 	//Check file searching $lang variables...
 	
 	$file=file_get_contents($file_path);
@@ -156,38 +137,38 @@ function check_i18n_file($file_path)
 	//Get $lang variables......
 	$arr_match_lang=array();
 	
-	$pattern_file="|".preg_quote("\$lang")."\['(.*)'\]\['(.*)'\]|U";
+	$pattern_file="|".preg_quote("PhangoVar::\$lang")."\['(.*)'\]\['(.*)'\]|U";
 		
 	if(preg_match_all ( $pattern_file, $file, $arr_match_lang, PREG_SET_ORDER)) 
 	{
 
 	//Check if exists lang file for $lang variable
 
-		$lang=array();
+		PhangoVar::$lang=array();
 
 		foreach($arr_match_lang as $arr_lang) 
 		{
 	
-			if(!isset($lang[$arr_lang[1]])) 
+			if(!isset(PhangoVar::$lang[$arr_lang[1]])) 
 			{
 	
-				$lang[$arr_lang[1]]=array();
+				PhangoVar::$lang[$arr_lang[1]]=array();
 			
 			}
 	
-			$lang[$arr_lang[1]][$arr_lang[2]]=slugify($arr_lang[2]);
+			PhangoVar::$lang[$arr_lang[1]][$arr_lang[2]]=slugify($arr_lang[2]);
 		
 		}
 			
-		foreach($arr_i18n as $language) 
+		foreach(PhangoVar::$arr_i18n as $language) 
 		{
 	
-			$arr_files=array_unique(array_keys($lang));
+			$arr_files=array_unique(array_keys(PhangoVar::$lang));
 				
 			foreach($arr_files as $lang_file)
 			{
 
-				$path_lang_file=$base_path.'i18n/'.$language.'/'.$lang_file.'.php';
+				$path_lang_file=PhangoVar::$base_path.'i18n/'.$language.'/'.$lang_file.'.php';
 
 				$module_path=$lang_file;
 				
@@ -202,22 +183,22 @@ function check_i18n_file($file_path)
 					
 				}
 
-				if(file_exists($base_path.'/modules/'.$module_path))
+				if(file_exists(PhangoVar::$base_path.'/modules/'.$module_path))
 				{
 
-					/*foreach($arr_i18n as $lang_dir) 
+					/*foreach(PhangoVar::$arr_i18n as $lang_dir) 
 					{*/
 
-					if(!file_exists($base_path.'/modules/'.$module_path.'/i18n/'.$language)) 
+					if(!file_exists(PhangoVar::$base_path.'/modules/'.$module_path.'/i18n/'.$language)) 
 					{
-						//echo $base_path.'/modules/'.$lang_file.'/i18n/'.$language;
-						mkdir($base_path.'/modules/'.$module_path.'/i18n/'.$language, 0755, true);
+						//echo PhangoVar::$base_path.'/modules/'.$lang_file.'/i18n/'.$language;
+						mkdir(PhangoVar::$base_path.'/modules/'.$module_path.'/i18n/'.$language, 0755, true);
 
 					}
 
 					//}
 
-					$path_lang_file=$base_path.'/modules/'.$module_path.'/i18n/'.$language.'/'.$lang_file.'.php';
+					$path_lang_file=PhangoVar::$base_path.'/modules/'.$module_path.'/i18n/'.$language.'/'.$lang_file.'.php';
 
 				}
 				
@@ -227,10 +208,10 @@ function check_i18n_file($file_path)
 					
 				$arr_file_lang=array("<?php\n\n");
 
-				foreach($lang[$lang_file] as $key_trad => $trad) 
+				foreach(PhangoVar::$lang[$lang_file] as $key_trad => $trad) 
 				{
 					
-					$arr_file_lang[]="\$lang['".$lang_file."']['".$key_trad."']='".str_replace("'", "\'", $trad)."';\n\n";
+					$arr_file_lang[]="PhangoVar::\$lang['".$lang_file."']['".$key_trad."']='".str_replace("'", "\'", $trad)."';\n\n";
 					
 				}
 					
@@ -285,16 +266,14 @@ function check_i18n_file($file_path)
 
 function scan_directory_status($directory)
 {
-    
-	global $base_path, $arr_i18n;
 
-	foreach($arr_i18n as $language) 
+	foreach(PhangoVar::$arr_i18n as $language) 
 	{
 
-		if(!file_exists($base_path.'i18n/'.$language)) 
+		if(!file_exists(PhangoVar::$base_path.'i18n/'.$language)) 
 		{
 
-			mkdir($base_path.'i18n/'.$language);
+			mkdir(PhangoVar::$base_path.'i18n/'.$language);
 
 		}
 
@@ -321,22 +300,22 @@ function scan_directory_status($directory)
 				}
 				else if( preg_match ( '/(.*)\/i18n\/(.*)\.php$/' , $path_file ) )
 				{
-					$lang=array();
+					PhangoVar::$lang=array();
 					echo "Checking file ".$path_file."...\n";
 
 					include($path_file);
 
 					//$file_lang=str_replace('.php', '', $file);
 
-					$file_lang=key($lang);
+					$file_lang=key(PhangoVar::$lang);
 	
-					foreach($lang[$file_lang] as $key_lang => $cont_lang)
+					foreach(PhangoVar::$lang[$file_lang] as $key_lang => $cont_lang)
 					{
 						
 						if($key_lang==$cont_lang)
 						{
 
-							echo "--- \$lang[".$file_lang."][".$key_lang."] need translation\n";
+							echo "--- PhangoVar::\$lang[".$file_lang."][".$key_lang."] need translation\n";
 
 						}
 

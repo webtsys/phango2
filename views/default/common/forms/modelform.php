@@ -3,7 +3,6 @@
 function ModelFormView($model_form, $fields=array(), $html_id='')
 {
 
-global $base_url, $model;
 
 $arr_required[0]='';
 $arr_required[1]='*';

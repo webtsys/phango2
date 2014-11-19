@@ -1,327 +1,89 @@
 <?php
 
-$lang['common']['title']='Título';
+PhangoVar::$lang['common']['no_element_chosen']='No se ha elegido ningún elemento';
 
-$lang['common']['name']='Nombre';
+PhangoVar::$lang['common']['any_option_chosen']='any_option_chosen';
 
-$lang['common']['image']='Imagen';
+PhangoVar::$lang['common']['last']='last';
 
-$lang['common']['redirect']='Redireccionar';
+PhangoVar::$lang['common']['pages']='pages';
 
-$lang['common']['success']='Éxito en la operación';
+PhangoVar::$lang['common']['delete_model']='delete_model';
 
-$lang['common']['press_here_redirecting']='Pulse aquí para volver';
+PhangoVar::$lang['common']['edit']='edit';
 
-$lang['common']['category']='Categoría';
+PhangoVar::$lang['common']['delete']='delete';
 
-$lang['common']['search']='Buscar';
+PhangoVar::$lang['common']['ascent']='ascent';
 
-$lang['common']['address']='Dirección';
+PhangoVar::$lang['common']['descent']='descent';
 
-$lang['common']['region']='Provincia';
+PhangoVar::$lang['common']['send']='send';
 
-$lang['common']['country']='País';
+PhangoVar::$lang['common']['order']='order';
 
-$lang['common']['phone']='Teléfono';
+PhangoVar::$lang['common']['redirect']='redirect';
 
-$lang['common']['fax']='Fax';
+PhangoVar::$lang['common']['success']='success';
 
-$lang['common']['zip_code']='Código postal';
+PhangoVar::$lang['common']['press_here_redirecting']='press_here_redirecting';
 
-$lang['common']['city']='Ciudad';
+PhangoVar::$lang['common']['no_exists_elements_to_order']='no_exists_elements_to_order';
 
-$lang['common']['date']='Fecha';
+PhangoVar::$lang['common']['home']='home';
 
-$lang['common']['go_back']='Volver atrás';
+PhangoVar::$lang['common']['the_value_can_not_be_greater_than_100']='the_value_can_not_be_greater_than_100';
 
-$lang['common']['any_option']='No ha escogido ninguna opción';
+PhangoVar::$lang['common']['thanks']='thanks';
 
-$lang['common']['send']='Enviar';
+PhangoVar::$lang['common']['go_back']='go_back';
 
-$lang['common']['options']='Opciones';
+PhangoVar::$lang['common']['email']='email';
 
-$lang['common']['yes']='Sí';
+PhangoVar::$lang['common']['captcha']='captcha';
 
-$lang['common']['register_user']='Registro de usuario';
+PhangoVar::$lang['common']['error_you_need_this_language_field']='error_you_need_this_language_field';
 
-$lang['common']['categories']='Categorías';
+PhangoVar::$lang['common']['cannot_load_jquery']='cannot_load_jquery';
 
-$lang['common']['description']='Descripción';
+PhangoVar::$lang['common']['field_required']='field_required';
 
-$lang['common']['user']='Usuario';
+PhangoVar::$lang['common']['error_in_field']='error_in_field';
 
-$lang['common']['last_name']='Apellidos';
+PhangoVar::$lang['common']['no']='no';
 
-$lang['common']['email']='Email';
+PhangoVar::$lang['common']['yes']='yes';
 
-$lang['common']['error_cannot_upload_this_image_to_the_server']='Error: no puedo subir la imagen al servidor. ¿Hay permisos para ello?.';
+PhangoVar::$lang['common']['error_cannot_upload_this_file_to_the_server']='error_cannot_upload_this_file_to_the_server';
 
-$lang['common']['pages']='Páginas';
+PhangoVar::$lang['common']['cannot_delete_file']='cannot_delete_file';
 
-$lang['common']['delete']='Borrar';
+PhangoVar::$lang['common']['image_size_is_not_correct']='image_size_is_not_correct';
 
-$lang['common']['more']='Más';
+PhangoVar::$lang['common']['min_size']='min_size';
 
-$lang['common']['error']='Error';
+PhangoVar::$lang['common']['a_image_with_same_name_exists']='a_image_with_same_name_exists';
 
-$lang['common']['admin_panel']='Panel de administración';
+PhangoVar::$lang['common']['error_cannot_upload_this_image_to_the_server']='error_cannot_upload_this_image_to_the_server';
 
-$lang['common']['no_element_chosen']='Elija opción...';
+PhangoVar::$lang['common']['cannot_delete_image']='cannot_delete_image';
 
-$lang['common']['any_option_chosen']='Elija cualquier opción...';
+PhangoVar::$lang['common']['delete_file']='delete_file';
 
-$lang['common']['listing_new']='Listado de';
+PhangoVar::$lang['common']['delete_image']='delete_image';
 
-$lang['common']['add_new_item']='Añadir nuevo elemento';
+PhangoVar::$lang['common']['hour']='hour';
 
-$lang['common']['edit']='Editar';
+PhangoVar::$lang['common']['minute']='minute';
 
-$lang['common']['ascent']='Ascendente';
+PhangoVar::$lang['common']['second']='second';
 
-$lang['common']['descent']='Descendente';
+PhangoVar::$lang['common']['login']='login';
 
-$lang['common']['cannot_update_insert_in_model']='No puedo actualizar o insertar nuevo elemento';
+PhangoVar::$lang['common']['order_and_search']='order_and_search';
 
-$lang['common']['delete_model']='Eliminar elemento';
+PhangoVar::$lang['common']['with_*_field_required']='with_-_field_required';
 
-$lang['common']['order']='Orden';
-
-$lang['common']['no_exists_elements_to_order']='No existen elementos a ordenar';
-
-$lang['common']['home']='Inicio';
-
-$lang['common']['the_value_can_not_be_greater_than_100']='El valor no puede ser más grande de 100 ni menor que 0';
-
-$lang['common']['error_you_need_this_language_field']='Error: necesitas obligatoriamente rellenar el campo de lenguaje';
-
-$lang['common']['cannot_load_jquery']='No se ha cargado jquery, necesario para que funcione este método';
-
-$lang['common']['field_required']='Campo requerido';
-
-$lang['common']['error_in_field']='Error en campo';
-
-$lang['common']['no']='No';
-
-$lang['common']['error_cannot_upload_this_file_to_the_server']='Error, no puedo subir este fichero al servidor. ¿Hay permisos para ello?';
-
-$lang['common']['cannot_delete_file']='No puedo borrar el archivo, ¿existe en el disco?.';
-
-$lang['common']['image_size_is_not_correct']='image_size_is_not_correct';
-
-$lang['common']['min_size']='min_size';
-
-$lang['common']['a_image_with_same_name_exists']='Existe una imagen con el mismo nombre';
-
-$lang['common']['cannot_delete_image']='No puedo borrar la imagen, ¿existe en el disco?.';
-
-$lang['common']['delete_file']='Borrar archivo';
-
-$lang['common']['delete_image']='Borrar imagen';
-
-$lang['common']['hour']='Hora';
-
-$lang['common']['minute']='Minuto';
-
-$lang['common']['second']='Segundo';
-
-$lang['common']['ip']='IP';
-
-$lang['common']['message']='Mensaje';
-
-$lang['common']['text']='Texto';
-
-$lang['common']['unlimited']='Ilimitado';
-
-$lang['common']['width']='Anchura';
-
-$lang['common']['height']='Altura';
-
-$lang['common']['password']='Contraseña';
-
-$lang['common']['error_email_format']='Error en el formato de email';
-
-$lang['common']['without_privileges']='Sin privilegios';
-
-$lang['common']['moderator']='Moderador';
-
-$lang['common']['administrator']='Administrador';
-
-$lang['common']['language']='Lengua';
-
-$lang['common']['website']='Sitio web';
-
-$lang['common']['hidden']='Oculto';
-
-$lang['common']['email_symbol']='Símbolo de email';
-
-$lang['common']['offline']='Desconectado';
-
-$lang['common']['connected']='Conectado';
-
-$lang['common']['profile']='Perfil';
-
-$lang['common']['captcha']='Captcha';
-
-$lang['common']['thanks']='Gracias';
-
-$lang['common']['subject']='Asunto';
-
-$lang['common']['preview']='Vista previa';
-
-$lang['common']['status']='Estado';
-
-$lang['common']['author']='Autor';
-
-$lang['common']['more_options']='Más opciones';
-
-$lang['common']['date_register']='Fecha de registro';
-
-$lang['common']['num_messages']='Número de mensajes';
-
-$lang['common']['quote']='Cita';
-
-$lang['common']['avatar']='Avatar';
-
-$lang['common']['rank_name']='Rango';
-
-$lang['common']['interests']='Intereses';
-
-$lang['common']['signature']='Firma';
-
-$lang['common']['filter_by_category']='Filtrar por categoría';
-
-$lang['common']['select']='Seleccionar';
-
-$lang['common']['registered_users']='Usuarios registrados';
-
-$lang['common']['html']='Html';
-
-$lang['common']['list']='list';
-
-$lang['common']['required']='Requerido';
-
-$lang['common']['html_allowed']='Html permitido';
-
-$lang['common']['registered']='Registrado';
-
-$lang['common']['messages']='Mensajes';
-
-$lang['common']['logout']='Desconectarse';
-
-$lang['common']['order_by']='Ordenar por';
-
-$lang['common']['in_order']='En orden';
-
-$lang['common']['search_by']='Buscar por';
-
-$lang['common']['reset']='Reiniciar búsqueda';
-
-$lang['common']['order_and_search']='Ordenar y buscar';
-
-$lang['common']['with_*_field_required']='Los campos con * son requeridos.';
-
-$lang['common']['login']='Identificarse';
-
-$lang['common']['nothing_to_show']='nothing_to_show';
-
-$lang['common']['change_language']='Cambiar lenguaje';
-
-$lang['common']['put_text_mode']='Poner modo texto';
-
-$lang['common']['created_object_successfully']='Se creó el elemento satisfactoriamente';
-
-$lang['common']['delete_sure']='¿Seguro que quiere eliminar el elemento?';
-
-$lang['common']['selection']='Seleccionar';
-
-$lang['common']['delete_selections']='Borrar seleccionados';
-
-$lang['common']['error_data']='Error al enviar los datos';
-
-$lang['common']['admin']='Administrador';
-
-$lang['common']['open']='Abierto';
-
-$lang['common']['close']='Cerrado';
-
-$lang['common']['redirecting']='Redireccionando';
-
-$lang['common']['push_here']='Pulse aquí';
-
-$lang['common']['wait_time']='Tiempo de espera';
-
-$lang['common']['alphabetic_order']='Orden alfabético';
-
-$lang['common']['search_user']='Busqueda de usuario';
-
-$lang['common']['in_sense']='En sentido';
-
-$lang['common']['hidden_status']='Estado oculto';
-
-$lang['common']['identity_doc']='CIF/NIF';
-
-$lang['common']['user_data']='Datos de usuario';
-
-$lang['common']['name_user_exists']='No existe ese nombre de usuario';
-
-$lang['common']['wait_send_message']='Espere para enviar el mensaje';
-
-$lang['common']['options_text']='Opciones de texto';
-
-$lang['common']['characters']='Carácteres';
-
-$lang['common']['insert_emoticons']='Insertar emoticonos';
-
-$lang['common']['emoticons']='Emoticonos';
-
-$lang['common']['config']='Configuración';
-
-$lang['common']['position']='Posición';
-
-$lang['common']['positions']='Posiciones';
-
-$lang['common']['user_type']='Tipo de usuario';
-
-$lang['common']['any_user']='Cualquier usuario';
-
-$lang['common']['register']='Registro';
-
-$lang['common']['weight']='Peso';
-
-$lang['common']['any_user_choose']='Elija a un usuario...';
-
-$lang['common']['subtitle']='Subtítulo';
-
-$lang['common']['content']='Contenido';
-
-$lang['common']['error_can_father_son_of_son']='Error, un padre no puede ser hijo de un hijo';
-
-$lang['common']['form']='Formulario';
-
-$lang['common']['type_user']='Tipo de usuario';
-
-$lang['common']['all_users']='Todos los usuarios';
-
-$lang['common']['last']='Último';
-
-$lang['common']['bold']='Negrita';
-
-$lang['common']['italic']='Itálica';
-
-$lang['common']['underline']='Subrayado';
-
-$lang['common']['url']='Enlace';
-
-$lang['common']['center']='Centrar';
-
-$lang['common']['font_color']='Color de fuente';
-
-$lang['common']['font_size']='Tamaño de fuente';
-
-$lang['common']['img']='Imagen';
-
-$lang['common']['code']='Código';
-
-$lang['common']['press_here']='Pulse aquí';
+PhangoVar::$lang['common']['password']='password';
 
 ?>

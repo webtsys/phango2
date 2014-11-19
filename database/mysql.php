@@ -136,8 +136,10 @@ function webtsys_connect( $host_db, $login_db, $contra_db , $server_data='defaul
 		return false;
 		
 	} 
-
-	return PhangoVar::$connection;
+	
+	return true;
+	
+	//return PhangoVar::$connection;
 } 
 
 function webtsys_pconnect( $host_db, $login_db, $contra_db, $server_data='default' )

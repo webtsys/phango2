@@ -560,6 +560,19 @@ session_set_cookie_params(0, PhangoVar::$cookie_path);
 
 session_start();
 
+if(!isset($_SESSION['csrf_token']))
+{
+
+	$_SESSION['csrf_token']=sha1(uniqid("", true));
+
+}
+
+//Timezone
+
+date_default_timezone_set (PhangoVar::$timezone);
+
+DateTimeNow::update_datetime();
+
 //Add ip
 
 //We need the ip

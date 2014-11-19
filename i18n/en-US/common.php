@@ -1,329 +1,89 @@
 <?php
 
-$lang['common']['title']='Title';
+PhangoVar::$lang['common']['no_element_chosen']='Any item no chosen';
 
-$lang['common']['name']='Name';
+PhangoVar::$lang['common']['any_option_chosen']='No option chosen';
 
-$lang['common']['image']='Image';
+PhangoVar::$lang['common']['last']='last';
 
-$lang['common']['redirect']='Redirect';
+PhangoVar::$lang['common']['pages']='pages';
 
-$lang['common']['success']='Successful operation';
+PhangoVar::$lang['common']['delete_model']='delete_model';
 
-$lang['common']['press_here_redirecting']='Press here to come back...';
+PhangoVar::$lang['common']['edit']='edit';
 
-$lang['common']['category']='Category';
+PhangoVar::$lang['common']['delete']='delete';
 
-$lang['common']['search']='Search';
+PhangoVar::$lang['common']['ascent']='ascent';
 
-$lang['common']['address']='Adress';
+PhangoVar::$lang['common']['descent']='descent';
 
-$lang['common']['region']='Region';
+PhangoVar::$lang['common']['send']='send';
 
-$lang['common']['country']='Country';
+PhangoVar::$lang['common']['order']='order';
 
-$lang['common']['phone']='Phone';
+PhangoVar::$lang['common']['redirect']='redirect';
 
-$lang['common']['fax']='Fax';
+PhangoVar::$lang['common']['success']='success';
 
-$lang['common']['zip_code']='Zip code';
+PhangoVar::$lang['common']['press_here_redirecting']='press_here_redirecting';
 
-$lang['common']['city']='City';
+PhangoVar::$lang['common']['no_exists_elements_to_order']='no_exists_elements_to_order';
 
-$lang['common']['date']='Date';
+PhangoVar::$lang['common']['home']='home';
 
-$lang['common']['go_back']='Go Back';
+PhangoVar::$lang['common']['the_value_can_not_be_greater_than_100']='the_value_can_not_be_greater_than_100';
 
-$lang['common']['any_option']='All options';
+PhangoVar::$lang['common']['thanks']='thanks';
 
-$lang['common']['send']='Send';
+PhangoVar::$lang['common']['go_back']='go_back';
 
-$lang['common']['options']='Options';
+PhangoVar::$lang['common']['email']='email';
 
-$lang['common']['yes']='Yes';
+PhangoVar::$lang['common']['captcha']='captcha';
 
-$lang['common']['register_user']='User registration';
+PhangoVar::$lang['common']['error_you_need_this_language_field']='error_you_need_this_language_field';
 
-$lang['common']['categories']='Categories';
+PhangoVar::$lang['common']['cannot_load_jquery']='cannot_load_jquery';
 
-$lang['common']['description']='Description';
+PhangoVar::$lang['common']['field_required']='field_required';
 
-$lang['common']['user']='User';
+PhangoVar::$lang['common']['error_in_field']='error_in_field';
 
-$lang['common']['last_name']='Last name';
+PhangoVar::$lang['common']['no']='no';
 
-$lang['common']['email']='Email';
+PhangoVar::$lang['common']['yes']='yes';
 
-$lang['common']['error_cannot_upload_this_image_to_the_server']='Error: I can not upload the image to the server. Are there permissions for it?.';
+PhangoVar::$lang['common']['error_cannot_upload_this_file_to_the_server']='error_cannot_upload_this_file_to_the_server';
 
-$lang['common']['pages']='Pages';
+PhangoVar::$lang['common']['cannot_delete_file']='cannot_delete_file';
 
-$lang['common']['delete']='Delete';
+PhangoVar::$lang['common']['image_size_is_not_correct']='image_size_is_not_correct';
 
-$lang['common']['more']='More';
+PhangoVar::$lang['common']['min_size']='min_size';
 
-$lang['common']['error']='Error';
+PhangoVar::$lang['common']['a_image_with_same_name_exists']='a_image_with_same_name_exists';
 
-$lang['common']['admin_panel']='Admin panel';
+PhangoVar::$lang['common']['error_cannot_upload_this_image_to_the_server']='error_cannot_upload_this_image_to_the_server';
 
-$lang['common']['no_element_chosen']='Choose option...';
+PhangoVar::$lang['common']['cannot_delete_image']='cannot_delete_image';
 
-$lang['common']['any_option_chosen']='Choose any option...';
+PhangoVar::$lang['common']['delete_file']='delete_file';
 
-$lang['common']['listing_new']='listing_new';
+PhangoVar::$lang['common']['delete_image']='delete_image';
 
-$lang['common']['add_new_item']='Add new item';
+PhangoVar::$lang['common']['hour']='hour';
 
-$lang['common']['edit']='Edit';
+PhangoVar::$lang['common']['minute']='minute';
 
-$lang['common']['ascent']='Up';
+PhangoVar::$lang['common']['second']='second';
 
-$lang['common']['descent']='Falling';
+PhangoVar::$lang['common']['login']='login';
 
-$lang['common']['cannot_update_insert_in_model']='I cannot insert or update this element';
+PhangoVar::$lang['common']['order_and_search']='order_and_search';
 
-$lang['common']['delete_model']='Delete element';
+PhangoVar::$lang['common']['with_*_field_required']='with_-_field_required';
 
-$lang['common']['order']='Order';
-
-$lang['common']['no_exists_elements_to_order']='There are no items to order';
-
-$lang['common']['home']='Home';
-
-$lang['common']['the_value_can_not_be_greater_than_100']='The value can not be greater than 100 or less than zero';
-
-$lang['common']['error_you_need_this_language_field']='Error: you need to fill the field mandatory language';
-
-$lang['common']['cannot_load_jquery']='Not loaded jquery, required for this method to work';
-
-$lang['common']['field_required']='Field required';
-
-$lang['common']['error_in_field']='Error in field';
-
-$lang['common']['no']='No';
-
-$lang['common']['error_cannot_upload_this_file_to_the_server']='Error: cannot upload this file to the server';
-
-$lang['common']['cannot_delete_file']='Cannot delete image. File exists?.';
-
-$lang['common']['image_size_is_not_correct']='image_size_is_not_correct';
-
-$lang['common']['min_size']='min_size';
-
-$lang['common']['a_image_with_same_name_exists']='A image with same name exists in the server';
-
-$lang['common']['cannot_delete_image']='Cannot delete image. Image exists?.';
-
-$lang['common']['delete_file']='Delete file';
-
-$lang['common']['delete_image']='Delete image';
-
-$lang['common']['hour']='Hour';
-
-$lang['common']['minute']='Minute';
-
-$lang['common']['second']='Second';
-
-$lang['common']['ip']='IP';
-
-$lang['common']['message']='Message';
-
-$lang['common']['text']='Text';
-
-$lang['common']['unlimited']='Unlimited';
-
-$lang['common']['width']='Width';
-
-$lang['common']['height']='Height';
-
-$lang['common']['password']='Password';
-
-$lang['common']['error_email_format']='Error in mail format';
-
-$lang['common']['without_privileges']='Unprivileged';
-
-$lang['common']['moderator']='Moderator';
-
-$lang['common']['administrator']='Admin';
-
-$lang['common']['language']='Language';
-
-$lang['common']['website']='Website';
-
-$lang['common']['hidden']='Hidden';
-
-$lang['common']['email_symbol']='Email symbol';
-
-$lang['common']['offline']='Offline';
-
-$lang['common']['connected']='Connected';
-
-$lang['common']['profile']='Profile';
-
-$lang['common']['captcha']='Captcha';
-
-$lang['common']['thanks']='Thanks';
-
-$lang['common']['subject']='Subject';
-
-$lang['common']['preview']='Preview';
-
-$lang['common']['status']='Status';
-
-$lang['common']['author']='Author';
-
-$lang['common']['more_options']='More options';
-
-$lang['common']['date_register']='Date register';
-
-$lang['common']['num_messages']='number of messages';
-
-$lang['common']['quote']='Quote';
-
-$lang['common']['avatar']='Avatar';
-
-$lang['common']['rank_name']='Rank';
-
-$lang['common']['interests']='Interests';
-
-$lang['common']['signature']='Signature';
-
-$lang['common']['filter_by_category']='filter_by_category';
-
-$lang['common']['select']='Select';
-
-$lang['common']['registered_users']='Registered users';
-
-$lang['common']['html']='Html';
-
-$lang['common']['list']='list';
-
-$lang['common']['required']='Required';
-
-$lang['common']['html_allowed']='Allowed html';
-
-$lang['common']['registered']='Registered';
-
-$lang['common']['messages']='Messages';
-
-$lang['common']['logout']='Logout';
-
-$lang['common']['order_by']='Order by';
-
-$lang['common']['in_order']='In order';
-
-$lang['common']['search_by']='Search by';
-
-$lang['common']['reset']='Reset';
-
-$lang['common']['order_and_search']='Search and order';
-
-$lang['common']['with_*_field_required']='The fields with * are required';
-
-$lang['common']['login']='Login';
-
-$lang['common']['nothing_to_show']='nothing_to_show';
-
-$lang['common']['change_language']='Change language';
-
-$lang['common']['put_text_mode']='Put in text mode';
-
-$lang['common']['created_object_successfully']='The object was created successfully';
-
-$lang['common']['delete_sure']='Are you sure you want to delete the item?';
-
-$lang['common']['selection']='Select';
-
-$lang['common']['delete_selections']='Delete selected';
-
-$lang['common']['error_data']='Failed to send data';
-
-$lang['common']['admin']='Admin';
-
-$lang['common']['open']='Open';
-
-$lang['common']['close']='Close';
-
-$lang['common']['redirecting']='Redirecting';
-
-$lang['common']['push_here']='Push here';
-
-$lang['common']['wait_time']='Timeout';
-
-$lang['common']['alphabetic_order']='Alphabetic order';
-
-$lang['common']['search_user']='Search user';
-
-$lang['common']['in_sense']='In sense';
-
-$lang['common']['hidden_status']='Hidden status';
-
-$lang['common']['identity_doc']='CIF/NIF';
-
-$lang['common']['user_data']='User data';
-
-$lang['common']['name_user_exists']='No such username';
-
-$lang['common']['wait_send_message']='You have to wait to send the message';
-
-$lang['common']['options_text']='Text options';
-
-$lang['common']['characters']='Characters';
-
-$lang['common']['insert_emoticons']='Insert emoticons';
-
-$lang['common']['emoticons']='Emoticons';
-
-$lang['common']['config']='Configuration';
-
-$lang['common']['position']='Position';
-
-$lang['common']['positions']='Positions';
-
-$lang['common']['user_type']='User type';
-
-$lang['common']['any_user']='Any user';
-
-$lang['common']['register']='Register';
-
-$lang['common']['weight']='Peso';
-
-$lang['common']['any_user_choose']='Choose any user...';
-
-$lang['common']['subtitle']='Subtitle';
-
-$lang['common']['content']='Content';
-
-$lang['common']['error_can_father_son_of_son']='Error, a parent can not be the son of his son';
-
-$lang['common']['form']='Form';
-
-$lang['common']['type_user']='User type';
-
-$lang['common']['all_users']='All users';
-
-$lang['common']['last']='Last';
-
-$lang['common']['bold']='Bold';
-
-$lang['common']['italic']='Italic';
-
-$lang['common']['underline']='Underline';
-
-$lang['common']['url']='Url';
-
-$lang['common']['center']='Center';
-
-$lang['common']['font_color']='Font color';
-
-$lang['common']['font_size']='Font size';
-
-$lang['common']['img']='Image';
-
-$lang['common']['code']='Code';
-
-$lang['common']['press_here']='Press here';
-
-$lang['common']['referencia']='referencia';
+PhangoVar::$lang['common']['password']='password';
 
 ?>

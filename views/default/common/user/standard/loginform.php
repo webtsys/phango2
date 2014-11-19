@@ -2,10 +2,8 @@
 
 function LoginFormView($model_user, $model_login)
 {
-
-	global $config_data, $base_url, $lang, $model;
 	
-	$model_user->forms['no_expire_session']=new ModelForm('form_login', 'no_expire_session', 'CheckBoxForm', $lang['user']['automatic_login']	, new BooleanField(), $required=1, $parameters='');
+	$model_user->forms['no_expire_session']=new ModelForm('form_login', 'no_expire_session', 'CheckBoxForm', PhangoVar::$lang['users']['automatic_login'], new BooleanField(), $required=1, $parameters='');
 
 	$arr_fields_login=array($model_login->field_user, $model_login->field_password, 'no_expire_session');
 	
@@ -13,12 +11,12 @@ function LoginFormView($model_user, $model_login)
 	<form method="post" action="<?php echo $model_login->url_login; ?>">
 	<?php
 		set_csrf_key();
-		//ModelFormView($model_form, $fields=array(), $html_id='')
+		
 		echo load_view(array($model_user->forms, $arr_fields_login), 'common/forms/modelform');
 
 	?>
-	<p><a href="<?php echo $model_login->url_recovery; ?>"><?php echo $lang['user']['remember_password']; ?></a></p>
-	<p><input type="submit" value="<?php echo $lang['common']['login']; ?>" /></p>
+	<p><a href="<?php echo $model_login->url_recovery; ?>"><?php echo PhangoVar::$lang['users']['remember_password']; ?></a></p>
+	<p><input type="submit" value="<?php echo PhangoVar::$lang['common']['login']; ?>" /></p>
 	</form>
 	<?php
 
