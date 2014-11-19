@@ -78,11 +78,11 @@ PhangoVar::$lang['common']['minute']='minute';
 
 PhangoVar::$lang['common']['second']='second';
 
+PhangoVar::$lang['common']['with_*_field_required']='with_-_field_required';
+
 PhangoVar::$lang['common']['login']='login';
 
 PhangoVar::$lang['common']['order_and_search']='order_and_search';
-
-PhangoVar::$lang['common']['with_*_field_required']='with_-_field_required';
 
 PhangoVar::$lang['common']['password']='password';
 

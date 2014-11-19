@@ -38,14 +38,6 @@ class IndexSwitchClass extends ControllerSwitchClass {
 		}
 		else
 		{
-		
-			/*$this->login->create_account_form();
-			
-			$cont_index=ob_get_contents();
-			
-			ob_end_clean();
-			
-			$this->load_theme(PhangoVar::$lang['users']['login'], $cont_index);*/
 			
 			load_libraries(array('redirect'));
 			

@@ -2,8 +2,6 @@
 
 function InsertUserFormView($model_user, $model_login)
 {
-
-	global $config_data, $base_url, $lang, $model;
 	
 	?>
 	<form method="post" action="<?php echo $model_login->url_insert; ?>">
@@ -16,7 +14,7 @@ function InsertUserFormView($model_user, $model_login)
 		
 
 	?>
-	<p><input type="submit" value="<?php echo $lang['user']['register']; ?>"/></p>
+	<p><input type="submit" value="<?php echo PhangoVar::$lang['users']['register']; ?>"/></p>
 	</form>
 	<?php
 

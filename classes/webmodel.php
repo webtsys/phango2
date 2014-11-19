@@ -281,6 +281,8 @@ class PhangoVar {
 	
 	static public $get=array();
 	
+	static public $url_module_requires=array();
+	
 }
 
 
@@ -4999,6 +5001,7 @@ function make_fancy_url($url, $folder_url, $ident_url, $arr_params=array())
 		$parameters='/'.implode('/', $arr_params);
 	
 	}
+
 	
 	return $url.$index_php.$part_url.$parameters;
 
@@ -5053,8 +5056,8 @@ function controller_fancy_url($func_name, $description_text, $arr_data=array(), 
 function slugify($text, $respect_upper=0, $replace_space='-')
 {
 
-	$from='àáâãäåæçèéêëìíîïðòóôõöøùúûýþÿŕñÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÐÒÓÔÕÖØÙÚÛÝỲŸÞŔÑ/?¿!¡()"|#*%';
-	$to=  'aaaaaaaceeeeiiiidoooooouuuybyrnAAAAAACEEEEIIIIDOOOOOOUUUYYYBRN------------';
+	$from='àáâãäåæçèéêëìíîïðòóôõöøùúûýþÿŕñÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÐÒÓÔÕÖØÙÚÛÝỲŸÞŔÑ?¿!¡()"|#*%';
+	$to=  'aaaaaaaceeeeiiiidoooooouuuybyrnAAAAAACEEEEIIIIDOOOOOOUUUYYYBRN-----------';
 
 	$text=trim(str_replace(" ", $replace_space, $text));
 
@@ -5804,28 +5807,16 @@ function load_header_view()
 if(PhangoVar::$THEME_MODULE==1)
 {
 
-	function get_url_image($img_name, $module='')
+	function get_url_image($img_name, $module='none')
 	{
 	
 		//Redirect to php
 		
-		/*if($set_encode==1)
-		{*/
-		
 		$img_name=urlencode_redirect($img_name, 1);
 		
-		//}
+		$arr_image_def=array('module' => $module, 'image' => $img_name);
 		
-		$arr_image_def=array('image' => $img_name);
-		
-		if($module!='')
-		{
-		
-			$arr_image_def['module']=$module;
-		
-		}
-		
-		return make_fancy_url(PhangoVar::$base_url, 'media', 'images', $arr_image_def);
+		return make_fancy_url(PhangoVar::$base_url, 'media', 'image', $arr_image_def);
 	
 	}
 	
@@ -6078,20 +6069,6 @@ function load_controller()
 	
 	//$server_host_php='http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . "{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 	
-	/*else
-	{
-	
-		//Function for search the url...
-		
-		function search_url()
-		{
-		
-			return array('', array());
-		
-		}
-	
-	}*/
-	
 	//Load urls, you need load this for make_fancy_url
 	
 	foreach(PhangoVar::$activated_modules as $module)
@@ -6204,6 +6181,54 @@ function load_controller()
 	
 	}
 	
+	//Check if all url module dependencies is loaded.
+	
+	$arr_keys_urls=array_keys(PhangoVar::$urls);
+	
+	$arr_no_loaded_urls=array_diff(PhangoVar::$url_module_requires, $arr_keys_urls);
+	
+	foreach($arr_no_loaded_urls as $url_no_loaded)
+	{
+	
+		$output=ob_get_contents();
+
+		ob_clean();
+
+		$arr_no_controller[0]='<p>Don\'t loaded necessary urls..</p>';
+		$arr_no_controller[1]='<p>Don\'t loaded necessary urls '.$url_no_loaded.'</p>';
+
+		echo show_error($arr_no_controller[0], $arr_no_controller[1], $output_external=$output);
+		
+		die;
+	
+	}
+	
+	/*foreach(PhangoVar::$url_module_requires as $module => $arr_requires)
+	{
+	
+		foreach($arr_requires as $require)
+		{
+		
+			if(!isset(PhangoVar::$urls[$require]))
+			{
+			
+				$output=ob_get_contents();
+
+				ob_clean();
+
+				$arr_no_controller[0]='<p>Don\'t loaded necessary urls..</p>';
+				$arr_no_controller[1]='<p>Don\'t loaded necessary urls '.$require.'</p>';
+
+				echo show_error($arr_no_controller[0], $arr_no_controller[1], $output_external=$output);
+				
+				die;
+			
+			}
+		
+		}
+	
+	}*/
+	
 	if(in_array(PhangoVar::$script_module, PhangoVar::$activated_modules)) 
 	{
 		
@@ -6307,5 +6332,31 @@ function integer_get($value)
 
 }
 
+function generate_random_password($length_pass=14)
+{
+
+	$x=0;
+	$z=0;
+
+	$abc = array( 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '*', '+', '!', '-', '_');
+	
+	shuffle($abc);
+	
+	$c_chars=count($abc)-1;
+
+	$password_final='';
+
+	for($x=0;$x<$length_pass;$x++)
+	{
+
+		$z=mt_rand(0, $c_chars);
+		
+		$password_final.=$abc[$z];
+
+	}
+
+	return $password_final;
+
+}
 
 ?>

@@ -44,4 +44,6 @@ PhangoVar::$lang['users']['automatic_login']='Guardar conexión';
 
 PhangoVar::$lang['users']['remember_password']='Recordar contraseña';
 
+PhangoVar::$lang['users']['register']='register';
+
 ?>

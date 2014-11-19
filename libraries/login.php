@@ -21,6 +21,8 @@ class LoginClass {
 	public $create_account_view='common/user/standard/insertuserform';
 	public $recovery_pass_view='common/user/standard/recoverypassform';
 	public $method_crypt='sha256';
+	public $accept_conditions=1;
+	public $was_prepared=0;
 	
 	public function __construct($model_login, $field_user, $field_password, $field_key, $arr_user_session=array(), $arr_user_insert=array())
 	{
@@ -30,8 +32,14 @@ class LoginClass {
 		$this->field_password=$field_password;
 		$this->arr_user_session=$arr_user_session;
 		$this->field_key=$field_key;
-		$this->arr_user_insert=array($field_user, $field_password);
 		
+		$this->arr_user_insert=$arr_user_insert;
+		
+		$this->arr_user_insert[]=$this->field_user;
+		$this->arr_user_insert[]=$this->field_password;
+		
+		$this->arr_user_insert=array_unique($this->arr_user_insert, SORT_STRING);
+
 		//Initialize form
 		
 		PhangoVar::$model[$this->model_login]->create_form();
@@ -175,7 +183,7 @@ class LoginClass {
 		
 		if(isset($_SESSION[$this->field_key]) && isset($_SESSION[PhangoVar::$model[$this->model_login]->idmodel]))
 		{
-		
+			
 			$check_user=1;
 			
 		}	
@@ -408,7 +416,7 @@ class LoginClass {
 	public function create_account_form()
 	{
 		
-		if(!isset(PhangoVar::$model[$this->model_login]->forms['accept_conditions']))
+		if($this->was_prepared==0)
 		{
 		
 			$this->prepare_insert_user();
@@ -423,6 +431,8 @@ class LoginClass {
 	{
 		
 		$this->prepare_insert_user();
+		
+		$this->was_prepared=1;
 					
 		$post=filter_fields_array($this->arr_user_insert, $_POST);
 		
@@ -445,7 +455,7 @@ class LoginClass {
 			
 				if(isset(PhangoVar::$model[$this->model_login]->components[$field_require]))
 				{
-					PhangoVar::$model[$this->model_login]->components[$field_require]->require=1;
+					PhangoVar::$model[$this->model_login]->components[$field_require]->required=1;
 				}
 			}
 			
@@ -489,8 +499,8 @@ class LoginClass {
 		//$this->arr_user_insert[]='accept_conditions';
 		
 		PhangoVar::$model[$this->model_login]->forms['repeat_password']=new ModelForm('repeat_password', 'repeat_password', 'PasswordForm',  PhangoVar::$lang['users']['repeat_password'], new PasswordField(), $required=1, $parameters='');
-	
-		$this->arr_user_insert[]='repeat_password';
+		
+		//PhangoVar::$model[$this->model_login]->InsertAfterFieldForm($this->field_password, 'repeat_password', new ModelForm('repeat_password', 'repeat_password', 'PasswordForm',  PhangoVar::$lang['users']['repeat_password'], new PasswordField(), $required=1, $parameters=''));
 			
 		if(PhangoVar::$captcha_type!='')
 		{
@@ -503,9 +513,14 @@ class LoginClass {
 			
 		}
 		
-		PhangoVar::$model[$this->model_login]->forms['accept_conditions']=new ModelForm('form_login', 'accept_conditions', 'CheckBoxForm',  PhangoVar::$lang['users']['accept_cond_register']	, new BooleanField(), $required=1, $parameters='');
+		if($this->accept_conditions==1)
+		{
 		
-		$this->arr_user_insert[]='accept_conditions';
+			PhangoVar::$model[$this->model_login]->forms['accept_conditions']=new ModelForm('form_login', 'accept_conditions', 'CheckBoxForm',  PhangoVar::$lang['users']['accept_cond_register']	, new BooleanField(), $required=1, $parameters='');
+			
+			$this->arr_user_insert[]='accept_conditions';
+			
+		}
 	
 	}
 	

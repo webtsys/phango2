@@ -1,36 +1,38 @@
 <?php
 
+load_libraries(array('login'));
+load_model('admin');
+load_config('admin');
+
 class IndexSwitchClass extends ControllerSwitchClass {
 
 
-	public function index($module_id)
+	public function index($module_id=0)
 	{
 		ob_start();
 
 		//global $model, $lang, PhangoVar::$base_url, PhangoVar::$base_path, $user_data, $arr_module_admin, $config_data, $arr_block, $original_theme, $module_admin, $header;
 		
+		$login=new LoginClass('user_admin', 'username', 'password', '', $arr_user_session=array('IdUser_admin', 'privileges_user', 'username'), $arr_user_insert=array('username', 'password', 'repeat_password', 'email'));
+		
+		$login->field_key='token_client';
+		
 		$header='';
 		$content='';
 		
 		load_lang('admin');
-		load_libraries(array('check_admin', 'utilities/set_admin_link'));
+		load_libraries(array('utilities/set_admin_link'));
 
 		settype($module_id, 'integer');
 
-		$original_theme=PhangoVar::$dir_theme;
-
-		PhangoVar::$dir_theme=$original_theme;
-
-		$arr_block='admin/admin_none';
-		
 		$extra_urls=array();
 
 		//Make menu...
 		//Admin was internationalized
 		
-		if(check_admin($user_data['IdUser']) || $user_data['privileges_user']==1)
+		if($login->check_login())
 		{
-
+			
 			//variables for define titles for admin page
 
 			$title_admin=PhangoVar::$lang['admin']['admin'];
@@ -54,8 +56,49 @@ class IndexSwitchClass extends ControllerSwitchClass {
 			$module_admin[$module_id]='AdminIndex';
 
 			PhangoVar::$lang[$module_admin[$module_id].'_admin']['AdminIndex_admin_name']=ucfirst(PhangoVar::$lang['admin']['admin']);
+			
+			foreach(ModuleAdmin::$arr_modules_admin as $idmodule => $ser_admin_script)
+			{
+				$name_module=$idmodule;
+				
+				$arr_admin_script[$idmodule]=$ser_admin_script;
+				
+				//load little file lang with the name for admin. With this you don't need bloated with biggest files of langs...
 
-			$query=PhangoVar::$model['module']->select('where admin=\'1\'', array('IdModule', 'name', 'admin_script'));
+				$dir_lang_admin='';
+
+				if($arr_admin_script[$idmodule][0]!=$arr_admin_script[$idmodule][1])
+				{
+
+					$dir_lang_admin=$arr_admin_script[$idmodule][0].'_';
+
+				}
+
+				load_lang($dir_lang_admin.$name_module.'_admin');
+				
+				if(!isset(PhangoVar::$lang[$name_module.'_admin'][$name_module.'_admin_name']))
+				{
+
+					$name_modules[$name_module]=ucfirst($name_module);
+					PhangoVar::$lang[$name_module.'_admin'][$name_module.'_admin_name']=ucfirst($name_modules[$name_module]);
+				
+				}
+				else
+				{
+					
+					$name_modules[$name_module]=ucfirst(PhangoVar::$lang[$name_module.'_admin'][$name_module.'_admin_name']);
+
+				}
+
+				$urls[$name_module]=set_admin_link($name_module, array('IdModule' => $idmodule)); //(PhangoVar::$base_url, 'admin', 'index', $name_module, array('IdModule' => $idmodule));
+
+				$module_admin[$idmodule]=$name_module;
+				
+				$arr_permissions_admin[$idmodule]=1;
+			
+			}
+
+			/*$query=PhangoVar::$model['module']->select('where admin=\'1\'', array('IdModule', 'name', 'admin_script'));
 
 			while( list($idmodule, $name_module, $ser_admin_script)=webtsys_fetch_row($query) )
 			{
@@ -95,11 +138,13 @@ class IndexSwitchClass extends ControllerSwitchClass {
 				
 				$arr_permissions_admin[$idmodule]=1;
 
-			}
+			}*/
+			
+			
 
 			$file_include=PhangoVar::$base_path.'modules/'.$arr_admin_script[ $module_id ][0].'/controllers/admin/admin_'.$arr_admin_script[ $module_id ][1].'.php';
 			
-			if($user_data['privileges_user']==1)
+			if($login->session['privileges_user']==1)
 			{
 			
 				$arr_permissions_admin=array();
@@ -181,13 +226,13 @@ class IndexSwitchClass extends ControllerSwitchClass {
 			echo load_view(array('header' => $header, 'title' => PhangoVar::$lang['admin']['admin_zone'], 'content' => $content, 'name_modules' => $name_modules, 'urls' => $urls , 'extra_data' => $extra_data), 'admin/admin');
 
 		}
-		else
+		/*else
 		{
 			$url_admin=set_admin_link('home', array());
 			
-			die(header('Location: '.make_fancy_url(PhangoVar::$base_url, 'user', 'index', 'login', array('register_page' => urlencode_redirect($url_admin)), true ) ));
+			die( header('Location: '.make_fancy_url(PhangoVar::$base_url, ADMIN_FOLDER, 'login'), true ) );
 			
-		}
+		}*/
 	
 	}
 	
