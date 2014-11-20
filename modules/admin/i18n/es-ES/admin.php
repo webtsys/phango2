@@ -4,7 +4,7 @@ PhangoVar::$lang['admin']['admin']='admin';
 
 PhangoVar::$lang['admin']['home']='home';
 
-PhangoVar::$lang['admin']['admin_zone']='admin_zone';
+PhangoVar::$lang['admin']['admin_zone']='Zona de administración';
 
 PhangoVar::$lang['admin']['welcome_to_admin']='welcome_to_admin';
 
