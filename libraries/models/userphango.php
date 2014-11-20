@@ -20,7 +20,7 @@ class UserPhangoModel extends Webmodel {
 			
 				//$this->components['password']->required=0;
 				
-				$this->components[$this->password]->std_error=$lang['users']['pasword_not_equal_repeat_password'];
+				$this->components[$this->password]->std_error=PhangoVar::$lang['users']['pasword_not_equal_repeat_password'];
 				
 				return false;
 			

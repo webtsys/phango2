@@ -6292,13 +6292,15 @@ function load_controller()
 			if(class_exists($script_class_name))
 			{
 			
-				if(PhangoVar::$get[0]=='')
+				if(isset(PhangoVar::$get[0]))
 				{
-				
-					PhangoVar::$get=array();
-				
+					if(PhangoVar::$get[0]=='')
+					{
+					
+						PhangoVar::$get=array();
+					
+					}
 				}
-			
 				
 				$script_class=new $script_class_name();
 				
