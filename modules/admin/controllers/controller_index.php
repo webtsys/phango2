@@ -92,7 +92,7 @@ class IndexSwitchClass extends ControllerSwitchClass {
 
 				}
 
-				$urls[$name_module]=set_admin_link($name_module, array($idmodule)); //(PhangoVar::$base_url, 'admin', 'index', $name_module, array('IdModule' => $idmodule));
+				$urls[$name_module]=set_admin_link($idmodule, array()); //(PhangoVar::$base_url, 'admin', 'index', $name_module, array('IdModule' => $idmodule));
 
 				$module_admin[$idmodule]=$name_module;
 				

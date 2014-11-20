@@ -1,8 +1,8 @@
 <?php
 
-PhangoVar::$lang['users']['cannot_insert_user_email_or_user']='cannot_insert_user_email_or_user';
-
 PhangoVar::$lang['users']['pasword_not_equal_repeat_password']='pasword_not_equal_repeat_password';
+
+PhangoVar::$lang['users']['cannot_insert_user_email_or_user']='cannot_insert_user_email_or_user';
 
 PhangoVar::$lang['users']['need_class_special']='need_class_special';
 
