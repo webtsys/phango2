@@ -2,8 +2,6 @@
 
 function UpdateModelFormView($model_form, $arr_fields=array(), $url_post, $enctype='', $form_html_id='', $arr_categories=array('default' => array()))
 {
-
-	load_libraries(array('generate_forms'));
 	
 	PhangoVar::$arr_cache_jscript[]='jquery.min.js';
 	

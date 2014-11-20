@@ -7,7 +7,7 @@ load_config('admin');
 class IndexSwitchClass extends ControllerSwitchClass {
 
 
-	public function index($module_id=0)
+	public function index($module_id='none')
 	{
 		ob_start();
 
@@ -23,8 +23,10 @@ class IndexSwitchClass extends ControllerSwitchClass {
 		load_lang('admin');
 		load_libraries(array('utilities/set_admin_link'));
 
-		settype($module_id, 'integer');
-
+		//settype($module_id, 'string');
+		
+		$module_id=slugify($module_id, 1);
+		
 		$extra_urls=array();
 
 		//Make menu...
@@ -45,11 +47,11 @@ class IndexSwitchClass extends ControllerSwitchClass {
 			$urls=array();
 			
 			$arr_permissions_admin=array();
-			$arr_permissions_admin[0]=1;
+			$arr_permissions_admin['none']=1;
 
 			$module_admin=array();
 
-			$arr_admin_script[0]=array('admin', 'admin');
+			$arr_admin_script['none']=array('admin', 'admin');
 			
 			//Define $module_admin[$module_id] for check if exists in database the module
 
@@ -90,7 +92,7 @@ class IndexSwitchClass extends ControllerSwitchClass {
 
 				}
 
-				$urls[$name_module]=set_admin_link($name_module, array('IdModule' => $idmodule)); //(PhangoVar::$base_url, 'admin', 'index', $name_module, array('IdModule' => $idmodule));
+				$urls[$name_module]=set_admin_link($name_module, array($idmodule)); //(PhangoVar::$base_url, 'admin', 'index', $name_module, array('IdModule' => $idmodule));
 
 				$module_admin[$idmodule]=$name_module;
 				

@@ -15,7 +15,7 @@ function redirect_webtsys($direction,$l_text,$text,$ifno, $arr_block='')
 
 	ob_end_clean();
 	
-	echo load_view(array($config_data['portal_name'].' / '.$l_text, $cont_index), 'home');
+	echo load_view(array(PhangoVar::$portal_name.' / '.$l_text, $cont_index), 'home');
 
 	die();
 
@@ -26,7 +26,7 @@ function simple_redirect($url_return, $l_text, $text, $ifno, $content_view='cont
 	
 	PhangoVar::$arr_cache_header[]="<meta http-equiv=\"refresh\" content=\"2;URL=$url_return\">";
 	
-	echo load_view(array($config_data['portal_name'].' / '.$l_text,'<p>'.$text.'<br><a href="'. $url_return.'">'.$ifno.'</a>'), $content_view);
+	echo load_view(array(PhangoVar::$portal_name.' / '.$l_text,'<p>'.$text.'<br><a href="'. $url_return.'">'.$ifno.'</a>'), $content_view);
 
 }
 

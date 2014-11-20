@@ -389,7 +389,7 @@ class DateTimeNow {
 * property string $idmodel The name of key field of the model.
 * property array $components An array where objects of the PhangoField class are saved. This objects are needed for create fields on the table and each of these represents a field on db table.
 * property array $forms An array where objects of the ModelForm class are saved. This objects are needed for create html forms based in the models. 
-* property string $func_update DEPRECATED An string for use on internal tasks of generate automatic admin.*/
+*/
 
 //Classes
 
@@ -457,10 +457,9 @@ class Webmodel {
 	*
 	* An string for use on internal tasks of generate automatic admin.
 	*
-	* @deprecated generate_admin_ng will are removed in a future and replaced by $model->generate_admin
 	*/
 
-	public $func_update='Basic';
+	public $func_update='basic';
 
 	/**
 	* In this variable is store errors using the model...
@@ -1627,7 +1626,7 @@ class Webmodel {
 	*
 	*/
 	
-	public function InsertAfterFieldForm($name_form_after, $name_form_new, $form_new)
+	public function insert_after_field_form($name_form_after, $name_form_new, $form_new)
 	{
 	
 		$arr_form_new=array();
@@ -4964,7 +4963,7 @@ function RadioIntFormSet($post, $value)
 	
 //Url don't have final slash!!
 
-function make_fancy_url($url, $folder_url, $ident_url, $arr_params=array())
+function make_fancy_url($url, $folder_url, $ident_url, $arr_params=array(), $arr_get_params=array())
 {
 
 	/*$description_text=slugify($description_text, $respect_upper);
@@ -5001,9 +5000,24 @@ function make_fancy_url($url, $folder_url, $ident_url, $arr_params=array())
 		$parameters='/'.implode('/', $arr_params);
 	
 	}
-
 	
-	return $url.$index_php.$part_url.$parameters;
+	$extra_params='';
+
+	if(count($arr_get_params)>0)
+	{
+	
+		foreach($arr_get_params as $key => $value)
+		{
+
+			$arr_get[]=$key.'/'.$value;
+
+		}
+	
+		$extra_params='/get/'.implode('/', $arr_get);
+	
+	}
+	
+	return $url.$index_php.$part_url.$parameters.$extra_params;
 
 }
 
@@ -5021,12 +5035,20 @@ function add_extra_fancy_url($url_fancy, $arr_data)
 
 	$get_final=implode('/', $arr_get);
 
-	$sep='/';
+	$sep='/get/';
 
 	if(preg_match('/\/$/', $url_fancy))
 	{
 
-		$sep='';
+		$sep='get/';
+
+	}
+	
+	
+	if(preg_match('/\/get\//', $url_fancy))
+	{
+
+		$sep='/';
 
 	}
 
@@ -5646,7 +5668,9 @@ function load_lang()
 				
 			}
 			
-			if(!@include(PhangoVar::$base_path.'modules/'.$module_path.'/i18n/'.PhangoVar::$language.'/'.$lang_file.'.php'))
+			$file_path=PhangoVar::$base_path.'modules/'.$module_path.'/i18n/'.PhangoVar::$language.'/'.$lang_file.'.php';
+			
+			if(!include($file_path))
 			{
 
 				$output_error_lang=ob_get_contents();
@@ -6106,9 +6130,48 @@ function load_controller()
 	
 	$request_uri=str_replace('index.php/', '', $request_uri);
 	
+	$arr_extra_get=explode('/get/', $request_uri);
+	
+	if(isset($arr_extra_get[1]))
+	{
+	
+		$arr_variables=explode('/', $arr_extra_get[1]);
+	
+		$cget=count($arr_variables);
+
+		if($cget % 2 !=0 ) 
+		{
+
+			$arr_variables[]='';
+			$cget++;
+		}
+
+		if($cget % 2 ==0 )
+		{
+			//Get variables
+
+			for($x=0;$x<$cget;$x+=2)
+			{
+				
+				//Cut big variables...
+
+				$_GET[$arr_variables[$x]]=urldecode(slugify(substr($arr_variables[$x+1], 0, 255), 1));
+
+			}
+
+		}
+		
+		
+	
+	}
+	
 	//Delete $_GET elements.
 	
 	$request_uri=preg_replace('/\/\?.*$/', '', $request_uri);
+	
+	//Delete get elements.
+	
+	$request_uri=preg_replace('/\/get\/.*$/', '', $request_uri);
 	
 	if($request_uri=='' || $request_uri=='index.php')
 	{
@@ -6217,32 +6280,6 @@ function load_controller()
 	
 	}
 	
-	/*foreach(PhangoVar::$url_module_requires as $module => $arr_requires)
-	{
-	
-		foreach($arr_requires as $require)
-		{
-		
-			if(!isset(PhangoVar::$urls[$require]))
-			{
-			
-				$output=ob_get_contents();
-
-				ob_clean();
-
-				$arr_no_controller[0]='<p>Don\'t loaded necessary urls..</p>';
-				$arr_no_controller[1]='<p>Don\'t loaded necessary urls '.$require.'</p>';
-
-				echo show_error($arr_no_controller[0], $arr_no_controller[1], $output_external=$output);
-				
-				die;
-			
-			}
-		
-		}
-	
-	}*/
-	
 	if(in_array(PhangoVar::$script_module, PhangoVar::$activated_modules)) 
 	{
 		
@@ -6254,6 +6291,14 @@ function load_controller()
 		{
 			if(class_exists($script_class_name))
 			{
+			
+				if(PhangoVar::$get[0]=='')
+				{
+				
+					PhangoVar::$get=array();
+				
+				}
+			
 				
 				$script_class=new $script_class_name();
 				

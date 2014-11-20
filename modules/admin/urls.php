@@ -2,6 +2,8 @@
 
 PhangoVar::$urls[ADMIN_FOLDER]['index']=array('pattern' => '/^'.ADMIN_FOLDER.'$/', 'url' => '/'.ADMIN_FOLDER, 'module' => 'admin', 'controller' => 'index', 'action' => 'index', 'parameters' => array());
 
+PhangoVar::$urls[ADMIN_FOLDER]['module']=array('pattern' => '/^'.ADMIN_FOLDER.'\/(\w+)$/', 'url' => '/'.ADMIN_FOLDER, 'module' => 'admin', 'controller' => 'index', 'action' => 'index', 'parameters' => array('$1' => 'string'));
+
 PhangoVar::$urls[ADMIN_FOLDER]['login']=array('pattern' => '/^'.ADMIN_FOLDER.'\/login$/', 'url' => '/'.ADMIN_FOLDER.'/login', 'module' => 'admin', 'controller' => 'login', 'action' => 'index', 'parameters' => array());
 
 PhangoVar::$urls[ADMIN_FOLDER]['logout']=array('pattern' => '/^'.ADMIN_FOLDER.'\/logout$/', 'url' => '/'.ADMIN_FOLDER.'/logout', 'module' => 'admin', 'controller' => 'login', 'action' => 'logout', 'parameters' => array());

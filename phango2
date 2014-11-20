@@ -29,3 +29,8 @@ Ahora la clase switchclass, cada metodo tendrá el tema de los parametros.
 - A por padmin, check_language, etc. Añadir dependencias y sufijo a tabla.
 
 - El token para los csrf. En _SESSION. Una vez usado el csrf, borrarlo y cambiarlo por otro. $_SESSION['change_csrf']=0
+
+- Falta recordar contraseña.
+
+- Check necessary php modules on welcome.
+

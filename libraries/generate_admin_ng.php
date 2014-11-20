@@ -149,14 +149,14 @@ function SearchInField($model_name, $arr_fields_order, $arr_fields_search, $wher
 		else
 		{
 		
-			PhangoVar::$model_related_name=PhangoVar::$model[$model_name]->components[$_GET['search_field']]->related_model;
+			$model_related_name=PhangoVar::$model[$model_name]->components[$_GET['search_field']]->related_model;
 			
 			if(PhangoVar::$model[$model_name]->components[$_GET['search_field']]->name_field_to_field!='')
 			{
 			
 				$field_related_name=PhangoVar::$model[$model_name]->components[$_GET['search_field']]->name_field_to_field;
 				
-				$arr_where_sql='`'.PhangoVar::$model_related_name.'`.`'.$field_related_name.'` LIKE \'%'.$value_search.'%\'';
+				$arr_where_sql='`'.$model_related_name.'`.`'.$field_related_name.'` LIKE \'%'.$value_search.'%\'';
 				
 			}
 		
@@ -273,7 +273,7 @@ function GeneratePositionModel($model_name, $field_name, $field_position, $url, 
 
 class SearchInFieldClass {
 
-	public $model_name, $arr_fields_order, $arr_fields_search, $where_sql, $url_options, $yes_id=1, $show_form=1, PhangoVar::$lang_asc;
+	public $model_name, $arr_fields_order, $arr_fields_search, $where_sql, $url_options, $yes_id=1, $show_form=1, $lang_asc;
 
 	function __construct($model_name, $arr_fields_order, $arr_fields_search, $where_sql, $url_options, $yes_id=1, $show_form=1)
 	{
@@ -409,14 +409,14 @@ class SearchInFieldClass {
 			else
 			{
 			
-				PhangoVar::$model_related_name=PhangoVar::$model[$this->model_name]->components[$_GET['search_field']]->related_model;
+				$model_related_name=PhangoVar::$model[$this->model_name]->components[$_GET['search_field']]->related_model;
 				
 				if(PhangoVar::$model[$this->model_name]->components[$_GET['search_field']]->name_field_to_field!='')
 				{
 				
 					$field_related_name=PhangoVar::$model[$this->model_name]->components[$_GET['search_field']]->name_field_to_field;
 					
-					$arr_where_sql='`'.PhangoVar::$model_related_name.'`.`'.$field_related_name.'` LIKE \'%'.$value_search.'%\'';
+					$arr_where_sql='`'.$model_related_name.'`.`'.$field_related_name.'` LIKE \'%'.$value_search.'%\'';
 					
 				}
 			
@@ -445,17 +445,17 @@ class SearchInFieldClass {
 
 class remove_idrow {
 
-	function no_remove($arr_row, PhangoVar::$model_idmodel)
+	function no_remove($arr_row, $model_idmodel)
 	{
 
 		return $arr_row;
 
 	}
 
-	function remove($arr_row, PhangoVar::$model_idmodel)
+	function remove($arr_row, $model_idmodel)
 	{
 
-		unset($arr_row[PhangoVar::$model_idmodel]);	
+		unset($arr_row[$model_idmodel]);	
 
 		return $arr_row;
 
@@ -465,10 +465,10 @@ class remove_idrow {
 
 class add_options {
 
-	function yes_add_options($arr_row, $arr_row_raw, $options_func, $url_options, $model_name, PhangoVar::$model_idmodel, $separator_element)
+	function yes_add_options($arr_row, $arr_row_raw, $options_func, $url_options, $model_name, $model_idmodel, $separator_element)
 	{
 
-		$arr_row[]=implode($separator_element, $options_func($url_options, $model_name, PhangoVar::$model_idmodel, $arr_row_raw) );
+		$arr_row[]=implode($separator_element, $options_func($url_options, $model_name, $model_idmodel, $arr_row_raw) );
 
 		return $arr_row;
 
@@ -476,7 +476,7 @@ class add_options {
 
 
 
-	function no_add_options($arr_row, $arr_row_raw, $options_func, $url_options, $model_name, PhangoVar::$model_idmodel, $separator_element)
+	function no_add_options($arr_row, $arr_row_raw, $options_func, $url_options, $model_name, $model_idmodel, $separator_element)
 	{
 
 		return $arr_row;
