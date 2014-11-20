@@ -226,13 +226,12 @@ class IndexSwitchClass extends ControllerSwitchClass {
 			echo load_view(array('header' => $header, 'title' => PhangoVar::$lang['admin']['admin_zone'], 'content' => $content, 'name_modules' => $name_modules, 'urls' => $urls , 'extra_data' => $extra_data), 'admin/admin');
 
 		}
-		/*else
-		{
-			$url_admin=set_admin_link('home', array());
-			
+		else
+		{	
+		
 			die( header('Location: '.make_fancy_url(PhangoVar::$base_url, ADMIN_FOLDER, 'login'), true ) );
 			
-		}*/
+		}
 	
 	}
 	

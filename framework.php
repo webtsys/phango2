@@ -567,6 +567,8 @@ if(!isset($_SESSION['csrf_token']))
 
 }
 
+PhangoVar::$key_csrf=$_SESSION['csrf_token'];
+
 //Timezone
 
 date_default_timezone_set (PhangoVar::$timezone);
@@ -588,6 +590,35 @@ else
 }
 
 load_lang('common', 'error_model');
+
+//Check for csrf attacks
+
+if(count($_POST)>0)
+{
+
+	//Check csrf_token
+
+	settype($_POST['csrf_token'], 'string');
+
+	//If no isset $_POST['csrf_token'] check $_GET['csrf_token']
+
+	if($_POST['csrf_token']!=PhangoVar::$key_csrf)
+	{
+
+		//Check if csrf_token in variable basic_csrf for anonymous connect, necessary for gateways payment for example...
+
+		$arr_error_sql[0]='Post denied';
+		$arr_error_sql[1]='Post denied. Error in csrf_token';
+
+		show_error($arr_error_sql[0], $arr_error_sql[1], $output_external='');
+
+		die;
+
+	}
+	
+	unset($_POST['csrf_token']);
+
+}
 
 load_controller();
 

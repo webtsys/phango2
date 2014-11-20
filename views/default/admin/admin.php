@@ -39,6 +39,10 @@ function AdminView($header, $title, $content, $name_modules, $url_modules, $extr
 
 		?>
 		</div>
+		
+		<div id="logout">
+		<a href="<?php echo make_fancy_url(PhangoVar::$base_url, 'admin', 'logout', array());?>">Logout</a>
+		</div>
 
 		<div id="center_body">
 			<div id="header"><span id="title_phango">Phango</span> <span id="title_framework">Framework!</span> <?php echo $title; ?></div>

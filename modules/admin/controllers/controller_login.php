@@ -152,6 +152,21 @@ class LoginSwitchClass extends ControllerSwitchClass {
 		}
 	
 	}
+	
+	public function logout()
+	{
+	
+		ob_start();
+			
+		$this->login->logout();
+		
+		$cont_index=ob_get_contents();
+		
+		ob_end_clean();
+		
+		$this->simple_redirect( make_fancy_url(PhangoVar::$base_url, ADMIN_FOLDER, 'login') );
+	
+	}
 
 }
 

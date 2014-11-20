@@ -489,7 +489,7 @@ a:hover.no_choose_flag
 
 }
 
-#languages_general
+#languages_general, #logout
 {
 
 	position:absolute;
@@ -499,6 +499,15 @@ a:hover.no_choose_flag
 	right:0px;
 	width:50px;
 	
+}
+
+#logout
+{
+	
+	top:16px;
+	right:5px;
+	font-weight:bold;
+	font-size:12px;
 }
 
 a.no_choose_flag_general
