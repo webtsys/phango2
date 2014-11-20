@@ -39,6 +39,17 @@ class LoginClass {
 		$this->arr_user_insert[]=$this->field_password;
 		
 		$this->arr_user_insert=array_unique($this->arr_user_insert, SORT_STRING);
+		
+		//Check is phangoUser the model.
+		
+		if(get_class(PhangoVar::$model[$this->model_login])!='UserPhangoModel')
+		{
+		
+			show_error(PhangoVar::$lang['users']['need_class_special'], PhangoVar::$lang['users']['need_class_special_phango_class']);
+		
+			die;
+		
+		}
 
 		//Initialize form
 		
@@ -452,9 +463,11 @@ class LoginClass {
 		
 		$check_user=PhangoVar::$model[$this->model_login]->components[$this->field_user]->check($post[$this->field_user]);
 		
-		$no_user=PhangoVar::$model[$this->model_login]->select_count('where `'.PhangoVar::$model[$this->model_login]->name.'`.`'.$this->field_user.'`="'.$check_user.'"');
+		//$no_user=PhangoVar::$model[$this->model_login]->select_count('where `'.PhangoVar::$model[$this->model_login]->name.'`.`'.$this->field_user.'`="'.$check_user.'"');
 		
-		if(ModelForm::check_form(PhangoVar::$model[$this->model_login]->forms, $post) && $no_user==0)
+		// && $no_user==0
+		
+		if(ModelForm::check_form(PhangoVar::$model[$this->model_login]->forms, $post))
 		{
 		
 			/*if($_POST['repeat_password']==$post[$this->field_password] && $check_captcha==1 && $no_user==0)

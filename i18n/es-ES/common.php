@@ -26,8 +26,6 @@ PhangoVar::$lang['common']['press_here_redirecting']='press_here_redirecting';
 
 PhangoVar::$lang['common']['go_back']='go_back';
 
-PhangoVar::$lang['common']['options']='options';
-
 PhangoVar::$lang['common']['pages']='pages';
 
 PhangoVar::$lang['common']['delete_model']='delete_model';
@@ -39,6 +37,8 @@ PhangoVar::$lang['common']['send']='send';
 PhangoVar::$lang['common']['order']='order';
 
 PhangoVar::$lang['common']['no_exists_elements_to_order']='no_exists_elements_to_order';
+
+PhangoVar::$lang['common']['options']='options';
 
 PhangoVar::$lang['common']['home']='home';
 

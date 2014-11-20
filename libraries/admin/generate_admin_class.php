@@ -259,6 +259,8 @@ class GenerateAdminClass {
 
 					$func_update=$arr_update[$id];
 					
+					$_POST[PhangoVar::$model[$model_name]->idmodel]=$id;
+					
 					if(!$this->$func_update($model_name, $arr_fields, $_POST, $id, $where_sql))
 					{
 

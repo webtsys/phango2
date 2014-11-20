@@ -1,9 +1,9 @@
 <?php
 
 load_lang('admin');
-load_libraries(array('fields/passwordfield'));
+load_libraries(array('fields/passwordfield', 'models/userphango'));
 
-PhangoVar::$model['user_admin']=new Webmodel('user_admin');
+PhangoVar::$model['user_admin']=new UserPhangoModel('user_admin');
 
 PhangoVar::$model['user_admin']->set_component('username', 'CharField', array(25), 1);
 

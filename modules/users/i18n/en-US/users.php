@@ -1,5 +1,13 @@
 <?php
 
+PhangoVar::$lang['users']['cannot_insert_user_email_or_user']='cannot_insert_user_email_or_user';
+
+PhangoVar::$lang['users']['pasword_not_equal_repeat_password']='pasword_not_equal_repeat_password';
+
+PhangoVar::$lang['users']['need_class_special']='need_class_special';
+
+PhangoVar::$lang['users']['need_class_special_phango_class']='need_class_special_phango_class';
+
 PhangoVar::$lang['users']['user_error_nick_or_pass']='user_error_nick_or_pass';
 
 PhangoVar::$lang['users']['lost_name']='lost_name';

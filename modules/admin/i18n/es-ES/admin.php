@@ -18,4 +18,6 @@ PhangoVar::$lang['admin']['welcome_to_admin']='welcome_to_admin';
 
 PhangoVar::$lang['admin']['applications']='applications';
 
+PhangoVar::$lang['admin']['cannot_insert_user_email_or_user']='cannot_insert_user_email_or_user';
+
 ?>
