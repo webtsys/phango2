@@ -1,64 +1,62 @@
 <?php
 
-function ShowMedia()
-{
+class IndexSwitchClass extends ControllerSwitchClass {
 
-	global $base_path, $config_data, $script_base_controller;
+	private $theme;
+	private $container_theme;
+	private $module_theme_loaded;
 
-	settype($_GET['images'], 'string');
-	settype($_GET['css'], 'string');
-	settype($_GET['module'], 'string');
-	
-	$module_theme_loaded=''; //$config_data['module_theme'];
-	
-	$theme=$config_data['dir_theme'];
-	
-	$container_theme=$config_data['module_theme'];
-	
-	if($_GET['module']!='')
+	public function __construct()
 	{
 	
-		$module_theme_loaded=slugify(basename($_GET['module']), 1).'/';
+		$this->module_theme_loaded=''; //$config_data['module_theme'];
+		
+		$this->theme=PhangoVar::$dir_theme;
+		
+		$this->container_theme=PhangoVar::$module_theme;
+		
+		parent::__construct();
 	
 	}
 	
-	/*settype($_GET['decoded'], 'integer');
-	
-	if($_GET['encoded']==1)
-	{*/
-	
-	format_media_type('images');
-
-	format_media_type('css');
-	
-	format_media_type('font');
-	
-	format_media_type('jscript');
-	
-	$cont_error=ob_get_contents();
-	
-	ob_clean();
-	
-	//Accept .gif, .png o .jpg
-	
-	if($_GET['images']!='')
+	public function check_module_theme($module)
 	{
+	
+		if($module!='none')
+		{
+		
+			$this->module_theme_loaded=slugify(basename($module), 1).'/';
+		
+		}
+	
+	
+	}
+
+
+	public function image($module, $image)
+	{
+	
+		$this->check_module_theme($module);
+		
+		$image=check_path(base64_decode($image));
 		
 		$check_file=0;
-		
-		$ext_info=pathinfo($_GET['images']);
+			
+		$ext_info=pathinfo($image);
 		
 		settype($ext_info['extension'], 'string');
 		
-		$_GET['images']=check_path($_GET['images']);
+		//$image=check_path($image);
 		
 		//theme path, can be a module theme. If module_theme_loaded exists, rewrite.
 		
-		$file_path=$base_path.$container_theme.'views/'.$theme.'/media/'.$module_theme_loaded.'images/'.$_GET['images'];
+		$file_path=PhangoVar::$base_path.$this->container_theme.'views/'.$this->theme.'/media/'.$this->module_theme_loaded.'images/'.$image;
+		
+		$file_path_old='';
 		
 		if($ext_info['extension']=='gif' || $ext_info['extension']=='jpg' || $ext_info['extension']=='png')
 		{
-		
+			
 			$check_file=0;
 			
 			//First on normal theme or module theme.
@@ -68,12 +66,20 @@ function ShowMedia()
 			
 				//Second on module directly.
 			
-				$file_path=$base_path.'modules/'.$module_theme_loaded.'media/images/'.$_GET['images'];
+				$file_path_old=$file_path;
+			
+				$file_path=PhangoVar::$base_path.'modules/'.$this->module_theme_loaded.'media/images/'.$image;
 			
 				if(file_exists($file_path))
 				{
 				
 					$check_file=1;
+				
+				}
+				else
+				{
+				
+					show_error('Don\'t exists the image', 'Don\'t exists the image with path: '.$file_path.' and '.$file_path_old, $output_external='');
 				
 				}
 				
@@ -104,6 +110,12 @@ function ShowMedia()
 			}
 			
 		}
+		else
+		{
+		
+			show_error('Don\'t exists the image', 'Don\'t exists the image with path: '.$file_path, $output_external='');
+		
+		}
 		
 		ob_end_flush();
 		
@@ -111,31 +123,36 @@ function ShowMedia()
 	
 	}
 	
-	if($_GET['css']!='')
+	public function css($module, $css)
 	{
 		
-		$ext_info=pathinfo($_GET['css']);
-		
+		$this->check_module_theme($module);
+	
+		$css=check_path(base64_decode($css));
+	
+		$ext_info=pathinfo($css);
+			
 		settype($ext_info['extension'], 'string');
+		
+		$file_path=PhangoVar::$base_path.$this->container_theme.'views/'.$this->theme.'/media/'.$this->module_theme_loaded.'css/'.$css;
 		
 		if($ext_info['extension']=='css')
 		{
 			$check_file=0;
 		
-			$_GET['css']=check_path($_GET['css']);
-		
 			//First, theme or module theme
-		
-			$file_path=$base_path.$container_theme.'views/'.$theme.'/media/'.$module_theme_loaded.'css/'.$_GET['css'];
-			
+			echo 'pepe';
+
 			if(!file_exists($file_path))
 			{
 			
 				//Second on module.
+				
+				//$file_path=PhangoVar::$base_path.$config_data['module_theme'].'views/'.$config_data['dir_theme'].'/media/css/'.$css;
 			
-				//$file_path=$base_path.$config_data['module_theme'].'views/'.$config_data['dir_theme'].'/media/css/'.$_GET['css'];
+				$file_path_old=$file_path;
 			
-				$file_path=$base_path.'modules/'.$module_theme_loaded.'media/css/'.$_GET['css'];
+				$file_path=PhangoVar::$base_path.'modules/'.$this->module_theme_loaded.'media/css/'.$css;
 				
 				if(file_exists($file_path))
 				{
@@ -164,10 +181,16 @@ function ShowMedia()
 			else
 			{
 			
-				show_error('Don\'t exists the css file', 'Don\'t exists the css file with path: '.$file_path, $output_external='');
+				show_error('Don\'t exists the css file', 'Don\'t exists the css file with path: '.$file_path.' and '.$file_path_old, $output_external='');
 			
 			}
 			
+		}
+		else
+		{
+		
+			show_error('Don\'t exists the css', 'Don\'t exists the css with path: '.$file_path, $output_external='');
+		
 		}
 		
 		ob_end_flush();
@@ -176,12 +199,20 @@ function ShowMedia()
 	
 	}
 	
-	if($_GET['font']!='')
+	public function font($module, $font)
 	{
-		
-		$ext_info=pathinfo($_GET['font']);
-		
+	
+		$this->check_module_theme($module);
+	
+		$font=check_path(base64_decode($font));
+	
+		$ext_info=pathinfo($font);
+			
 		settype($ext_info['extension'], 'string');
+		
+		$file_path=PhangoVar::$base_path.$this->container_theme.'views/'.$this->theme.'/media/'.$this->module_theme_loaded.'fonts/'.$font;
+		
+		$file_path_old='';
 		
 		if($ext_info['extension']=='ttf')
 		{
@@ -189,21 +220,27 @@ function ShowMedia()
 			
 			//normal theme or module theme
 			
-			$file_path=$base_path.$container_theme.'views/'.$theme.'/media/'.$module_theme_loaded.'fonts/'.$_GET['font'];
-			
 			if(!file_exists($file_path))
 			{
 			
 				//Second on module.
 			
-				//$file_path=$base_path.$config_data['module_theme'].'views/'.$config_data['dir_theme'].'/media/fonts/'.$_GET['font'];
+				//$file_path=PhangoVar::$base_path.$config_data['module_theme'].'views/'.$config_data['dir_theme'].'/media/fonts/'.$font;
+				
+				$file_path_old=$file_path;
 			
-				$file_path=$base_path.'modules/'.$module_theme_loaded.'media/fonts/'.$_GET['font'];
+				$file_path=PhangoVar::$base_path.'modules/'.$this->module_theme_loaded.'media/fonts/'.$font;
 			
 				if(file_exists($file_path))
 				{
 				
 					$check_file=1;
+				
+				}
+				else
+				{
+				
+					show_error('Don\'t exists the font', 'Don\'t exists the font with path: '.$file_path.' and '.$file_path_old, $output_external='');
 				
 				}
 				
@@ -226,6 +263,12 @@ function ShowMedia()
 			}
 			
 		}
+		else
+		{
+		
+			show_error('Don\'t exists the font', 'Don\'t exists the font with path: '.$file_path, $output_external='');
+		
+		}
 		
 		ob_end_flush();
 		
@@ -233,10 +276,16 @@ function ShowMedia()
 	
 	}
 	
-	if($_GET['jscript']!='')
+	public function jscript($module, $jscript)
 	{
+	
+		$this->check_module_theme($module);
+	
+		$jscript=check_path(base64_decode($jscript));
+	
+		$ext_info=pathinfo($jscript);
 		
-		$ext_info=pathinfo($_GET['jscript']);
+		$file_path=PhangoVar::$base_path.$this->container_theme.'views/'.$this->theme.'/media/'.$this->module_theme_loaded.'jscript/'.$jscript;
 		
 		settype($ext_info['extension'], 'string');
 		
@@ -246,16 +295,16 @@ function ShowMedia()
 			
 			//normal theme or module theme
 			
-			$file_path=$base_path.$container_theme.'views/'.$theme.'/media/'.$module_theme_loaded.'jscript/'.$_GET['jscript'];
-			
 			if(!file_exists($file_path))
 			{
 			
 				//Second on module.
 			
-				//$file_path=$base_path.$config_data['module_theme'].'views/'.$config_data['dir_theme'].'/media/fonts/'.$_GET['font'];
+				//$file_path=PhangoVar::$base_path.$config_data['module_theme'].'views/'.$config_data['dir_theme'].'/media/fonts/'.$_GET['font'];
+				
+				$file_path_old=$file_path;
 			
-				$file_path=$base_path.'modules/'.$module_theme_loaded.'media/jscript/'.$_GET['jscript'];
+				$file_path=PhangoVar::$base_path.'modules/'.$this->module_theme_loaded.'media/jscript/'.$jscript;
 			
 				if(!file_exists($file_path))
 				{
@@ -263,13 +312,21 @@ function ShowMedia()
 					//$check_file=1;
 					
 					//last look on application/media/jscript, jscript can be standard, images, css, or fonts, not.
-			
-					$file_path=$base_path.'application/media/jscript/'.$_GET['jscript'];
 					
-					if(!file_exists($file_path))
+					$file_path_old.=' and '.$file_path;
+			
+					$file_path=PhangoVar::$base_path.'application/media/jscript/'.$jscript;
+					
+					if(file_exists($file_path))
 					{
 					
 						$check_file=1;
+					
+					}
+					else
+					{
+					
+						show_error('Don\'t exists the jscript', 'Don\'t exists the jscript with path: '.$file_path.' and '.$file_path_old, $output_external='');
 					
 					}
 				
@@ -298,6 +355,12 @@ function ShowMedia()
 				readfile($file_path);
 			
 			}
+			else
+			{
+			
+				show_error('Don\'t exists the jscript', 'Don\'t exists the jscript with path: '.$file_path, $output_external='');
+			
+			}
 			
 		}
 		
@@ -307,25 +370,333 @@ function ShowMedia()
 	
 	}
 
+	public function index($module_id=0)
+	{
+		global $config_data;
+
+		settype($_GET['images'], 'string');
+		settype($_GET['css'], 'string');
+		settype($_GET['module'], 'string');
+		
+		
+		
+		/*settype($_GET['decoded'], 'integer');
+		
+		if($_GET['encoded']==1)
+		{*/
+		
+		format_media_type('images');
+
+		format_media_type('css');
+		
+		format_media_type('font');
+		
+		format_media_type('jscript');
+		
+		$cont_error=ob_get_contents();
+		
+		ob_clean();
+		
+		//Accept .gif, .png o .jpg
+		
+		if($_GET['images']!='')
+		{
+			
+			$check_file=0;
+			
+			$ext_info=pathinfo($_GET['images']);
+			
+			settype($ext_info['extension'], 'string');
+			
+			$_GET['images']=check_path($_GET['images']);
+			
+			//theme path, can be a module theme. If module_theme_loaded exists, rewrite.
+			
+			$file_path=PhangoVar::$base_path.$this->container_theme.'views/'.$this->theme.'/media/'.$this->module_theme_loaded.'images/'.$_GET['images'];
+			
+			if($ext_info['extension']=='gif' || $ext_info['extension']=='jpg' || $ext_info['extension']=='png')
+			{
+			
+				$check_file=0;
+				
+				//First on normal theme or module theme.
+				
+				if(!file_exists($file_path))
+				{
+				
+					//Second on module directly.
+				
+					$file_path=PhangoVar::$base_path.'modules/'.$this->module_theme_loaded.'media/images/'.$_GET['images'];
+				
+					if(file_exists($file_path))
+					{
+					
+						$check_file=1;
+					
+					}
+					
+					
+				
+				}
+				else
+				{
+				
+					$check_file=1;
+				
+				}
+				
+				if($check_file==1)
+				{
+				
+				
+					header('Content-Type: image/'.$ext_info['extension']);
+				
+					readfile($file_path);
+				
+				}
+				else
+				{
+				
+					show_error('Don\'t exists the image', 'Don\'t exists the image with path: '.$file_path, $output_external='');
+				
+				}
+				
+			}
+			
+			ob_end_flush();
+			
+			die;
+		
+		}
+		
+		if($_GET['css']!='')
+		{
+			
+			$ext_info=pathinfo($_GET['css']);
+			
+			settype($ext_info['extension'], 'string');
+			
+			if($ext_info['extension']=='css')
+			{
+				$check_file=0;
+			
+				$_GET['css']=check_path($_GET['css']);
+			
+				//First, theme or module theme
+			
+				$file_path=PhangoVar::$base_path.$this->container_theme.'views/'.$this->theme.'/media/'.$this->module_theme_loaded.'css/'.$_GET['css'];
+				
+				if(!file_exists($file_path))
+				{
+				
+					//Second on module.
+				
+					//$file_path=PhangoVar::$base_path.$config_data['module_theme'].'views/'.$config_data['dir_theme'].'/media/css/'.$_GET['css'];
+				
+					$file_path=PhangoVar::$base_path.'modules/'.$this->module_theme_loaded.'media/css/'.$_GET['css'];
+					
+					if(file_exists($file_path))
+					{
+					
+						$check_file=1;
+					
+					}
+					
+				
+				}
+				else
+				{
+				
+					$check_file=1;
+				
+				}
+				
+				if($check_file==1)
+				{
+				
+					header('Content-Type: text/css');
+				
+					readfile($file_path);
+				
+				}
+				else
+				{
+				
+					show_error('Don\'t exists the css file', 'Don\'t exists the css file with path: '.$file_path, $output_external='');
+				
+				}
+				
+			}
+			
+			ob_end_flush();
+			
+			die;
+		
+		}
+		
+		if($_GET['font']!='')
+		{
+			
+			$ext_info=pathinfo($_GET['font']);
+			
+			settype($ext_info['extension'], 'string');
+			
+			if($ext_info['extension']=='ttf')
+			{
+				$check_file=0;
+				
+				//normal theme or module theme
+				
+				$file_path=PhangoVar::$base_path.$this->container_theme.'views/'.$this->theme.'/media/'.$this->module_theme_loaded.'fonts/'.$_GET['font'];
+				
+				if(!file_exists($file_path))
+				{
+				
+					//Second on module.
+				
+					//$file_path=PhangoVar::$base_path.$config_data['module_theme'].'views/'.$config_data['dir_theme'].'/media/fonts/'.$_GET['font'];
+				
+					$file_path=PhangoVar::$base_path.'modules/'.$this->module_theme_loaded.'media/fonts/'.$_GET['font'];
+				
+					if(file_exists($file_path))
+					{
+					
+						$check_file=1;
+					
+					}
+					
+				
+				}
+				else
+				{
+				
+					$check_file=1;
+				
+				}
+				
+				if($check_file==1)
+				{
+					
+					header('Content-Type: application/x-font-woff');
+				
+					readfile($file_path);
+				
+				}
+				
+			}
+			
+			ob_end_flush();
+			
+			die;
+		
+		}
+		
+		if($_GET['jscript']!='')
+		{
+			
+			$ext_info=pathinfo($_GET['jscript']);
+			
+			settype($ext_info['extension'], 'string');
+			
+			if($ext_info['extension']=='js')
+			{
+				$check_file=0;
+				
+				//normal theme or module theme
+				
+				$file_path=PhangoVar::$base_path.$this->container_theme.'views/'.$this->theme.'/media/'.$this->module_theme_loaded.'jscript/'.$_GET['jscript'];
+				
+				if(!file_exists($file_path))
+				{
+				
+					//Second on module.
+				
+					//$file_path=PhangoVar::$base_path.$config_data['module_theme'].'views/'.$config_data['dir_theme'].'/media/fonts/'.$_GET['font'];
+				
+					$file_path=PhangoVar::$base_path.'modules/'.$this->module_theme_loaded.'media/jscript/'.$_GET['jscript'];
+				
+					if(!file_exists($file_path))
+					{
+					
+						//$check_file=1;
+						
+						//last look on application/media/jscript, jscript can be standard, images, css, or fonts, not.
+				
+						$file_path=PhangoVar::$base_path.'application/media/jscript/'.$_GET['jscript'];
+						
+						if(!file_exists($file_path))
+						{
+						
+							$check_file=1;
+						
+						}
+					
+					}
+					else
+					{
+					
+						$check_file=1;
+					
+					}
+					
+				
+				}
+				else
+				{
+				
+					$check_file=1;
+				
+				}
+				
+				if($check_file==1)
+				{
+					
+					header('Content-Type: application/javascript');
+				
+					readfile($file_path);
+				
+				}
+				
+			}
+			
+			ob_end_flush();
+			
+			die;
+		
+		}
+		
+	}
+
 }
 
 function check_path($file)
 {
 
 	$arr_file=explode('/', $file);
+	
 	$arr_file_final=array();
 	
-	foreach($arr_file as $file_part)
-	{
+	/*foreach($arr_file as $file_part)
+	{*/
 	
-		$arr_file_final[]=slugify(basename($file_part), 1);
+	$c=count($arr_file)-1;
+	
+	for($x=0;$x<$c;$x++)
+	{
+		if($arr_file[$x]!='')
+		{
+			$arr_file_final[]=slugify(basename($arr_file[$x]), 1, '-', 1);
+			
+		}
 	
 	}
+	
+	$arr_file_final[]=slugify(basename($arr_file[$x]), 1);
 	
 	return implode('/', $arr_file_final);
 
 }
-
+/*
 function format_media_type($type)
 {
 	
@@ -346,6 +717,6 @@ function format_media_type($type)
 	
 	$_GET[$type]=str_replace('./', '', form_text($_GET[$type]));
 
-}
+}*/
 
 ?>

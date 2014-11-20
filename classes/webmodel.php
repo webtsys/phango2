@@ -5053,11 +5053,19 @@ function controller_fancy_url($func_name, $description_text, $arr_data=array(), 
 *
 */
 
-function slugify($text, $respect_upper=0, $replace_space='-')
+function slugify($text, $respect_upper=0, $replace_space='-', $replace_dot=0)
 {
 
 	$from='àáâãäåæçèéêëìíîïðòóôõöøùúûýþÿŕñÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÐÒÓÔÕÖØÙÚÛÝỲŸÞŔÑ?¿!¡()"|#*%';
 	$to=  'aaaaaaaceeeeiiiidoooooouuuybyrnAAAAAACEEEEIIIIDOOOOOOUUUYYYBRN-----------';
+	
+	if($replace_dot==1)
+	{
+	
+		$from.='.';
+		$to.='-';
+	
+	}
 
 	$text=trim(str_replace(" ", $replace_space, $text));
 
