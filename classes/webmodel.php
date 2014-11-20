@@ -5610,6 +5610,12 @@ function load_lang()
 		PhangoVar::$language=$_SESSION['language'];
 
 	}
+	else
+	{
+	
+		$_SESSION['language']=PhangoVar::$language;
+	
+	}
 	
 	$arg_list = func_get_args();
 	
@@ -5882,7 +5888,7 @@ if(PhangoVar::$THEME_MODULE==1)
 		foreach(PhangoVar::$arr_cache_jscript as $idjscript => $jscript)
 		{
 			
-			$module_jscript='';
+			$module_jscript='none';
 			
 			if(gettype($jscript)=='array')
 			{
@@ -5893,7 +5899,7 @@ if(PhangoVar::$THEME_MODULE==1)
 				{
 					$jscript_item=slugify(urlencode_redirect($jscript_item, 1), 1);
 				
-					$url=make_fancy_url(PhangoVar::$base_url, 'media', 'jscript', array( 'jscript' => $jscript_item, 'module' => $module_jscript,));
+					$url=make_fancy_url(PhangoVar::$base_url, 'media', 'jscript', array('module' => $module_jscript, 'jscript' => $jscript_item));
 					
 					$arr_final_jscript[]='<script language="javascript" src="'.$url.'"></script>'."\n";
 				}
@@ -5903,7 +5909,7 @@ if(PhangoVar::$THEME_MODULE==1)
 				
 				$jscript=slugify(urlencode_redirect($jscript, 1), 1);
 				
-				$url=make_fancy_url(PhangoVar::$base_url, 'media', 'jscript', array('jscript' => $jscript));
+				$url=make_fancy_url(PhangoVar::$base_url, 'media', 'jscript', array('module' => $module_jscript, 'jscript' => $jscript));
 				
 				$arr_final_jscript[]='<script language="javascript" src="'.$url.'"></script>'."\n";
 

@@ -2,9 +2,11 @@
 
 function AdminView($header, $title, $content, $name_modules, $url_modules, $extra_data)
 {
+
+	PhangoVar::$arr_cache_jscript[]='jquery.min.js';
 	
 	?>
-	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+	<!DOCTYPE html>
 
 		<html>
 		<head>
