@@ -150,18 +150,18 @@ class IndexSwitchClass extends ControllerSwitchClass {
 			{
 			
 				$arr_permissions_admin=array();
-				//$arr_module_saved=array();
+				$arr_module_saved=array();
 				$arr_module_strip=array();
 				
 				$arr_permissions_admin[$module_id]=0;
-				$arr_permissions_admin[0]=1;
+				$arr_permissions_admin['none']=1;
 			
-				$query=PhangoVar::$model['moderators_module']->select('where moderator='.$user_data['IdUser'], array('idmodule'), 1);
+				$query=PhangoVar::$model['moderators_module']->select('where moderator='.$_SESSION['IdUser_admin'], array('idmodule'), 1);
 				
 				while(list($idmodule_mod)=webtsys_fetch_row($query))
 				{
 				
-					settype($idmodule_mod, 'integer');
+					//settype($idmodule_mod, 'integer');
 					
 					$arr_permissions_admin[$idmodule_mod]=1;
 					
@@ -209,16 +209,26 @@ class IndexSwitchClass extends ControllerSwitchClass {
 				}
 
 			}
-			else if($module_admin[$module_id]!='')
+			else if($module_admin[$module_id]!='' && $arr_permissions_admin[$module_id]==1)
 			{
+				
+				$output=ob_get_contents();
+				
+				ob_clean();
 
 				$arr_error[0]='Error: no exists file for admin application';
-				$arr_error[1]='Error: no exists file '.$file_include.' for admin application';
-				ob_clean();
+				$arr_error[1]='Error: no exists file '.$file_include.' for admin application<p>Output: '.$output.'</p>';
+				
 				echo load_view(array('title' => 'Phango site is down', 'content' => '<p>'.$arr_error[DEBUG].'</p>'), 'common/common');
 				die();
 
 
+			}
+			else
+			{
+			
+				die;
+			
 			}
 
 			$content=ob_get_contents();
