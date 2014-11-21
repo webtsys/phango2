@@ -10,6 +10,10 @@ PhangoVar::$lang['admin']['home']='home';
 
 PhangoVar::$lang['admin']['admin_zone']='Admin zone';
 
+PhangoVar::$lang['admin']['add_moderator_to_module']='add_moderator_to_module';
+
+PhangoVar::$lang['admin']['go_back_home']='go_back_home';
+
 PhangoVar::$lang['admin']['change_user_modules']='change_user_modules';
 
 PhangoVar::$lang['admin']['welcome_to_admin']='welcome_to_admin';

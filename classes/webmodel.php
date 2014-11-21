@@ -1915,6 +1915,30 @@ class ModelForm {
 	
 	/**
 	*
+	* Method for set third argument of a form function. Third argument can be mixed type.
+	*
+	* @param mixed $parameters Third argument for the chose form function
+	*
+	*/
+	
+	function SetAllParameters($parameters=array())
+	{
+	
+		$z=2;
+	
+		foreach($parameters as $paremeter)
+		{
+		
+			$this->parameters[$z]=$parameter;
+			
+			$z++;
+			
+		}
+		
+	}
+	
+	/**
+	*
 	* Method for set all argumentos of a form function.
 	* 
 	* @param array $parameters An array with arguments for the form function used for this ModelForm

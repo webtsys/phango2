@@ -16,7 +16,7 @@ class SimpleList
 	public $url_options='';
 	public $separator_element='<br />';
 	public $limit_rows=10;
-	public $raw_query=1;
+	public $raw_query=0;
 	public $yes_pagination=1;
 	public $num_by_page=20;
 	public $begin_page=0;
