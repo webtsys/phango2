@@ -6,6 +6,9 @@ function update_table($model)
 	$arr_sql_index=array();
 	$arr_sql_set_index=array();
 	
+	$arr_sql_unique=array();
+	$arr_sql_set_unique=array();
+	
 	$arr_etable=array();
 	
 	$query=webtsys_query("show tables");
@@ -51,6 +54,16 @@ function update_table($model)
 				
 					$arr_sql_index[$key][$field]='CREATE INDEX `index_'.$key.'_'.$field.'` ON '.$key.'(`'.$field.'`);';
 					$arr_sql_set_index[$key][$field]='';
+				
+				}
+				
+				//Check if unique
+				
+				if($model[$key]->components[$field]->unique==true)
+				{
+				
+					$arr_sql_unique[$key][$field]=' ALTER TABLE `'.$key.'` ADD UNIQUE (`'.$field.'`)';
+					$arr_sql_set_unique[$key][$field]='';
 				
 				}
 				
@@ -153,6 +166,16 @@ function update_table($model)
 						$arr_sql_set_index[$key][$field]='';
 					
 					}
+					
+					//Check if unique
+				
+					if($model[$key]->components[$field]->unique==true && $keys[$field]=='')
+					{
+					
+						$arr_sql_unique[$key][$field]=' ALTER TABLE `'.$key.'` ADD UNIQUE (`'.$field.'`)';
+						$arr_sql_set_unique[$key][$field]='';
+					
+					}
 
 					//Set index
 
@@ -170,8 +193,8 @@ function update_table($model)
 						
 
 					}
-
-					if(!isset($model[$key]->components[$field]->related_model) && $keys[$field]!='' && $model[$key]->components[$field]->indexed==false)
+					
+					if(!isset($model[$key]->components[$field]->related_model) && $keys[$field]!='' && $model[$key]->components[$field]->indexed==false && $model[$key]->components[$field]->unique!=true)
 					{
 						
 						echo "---Delete index for ".$field." from ".$key."\n";
@@ -287,6 +310,25 @@ function update_table($model)
 			if($arr_sql_set_index[$model_name][$key_data]!='')
 			{
 				$query=webtsys_query($arr_sql_set_index[$model_name][$key_data]);
+			}
+
+		}
+	}
+	
+	//Create Uniques...
+	
+	foreach($arr_sql_unique as $model_name => $arr_index)
+	{
+		foreach($arr_sql_unique[$model_name] as $key_data => $sql_index)
+		{
+
+			echo "---Creating unique for ".$key_data." on model ".$model_name."\n";
+
+			$query=webtsys_query($sql_index);
+			
+			if($arr_sql_set_unique[$model_name][$key_data]!='')
+			{
+				$query=webtsys_query($arr_sql_set_unique[$model_name][$key_data]);
 			}
 
 		}

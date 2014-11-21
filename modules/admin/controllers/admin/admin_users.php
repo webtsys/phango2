@@ -49,7 +49,7 @@ function AusersAdmin()
 			
 				echo '<h3>'.PhangoVar::$lang['admin']['add_moderator_to_module'].': <strong>'.$arr_user['username'].'</strong></h3>';
 				
-				$arr_fields=array('moderator');
+				$arr_fields=array('idmodule');
 				$arr_fields_edit=array();
 				
 				//$url_options=make_fancy_url( $base_url, 'admin', 'index', 'edit_modules', $arr_data=array('IdModule' => $_GET['IdModule'], 'op' => 3, 'idmodule' => $_GET['idmodule']) );

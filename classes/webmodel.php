@@ -2123,6 +2123,12 @@ class PhangoField {
 	public $indexed=0;
 	
 	/**
+	* Property used for set this field how unique value in the database table.
+	*/
+
+	public $unique=0;
+	
+	/**
 	* The name of the model where this component or field live
 	*/
 	

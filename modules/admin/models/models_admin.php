@@ -26,9 +26,12 @@ PhangoVar::$model['login_tried_admin']->set_component('time', 'IntegerField', ar
 PhangoVar::$model['moderators_module']=new Webmodel('moderators_module');
 PhangoVar::$model['moderators_module']->set_component('moderator', 'ForeignKeyField', array('user_admin'), 1);
 PhangoVar::$model['moderators_module']->components['moderator']->name_field_to_field='username';
+
 PhangoVar::$model['moderators_module']->components['moderator']->fields_related_model=array('username');
 
 PhangoVar::$model['moderators_module']->set_component('idmodule', 'CharField', array(255), 1);
+
+PhangoVar::$model['moderators_module']->components['idmodule']->unique=1;
 
 class ChoiceAdminField extends ChoiceField {
 
