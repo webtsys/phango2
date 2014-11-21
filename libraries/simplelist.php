@@ -108,7 +108,7 @@ class SimpleList
 			foreach($arr_fields_showed as $field)
 			{
 			
-				$arr_row_final[$field]=PhangoVar::$model[$this->model_name]->components[$field]->show_formatted($arr_row[$field]);
+				$arr_row_final[$field]=PhangoVar::$model[$this->model_name]->components[$field]->show_formatted($arr_row[$field],  $arr_row[PhangoVar::$model[$this->model_name]->idmodel]);
 			
 			}
 			

@@ -554,14 +554,14 @@ class ListModelClass {
 			
 			$list->initial_num_pages=$this->initial_num_pages;
 			
-			if(preg_match('/^where|WHERE/', $list->where_sql))
+			/*if(preg_match('/^where|WHERE/', $list->where_sql))
 			{
 			
 				$list->where_sql=' AND ';
 			
-			}
+			}*/
 			
-			$list->where_sql.=$arr_where_sql.' order by '.$location.'`'.$this->model_name.'`.`'.$_GET['order_field'].'` '.$arr_order[$_GET['order_desc']];
+			$list->where_sql=$this->where_sql.$arr_where_sql.' order by '.$location.'`'.$this->model_name.'`.`'.$_GET['order_field'].'` '.$arr_order[$_GET['order_desc']];
 			
 			$list->url_options=$this->url_options;
 			
