@@ -52,6 +52,8 @@ PhangoVar::$lang['users']['automatic_login']='Conexión automática';
 
 PhangoVar::$lang['users']['remember_password']='Recordar contraseña';
 
+PhangoVar::$lang['users']['remember_password_explain']='Por favor, introduzca el email con el que se registró en la web, que será donde reciba su nueva contraseña';
+
 PhangoVar::$lang['users']['register']='Registrar';
 
 ?>

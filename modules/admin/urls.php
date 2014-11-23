@@ -10,6 +10,8 @@ PhangoVar::$urls[ADMIN_FOLDER]['login_check']=array('pattern' => '/^'.ADMIN_FOLD
 
 PhangoVar::$urls[ADMIN_FOLDER]['register']=array('pattern' => '/^'.ADMIN_FOLDER.'\/register$/', 'url' => '/'.ADMIN_FOLDER.'/register', 'module' => 'admin', 'controller' => 'login', 'action' => 'register', 'parameters' => array());
 
+PhangoVar::$urls[ADMIN_FOLDER]['recovery_password']=array('pattern' => '/^'.ADMIN_FOLDER.'\/recovery_password$/', 'url' => '/'.ADMIN_FOLDER.'/recovery_password', 'module' => 'admin', 'controller' => 'login', 'action' => 'recovery', 'parameters' => array());
+
 PhangoVar::$urls[ADMIN_FOLDER]['register_insert']=array('pattern' => '/^'.ADMIN_FOLDER.'\/register\/([0-9])$/', 'url' => '/'.ADMIN_FOLDER.'/register', 'module' => 'admin', 'controller' => 'login', 'action' => 'register', 'parameters' => array('$1' => 'integer'));
 
 PhangoVar::$urls[ADMIN_FOLDER]['module']=array('pattern' => '/^'.ADMIN_FOLDER.'\/(\w+)$/', 'url' => '/'.ADMIN_FOLDER, 'module' => 'admin', 'controller' => 'index', 'action' => 'index', 'parameters' => array('$1' => 'string'));

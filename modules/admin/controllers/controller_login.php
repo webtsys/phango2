@@ -16,6 +16,8 @@ class LoginSwitchClass extends ControllerSwitchClass {
 		
 		$this->login->url_insert=make_fancy_url(PhangoVar::$base_url, 'admin', 'register_insert', array(1));
 		
+		$this->login->url_recovery=make_fancy_url(PhangoVar::$base_url, 'admin', 'recovery_password', array(1));
+		
 		$this->login->accept_conditions=0;
 		
 		$this->login->field_key='token_client';
@@ -100,10 +102,18 @@ class LoginSwitchClass extends ControllerSwitchClass {
 	
 	}
 	
-	public function remember_password()
+	public function recovery()
 	{
 	
+		ob_start();
+			
+		$this->login->recovery_password_form();
+			
+		$cont_index=ob_get_contents();
 		
+		ob_end_clean();
+		
+		$this->load_theme(PhangoVar::$lang['users']['login'], $cont_index);
 	
 	}
 	
@@ -167,6 +177,7 @@ class LoginSwitchClass extends ControllerSwitchClass {
 		$this->simple_redirect( make_fancy_url(PhangoVar::$base_url, ADMIN_FOLDER, 'login') );
 	
 	}
+	
 
 }
 

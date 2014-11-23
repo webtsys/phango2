@@ -52,6 +52,8 @@ PhangoVar::$lang['users']['automatic_login']='automatic_login';
 
 PhangoVar::$lang['users']['remember_password']='remember_password';
 
+PhangoVar::$lang['users']['remember_password_explain']='remember_password_explain';
+
 PhangoVar::$lang['users']['register']='register';
 
 ?>
