@@ -43,37 +43,48 @@ class UserPhangoModel extends Webmodel {
 	public function update($post, $where_sql='')
 	{
 	
-		if($this->check_user_exists($post[$this->username], $post[$this->email], $post['IdUser_admin']))
+		if(isset($post[$this->username]) && $post[$this->email])
 		{
-		
-			if(!$this->check_password($post['password'], $post['repeat_password']))
+	
+			if($this->check_user_exists($post[$this->username], $post[$this->email], $post['IdUser_admin']))
 			{
 			
-				//$this->components['password']->required=0;
+				if(!$this->check_password($post['password'], $post['repeat_password']))
+				{
 				
-				$this->components[$this->password]->std_error=PhangoVar::$lang['users']['pasword_not_equal_repeat_password'];
+					//$this->components['password']->required=0;
+					
+					$this->components[$this->password]->std_error=PhangoVar::$lang['users']['pasword_not_equal_repeat_password'];
+					
+					return false;
 				
+				}
+				
+				if(form_text($post['password'])=='')
+				{
+				
+					$this->components[$this->password]->required=0;
+					unset($post[$this->password]);
+				
+				}
+			
+				return parent::update($post, $where_sql);
+			
+			}
+			else
+			{
+			
+				$this->std_error=PhangoVar::$lang['users']['cannot_insert_user_email_or_user'];
+			
 				return false;
 			
 			}
 			
-			if(form_text($post['password'])=='')
-			{
-			
-				$this->components[$this->password]->required=0;
-				unset($post[$this->password]);
-			
-			}
-		
-			return parent::update($post, $where_sql);
-		
 		}
 		else
 		{
 		
-			$this->std_error=PhangoVar::$lang['users']['cannot_insert_user_email_or_user'];
-		
-			return false;
+			return parent::update($post, $where_sql);
 		
 		}
 	

@@ -90,8 +90,10 @@ class LoginClass {
 		
 		if($arr_user[PhangoVar::$model[$this->model_login]->idmodel]==0)
 		{
-		
+			
 			ModelForm::SetValuesForm($_POST, PhangoVar::$model[$this->model_login]->forms, 1);
+		
+			PhangoVar::$model[$this->model_login]->forms[$this->field_password]->std_error= PhangoVar::$lang['users']['user_error_nick_or_pass'];
 		
 			unset($arr_user[$this->field_password]);
 			
@@ -296,7 +298,7 @@ class LoginClass {
 		{
 		
 			$email = @form_text( $_POST['email'] );
-		
+			
 			$query=PhangoVar::$model[$this->model_login]->select( 'where '.$this->field_mail.'="'.$email.'"', array(PhangoVar::$model[$this->model_login]->idmodel, $this->field_name, $this->field_mail) );
 			
 			list($iduser_recovery, $nick, $email)=PhangoVar::$model[$this->model_login]->fetch_row($query);
@@ -378,7 +380,7 @@ class LoginClass {
 				//settype($iduser_recovery, 'integer');
 
 				$password=generate_random_password(); 
-
+				
 				$topic_email =  PhangoVar::$lang['users']['success_change_password'];
 				$body_email =  PhangoVar::$lang['users']['hello_lost_pass_successful']."\n\n".  PhangoVar::$lang['users']['user_data'] . "\n\n". PhangoVar::$lang['users']['user']." : $nick"."\n\n". PhangoVar::$lang['common']['email']." : $email"."\n\n"  .  PhangoVar::$lang['users']['new_pass'] . " : $password" . "\n\n" . PhangoVar::$lang['common']['thanks'];
 					

@@ -12,11 +12,15 @@ class LoginSwitchClass extends ControllerSwitchClass {
 	{
 		$this->login=new LoginClass('user_admin', 'username', 'password', '', $arr_user_session=array('IdUser_admin', 'privileges_user'), $arr_user_insert=array('username', 'password', 'repeat_password', 'email'));
 	
+		$this->login->field_name='username';
+	
 		$this->login->url_login=make_fancy_url(PhangoVar::$base_url, 'admin', 'login_check', array());
 		
 		$this->login->url_insert=make_fancy_url(PhangoVar::$base_url, 'admin', 'register_insert', array(1));
 		
 		$this->login->url_recovery=make_fancy_url(PhangoVar::$base_url, 'admin', 'recovery_password', array(1));
+		
+		$this->login->url_recovery_send=make_fancy_url(PhangoVar::$base_url, 'admin', 'recovery_password_send', array(1));
 		
 		$this->login->accept_conditions=0;
 		
@@ -105,15 +109,40 @@ class LoginSwitchClass extends ControllerSwitchClass {
 	public function recovery()
 	{
 	
-		ob_start();
+		if(!$this->login->check_login())
+		{
+	
+			ob_start();
+				
+			$this->login->recovery_password_form();
+				
+			$cont_index=ob_get_contents();
 			
-		$this->login->recovery_password_form();
+			ob_end_clean();
 			
-		$cont_index=ob_get_contents();
-		
-		ob_end_clean();
-		
-		$this->load_theme(PhangoVar::$lang['users']['login'], $cont_index);
+			$this->load_theme(PhangoVar::$lang['users']['login'], $cont_index);
+			
+		}
+	
+	}
+	
+	public function recovery_send()
+	{
+	
+		if(!$this->login->check_login())
+		{
+	
+			ob_start();
+				
+			$this->login->recovery_password();
+				
+			$cont_index=ob_get_contents();
+			
+			ob_end_clean();
+			
+			$this->load_theme(PhangoVar::$lang['users']['login'], $cont_index);
+			
+		}
 	
 	}
 	

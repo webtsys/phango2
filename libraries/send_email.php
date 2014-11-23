@@ -7,7 +7,7 @@ function send_mail($email, $subject, $message, $content_type='plain', $bcc='', $
 
 	$portal_name=html_entity_decode(PhangoVar::$portal_name);
 	
-	switch($config_data['mailer_type'])
+	switch(PhangoVar::$mailer_type)
 	{
 	
 	default:
