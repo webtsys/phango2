@@ -2,106 +2,106 @@
 
 PhangoVar::$lang['common']['no_element_chosen']='No se ha elegido ningún elemento';
 
-PhangoVar::$lang['common']['any_option_chosen']='any_option_chosen';
+PhangoVar::$lang['common']['any_option_chosen']='Ninguna opción seleccionada';
 
-PhangoVar::$lang['common']['last']='last';
+PhangoVar::$lang['common']['last']='Último';
 
-PhangoVar::$lang['common']['listing_new']='listing_new';
+PhangoVar::$lang['common']['listing_new']='Lista de';
 
-PhangoVar::$lang['common']['add_new_item']='add_new_item';
+PhangoVar::$lang['common']['add_new_item']='Añadir nuevo elemento';
 
-PhangoVar::$lang['common']['edit']='edit';
+PhangoVar::$lang['common']['edit']='Editar';
 
-PhangoVar::$lang['common']['ascent']='ascent';
+PhangoVar::$lang['common']['ascent']='Ascendente';
 
-PhangoVar::$lang['common']['descent']='descent';
+PhangoVar::$lang['common']['descent']='Descendente';
 
-PhangoVar::$lang['common']['cannot_update_insert_in_model']='cannot_update_insert_in_model';
+PhangoVar::$lang['common']['cannot_update_insert_in_model']='No puedo actualizar o insertar este elmento en la bsae de datos';
 
-PhangoVar::$lang['common']['success']='success';
+PhangoVar::$lang['common']['success']='Éxito';
 
-PhangoVar::$lang['common']['redirect']='redirect';
+PhangoVar::$lang['common']['redirect']='Redirigiendo';
 
-PhangoVar::$lang['common']['press_here_redirecting']='press_here_redirecting';
+PhangoVar::$lang['common']['press_here_redirecting']='Pulse aquí para que se produzca la redirección';
 
-PhangoVar::$lang['common']['go_back']='go_back';
+PhangoVar::$lang['common']['go_back']='Volver atrás';
 
-PhangoVar::$lang['common']['pages']='pages';
+PhangoVar::$lang['common']['pages']='Páginas';
 
-PhangoVar::$lang['common']['delete_model']='delete_model';
+PhangoVar::$lang['common']['delete_model']='Eliminar elemento';
 
-PhangoVar::$lang['common']['delete']='delete';
+PhangoVar::$lang['common']['delete']='Borrar';
 
-PhangoVar::$lang['common']['send']='send';
+PhangoVar::$lang['common']['send']='Enviar';
 
-PhangoVar::$lang['common']['order']='order';
+PhangoVar::$lang['common']['order']='Orden';
 
-PhangoVar::$lang['common']['no_exists_elements_to_order']='no_exists_elements_to_order';
+PhangoVar::$lang['common']['no_exists_elements_to_order']='No existe elemento a ordenar';
 
-PhangoVar::$lang['common']['options']='options';
+PhangoVar::$lang['common']['options']='Opciones';
 
-PhangoVar::$lang['common']['home']='home';
+PhangoVar::$lang['common']['home']='Home';
 
-PhangoVar::$lang['common']['the_value_can_not_be_greater_than_100']='the_value_can_not_be_greater_than_100';
+PhangoVar::$lang['common']['the_value_can_not_be_greater_than_100']='El valor no puede ser mayor de 100';
 
-PhangoVar::$lang['common']['thanks']='thanks';
+PhangoVar::$lang['common']['thanks']='Gracias';
 
-PhangoVar::$lang['common']['email']='email';
+PhangoVar::$lang['common']['email']='Email';
 
-PhangoVar::$lang['common']['captcha']='captcha';
+PhangoVar::$lang['common']['captcha']='Captcha';
 
-PhangoVar::$lang['common']['error_you_need_this_language_field']='error_you_need_this_language_field';
+PhangoVar::$lang['common']['error_you_need_this_language_field']='Error: necesitas este campo de lenguaje.';
 
-PhangoVar::$lang['common']['cannot_load_jquery']='cannot_load_jquery';
+PhangoVar::$lang['common']['cannot_load_jquery']='No puedo cargar JQuery';
 
-PhangoVar::$lang['common']['field_required']='field_required';
+PhangoVar::$lang['common']['field_required']='Campo requerido';
 
-PhangoVar::$lang['common']['error_in_field']='error_in_field';
+PhangoVar::$lang['common']['error_in_field']='Error en campo';
 
-PhangoVar::$lang['common']['no']='no';
+PhangoVar::$lang['common']['no']='No';
 
-PhangoVar::$lang['common']['yes']='yes';
+PhangoVar::$lang['common']['yes']='Sí';
 
-PhangoVar::$lang['common']['error_cannot_upload_this_file_to_the_server']='error_cannot_upload_this_file_to_the_server';
+PhangoVar::$lang['common']['error_cannot_upload_this_file_to_the_server']='Error: no puedo subir el archivo al servidor';
 
-PhangoVar::$lang['common']['cannot_delete_file']='cannot_delete_file';
+PhangoVar::$lang['common']['cannot_delete_file']='No puedo borrar el archivo';
 
-PhangoVar::$lang['common']['image_size_is_not_correct']='image_size_is_not_correct';
+PhangoVar::$lang['common']['image_size_is_not_correct']='El tamaño de la imagen no es correcta';
 
-PhangoVar::$lang['common']['min_size']='min_size';
+PhangoVar::$lang['common']['min_size']='Tamaño mínimo';
 
-PhangoVar::$lang['common']['a_image_with_same_name_exists']='a_image_with_same_name_exists';
+PhangoVar::$lang['common']['a_image_with_same_name_exists']='Existe una imagen con ese mismo nombre';
 
-PhangoVar::$lang['common']['error_cannot_upload_this_image_to_the_server']='error_cannot_upload_this_image_to_the_server';
+PhangoVar::$lang['common']['error_cannot_upload_this_image_to_the_server']='Error: no puedo subir esta imagen al servidor';
 
-PhangoVar::$lang['common']['cannot_delete_image']='cannot_delete_image';
+PhangoVar::$lang['common']['cannot_delete_image']='No puedo borrar la imagen';
 
-PhangoVar::$lang['common']['delete_file']='delete_file';
+PhangoVar::$lang['common']['delete_file']='Borrar archivo';
 
-PhangoVar::$lang['common']['delete_image']='delete_image';
+PhangoVar::$lang['common']['delete_image']='Borrar imagen';
 
-PhangoVar::$lang['common']['hour']='hour';
+PhangoVar::$lang['common']['hour']='hora';
 
-PhangoVar::$lang['common']['minute']='minute';
+PhangoVar::$lang['common']['minute']='minuto';
 
-PhangoVar::$lang['common']['second']='second';
+PhangoVar::$lang['common']['second']='segundo';
 
-PhangoVar::$lang['common']['order_by']='order_by';
+PhangoVar::$lang['common']['order_by']='Ordenar por';
 
-PhangoVar::$lang['common']['in_order']='in_order';
+PhangoVar::$lang['common']['in_order']='En orden';
 
-PhangoVar::$lang['common']['search']='search';
+PhangoVar::$lang['common']['search']='Buscar';
 
-PhangoVar::$lang['common']['search_by']='search_by';
+PhangoVar::$lang['common']['search_by']='Busqueda por';
 
-PhangoVar::$lang['common']['reset']='reset';
+PhangoVar::$lang['common']['reset']='Reset';
 
-PhangoVar::$lang['common']['order_and_search']='order_and_search';
+PhangoVar::$lang['common']['order_and_search']='Ordenar y buscar';
 
-PhangoVar::$lang['common']['with_*_field_required']='with_-_field_required';
+PhangoVar::$lang['common']['with_*_field_required']='* Campo requerido';
 
-PhangoVar::$lang['common']['login']='login';
+PhangoVar::$lang['common']['login']='Identificarse';
 
-PhangoVar::$lang['common']['password']='password';
+PhangoVar::$lang['common']['password']='Contraseña';
 
 ?>
