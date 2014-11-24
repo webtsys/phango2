@@ -141,7 +141,7 @@ class IndexSwitchClass extends ControllerSwitchClass {
 			$check_file=0;
 		
 			//First, theme or module theme
-			echo 'pepe';
+			
 
 			if(!file_exists($file_path))
 			{

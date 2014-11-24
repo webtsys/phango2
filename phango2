@@ -34,3 +34,5 @@ Ahora la clase switchclass, cada metodo tendrá el tema de los parametros.
 
 - Check necessary php modules on welcome.
 
+- Por seguridad, en vez de sha1 para ocultar campos, label slugifado, así se que campo es. Más sencillo, tengo un array que se rellena por el form cn la correspondencia de cada post. Eso estará por defecto.
+

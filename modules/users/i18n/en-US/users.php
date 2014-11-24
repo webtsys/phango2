@@ -46,6 +46,8 @@ PhangoVar::$lang['users']['repeat_password']='repeat_password';
 
 PhangoVar::$lang['users']['accept_cond_register']='accept_cond_register';
 
+PhangoVar::$lang['users']['users_zone']='users_zone';
+
 PhangoVar::$lang['users']['login']='login';
 
 PhangoVar::$lang['users']['automatic_login']='automatic_login';

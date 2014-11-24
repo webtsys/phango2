@@ -46,6 +46,8 @@ PhangoVar::$lang['users']['repeat_password']='Repetir password';
 
 PhangoVar::$lang['users']['accept_cond_register']='Aceptar condiciones de registro';
 
+PhangoVar::$lang['users']['users_zone']='Zona de usuarios';
+
 PhangoVar::$lang['users']['login']='Conectar';
 
 PhangoVar::$lang['users']['automatic_login']='Conexión automática';

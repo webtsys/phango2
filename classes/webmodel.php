@@ -277,7 +277,17 @@ class PhangoVar {
 	
 	static public $rurls=array();
 	
+	/**
+	* This variable is used for save the csrf token.
+	*
+	*/
+	
 	static public $key_csrf='';
+	
+	/**
+	* This array save the get obtained from url phango format.
+	*
+	*/
 	
 	static public $get=array();
 	
@@ -1458,7 +1468,7 @@ class Webmodel {
 
 				//Use method from ModelForm for set initial parameters...
 
-				$this->forms[$component_name]->SetParameters($parameters);
+				$this->forms[$component_name]->set_simple_parameters($parameters);
 				
 			}
 
@@ -1699,7 +1709,7 @@ function SetValuesForm($post, $arr_form, $show_error=1)
 
 				//Set value for ModelForm to $value
 				
-				$arr_form[$name_field]->SetForm($value);
+				$arr_form[$name_field]->set_value_form($value);
 		
 			}
 			else
@@ -1823,16 +1833,16 @@ class ModelForm {
 		$this->txt_error = PhangoVar::$lang['common']['error_in_field'];
 		$this->required = $required;
 
-		$html_field_name=$name_field;
+		$this->html_field_name=$name_field;
 
 		switch(DEBUG)
 		{
 
 			default:
 				
-				$html_field_name=sha1($name_field);
+				$this->html_field_name=sha1($name_field);
 			
-				$this->html_field_name[$name_field]=$html_field_name;
+				/*$this->html_field_name[$name_field]=$html_field_name;
 
 				if(isset($_POST[$html_field_name]))
 				{
@@ -1846,23 +1856,42 @@ class ModelForm {
 
 					$_FILES[$name_field]=&$_FILES[$html_field_name];
 
-				}
+				}*/
 
 			break;
 
 			case 1:
 
-				$this->html_field_name[$name_field]=$name_field;
+				$this->html_field_name=$name_field;
 				
 
 			break;
 		}
+		
+		//$this->html_field_name=$name_field; slugify($this->label, $respect_upper=0, $replace_space='-', $replace_dot=1, $replace_barr=1);
 
-		PhangoVar::$arr_form_public[$html_field_name]=$name_field;
+		PhangoVar::$arr_form_public[$this->html_field_name]=$name_field;
 
-		$this->parameters = array($html_field_name, $class='', $parameters);
+		$this->parameters = array($this->html_field_name, $class='', $parameters);
 
 	}
+	
+	public function change_label_html($new_label)
+	{
+	
+		$this->html_field_name=slugify($new_label, $respect_upper=0, $replace_space='-', $replace_dot=1, $replace_barr=1);
+		
+		$this->parameters[0]=$this->html_field_name;
+	
+	}
+	
+	public function return_name_form()
+	{
+	
+		return $this->html_field_name;
+	
+	}
+	
 	
 	/**
 	*
@@ -1873,7 +1902,7 @@ class ModelForm {
 	*
 	*/
 
-	function SetForm($value, $form_type_set='')
+	function set_value_form($value, $form_type_set='')
 	{
 		
 		$func_setvalue=$this->form.'Set';
@@ -1882,21 +1911,6 @@ class ModelForm {
 		
 	}
 	
-	/**
-	*
-	* An alias for $this->SetForm
-	*
-	* @param mixed $value The value passed to the form
-	* @param string $form_type_set Parameter don't used for now.
-	*
-	*/
-	
-	function SetValueForm($value, $form_type_set='')
-	{
-	
-		$this->SetForm($value, $form_type_set);
-	
-	}
 
 	/**
 	*
@@ -1906,7 +1920,7 @@ class ModelForm {
 	*
 	*/
 	
-	function SetParameters($parameters)
+	function set_simple_parameters($parameters)
 	{
 		
 		$this->parameters[2]=$parameters;
@@ -1915,16 +1929,16 @@ class ModelForm {
 	
 	/**
 	*
-	* Method for set third argument of a form function. Third argument can be mixed type.
+	* Method for set all arguments for a form function except name.
 	*
 	* @param mixed $parameters Third argument for the chose form function
 	*
 	*/
 	
-	function SetAllParameters($parameters=array())
+	function set_parameters_form($parameters=array())
 	{
 	
-		$z=2;
+		$z=1;
 	
 		foreach($parameters as $paremeter)
 		{
@@ -1939,13 +1953,15 @@ class ModelForm {
 	
 	/**
 	*
-	* Method for set all argumentos of a form function.
+	* @warning 
+	*
+	* Method for set all arguments of a form function. DONT USE IF YOU DON'T KNOW WHAT ARE YOU DOING
 	* 
 	* @param array $parameters An array with arguments for the form function used for this ModelForm
 	*
 	*/
 	
-	function SetParametersForm($parameters)
+	function set_all_parameters_form($parameters)
 	{
 		
 		$this->parameters=$parameters;
@@ -5105,17 +5121,25 @@ function controller_fancy_url($func_name, $description_text, $arr_data=array(), 
 *
 */
 
-function slugify($text, $respect_upper=0, $replace_space='-', $replace_dot=0)
+function slugify($text, $respect_upper=0, $replace_space='-', $replace_dot=0, $replace_barr=0)
 {
 
-	$from='àáâãäåæçèéêëìíîïðòóôõöøùúûýþÿŕñÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÐÒÓÔÕÖØÙÚÛÝỲŸÞŔÑ?¿!¡()"|#*%';
-	$to=  'aaaaaaaceeeeiiiidoooooouuuybyrnAAAAAACEEEEIIIIDOOOOOOUUUYYYBRN-----------';
+	$from='àáâãäåæçèéêëìíîïðòóôõöøùúûýþÿŕñÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÐÒÓÔÕÖØÙÚÛÝỲŸÞŔÑ¿?!¡()"|#*%,;+&$ºª<>`çÇ{}@~=^:´[]';
+	$to=  'aaaaaaaceeeeiiiidoooooouuuybyrnAAAAAACEEEEIIIIDOOOOOOUUUYYYBRN---------------------------------';
 	
 	if($replace_dot==1)
 	{
 	
 		$from.='.';
 		$to.='-';
+	
+	}
+	
+	if($replace_barr==1)
+	{
+	
+		$from.="/";
+		$to.="-";
 	
 	}
 
@@ -5899,7 +5923,7 @@ if(PhangoVar::$THEME_MODULE==1)
 		foreach(PhangoVar::$arr_cache_css as $idcss => $css)
 		{
 			
-			$module_css='';
+			$module_css='none';
 			
 			if(gettype($css)=='array')
 			{
@@ -5910,7 +5934,7 @@ if(PhangoVar::$THEME_MODULE==1)
 				{
 					$css_item=slugify(urlencode_redirect($css_item, 1), 1);
 				
-					$url=make_fancy_url(PhangoVar::$base_url, 'media', 'css', array('css' => $css_item, 'module' => $module_css));
+					$url=make_fancy_url(PhangoVar::$base_url, 'media', 'css', array('module' => $module_css, 'css' => $css_item));
 					
 					$arr_final_css[]='<link href="'.$url.'" rel="stylesheet" type="text/css"/>'."\n";
 				}
@@ -5920,7 +5944,7 @@ if(PhangoVar::$THEME_MODULE==1)
 				
 				$css=slugify(urlencode_redirect($css, 1), 1);
 				
-				$url=make_fancy_url(PhangoVar::$base_url, 'media', 'css', array('css' => $css));
+				$url=make_fancy_url(PhangoVar::$base_url, 'media', 'css', array('module' => $module_css, 'css' => $css));
 				
 				$arr_final_css[]='<link href="'.$url.'" rel="stylesheet" type="text/css"/>'."\n";
 

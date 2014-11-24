@@ -59,7 +59,7 @@ function AusersAdmin()
 				PhangoVar::$model['moderators_module']->create_form();
 				
 				PhangoVar::$model['moderators_module']->forms['moderator']->form='HiddenForm';
-				PhangoVar::$model['moderators_module']->forms['moderator']->SetForm($arr_user['IdUser_admin']);
+				PhangoVar::$model['moderators_module']->forms['moderator']->set_value_form($arr_user['IdUser_admin']);
 				
 				PhangoVar::$model['moderators_module']->forms['moderator']->label=PhangoVar::$lang['admin']['moderator'];
 				
@@ -75,9 +75,7 @@ function AusersAdmin()
 				
 				}
 				
-				PhangoVar::$model['moderators_module']->forms['idmodule']->SetParameters($arr_mod);
-				
-				//PhangoVar::$model['moderators_module']->forms['moderator']->SetAllParameters(0, 'user_admin', 'username', $where='where privileges_user=1');
+				PhangoVar::$model['moderators_module']->forms['idmodule']->set_value_form($arr_mod);
 				
 				$admin=new GenerateAdminClass('moderators_module');
 			
@@ -87,7 +85,7 @@ function AusersAdmin()
 				
 				$admin->no_search=1;
 				
-				$admin->where_sql='where user_admin='.$arr_user['IdUser_admin'];
+				$admin->where_sql='where moderator='.$arr_user['IdUser_admin'];
 				
 				$admin->show();
 			
