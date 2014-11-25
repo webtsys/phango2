@@ -85,7 +85,28 @@ function AusersAdmin()
 				
 				$admin->no_search=1;
 				
-				$admin->where_sql='where moderator='.$arr_user['IdUser_admin'];
+				/*$arr_conditions['union1_AND']['AND'][]=array('moderator' => array('=', $arr_user['IdUser_admin']));
+				$arr_conditions['union1_AND']['AND'][]=array('moderator' => array('!=', 1));
+				//$arr_conditions['union1_AND']['OR'][]=array('moderator' => array('=', '25'));
+				
+				$arr_conditions['union2_OR']['AND'][]=array('moderator' => array('=', $arr_user['IdUser_admin']));
+				$arr_conditions['union2_OR']['OR'][]=array('moderator' => array('!=', 1));
+				$arr_conditions['union2_OR']['AND'][]=array('moderator' => array('=', '25'));
+				
+				$where_class=new WhereSql('moderators_module', $arr_conditions);
+				
+				$where_class->order_by[]=array('field' => 'moderator', 'order' => 'ASC');
+				$where_class->order_by[]=array('field' => 'moderator', 'order' => 'ASC');
+				
+				$where_class->limit=array(0, 25);
+				
+				echo $where_class->obtain_sql();
+				
+				//$admin->where_sql=PhangoVar::$model['moderators_module']->where($arr_where);
+				
+				echo $admin->where_sql;*/
+		
+				//'where moderator='.$arr_user['IdUser_admin'];
 				
 				$admin->show();
 			

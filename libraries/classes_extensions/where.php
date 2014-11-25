@@ -6,147 +6,86 @@
 *
 * With this extension, you can create sql strings for use on where parameter of select method from Webmodel.
 *
+* Example ['AND']->array( 'field' => array('!=', 25), 'field2' => array('=', 'value_field'), 'field3' => array('LIKE', 'value_field'), 'field4' => array('IN',  array('1','2','3'), 'limit_sql' => array('LIMIT', array(1, 10), 'order_by' => array('order_fieldY', 'ASC'
+))
 * 
+* You can join differents sql sentences 
 */
 
-function where_method_class($class, $arr_where, $initial_sql='WHERE', $parenthesis=0)
+function where_method_class($class, $arr_where, $initial_sql='WHERE', $parenthesis=0, $order_by=array(), $limit=array())
 {
+
+	$arr_to_glued=array();
 	
-	global $model;
+	$glue=key($arr_where);
+
+	/*foreach($arr_where as $glue => $arr_fields_where)
+	{*/
 	
-	foreach($arr_where as $type => $where)
-	{
-	
-		/*//Checking
-	
-		foreach($where as $field => $value)
+		foreach($arr_where[$glue] as $field => $operation)
 		{
-		
-			$where[$field]=$model[$model_name]->components[$field_name]->check($value);
-		
-		}*/
-		
-		$arr_sql=array();
-		
-		$sql_string='';
-		
-		$arr_par[0]=array('open' => '', 'close' => '');
-		$arr_par[1]=array('open' => '(', 'close' => ')');
-	
-		switch($type)
-		{
-		
-			//Default is and
-			default:
-			case 'AND':
 			
-				foreach($where as $field => $value)
-				{
-				
-					list($field_select, $model_name, $field_name)=set_safe_name_field($class, $field);
-					
-					$arr_sql[]=$field_select.'=\''.$model[$model_name]->components[$field_name]->check($value).'\'';
-				
-				}
-				
-				$initial_sql.=' '.$arr_par[$parenthesis]['open'].implode(' AND ', $arr_sql).$arr_par[$parenthesis]['close'];
+			list($field_select, $model_name, $field_name)=set_safe_name_field($class, $field);
+						
+			$op=$operation[0];
 			
-			break;
+			$value=$operation[1];
 			
-			case 'OR':
+			switch($op)
+			{
 			
-				foreach($where as $field => $value)
-				{
+				case '=':
 				
-					list($field_select, $model_name, $field_name)=set_safe_name_field($class, $field);
+					$value=PhangoVar::$model[$model_name]->components[$field_name]->check($value);
 				
-					$arr_sql[]=$field_select.'=\''.$model[$model_name]->components[$field_name]->check($value).'\'';
+					$arr_to_glued[]=$field_select.' '.$op.' \''.$value.'\'';
 				
-				}
+				break;
 				
-				$initial_sql.=' '.$arr_par[$parenthesis]['open'].implode(' OR ', $arr_sql).$arr_par[$parenthesis]['close'];
-			
-			break;
-			
-			case 'IN_AND':
-			case 'IN_OR':
-			case 'NOT_IN_AND':
-			case 'NOT_IN_OR':
-			
-				$arr_in=array();
+				case '!=':
 				
-				$arr_key_in['IN_AND']='IN';
-				$arr_key_in['IN_OR']='IN';
-				$arr_key_in['NOT_IN_AND']='NOT IN';
-				$arr_key_in['NOT_IN_OR']='NOT IN';
-			
-				/*foreach($where as $field => $value)
-				{
-					
-					$where[$field]=$model[$model_name]->components[$field_name]->check($value);
+					$value=PhangoVar::$model[$model_name]->components[$field_name]->check($value);
 				
-				}
+					$arr_to_glued[]=$field_select.' '.$op.' \''.$value.'\'';
 				
-				$initial_sql.=' '.'`'.$class->name.'`'.'.'.'`'.$field.'`'.' IN (\''.implode('\', ', $where).'\')';*/
+				break;
 				
-				//$where=array( 'IN' => array( 'IdUser' => array(1, 2, 3) ) );
+				case 'LIKE':
 				
-				foreach($where as $field => $arr_value)
-				{
-					
-					list($field_select, $model_name, $field_name)=set_safe_name_field($class, $field);
-					
-					foreach($arr_value as $key_value => $value)
+					$value=PhangoVar::$model[$model_name]->components[$field_name]->check($value);
+				
+					$arr_to_glued[]=$field_select.' '.$op.' \''.$value.'\'';
+				
+				break;
+				
+				case 'IN':
+				case 'NOT IN':
+				
+					foreach($value as $key_val => $val)
 					{
 					
-						$arr_value[$key_value]=$model[$model_name]->components[$field_name]->check($value);
+						$value[$key_val]=PhangoVar::$model[$model_name]->components[$field_name]->check($val);
 					
 					}
 					
-					$arr_in[]=$field_select.' '.$arr_key_in[$type].' (\''.implode('\', \'', $arr_value).'\')';
+					$arr_to_glued[]=$field_select.' '.$op.' (\''.implode('\',\'', $value).'\')';
 				
-				}
-				
-				$arr_union['IN_AND']='AND';
-				$arr_union['IN_OR']='OR';
-				$arr_union['NOT_IN_AND']='AND';
-				$arr_union['NOT_IN_OR']='OR';
-				
-				$initial_sql.=' '.$arr_par[$parenthesis]['open'].implode(' '.$arr_union[$type].' ', $arr_in).$arr_par[$parenthesis]['close'];
+				break;
 			
-			break;
+			}
 			
-			case 'LIKE_OR':
-			
-				foreach($where as $field => $value)
-				{
-				
-					list($field_select, $model_name, $field_name)=set_safe_name_field($class, $field);
-				
-					$arr_sql[]=' '.$field_select.' LIKE \'%'.$model[$model_name]->components[$field_name]->check($value).'%\'';
-				
-				}
-				
-				$initial_sql.=' '.$arr_par[$parenthesis]['open'].implode(' OR ', $arr_sql).$arr_par[$parenthesis]['close'];
-			
-			break;
-			
-			case 'LIKE_AND':
-			
-				foreach($where as $field => $value)
-				{
-				
-					list($field_select, $model_name, $field_name)=set_safe_name_field($class, $field);
-				
-					$arr_sql[]=$field_select.' LIKE \'%'.$model[$model_name]->components[$field_name]->check($value).'%\'';
-				
-				}
-				
-				$initial_sql.=' '.$arr_par[$parenthesis]['open'].implode(' AND ', $arr_sql).$arr_par[$parenthesis]['close'];
-			
-			break;
+
 		
 		}
+	
+	//}
+	
+	$initial_sql.=implode(' '.$glue.' ', $arr_to_glued);
+	
+	if(count($order_by)>0)
+	{
+	
+		$initial_sql.='';
 	
 	}
 	
