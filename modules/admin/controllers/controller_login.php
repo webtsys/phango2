@@ -81,9 +81,9 @@ class LoginSwitchClass extends ControllerSwitchClass {
 		
 		if(!$this->login->login($_POST['username'], $_POST['password'], $_POST['no_expire_session']))
 		{
-		
+			
 			ob_start();
-	
+				
 			$this->login->login_form();
 			
 			$cont_index=ob_get_contents();

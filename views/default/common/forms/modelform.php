@@ -29,12 +29,12 @@ if(count($fields)==0)
 
 			default:
 			
-				$label_class=slugify($model_form[$field]->label).'_class';
+				$label_class=$model_form[$field]->label_class;
 				
 				?>
 
 				<p>
-				<label class=""><?php echo ucfirst(str_replace('_', ' ', $model_form[$field]->label) );?> <?php echo $arr_required[$model_form[$field]->required]; ?> <span class="error"><?php echo $model_form[$field]->std_error; ?></span>: </label>
+				<label class="<?php echo $label_class; ?>"><?php echo ucfirst(str_replace('_', ' ', $model_form[$field]->label) );?> <?php echo $arr_required[$model_form[$field]->required]; ?> <span class="error"><?php echo $model_form[$field]->std_error; ?></span>: </label>
 				<?php
 				
 				echo call_user_func_array($func_form , $model_form[$field]->parameters);

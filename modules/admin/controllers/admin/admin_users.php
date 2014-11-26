@@ -9,6 +9,10 @@ function AusersAdmin()
 
 	settype($_GET['op'], 'integer');
 	
+	PhangoVar::$model['user_admin']->label=PhangoVar::$lang['ausers_admin']['ausers_admin_name'];
+	PhangoVar::$model['user_admin']->components['username']->label=PhangoVar::$lang['users']['username'];
+	PhangoVar::$model['user_admin']->components['privileges_user']->label=PhangoVar::$lang['users']['privileges_user'];
+	
 	switch($_GET['op'])
 	{
 	

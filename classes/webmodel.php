@@ -82,8 +82,12 @@ class PhangoVar {
 	static public $cookie_path='';
     
 	static public $base_url='';
+	
+	static public $media_url='';
     
 	static public $base_path='../';
+	
+	static public $media_path='../';
     
 	static public $language='';
 	
@@ -1772,6 +1776,13 @@ class ModelForm {
 	public $label;
 	
 	/**
+	* Text that is used on html for identify the class label containment.
+	* 
+	*/
+	
+	public $label_class='';
+	
+	/**
 	*  DEPRECATED An string used for internal tasks of older versions of generate_admin
 	* *@deprecated Used on older versions of generate_admin
 	* 
@@ -1970,6 +1981,13 @@ class ModelForm {
 			
 		}
 		
+	}
+	
+	function set_parameter($key, $value)
+	{
+		
+		$this->parameters[$key]=$value;
+	
 	}
 	
 	/**
@@ -5950,7 +5968,7 @@ if(PhangoVar::$THEME_MODULE==1)
 		
 		$arr_image_def=array('module' => $module, 'image' => $img_name);
 		
-		return make_fancy_url(PhangoVar::$base_url, 'media', 'image', $arr_image_def);
+		return make_fancy_url(PhangoVar::$media_url, 'media', 'image', $arr_image_def);
 	
 	}
 	
@@ -5976,7 +5994,7 @@ if(PhangoVar::$THEME_MODULE==1)
 				{
 					$css_item=slugify(urlencode_redirect($css_item, 1), 1);
 				
-					$url=make_fancy_url(PhangoVar::$base_url, 'media', 'css', array('module' => $module_css, 'css' => $css_item));
+					$url=make_fancy_url(PhangoVar::$media_url, 'media', 'css', array('module' => $module_css, 'css' => $css_item));
 					
 					$arr_final_css[]='<link href="'.$url.'" rel="stylesheet" type="text/css"/>'."\n";
 				}
@@ -5986,7 +6004,7 @@ if(PhangoVar::$THEME_MODULE==1)
 				
 				$css=slugify(urlencode_redirect($css, 1), 1);
 				
-				$url=make_fancy_url(PhangoVar::$base_url, 'media', 'css', array('module' => $module_css, 'css' => $css));
+				$url=make_fancy_url(PhangoVar::$media_url, 'media', 'css', array('module' => $module_css, 'css' => $css));
 				
 				$arr_final_css[]='<link href="'.$url.'" rel="stylesheet" type="text/css"/>'."\n";
 
@@ -6019,7 +6037,7 @@ if(PhangoVar::$THEME_MODULE==1)
 				{
 					$jscript_item=slugify(urlencode_redirect($jscript_item, 1), 1);
 				
-					$url=make_fancy_url(PhangoVar::$base_url, 'media', 'jscript', array('module' => $module_jscript, 'jscript' => $jscript_item));
+					$url=make_fancy_url(PhangoVar::$media_url, 'media', 'jscript', array('module' => $module_jscript, 'jscript' => $jscript_item));
 					
 					$arr_final_jscript[]='<script language="javascript" src="'.$url.'"></script>'."\n";
 				}
@@ -6029,7 +6047,7 @@ if(PhangoVar::$THEME_MODULE==1)
 				
 				$jscript=slugify(urlencode_redirect($jscript, 1), 1);
 				
-				$url=make_fancy_url(PhangoVar::$base_url, 'media', 'jscript', array('module' => $module_jscript, 'jscript' => $jscript));
+				$url=make_fancy_url(PhangoVar::$media_url, 'media', 'jscript', array('module' => $module_jscript, 'jscript' => $jscript));
 				
 				$arr_final_jscript[]='<script language="javascript" src="'.$url.'"></script>'."\n";
 
@@ -6049,7 +6067,7 @@ else
 		//Redirect to image
 		//media/default/images
 		
-		return PhangoVar::$base_url.'/media/'.PhangoVar::$dir_theme.'/'.$module.'/images/'.$img_name;
+		return PhangoVar::$media_url.'/media/'.PhangoVar::$dir_theme.'/'.$module.'/images/'.$img_name;
 	
 	}
 	
@@ -6070,14 +6088,14 @@ else
 				foreach($css as $css_item)
 				{
 				
-					$arr_final_css[]='<link href="'.PhangoVar::$base_url.'/media/'.PhangoVar::$dir_theme.'/'.$idcss.'/css/'.$css_item.'" rel="stylesheet" type="text/css"/>'."\n";
+					$arr_final_css[]='<link href="'.PhangoVar::$media_url.'/media/'.PhangoVar::$dir_theme.'/'.$idcss.'/css/'.$css_item.'" rel="stylesheet" type="text/css"/>'."\n";
 				
 				}
 			
 			}
 			else
 			{
-				$arr_final_css[]='<link href="'.PhangoVar::$base_url.'/media/'.PhangoVar::$dir_theme.'/css/'.$css.'" rel="stylesheet" type="text/css"/>'."\n";
+				$arr_final_css[]='<link href="'.PhangoVar::$media_url.'/media/'.PhangoVar::$dir_theme.'/css/'.$css.'" rel="stylesheet" type="text/css"/>'."\n";
 			}
 		}
 
@@ -6103,14 +6121,14 @@ else
 				foreach($jscript as $jscript_item)
 				{
 				
-					$arr_final_jscript[]='<script language="javascript" src="'.PhangoVar::$base_url.'/media/'.PhangoVar::$dir_theme.'/'.$idjscript.'/jscript/'.$jscript_item.'"></script>'."\n";
+					$arr_final_jscript[]='<script language="javascript" src="'.PhangoVar::$media_url.'/media/'.PhangoVar::$dir_theme.'/'.$idjscript.'/jscript/'.$jscript_item.'"></script>'."\n";
 				
 				}
 			
 			}
 			else
 			{
-				$arr_final_jscript[]='<script language="Javascript" src="'.PhangoVar::$base_url.'/media/jscript/'.$jscript.'"></script>'."\n";
+				$arr_final_jscript[]='<script language="Javascript" src="'.PhangoVar::$media_url.'/media/jscript/'.$jscript.'"></script>'."\n";
 			}
 		}
 

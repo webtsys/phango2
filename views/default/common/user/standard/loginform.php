@@ -7,6 +7,8 @@ function LoginFormView($model_user, $model_login)
 
 	$arr_fields_login=array($model_login->field_user, $model_login->field_password, 'no_expire_session');
 	
+	$model_user->forms['no_expire_session']->label_class='expire_button';
+	
 	?>
 	<form method="post" action="<?php echo $model_login->url_login; ?>">
 	<?php

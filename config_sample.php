@@ -42,8 +42,14 @@ define('COOKIE_NAME', 'webtsys_id');
 //base url, without last slash. Put here tipically, the url of home page of your site.
 PhangoVar::$base_url = 'http://www.example.com';
 
+//base url for media, if you want put this on other server, without last slash. Put here tipically, the same value thar $base_url.
+PhangoVar::$media_url = PhangoVar::$base_url;
+
 //base path, the REAL PATH in the server. 
 PhangoVar::$base_path = '/var/www/htdocs/phango/';
+
+//media path, the REAL PATH in the server media. Normally you can mount with nfs or other methods the media disk if is on other server. 
+PhangoVar::$media_path = PhangoVar::$base_path;
 
 //DEBUG, if you active DEBUG, phango send messages with error to stdout
 define('DEBUG', '0');

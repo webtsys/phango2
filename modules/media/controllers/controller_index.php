@@ -50,7 +50,7 @@ class IndexSwitchClass extends ControllerSwitchClass {
 		
 		//theme path, can be a module theme. If module_theme_loaded exists, rewrite.
 		
-		$file_path=PhangoVar::$base_path.$this->container_theme.'views/'.$this->theme.'/media/'.$this->module_theme_loaded.'images/'.$image;
+		$file_path=PhangoVar::$media_path.$this->container_theme.'views/'.$this->theme.'/media/'.$this->module_theme_loaded.'images/'.$image;
 		
 		$file_path_old='';
 		
@@ -68,7 +68,7 @@ class IndexSwitchClass extends ControllerSwitchClass {
 			
 				$file_path_old=$file_path;
 			
-				$file_path=PhangoVar::$base_path.'modules/'.$this->module_theme_loaded.'media/images/'.$image;
+				$file_path=PhangoVar::$media_path.'modules/'.$this->module_theme_loaded.'media/images/'.$image;
 			
 				if(file_exists($file_path))
 				{
@@ -134,7 +134,7 @@ class IndexSwitchClass extends ControllerSwitchClass {
 			
 		settype($ext_info['extension'], 'string');
 		
-		$file_path=PhangoVar::$base_path.$this->container_theme.'views/'.$this->theme.'/media/'.$this->module_theme_loaded.'css/'.$css;
+		$file_path=PhangoVar::$media_path.$this->container_theme.'views/'.$this->theme.'/media/'.$this->module_theme_loaded.'css/'.$css;
 		
 		if($ext_info['extension']=='css')
 		{
@@ -148,11 +148,11 @@ class IndexSwitchClass extends ControllerSwitchClass {
 			
 				//Second on module.
 				
-				//$file_path=PhangoVar::$base_path.$config_data['module_theme'].'views/'.$config_data['dir_theme'].'/media/css/'.$css;
+				//$file_path=PhangoVar::$media_path.$config_data['module_theme'].'views/'.$config_data['dir_theme'].'/media/css/'.$css;
 			
 				$file_path_old=$file_path;
 			
-				$file_path=PhangoVar::$base_path.'modules/'.$this->module_theme_loaded.'media/css/'.$css;
+				$file_path=PhangoVar::$media_path.'modules/'.$this->module_theme_loaded.'media/css/'.$css;
 				
 				if(file_exists($file_path))
 				{
@@ -210,7 +210,7 @@ class IndexSwitchClass extends ControllerSwitchClass {
 			
 		settype($ext_info['extension'], 'string');
 		
-		$file_path=PhangoVar::$base_path.$this->container_theme.'views/'.$this->theme.'/media/'.$this->module_theme_loaded.'fonts/'.$font;
+		$file_path=PhangoVar::$media_path.$this->container_theme.'views/'.$this->theme.'/media/'.$this->module_theme_loaded.'fonts/'.$font;
 		
 		$file_path_old='';
 		
@@ -225,11 +225,11 @@ class IndexSwitchClass extends ControllerSwitchClass {
 			
 				//Second on module.
 			
-				//$file_path=PhangoVar::$base_path.$config_data['module_theme'].'views/'.$config_data['dir_theme'].'/media/fonts/'.$font;
+				//$file_path=PhangoVar::$media_path.$config_data['module_theme'].'views/'.$config_data['dir_theme'].'/media/fonts/'.$font;
 				
 				$file_path_old=$file_path;
 			
-				$file_path=PhangoVar::$base_path.'modules/'.$this->module_theme_loaded.'media/fonts/'.$font;
+				$file_path=PhangoVar::$media_path.'modules/'.$this->module_theme_loaded.'media/fonts/'.$font;
 			
 				if(file_exists($file_path))
 				{
@@ -285,7 +285,7 @@ class IndexSwitchClass extends ControllerSwitchClass {
 	
 		$ext_info=pathinfo($jscript);
 		
-		$file_path=PhangoVar::$base_path.$this->container_theme.'views/'.$this->theme.'/media/'.$this->module_theme_loaded.'jscript/'.$jscript;
+		$file_path=PhangoVar::$media_path.$this->container_theme.'views/'.$this->theme.'/media/'.$this->module_theme_loaded.'jscript/'.$jscript;
 		
 		settype($ext_info['extension'], 'string');
 		
@@ -300,11 +300,11 @@ class IndexSwitchClass extends ControllerSwitchClass {
 			
 				//Second on module.
 			
-				//$file_path=PhangoVar::$base_path.$config_data['module_theme'].'views/'.$config_data['dir_theme'].'/media/fonts/'.$_GET['font'];
+				//$file_path=PhangoVar::$media_path.$config_data['module_theme'].'views/'.$config_data['dir_theme'].'/media/fonts/'.$_GET['font'];
 				
 				$file_path_old=$file_path;
 			
-				$file_path=PhangoVar::$base_path.'modules/'.$this->module_theme_loaded.'media/jscript/'.$jscript;
+				$file_path=PhangoVar::$media_path.'modules/'.$this->module_theme_loaded.'media/jscript/'.$jscript;
 			
 				if(!file_exists($file_path))
 				{
@@ -315,7 +315,7 @@ class IndexSwitchClass extends ControllerSwitchClass {
 					
 					$file_path_old.=' and '.$file_path;
 			
-					$file_path=PhangoVar::$base_path.'application/media/jscript/'.$jscript;
+					$file_path=PhangoVar::$media_path.'application/media/jscript/'.$jscript;
 					
 					if(file_exists($file_path))
 					{

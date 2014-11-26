@@ -46,7 +46,9 @@ PhangoVar::$lang['users']['repeat_password']='Repetir password';
 
 PhangoVar::$lang['users']['accept_cond_register']='Aceptar condiciones de registro';
 
-PhangoVar::$lang['users']['users_zone']='Zona de usuarios';
+PhangoVar::$lang['users']['username']='Nombre de usuario';
+
+PhangoVar::$lang['users']['privileges_user']='Privilegios';
 
 PhangoVar::$lang['users']['login']='Conectar';
 
@@ -57,5 +59,7 @@ PhangoVar::$lang['users']['remember_password']='Recordar contraseña';
 PhangoVar::$lang['users']['remember_password_explain']='Por favor, introduzca el email con el que se registró en la web, que será donde reciba su nueva contraseña';
 
 PhangoVar::$lang['users']['register']='Registrar';
+
+PhangoVar::$lang['users']['users_zone']='Zona de usuarios';
 
 ?>
