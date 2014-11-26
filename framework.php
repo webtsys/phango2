@@ -628,6 +628,8 @@ if($_GET['begin_page']<0)
 {
 
 	$_GET['begin_page']=0;
+	
+	PhangoVar::$begin_page=$_GET['begin_page'];
 
 }
 

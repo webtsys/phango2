@@ -293,6 +293,8 @@ class PhangoVar {
 	
 	static public $url_module_requires=array();
 	
+	static public $begin_page=0;
+	
 }
 
 
@@ -1472,7 +1474,7 @@ class Webmodel {
 
 				//Use method from ModelForm for set initial parameters...
 
-				$this->forms[$component_name]->set_simple_parameters($parameters);
+				$this->forms[$component_name]->set_parameter_value($parameters);
 				
 			}
 
@@ -1924,7 +1926,7 @@ class ModelForm {
 	*
 	*/
 	
-	function set_simple_parameters($parameters)
+	function set_parameter_value($parameters)
 	{
 		
 		$this->parameters[2]=$parameters;
@@ -6529,7 +6531,7 @@ class WhereSql {
 	
 	}
 	
-	public function obtain_sql()
+	public function get_where_sql()
 	{
 	
 		$arr_to_glued=array();
@@ -6538,6 +6540,16 @@ class WhereSql {
 		$arr_conditions['union1_AND']['AND'][]=array('moderator' => array('=', $arr_user['IdUser_admin']));
 		$arr_conditions['union1_AND']['AND'][]=array('moderator' => array('!=', 0));
 		$arr_conditions['union1_AND']['OR'][]=array('moderator' => array('!=', 0));
+		$arr_conditions['union1_AND']['AND'][]=array('moderator' => array('=', $arr_user['IdUser_admin']));
+		
+		$arr_conditions['union2_OR']['AND'][]=array('moderator' => array('=', $arr_user['IdUser_admin']));
+		$arr_conditions['union2_OR']['OR'][]=array('moderator' => array('!=', 1));
+		$arr_conditions['union2_OR']['AND'][]=array('moderator' => array('=', '25'));
+		
+		$where_class->order_by[]=array('field' => 'moderator', 'order' => 'ASC');
+		$where_class->order_by[]=array('field' => 'moderator', 'order' => 'ASC');
+		
+		$where_class->limit=array(0, 25);
 		*/
 		
 		$arr_define_sql=array();
@@ -6638,10 +6650,18 @@ class WhereSql {
 		
 		}
 		
-		
 		$this->initial_sql.=implode('', $arr_final_sql);
 		
+		return $this->initial_sql;
+	
+	}
+	
+	public function get_order_sql()
+	{
+	
 		$arr_order_final=array();
+		
+		$final_order='';
 		
 		//$order_by[]=array('field' => 'moderator', 'order' => 'ASC'
 		
@@ -6656,18 +6676,32 @@ class WhereSql {
 			
 			}
 		
-			$this->initial_sql.=' ORDER BY '.implode(' ,', $arr_order_final);
+			$final_order=' ORDER BY '.implode(' ,', $arr_order_final);
 		
 		}
 		
+		return $final_order;
+	
+	}
+	
+	public function get_limit_sql()
+	{
+			
 		if(count($this->limit)>0)
 		{
 		
-			$this->initial_sql.=' LIMIT '.implode(' ,', $this->limit);
+			return ' LIMIT '.implode(' ,', $this->limit);
 		
 		}
 		
-		return $this->initial_sql;
+		return '';
+	
+	}
+	
+	public function get_all_sql()
+	{
+	
+		return $this->get_where_sql().$this->get_order_sql().$this->get_limit_sql();
 	
 	}
 	

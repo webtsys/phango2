@@ -94,7 +94,7 @@ class SimpleList
 		
 		}*/
 		
-		$this->where_sql=$this->where_sql.' limit '.$this->begin_page.', '.$this->num_by_page;
+		//$this->where_sql=$this->where_sql.' limit '.$this->begin_page.', '.$this->num_by_page;
 		
 		up_table_config($arr_fields_show, $this->arr_cell_sizes);
 		

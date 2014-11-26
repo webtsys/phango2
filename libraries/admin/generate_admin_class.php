@@ -4,7 +4,7 @@ load_libraries(array('utilities/menu_barr_hierarchy', 'simplelist', 'generate_ad
 
 class GenerateAdminClass {
 
-	public $class, $arr_fields, $arr_fields_edit, $url_options, $options_func, $where_sql, $arr_fields_form, $type_list, $url_back, $no_search, $txt_list_new, $txt_add_new_item, $txt_edit_item, $simple_redirect, $class_add, $separator_element_opt, $extra_menu_create, $listmodel, $number_id, $arr_fields_no_showed;
+	public $class, $arr_fields, $arr_fields_edit, $url_options, $options_func, $where_sql, $arr_fields_form, $type_list, $url_back, $no_search, $txt_list_new, $txt_add_new_item, $txt_edit_item, $simple_redirect, $class_add, $separator_element_opt, $extra_menu_create, $listmodel, $number_id, $arr_fields_no_showed, $where_sql_class, $num_by_page;
 
 	public $search_asc;
 	public $search_desc;
@@ -12,7 +12,7 @@ class GenerateAdminClass {
 	
 	function __construct($model_name)
 	{
-	
+		
 		$this->model_name=$model_name;
 		$this->arr_fields=array(); 
 		$this->arr_fields_edit=array();
@@ -21,7 +21,9 @@ class GenerateAdminClass {
 		$this->url_back=$this->url_options;
 		$this->no_search=false;
 		$this->options_func='BasicOptionsListModel';
+		$this->num_by_page=20;
 		$this->where_sql='';
+		$this->where_sql_class=new WhereSql($this->model_name, $arr_conditions=array(), $order_by=array(), $limit=array(PhangoVar::$begin_page, $this->num_by_page));
 		$this->arr_fields_form=array();
 		$this->type_list='Basic';
 		$this->show_id=1;
@@ -46,10 +48,15 @@ class GenerateAdminClass {
 	
 	}
 	
-	function initial_order()
+	function set_where_sql()
 	{
 	
+		/*if($this->where_sql=='')
+		{*/
 		
+			$this->where_sql=$this->where_sql_class->obtain_sql();
+		
+		//}
 	  
 	}
 	
@@ -93,6 +100,8 @@ class GenerateAdminClass {
 				//$this->url_back=$this->url_options;
 				
 				//$this->url_options=add_extra_fancy_url($this->url_options, array('op_edit' => $_GET['op_edit']));
+				
+				//$this->set_where_sql();
 				
 				$listmodel=new ListModelClass($this->model_name, $this->arr_fields, $this->url_options, $this->options_func, $this->where_sql, $this->arr_fields_edit, $this->type_list, $this->no_search, $this->show_id, $this->yes_options, $this->extra_fields, $this->separator_element_opt);
 				
@@ -174,6 +183,8 @@ class GenerateAdminClass {
 		if(count($post)==0)
 		{
 		
+			//$this->set_where_sql();
+		
 			$post=PhangoVar::$model[$this->model_name]->select_a_row_where($this->where_sql, $this->arr_fields_edit, 1);
 		
 		}
@@ -202,6 +213,8 @@ class GenerateAdminClass {
 		//Setting op variable to integer for use in switch
 		
 		//function InsertModelForm($model_name, $url_admin, $url_back, $arr_fields=array(), $id=0, $goback=1, $simple_redirect=0, $where_sql='')
+		
+		//$this->set_where_sql();
 		
 		$model_name=$this->model_name;
 		$url_admin=$this->url_options; 
@@ -500,10 +513,13 @@ class ListModelClass {
 			$arr_order=array();
 			$show_form=1;
 			
+			//$search_class=New SearchFormClass($this->model_name, $this->arr_fields_search, $this->arr_fields_order, $this->url_options);
+			
 			if($this->no_search==true)
 			{
 			
 				$show_form=0;
+				//$search_class->search_form();
 			
 			}
 			
@@ -562,6 +578,8 @@ class ListModelClass {
 			}*/
 			
 			$list->where_sql=$this->where_sql.$arr_where_sql.' order by '.$location.'`'.$this->model_name.'`.`'.$_GET['order_field'].'` '.$arr_order[$_GET['order_desc']];
+			
+			//echo $list->where_sql;
 			
 			$list->url_options=$this->url_options;
 			
@@ -647,7 +665,40 @@ class ListModelClass {
 	}
 
 }
+/*
+class SearchFormClass {
 
+	public $model_name, $arr_search_field, $arr_order_field, $arr_order_select, $url_options;
+
+	public function __construct($model_name, $arr_search_field, $arr_order_field,  $url_options)
+	{
+	
+		$this->model_name=$model_name;
+		$this->arr_search_field=$arr_search_field;
+		$this->arr_order_field=$arr_order_field;
+		$this->url_options=$url_options;
+	
+	}
+
+
+	public function search_form()
+	{
+	
+		echo load_view(array($this->arr_search_field, $this->arr_order_field, $this->arr_order_select, $this->url_options), 'common/forms/searchform');
+	
+	}
+	
+	//Return search on format WhereSql
+	
+	public function search()
+	{
+	
+		
+	
+	}
+
+}
+*/
 /*
 class ListModelAjaxClass {
 
