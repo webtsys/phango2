@@ -1847,6 +1847,8 @@ class ModelForm {
 			default:
 				
 				$this->html_field_name=sha1($name_field);
+				
+				$_SESSION['fields_check'][$name_field]=$this->html_field_name;
 			
 				/*$this->html_field_name[$name_field]=$html_field_name;
 

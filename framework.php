@@ -591,7 +591,7 @@ else
 
 load_lang('common', 'error_model');
 
-//Check for csrf attacks
+//Check for csrf attacks and obtain posts if debug.
 
 if(count($_POST)>0)
 {
@@ -617,6 +617,22 @@ if(count($_POST)>0)
 	}
 	
 	unset($_POST['csrf_token']);
+	
+	//Convert $_POST values
+	
+	if(DEBUG==1)
+	{
+	
+		$arr_post_keys=array($_POST);
+		
+		foreach($arr_post_keys as $post_key)
+		{
+		
+			
+		
+		}
+	
+	}
 
 }
 

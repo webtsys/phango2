@@ -83,7 +83,7 @@ function AusersAdmin()
 				
 				$admin->set_url_post(set_admin_link('ausers', array('IdUser_admin' => $arr_user['IdUser_admin'], 'op' => 1)));
 				
-				$admin->no_search=1;
+				//$admin->no_search=1;
 				
 				$arr_conditions['union1_AND']['AND'][]=array('moderator' => array('=', $arr_user['IdUser_admin']));
 				
