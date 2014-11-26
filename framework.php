@@ -620,17 +620,51 @@ if(count($_POST)>0)
 	
 	//Convert $_POST values
 	
-	if(DEBUG==1)
+	if(!DEBUG)
 	{
 	
-		$arr_post_keys=array($_POST);
+		$arr_post_keys=array_keys($_POST);
+		
+		$arr_unset_post=array();
 		
 		foreach($arr_post_keys as $post_key)
 		{
-		
 			
+			if(isset($_SESSION['fields_check'][$post_key]))
+			{
+				
+				$real_name_field=$_SESSION['fields_check'][$post_key];
+			
+				$_POST[$real_name_field]=&$_POST[$post_key];
+						
+			}
+			
+			/*@unset($_SESSION['fields_check'][$post_key]);
+			@unset($_SESSION['fields_check'][$real_name_field]);*/
 		
 		}
+		
+		if(count($_FILES)>0)
+		{
+			$arr_files_keys=array($_FILES);
+			
+			foreach($arr_file_keys as $file_key)
+			{
+			
+				if(isset($_SESSION['fields_check'][$file_key]))
+				{
+					
+					$real_name_field=$_SESSION['fields_check'][$file_key];
+				
+					$_FILES[$real_name_field]=&$_FILES[$file_key];
+				
+				}
+			
+			}
+			
+		}
+		
+		unset($_SESSION['fields_check']);
 	
 	}
 

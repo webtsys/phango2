@@ -1846,9 +1846,22 @@ class ModelForm {
 
 			default:
 				
-				$this->html_field_name=sha1($name_field);
+				$prefix_uniqid=generate_random_password();
+								
+				if(!isset($_SESSION['fields_check'][$name_field]))
+				{
+					$this->html_field_name=uniqid($prefix_uniqid);
 				
-				$_SESSION['fields_check'][$name_field]=$this->html_field_name;
+					$_SESSION['fields_check'][$name_field]=$this->html_field_name;
+					$_SESSION['fields_check'][$this->html_field_name]=$name_field;
+					
+				}
+				else
+				{
+				
+					$this->html_field_name=$_SESSION['fields_check'][$name_field];
+				
+				}
 			
 				/*$this->html_field_name[$name_field]=$html_field_name;
 
