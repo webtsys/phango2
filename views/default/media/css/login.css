@@ -1,9 +1,9 @@
 body 
 {
 	
-	background: #f4f9ff;
+	background: #f4f9ff url('../images/logo.png') center top no-repeat;
 	font-family:sans;
-	margin-top:200px;
+	margin-top:60px;
 	
 }
 

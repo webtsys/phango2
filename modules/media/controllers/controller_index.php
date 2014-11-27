@@ -38,7 +38,9 @@ class IndexSwitchClass extends ControllerSwitchClass {
 	
 		$this->check_module_theme($module);
 		
-		$image=check_path(base64_decode($image));
+		$image=base64_decode($image);
+		
+		$image=check_path($image);
 		
 		$check_file=0;
 			
@@ -120,6 +122,15 @@ class IndexSwitchClass extends ControllerSwitchClass {
 		ob_end_flush();
 		
 		die;
+	
+	}
+	
+	public function image_css($image, $module='none')
+	{
+	
+		$image=base64_encode($image);
+		
+		$this->image($module, $image);
 	
 	}
 	
