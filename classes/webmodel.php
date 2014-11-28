@@ -6394,10 +6394,21 @@ function load_controller()
 	
 	}
 	
+	$folder_controller='';
+	
+	if(strpos('/', PhangoVar::$script_controller))
+	{
+	
+		$arr_controller=explode('/', PhangoVar::$script_controller);
+		
+		$folder_controller=basename($arr_controller[0]).'/';
+	
+	}
+	
 	if(in_array(PhangoVar::$script_module, PhangoVar::$activated_modules)) 
 	{
 		
-		$path_script_controller=PhangoVar::$base_path.'modules/'.PhangoVar::$script_module.'/controllers/controller_'.PhangoVar::$script_controller.'.php';
+		$path_script_controller=PhangoVar::$base_path.'modules/'.PhangoVar::$script_module.'/controllers/'.$folder_controller.'controller_'.PhangoVar::$script_controller.'.php';
 		
 		$script_class_name=ucfirst(PhangoVar::$script_controller).'SwitchClass';
 		
