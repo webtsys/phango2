@@ -7,10 +7,10 @@ function set_emoticons()
 	$smiley_img=array();
 	//
 	$smiley_text[0] = ":D";
-	$smiley_img[0] =get_url_image("smileys/icon_biggrin.gif"));
+	$smiley_img[0] =get_url_image("smileys/icon_biggrin.gif");
 
 	$smiley_text[1] = ":)";
-	$smiley_img[1] =get_url_image("smileys/icon_smile.gif"));
+	$smiley_img[1] =get_url_image("smileys/icon_smile.gif");
 
 	$smiley_text[2] = ":(";
 	$smiley_img[2] =get_url_image("smileys/icon_sad.gif");

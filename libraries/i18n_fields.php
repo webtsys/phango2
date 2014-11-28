@@ -31,10 +31,10 @@ class I18nField extends PhangoField {
 
 		}
 
-		if($this->required==1 && $value[$_SESSION['default_language']]=='')
+		if($this->required==1 && $value[PhangoVar::$language]=='')
 		{
 
-			$this->std_error=PhangoVar::$lang['common']['error_you_need_this_language_field'].' '.$_SESSION['default_language'];
+			$this->std_error=PhangoVar::$lang['common']['error_you_need_this_language_field'].' '.PhangoVar::$language;
 
 			return '';
 
@@ -63,9 +63,9 @@ class I18nField extends PhangoField {
 		
 		settype($arr_lang[PhangoVar::$language], 'string');
 
-		settype($arr_lang[$_SESSION['default_language']], 'string');
+		settype($arr_lang[PhangoVar::$language], 'string');
 
-		if($arr_lang[PhangoVar::$language]=='' && $arr_lang[$_SESSION['default_language']]=='')
+		if($arr_lang[PhangoVar::$language]=='' && $arr_lang[PhangoVar::$language]=='')
 		{
 			
 			//Need  view var with text...
@@ -87,7 +87,7 @@ class I18nField extends PhangoField {
 		else if($arr_lang[PhangoVar::$language]=='')
 		{
 			
-			return $arr_lang[$_SESSION['default_language']];
+			return $arr_lang[PhangoVar::$language];
 		
 		}
 		
@@ -198,7 +198,7 @@ function MultiLangForm($field, $class='', $arr_values=array(), $type_form='TextF
 	{
 
 		$arr_selected[slugify($lang_select)]='hidden_form';
-		$arr_selected[slugify($_SESSION['default_language'])]='no_hidden_form';
+		$arr_selected[slugify(PhangoVar::$language)]='no_hidden_form';
 		
 		settype($arr_values[$lang_select], 'string');
 		echo '<div class="'.$arr_selected[slugify($lang_select)].'" id="'.$field.'_'.$lang_select.'">';
@@ -217,7 +217,7 @@ function MultiLangForm($field, $class='', $arr_values=array(), $type_form='TextF
 		//set
 
 		$arr_selected[slugify($lang_item)]='no_choose_flag';
-		$arr_selected[slugify($_SESSION['default_language'])]='choose_flag';
+		$arr_selected[slugify(PhangoVar::$language)]='choose_flag';
 
 		?>
 		<a class="<?php echo $arr_selected[slugify($lang_item)]; ?>" id="<?php echo $field.'_'.$lang_item; ?>_flag" href="#" onclick="change_form_language_<?php echo $field; ?>('<?php echo $field; ?>', '<?php echo $field.'_'.$lang_item; ?>'); return false;"><img src="<?php echo get_url_image('languages/'.$lang_item.'.png'); ?>" alt="<?php echo $lang_item; ?>"/></a>&nbsp;

@@ -554,12 +554,12 @@ class Webmodel {
 		$this->components[$this->idmodel]=new PrimaryField();
 		$this->label=$this->name;
 		
-		/*if(isset(PhangoVar::$connection_func[$this->db_selected]))
-		{*/
+		if(!isset(PhangoVar::$connection_func[$this->db_selected]))
+		{
 		
-		PhangoVar::$connection_func[$this->db_selected]='connect_to_db';
+			PhangoVar::$connection_func[$this->db_selected]='connect_to_db';
 		
-		//}
+		}
 
 	}
 	
@@ -570,7 +570,7 @@ class Webmodel {
 	
 	public function connect_to_db()
 	{
-	
+		
 		include(PhangoVar::$base_path.'database/'.TYPE_DB.'.php');
 	
 		if(!webtsys_connect( PhangoVar::$host_db[$this->db_selected], PhangoVar::$login_db[$this->db_selected], PhangoVar::$pass_db[$this->db_selected] , $this->db_selected))
@@ -593,7 +593,7 @@ class Webmodel {
 		
 		if(PhangoVar::$select_db[$this->db_selected]!=false && PhangoVar::$connection[$this->db_selected]!=false)
 		{
-		
+			
 			PhangoVar::$connection_func[$this->db_selected]='dummy_connect_to_db';
 			
 		}
@@ -630,7 +630,7 @@ class Webmodel {
 	
 	public function set_phango_connection()
 	{
-	
+		
 		$method_connection=PhangoVar::$connection_func[$this->db_selected];
 		
 		$this->$method_connection();

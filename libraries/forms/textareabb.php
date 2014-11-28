@@ -25,7 +25,7 @@ function TextAreaBBForm($name="", $class='', $value='', $profile='all')
 		PhangoVar::$textbb_type=basename(str_replace('.php', '', PhangoVar::$textbb_type));
 
 		load_libraries(array('textbb/'.PhangoVar::$textbb_type.'/'.PhangoVar::$textbb_type.'_'.$profile));
-
+		
 		//Load script profile for jscript, is a function called load_profile
 
 		//load_libraries(array('textbb/profiles/'.$config_data['textbb_type'].'_'.$profile.'.php'));

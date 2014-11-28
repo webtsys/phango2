@@ -4,4 +4,4 @@ include('../../../../config.php');
 
 ?>
 
-var CKEDITOR_BASEPATH = '<?php echo $base_url; ?>/media/jscript/libraries_jscript/textbb/ckeditor/';
+var CKEDITOR_BASEPATH = '<?php echo PhangoVar::$base_url; ?>/media/jscript/textbb/ckeditor/';
