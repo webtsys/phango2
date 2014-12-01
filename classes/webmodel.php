@@ -5956,6 +5956,17 @@ function load_header_view()
 
 }
 
+//A function for load all files into media folder, on application, theme view, or module.
+//Here is load from theme view or module views. Without base64 code.
+//the type is the folder where you search into media.
+
+function get_url_media($name_media, $module='none')
+{
+
+	return make_fancy_url(PhangoVar::$media_url, 'media', 'show', array('module' => $module, 'media' => $name_media));
+
+}
+
 if(PhangoVar::$THEME_MODULE==1)
 {
 
@@ -5964,11 +5975,13 @@ if(PhangoVar::$THEME_MODULE==1)
 	
 		//Redirect to php
 		
-		$img_name=urlencode_redirect($img_name, 1);
+		//$img_name=urlencode_redirect($img_name, 1);
 		
 		$arr_image_def=array('module' => $module, 'image' => $img_name);
 		
-		return make_fancy_url(PhangoVar::$media_url, 'media', 'image', $arr_image_def);
+		//return make_fancy_url(PhangoVar::$media_url, 'media', 'image', $arr_image_def);
+		
+		return get_url_media($img_name, $module);
 	
 	}
 	
@@ -5992,9 +6005,12 @@ if(PhangoVar::$THEME_MODULE==1)
 				
 				foreach($css as $css_item)
 				{
-					$css_item=slugify(urlencode_redirect($css_item, 1), 1);
+					/*$css_item=slugify(urlencode_redirect($css_item, 1), 1);
 				
 					$url=make_fancy_url(PhangoVar::$media_url, 'media', 'css', array('module' => $module_css, 'css' => $css_item));
+					*/
+					
+					$url=get_url_media('css/'.$css_item, $module_css);
 					
 					$arr_final_css[]='<link href="'.$url.'" rel="stylesheet" type="text/css"/>'."\n";
 				}
@@ -6002,9 +6018,11 @@ if(PhangoVar::$THEME_MODULE==1)
 			else
 			{
 				
-				$css=slugify(urlencode_redirect($css, 1), 1);
+				/*$css=slugify(urlencode_redirect($css, 1), 1);
 				
-				$url=make_fancy_url(PhangoVar::$media_url, 'media', 'css', array('module' => $module_css, 'css' => $css));
+				$url=make_fancy_url(PhangoVar::$media_url, 'media', 'css', array('module' => $module_css, 'css' => $css));*/
+				
+				$url=get_url_media('css/'.$css, $module_css);
 				
 				$arr_final_css[]='<link href="'.$url.'" rel="stylesheet" type="text/css"/>'."\n";
 
@@ -6038,6 +6056,8 @@ if(PhangoVar::$THEME_MODULE==1)
 					$jscript_item=slugify(urlencode_redirect($jscript_item, 1), 1);
 				
 					$url=make_fancy_url(PhangoVar::$media_url, 'media', 'jscript', array('module' => $module_jscript, 'jscript' => $jscript_item));
+					
+					$url=load_media();
 					
 					$arr_final_jscript[]='<script language="javascript" src="'.$url.'"></script>'."\n";
 				}
@@ -6396,7 +6416,7 @@ function load_controller()
 	
 	$folder_controller='';
 	
-	if(strpos('/', PhangoVar::$script_controller))
+	if(@strpos('/', PhangoVar::$script_controller))
 	{
 	
 		$arr_controller=explode('/', PhangoVar::$script_controller);
@@ -6411,6 +6431,8 @@ function load_controller()
 		$path_script_controller=PhangoVar::$base_path.'modules/'.PhangoVar::$script_module.'/controllers/'.$folder_controller.'controller_'.PhangoVar::$script_controller.'.php';
 		
 		$script_class_name=ucfirst(PhangoVar::$script_controller).'SwitchClass';
+		
+		//$script_class='index';
 		
 		if(include($path_script_controller))
 		{
@@ -6455,7 +6477,7 @@ function load_controller()
 				ob_clean();
 
 				$arr_no_controller[0]='<p>Don\'t exist controller class</p>';
-				$arr_no_controller[1]='<p>Don\'t exist '.$script_class.'.php on <strong>'.PhangoVar::$script_controller.' folder</strong></p>';
+				$arr_no_controller[1]='<p>Don\'t exist '.$script_class_name.' <strong>'.PhangoVar::$script_controller.' folder</strong></p>';
 
 				echo show_error($arr_no_controller[0], $arr_no_controller[1], $output_external=$output);
 				

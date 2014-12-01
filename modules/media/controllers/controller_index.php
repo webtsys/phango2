@@ -300,7 +300,9 @@ class IndexSwitchClass extends ControllerSwitchClass {
 		
 		settype($ext_info['extension'], 'string');
 		
-		if($ext_info['extension']=='js')
+		$yes_jscript_php=preg_match('/\.js\.php/', $jscript);
+		
+		if($ext_info['extension']=='js' || $yes_jscript_php)
 		{
 			$check_file=0;
 			
@@ -362,8 +364,19 @@ class IndexSwitchClass extends ControllerSwitchClass {
 			{
 				
 				header('Content-Type: application/javascript');
-			
-				readfile($file_path);
+				
+				if(!$yes_jscript_php)
+				{
+				
+					readfile($file_path);
+					
+				}
+				else
+				{
+				
+					include($file_path);
+				
+				}
 			
 			}
 			else

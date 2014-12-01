@@ -13,7 +13,7 @@ function load_jscript_editor($name_editor, $value, $profiles='all')
 	
 	ob_end_clean();
 	
-	PhangoVar::$arr_cache_jscript[]='ckeditor_path.js';
+	//PhangoVar::$arr_cache_jscript[]='ckeditor_path.js';
 	PhangoVar::$arr_cache_jscript[]='jquery.min.js';
 	PhangoVar::$arr_cache_jscript[]='textbb/ckeditor/ckeditor.js';
 
@@ -37,6 +37,8 @@ function load_jscript_editor($name_editor, $value, $profiles='all')
 	?>
 	
 	$(document).ready( function () {
+	
+		CKEDITOR.config.baseHref='<?php echo PhangoVar::$base_url; ?>/media/jscript/textbb/ckeditor/';
 	
 		CKEDITOR.replace( '<?php echo $name_editor; ?>' , 
 		{
