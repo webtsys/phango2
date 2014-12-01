@@ -192,6 +192,8 @@ class LoginClass {
 	public function logout()
 	{
 	
+		unset($_SESSION);
+	
 		session_destroy();
 		
 		setcookie(COOKIE_NAME.'_'.sha1($this->field_key), 0, 0, PhangoVar::$cookie_path);

@@ -63,7 +63,7 @@ class ShowMediaSwitchClass extends ControllerSwitchClass {
 	public function show($module, $media_file)
 	{
 	
-		$media_file=$this->check_path($media_file);
+		//$media_file=$this->check_path($media_file);
 
 		//theme path, can be a module theme. If module_theme_loaded exists, rewrite.
 		
@@ -174,7 +174,7 @@ class ShowMediaSwitchClass extends ControllerSwitchClass {
 		else
 		{
 		
-			show_error('Don\'t exists the image', 'Don\'t exists the image with path: '.$file_path, $output_external='');
+			show_error('Don\'t exists the media file', 'Don\'t exists the media file with path: '.$file_path, $output_external='');
 		
 		}
 		

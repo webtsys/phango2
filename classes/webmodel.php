@@ -5977,11 +5977,11 @@ if(PhangoVar::$THEME_MODULE==1)
 		
 		//$img_name=urlencode_redirect($img_name, 1);
 		
-		$arr_image_def=array('module' => $module, 'image' => $img_name);
+		//$arr_image_def=array('module' => $module, 'image' => 'images/'.$img_name);
 		
 		//return make_fancy_url(PhangoVar::$media_url, 'media', 'image', $arr_image_def);
 		
-		return get_url_media($img_name, $module);
+		return get_url_media('images/'.$img_name, $module);
 	
 	}
 	
@@ -6053,11 +6053,11 @@ if(PhangoVar::$THEME_MODULE==1)
 				
 				foreach($jscript as $jscript_item)
 				{
-					$jscript_item=slugify(urlencode_redirect($jscript_item, 1), 1);
+					/*$jscript_item=slugify(urlencode_redirect($jscript_item, 1), 1);
 				
-					$url=make_fancy_url(PhangoVar::$media_url, 'media', 'jscript', array('module' => $module_jscript, 'jscript' => $jscript_item));
+					$url=make_fancy_url(PhangoVar::$media_url, 'media', 'jscript', array('module' => $module_jscript, 'jscript' => $jscript_item));*/
 					
-					$url=load_media();
+					$url=get_url_media('jscript/'.$jscript_item, $module_jscript);
 					
 					$arr_final_jscript[]='<script language="javascript" src="'.$url.'"></script>'."\n";
 				}
@@ -6065,9 +6065,11 @@ if(PhangoVar::$THEME_MODULE==1)
 			else
 			{
 				
-				$jscript=slugify(urlencode_redirect($jscript, 1), 1);
+				/*$jscript=slugify(urlencode_redirect($jscript, 1), 1);
 				
-				$url=make_fancy_url(PhangoVar::$media_url, 'media', 'jscript', array('module' => $module_jscript, 'jscript' => $jscript));
+				$url=make_fancy_url(PhangoVar::$media_url, 'media', 'jscript', array('module' => $module_jscript, 'jscript' => $jscript));*/
+				
+				$url=get_url_media('jscript/'.$jscript, $module_jscript);
 				
 				$arr_final_jscript[]='<script language="javascript" src="'.$url.'"></script>'."\n";
 
@@ -6526,6 +6528,8 @@ function load_controller()
 
 function slugify_get($value)
 {
+
+	$value=preg_replace('/\?.*$/', '', $value);
 
 	return slugify($value, 1);
 
