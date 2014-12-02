@@ -23,10 +23,14 @@ class I18nField extends PhangoField {
 
 	function check($value)
 	{
+	
+		settype($value, 'array');
 		
 		foreach(PhangoVar::$arr_i18n as $lang_item)
 		{
 
+			settype($value[$lang_item], 'string');
+		
 			$value[$lang_item]=$this->type_field->check($value[$lang_item]);
 
 		}

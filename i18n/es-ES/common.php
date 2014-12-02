@@ -86,9 +86,9 @@ PhangoVar::$lang['common']['minute']='minuto';
 
 PhangoVar::$lang['common']['second']='segundo';
 
-PhangoVar::$lang['common']['title']='title';
+PhangoVar::$lang['common']['title']='Título';
 
-PhangoVar::$lang['common']['text']='text';
+PhangoVar::$lang['common']['text']='Texto';
 
 PhangoVar::$lang['common']['order_by']='Ordenar por';
 
