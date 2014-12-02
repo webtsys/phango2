@@ -58,7 +58,7 @@ function load_jscript_editor($name_editor, $value, $profiles='all')
 				['Source'],'-', ['Bold', 'Italic','Underline'], '-', ['Blockquote'] , '-', ['Link', 'Unlink'], '-', ['TextColor', 'SpecialChar', 'FontSize'], '-', ['Image','Table'], '-', ['Undo','Redo'], '-', ['Smiley']
 
 				],*/
-			/*smiley_columns: 10,
+			smiley_columns: 10,
 			smiley_path: [''], //['<?php echo PhangoVar::$base_url; ?>/media/smileys/'],
 			smiley_images :
 			[
@@ -90,7 +90,7 @@ function load_jscript_editor($name_editor, $value, $profiles='all')
 
 				?> 
 			
-			]*/
+			]
 
 			/*,on :
 			{

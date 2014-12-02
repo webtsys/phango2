@@ -63,7 +63,7 @@ class ShowMediaSwitchClass extends ControllerSwitchClass {
 	public function show($module, $media_file)
 	{
 	
-		//$media_file=$this->check_path($media_file);
+		$media_file=$this->check_path($media_file);
 
 		//theme path, can be a module theme. If module_theme_loaded exists, rewrite.
 		

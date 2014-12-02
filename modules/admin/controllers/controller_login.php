@@ -39,8 +39,8 @@ class LoginSwitchClass extends ControllerSwitchClass {
 		if($c_users>0)
 		{
 		
-			if(!$this->login->check_login())
-			{
+			/*if(!$this->login->check_login())
+			{*/
 			
 				$this->login->login_form();
 				
@@ -50,13 +50,13 @@ class LoginSwitchClass extends ControllerSwitchClass {
 				
 				echo load_view(array($cont_index), 'loginadmin');
 				
-			}
+			/*}
 			else
 			{
 			
 				
 			
-			}
+			}*/
 			
 		}
 		else
