@@ -98,13 +98,6 @@ class I18nField extends PhangoField {
 		return $arr_lang[PhangoVar::$language];
 
 	}
-
-	function get_parameters_default()
-	{
-
-		return ;
-
-	}
 	
 	function add_slugify_i18n_post($field, $post)
 	{
@@ -147,13 +140,6 @@ class SlugifyField extends PhangoField {
 
 		return $this->type.' NOT NULL';
 		
-
-	}
-
-	function get_parameters_default()
-	{
-
-		return;
 
 	}
 	

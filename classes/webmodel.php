@@ -1459,6 +1459,8 @@ class Webmodel {
 
 				$this->forms[$component_name]=new ModelForm($this->name, $component_name, $component->form, set_name_default($component_name), $component, $component->required, '');
 				
+				$this->forms[$component_name]->set_all_parameters_form($component->get_parameters_default());
+				
 				if($this->components[$component_name]->label=='')
 				{
 				
@@ -1469,18 +1471,19 @@ class Webmodel {
 				$this->forms[$component_name]->label=$this->components[$component_name]->label;
 
 				//Set parameters to default
-				$parameters='';
+				//$parameters_value=$this->components[$component_name]->parameters;
 
 				/*if($this->forms[$component_name]->parameters[2]==0)
 				{*/
+	
+				//$this->forms[$component_name]->parameters=$this->components[$component_name]->parameters;
 					
-				$parameters=$component->get_parameters_default();
 
 				//}
 
 				//Use method from ModelForm for set initial parameters...
 
-				$this->forms[$component_name]->set_parameter_value($parameters);
+				//$this->forms[$component_name]->set_parameter_value($parameters_initial_value);
 				
 			}
 
@@ -1974,7 +1977,7 @@ class ModelForm {
 	
 		$z=1;
 	
-		foreach($parameters as $paremeter)
+		foreach($parameters as $parameter)
 		{
 		
 			$this->parameters[$z]=$parameter;
@@ -2244,6 +2247,12 @@ class PhangoField {
 	public $form="";
 	
 	/**
+	* Array for create initial parameters for form..
+	*/
+	
+	public $parameters=array();
+	
+	/**
 	* Method used for internal tasks related with searchs. You can overwrite this method in your PhangoField object if you need translate the value that the user want search to a real value into the database.
 	*/
 	
@@ -2285,7 +2294,7 @@ class PhangoField {
 	public function get_parameters_default()
 	{
 
-		return '';
+		return array($this->name_component, '', '');
 
 	}
 	
@@ -2439,17 +2448,6 @@ class PrimaryField extends PhangoField {
 		return $value;
 
 	}
-	
-	/**
-	* Method for return a default value for the parameters.
-	*/
-
-	public function get_parameters_default()
-	{
-
-		return '';
-
-	}
 
 }
 
@@ -2526,7 +2524,7 @@ class IntegerField extends PhangoField {
 	function get_parameters_default()
 	{
 
-		return 0;
+		return array($this->name_component, '', 0);
 
 	}
 
@@ -2606,8 +2604,10 @@ class BooleanField extends PhangoField {
 
 	function get_parameters_default()
 	{
+	
+		$arr_values=array($this->default_value, PhangoVar::$lang['common']['no'], 0, PhangoVar::$lang['common']['yes'], 1);;
 
-		return array($this->default_value, PhangoVar::$lang['common']['no'], 0, PhangoVar::$lang['common']['yes'], 1);
+		return array($this->name_component, '', $arr_values);
 
 	}
 
@@ -2662,7 +2662,7 @@ class DoubleField extends PhangoField {
 	function get_parameters_default()
 	{
 
-		return '0';
+		return array($this->name_component, '', 0);
 
 	}
 
@@ -2797,15 +2797,17 @@ class ChoiceField extends PhangoField {
 
 			}
 
-			return $arr_return;
+			$arr_values=$arr_return;
 
 		}
 		else
 		{
 
-			return array(0, 'Option 1', 0, 'Option 2', 1);
+			$arr_values=array(0, 'Option 1', 0, 'Option 2', 1);
 
 		}
+		
+		return array($this->name_component, '', $arr_values);
 
 	}
 
@@ -2863,7 +2865,7 @@ class TextField extends PhangoField {
 	function get_parameters_default()
 	{
 
-		return ;
+		return array($this->name_component, '', '');
 
 	}
 	
@@ -2964,7 +2966,7 @@ class TextHTMLField extends PhangoField {
 	function get_parameters_default()
 	{
 
-		return ;
+		return array($this->name_component, '', '');
 
 	}
 
@@ -3095,7 +3097,7 @@ class SerializeField extends PhangoField {
 	function get_parameters_default()
 	{
 
-		return ;
+		return array($this->name_component, '', '');
 
 	}
 	
@@ -3228,7 +3230,7 @@ class DateField extends PhangoField {
 	function get_parameters_default()
 	{
 
-		return time();
+		return array($this->name_component, '', time());
 
 	}
 	
@@ -3357,7 +3359,7 @@ class FileField extends PhangoField {
 	function get_parameters_default()
 	{
 
-		return ;
+		return array($this->name_component, '', '');
 
 	}
 	
@@ -3764,13 +3766,6 @@ class ImageField extends PhangoField {
 		return $this->url_path.'/'.$value;
 
 	}
-
-	function get_parameters_default()
-	{
-
-		return ;
-
-	}
 	
 	function process_delete_field($model, $name_field, $conditions)
 	{
@@ -3876,13 +3871,6 @@ class KeyField extends PhangoField {
 	{
 
 		return $value;
-
-	}
-
-	function get_parameters_default()
-	{
-
-		return ;
 
 	}
 
@@ -4030,20 +4018,21 @@ class ForeignKeyField extends IntegerField{
 		
 		//Prepare parameters for selectmodelform
 		
-		/*if(isset($this->name_component) && $this->name_field_to_field!='')
+		if(isset($this->name_component) && $this->name_field_to_field!='' && $this->name_model!='' && count(PhangoVar::$model[$this->name_model]->forms)>0)
 		{
-		
-			$this->parameters=array($this->name_component, '', '', $this->related_model, $this->name_field_to_field, '');
-
-			return '';
+			PhangoVar::$model[$this->name_model]->forms[$this->name_component]->form='SelectModelForm';
+			
+			return array($this->name_component, '', '', $this->related_model, $this->name_field_to_field, '');
 			
 		}
 		else
-		{*/
+		{
 		
-		return array('', PhangoVar::$lang['common']['any_option_chosen'], '');
+			$arr_values=array('', PhangoVar::$lang['common']['any_option_chosen'], '');
 			
-		//}
+			return array($this->name_component, '', $arr_values);
+			
+		}
 
 	}
 	
@@ -4106,7 +4095,9 @@ class ParentField extends IntegerField{
 	{
 		
 
-		return array('', PhangoVar::$lang['common']['any_option_chosen'], '');
+		$arr_values=array('', PhangoVar::$lang['common']['any_option_chosen'], '');
+		
+		return array($this->name_component, '', $arr_values);
 
 	}
 	
@@ -4246,13 +4237,6 @@ class EmailField extends PhangoField {
 	{
 
 		return $value;
-
-	}
-
-	function get_parameters_default()
-	{
-
-		return '';
 
 	}
 

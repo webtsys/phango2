@@ -47,13 +47,6 @@ class BlobField extends PhangoField {
 		return $value;
 
 	}
-
-	function get_parameters_default()
-	{
-
-		return ;
-
-	}
 	
 }
 
