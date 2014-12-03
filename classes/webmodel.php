@@ -88,6 +88,8 @@ class PhangoVar {
 	static public $base_path='../';
 	
 	static public $media_path='../';
+	
+	static public $application_path='';
     
 	static public $language='';
 	

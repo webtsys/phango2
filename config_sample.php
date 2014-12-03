@@ -51,6 +51,9 @@ PhangoVar::$base_path = '/var/www/htdocs/phango/';
 //media path, the REAL PATH in the server media. Normally you can mount with nfs or other methods the media disk if is on other server. 
 PhangoVar::$media_path = PhangoVar::$base_path;
 
+//Path where the index.php alive.
+PhangoVar::$application_path = PhangoVar::$base_path.'application/';
+
 //DEBUG, if you active DEBUG, phango send messages with error to stdout
 define('DEBUG', '0');
 
