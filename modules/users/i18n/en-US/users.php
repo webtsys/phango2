@@ -1,5 +1,19 @@
 <?php
 
+PhangoVar::$lang['users']['name']='name';
+
+PhangoVar::$lang['users']['last_name']='last_name';
+
+PhangoVar::$lang['users']['enterprise_name']='enterprise_name';
+
+PhangoVar::$lang['users']['email']='email';
+
+PhangoVar::$lang['users']['nif']='nif';
+
+PhangoVar::$lang['users']['zip_code']='zip_code';
+
+PhangoVar::$lang['users']['city']='city';
+
 PhangoVar::$lang['users']['pasword_not_equal_repeat_password']='pasword_not_equal_repeat_password';
 
 PhangoVar::$lang['users']['cannot_insert_user_email_or_user']='cannot_insert_user_email_or_user';
@@ -45,20 +59,6 @@ PhangoVar::$lang['users']['user_or_email_exists']='user_or_email_exists';
 PhangoVar::$lang['users']['repeat_password']='repeat_password';
 
 PhangoVar::$lang['users']['accept_cond_register']='accept_cond_register';
-
-PhangoVar::$lang['users']['name']='name';
-
-PhangoVar::$lang['users']['last_name']='last_name';
-
-PhangoVar::$lang['users']['enterprise_name']='enterprise_name';
-
-PhangoVar::$lang['users']['email']='email';
-
-PhangoVar::$lang['users']['nif']='nif';
-
-PhangoVar::$lang['users']['zip_code']='zip_code';
-
-PhangoVar::$lang['users']['city']='city';
 
 PhangoVar::$lang['users']['username']='username';
 

@@ -1,5 +1,51 @@
 <?php
 
+PhangoVar::$lang['common']['address']='address';
+
+PhangoVar::$lang['common']['region']='region';
+
+PhangoVar::$lang['common']['country']='country';
+
+PhangoVar::$lang['common']['phone']='phone';
+
+PhangoVar::$lang['common']['fax']='fax';
+
+PhangoVar::$lang['common']['zip_code']='zip_code';
+
+PhangoVar::$lang['common']['city']='city';
+
+PhangoVar::$lang['common']['date']='date';
+
+PhangoVar::$lang['common']['categories']='categories';
+
+PhangoVar::$lang['common']['image']='image';
+
+PhangoVar::$lang['common']['title']='title';
+
+PhangoVar::$lang['common']['go_back']='go_back';
+
+PhangoVar::$lang['common']['any_option']='any_option';
+
+PhangoVar::$lang['common']['description']='description';
+
+PhangoVar::$lang['common']['name']='name';
+
+PhangoVar::$lang['common']['user']='user';
+
+PhangoVar::$lang['common']['last_name']='last_name';
+
+PhangoVar::$lang['common']['email']='email';
+
+PhangoVar::$lang['common']['redirect']='redirect';
+
+PhangoVar::$lang['common']['success']='success';
+
+PhangoVar::$lang['common']['press_here_redirecting']='press_here_redirecting';
+
+PhangoVar::$lang['common']['error_cannot_upload_this_image_to_the_server']='error_cannot_upload_this_image_to_the_server';
+
+PhangoVar::$lang['common']['send']='send';
+
 PhangoVar::$lang['common']['no_element_chosen']='Any item no chosen';
 
 PhangoVar::$lang['common']['any_option_chosen']='No option chosen';
@@ -18,21 +64,11 @@ PhangoVar::$lang['common']['descent']='descent';
 
 PhangoVar::$lang['common']['cannot_update_insert_in_model']='cannot_update_insert_in_model';
 
-PhangoVar::$lang['common']['success']='success';
-
-PhangoVar::$lang['common']['redirect']='redirect';
-
-PhangoVar::$lang['common']['press_here_redirecting']='press_here_redirecting';
-
-PhangoVar::$lang['common']['go_back']='go_back';
-
 PhangoVar::$lang['common']['pages']='pages';
 
 PhangoVar::$lang['common']['delete_model']='delete_model';
 
 PhangoVar::$lang['common']['delete']='delete';
-
-PhangoVar::$lang['common']['send']='send';
 
 PhangoVar::$lang['common']['order']='order';
 
@@ -45,8 +81,6 @@ PhangoVar::$lang['common']['home']='home';
 PhangoVar::$lang['common']['the_value_can_not_be_greater_than_100']='the_value_can_not_be_greater_than_100';
 
 PhangoVar::$lang['common']['thanks']='thanks';
-
-PhangoVar::$lang['common']['email']='email';
 
 PhangoVar::$lang['common']['captcha']='captcha';
 
@@ -72,8 +106,6 @@ PhangoVar::$lang['common']['min_size']='min_size';
 
 PhangoVar::$lang['common']['a_image_with_same_name_exists']='a_image_with_same_name_exists';
 
-PhangoVar::$lang['common']['error_cannot_upload_this_image_to_the_server']='error_cannot_upload_this_image_to_the_server';
-
 PhangoVar::$lang['common']['cannot_delete_image']='cannot_delete_image';
 
 PhangoVar::$lang['common']['delete_file']='delete_file';
@@ -85,24 +117,6 @@ PhangoVar::$lang['common']['hour']='hour';
 PhangoVar::$lang['common']['minute']='minute';
 
 PhangoVar::$lang['common']['second']='second';
-
-PhangoVar::$lang['common']['address']='address';
-
-PhangoVar::$lang['common']['region']='region';
-
-PhangoVar::$lang['common']['country']='country';
-
-PhangoVar::$lang['common']['phone']='phone';
-
-PhangoVar::$lang['common']['fax']='fax';
-
-PhangoVar::$lang['common']['zip_code']='zip_code';
-
-PhangoVar::$lang['common']['city']='city';
-
-PhangoVar::$lang['common']['date']='date';
-
-PhangoVar::$lang['common']['title']='title';
 
 PhangoVar::$lang['common']['text']='text';
 
