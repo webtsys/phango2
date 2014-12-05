@@ -1687,7 +1687,7 @@ class Webmodel {
 * @param array $show_error An option for choose if in the form is showed 
 */
 
-function SetValuesForm($post, $arr_form, $show_error=1)
+function set_values_form($post, $arr_form, $show_error=1)
 {
 	
 	//Foreach to $post values
@@ -2086,10 +2086,10 @@ class ModelForm {
 
 	}
 	
-	static public function SetValuesForm($post, $arr_form, $show_error=1)
+	static public function set_values_form($post, $arr_form, $show_error=1)
 	{
 		
-		SetValuesForm($post, $arr_form, $show_error);
+		set_values_form($post, $arr_form, $show_error);
 
 	}
 		

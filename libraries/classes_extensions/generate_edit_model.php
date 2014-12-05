@@ -31,7 +31,7 @@ function generate_edit_model_method_class($class, $idrow, $arr_fields, $url_admi
 		
 		$post=webtsys_fetch_array($query);
 		
-		SetValuesForm($post, $class->forms, 0);
+		set_values_form($post, $class->forms, 0);
 		
 		$update_method='update';
 		
@@ -89,7 +89,7 @@ function generate_edit_model_method_class($class, $idrow, $arr_fields, $url_admi
 
 				$post=filter_fields_array($arr_fields, $_POST);
 				
-				SetValuesForm($post, $class->forms);
+				set_values_form($post, $class->forms);
 
 				echo load_view(array($class->forms, $arr_fields, $url_post, $class->enctype), 'common/forms/updatemodelform');
 

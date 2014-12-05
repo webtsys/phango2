@@ -91,7 +91,7 @@ class LoginClass {
 		if($arr_user[PhangoVar::$model[$this->model_login]->idmodel]==0)
 		{
 			
-			ModelForm::SetValuesForm($_POST, PhangoVar::$model[$this->model_login]->forms, 1);
+			ModelForm::set_values_form($_POST, PhangoVar::$model[$this->model_login]->forms, 1);
 		
 			PhangoVar::$model[$this->model_login]->forms[$this->field_password]->std_error= PhangoVar::$lang['users']['user_error_nick_or_pass'];
 		
@@ -167,7 +167,7 @@ class LoginClass {
 				else
 				{
 				
-					ModelForm::SetValuesForm($_POST, PhangoVar::$model[$this->model_login]->forms, 1);
+					ModelForm::set_values_form($_POST, PhangoVar::$model[$this->model_login]->forms, 1);
 				
 					return false;
 				
@@ -177,7 +177,7 @@ class LoginClass {
 			else
 			{
 				
-				ModelForm::SetValuesForm($_POST, PhangoVar::$model[$this->model_login]->forms, 1);
+				ModelForm::set_values_form($_POST, PhangoVar::$model[$this->model_login]->forms, 1);
 				
 				PhangoVar::$model[$this->model_login]->forms[$this->field_password]->std_error= PhangoVar::$lang['users']['user_error_nick_or_pass'];
 			
@@ -497,7 +497,7 @@ class LoginClass {
 			else
 			{
 			
-				ModelForm::SetValuesForm($_POST, PhangoVar::$model[$this->model_login]->forms, 1);
+				ModelForm::set_values_form($_POST, PhangoVar::$model[$this->model_login]->forms, 1);
 			
 			
 				return false;
@@ -514,7 +514,7 @@ class LoginClass {
 			
 			}
 		
-			ModelForm::SetValuesForm($_POST, PhangoVar::$model[$this->model_login]->forms, 1);
+			ModelForm::set_values_form($_POST, PhangoVar::$model[$this->model_login]->forms, 1);
 		
 			return false;
 		

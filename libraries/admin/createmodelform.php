@@ -35,7 +35,7 @@ class CreateModelForm {
 		if(count($arr_values)>0)
 		{
 		
-			SetValuesForm($arr_values, $this->arr_forms, $show_error=1);
+			set_values_form($arr_values, $this->arr_forms, $show_error=1);
 		
 		}
 	
