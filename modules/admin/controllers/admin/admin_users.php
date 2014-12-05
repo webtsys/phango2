@@ -63,7 +63,7 @@ function AusersAdmin()
 				PhangoVar::$model['moderators_module']->create_form();
 				
 				PhangoVar::$model['moderators_module']->forms['moderator']->form='HiddenForm';
-				PhangoVar::$model['moderators_module']->forms['moderator']->set_value_form($arr_user['IdUser_admin']);
+				PhangoVar::$model['moderators_module']->forms['moderator']->set_param_value_form($arr_user['IdUser_admin']);
 				
 				PhangoVar::$model['moderators_module']->forms['moderator']->label=PhangoVar::$lang['admin']['moderator'];
 				

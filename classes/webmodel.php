@@ -1724,7 +1724,7 @@ function set_values_form($post, $arr_form, $show_error=1)
 
 				//Set value for ModelForm to $value
 				
-				$arr_form[$name_field]->set_value_form($value);
+				$arr_form[$name_field]->set_param_value_form($value);
 		
 			}
 			else
@@ -1939,7 +1939,7 @@ class ModelForm {
 	*
 	*/
 
-	function set_value_form($value, $form_type_set='')
+	function set_param_value_form($value, $form_type_set='')
 	{
 		
 		$func_setvalue=$this->form.'Set';
