@@ -27,6 +27,8 @@ class IndexSwitchClass extends ControllerSwitchClass {
 		
 		$module_id=slugify($module_id, 1);
 		
+		
+		
 		$extra_urls=array();
 
 		//Make menu...
@@ -142,8 +144,15 @@ class IndexSwitchClass extends ControllerSwitchClass {
 
 			}*/
 			
+			if(!isset($arr_admin_script[ $module_id ]))
+			{
 			
-
+				//Need show error.
+			
+				die;
+			
+			}
+			
 			$file_include=PhangoVar::$base_path.'modules/'.$arr_admin_script[ $module_id ][0].'/controllers/admin/admin_'.$arr_admin_script[ $module_id ][1].'.php';
 			
 			if($login->session['privileges_user']==1)
