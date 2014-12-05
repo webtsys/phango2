@@ -5793,7 +5793,7 @@ function load_lang()
 				}
 
 			}
-
+			
 			ob_end_clean();
 
 			PhangoVar::$cache_lang[$lang_file]=1;

@@ -86,6 +86,22 @@ PhangoVar::$lang['common']['minute']='minute';
 
 PhangoVar::$lang['common']['second']='second';
 
+PhangoVar::$lang['common']['address']='address';
+
+PhangoVar::$lang['common']['region']='region';
+
+PhangoVar::$lang['common']['country']='country';
+
+PhangoVar::$lang['common']['phone']='phone';
+
+PhangoVar::$lang['common']['fax']='fax';
+
+PhangoVar::$lang['common']['zip_code']='zip_code';
+
+PhangoVar::$lang['common']['city']='city';
+
+PhangoVar::$lang['common']['date']='date';
+
 PhangoVar::$lang['common']['title']='title';
 
 PhangoVar::$lang['common']['text']='text';
