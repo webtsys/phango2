@@ -449,6 +449,98 @@ class GenerateAdminClass {
 
 	}
 	
+	
+	function generate_position_model($field_name, $field_position, $url, $where='')
+	{
+
+	settype($_GET['action_field'], 'integer');
+	
+	$model_name=$this->model_name;
+	
+	$num_order=PhangoVar::$model[$model_name]->select_count($where, PhangoVar::$model[$model_name]->idmodel );
+
+	if($num_order>0)
+	{
+	
+		switch($_GET['action_field'])
+		{
+		default:
+
+			ob_start();
+
+			$url_post=add_extra_fancy_url($url, array('action_field' => 1));
+
+			echo '<form method="post" action="'.$url_post.'">';
+			set_csrf_key();
+			echo '<div class="form">';
+
+			$query=PhangoVar::$model[$model_name]->select($where.' order by `'.$field_position.'` ASC', array(PhangoVar::$model[$model_name]->idmodel, $field_name, $field_position));
+
+			while(list($id, $name, $position)=webtsys_fetch_row($query))
+			{
+				$name=PhangoVar::$model[$model_name]->components[$field_name]->show_formatted($name);
+
+				echo '<p><label for="'.$field_position.'">'.$name.'</label><input type="text" name="position['.$id.']" value="'.$position.'" size="3"/></p>';
+
+			}
+			echo '<input type="submit" value="'.PhangoVar::$lang['common']['send'].'"/>';
+			echo '</div>';
+			echo '</form>';
+			
+			$cont_order=ob_get_contents();
+
+			ob_end_clean();
+
+			echo load_view(array(PhangoVar::$lang['common']['order'], $cont_order), 'content');
+
+		break;
+
+		case 1:
+
+			$arr_position=$_POST['position'];
+
+			foreach($arr_position as $key => $value)
+			{
+				
+				settype($key, 'integer');
+				settype($value, 'integer');
+				
+				$where='where '.PhangoVar::$model[$model_name]->idmodel.'='.$key;
+
+				//Clean required...
+
+				PhangoVar::$model[$model_name]->reset_require();
+				
+				$query=PhangoVar::$model[$model_name]->update(array($field_position => $value), $where);
+				
+			}
+			
+			ob_end_clean();
+
+			load_libraries(array('redirect'));
+
+			//die( redirect_webtsys( $url, PhangoVar::$lang['common']['redirect'], PhangoVar::$lang['common']['success'], PhangoVar::$lang['common']['press_here_redirecting']) );
+			
+			simple_redirect($url, PhangoVar::$lang['common']['redirect'], PhangoVar::$lang['common']['success'], PhangoVar::$lang['common']['press_here_redirecting'], $content_view='content');
+			
+			//die;
+			
+			/*load_libraries(array('redirect'));
+			simple_redirect( $url, PhangoVar::$lang['common']['redirect'], PhangoVar::$lang['common']['success'], PhangoVar::$lang['common']['press_here_redirecting']);*/
+
+		break;
+
+		}
+
+	}
+	else
+	{
+
+		echo '<p>'.PhangoVar::$lang['common']['no_exists_elements_to_order'].'</p>';
+
+	}
+
+}
 }
 
 class ListModelClass {
