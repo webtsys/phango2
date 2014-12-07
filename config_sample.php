@@ -52,7 +52,7 @@ PhangoVar::$base_path = '/var/www/htdocs/phango/';
 PhangoVar::$media_path = PhangoVar::$base_path;
 
 //addons path, if use composer, you can find your modules installed here for load manually.
-PhangoVar::$addons_composer_path = PhangoVar::$base_path.'vendor/bin/';
+PhangoVar::$addons_composer_path = PhangoVar::$base_path.'vendor/';
 
 //Path where the index.php alive.
 PhangoVar::$application_path = PhangoVar::$base_path.'application/';

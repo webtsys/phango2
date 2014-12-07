@@ -90,6 +90,8 @@ class PhangoVar {
 	static public $media_path='../';
 	
 	static public $application_path='';
+	
+	static public $addons_composer_path='';
     
 	static public $language='';
 	
@@ -3772,13 +3774,6 @@ class ImageField extends PhangoField {
 		return 'VARCHAR(255) NOT NULL';
 
 	}
-
-	function show_formatted($value)
-	{
-
-		return $value;
-
-	}
 	
 	function show_image_url($value)
 	{
@@ -3838,6 +3833,31 @@ class ImageField extends PhangoField {
 			}
 		
 		}
+	
+	}
+	
+	public function show_formatted($value)
+	{
+	
+		//Size
+		
+		$size=150;
+	
+		if($this->thumb==1)
+		{
+		
+			reset($this->img_width);
+			
+			$key=key($this->img_width);
+			
+			$value=$key.'_'.$value;
+			
+			$size=$this->img_width[$key];
+			
+		
+		}
+	
+		return '<img src="'.$this->show_image_url($value).'" width="'.$size.'"/>';
 	
 	}
 
