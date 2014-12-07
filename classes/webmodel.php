@@ -820,11 +820,11 @@ class Webmodel {
 			
 			foreach($fields as $name_field => $val_field)
 			{
-			
+				
 				if(method_exists($this->components[$name_field],  'process_update_field'))
 				{
-					
-					if(!$component->process_update_field($this, $name_field, $conditions, $fields[$name_field]))
+					;
+					if(!$this->components[$name_field]->process_update_field($this, $name_field, $conditions, $fields[$name_field]))
 					{
 						
 						$this->std_error.=PhangoVar::$lang['error_model']['cant_update'].' ';
@@ -4101,7 +4101,7 @@ class ParentField extends IntegerField{
 
 	}
 	
-	function process_update_field($class, $name_field, $conditions, $value)
+	public function process_update_field($class, $name_field, $conditions, $value)
 	{
 	
 		$num_rows=$class->select_count($conditions.' and '.$class->idmodel.'='.$value);
@@ -4144,7 +4144,7 @@ class ParentField extends IntegerField{
 	
 	}
 	
-	private function obtain_recursive_parent($id, $arr_parent, $arr_link_parent, $field_ident, $url_op)
+	public function obtain_recursive_parent($id, $arr_parent, $arr_link_parent, $field_ident, $url_op)
 	{
 	
 		//$arr_link_parent[]=array('nombre', 'enlace');
