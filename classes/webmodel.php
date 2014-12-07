@@ -3003,10 +3003,10 @@ class SerializeField extends PhangoField {
 	
 	//type_data can be any field type that is loaded IntegerField, etc..
 	
-	function __construct($related_type='TextField')
+	function __construct($related_type)
 	{
 	
-		$this->related_type=$related_type;
+		$this->related_type=&$related_type;
 		
 	}
 	
@@ -3033,9 +3033,9 @@ class SerializeField extends PhangoField {
 				{
 
 					//Create new type.
-					$type_field=new $this->related_type();
+					//$type_field=new $this->related_type();
 				
-					$value[$key]=$type_field->check($value_key);
+					$value[$key]=$this->related_type->check($value_key);
 
 				}
 
@@ -3093,14 +3093,34 @@ class SerializeField extends PhangoField {
 		}
 
 	}
+	
+}
 
-	function get_parameters_default()
+//Array field is a field for save an array with values based in a TypeField.
+
+class ArrayField extends SerializeField {
+
+	function show_formatted($value, $key_value='')
 	{
-
-		return array($this->name_component, '', '');
+	
+		$real_value=unserialize($value);
+	
+		if($key_value==='')
+		{
+			
+			return implode(', ', $return_value);
+			
+		}
+		else
+		if(isset($real_value[$key_value]))
+		{
+		
+			return $real_value[$key_value];
+		
+		}
 
 	}
-	
+
 }
 
 //Datefield is a field for save dates in timestamp, this value is a timestamp and you need use form_date or form_time for format DateField

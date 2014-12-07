@@ -2,3 +2,4 @@
 application/media/upload_images/*
 config.php
 modules/*/config/*
+vendor/*
