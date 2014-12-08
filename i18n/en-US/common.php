@@ -16,8 +16,6 @@ PhangoVar::$lang['common']['city']='city';
 
 PhangoVar::$lang['common']['date']='date';
 
-PhangoVar::$lang['common']['categories']='categories';
-
 PhangoVar::$lang['common']['image']='image';
 
 PhangoVar::$lang['common']['title']='title';
@@ -45,6 +43,8 @@ PhangoVar::$lang['common']['press_here_redirecting']='press_here_redirecting';
 PhangoVar::$lang['common']['error_cannot_upload_this_image_to_the_server']='error_cannot_upload_this_image_to_the_server';
 
 PhangoVar::$lang['common']['send']='send';
+
+PhangoVar::$lang['common']['categories']='categories';
 
 PhangoVar::$lang['common']['no_element_chosen']='Any item no chosen';
 
