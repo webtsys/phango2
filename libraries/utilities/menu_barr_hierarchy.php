@@ -43,35 +43,59 @@ function obtain_fathers($arr_father, $arr_menu, $father)
 }
 */
 
-// $arr_menu[0]=array(0 => menu1, 1 => menu2)
+// $arr_menu[]=array(0 => text_menu, 1 => $arr_menu2)
 
-function menu_barr_hierarchy($arr_menu, $name_get, $value_get, $yes_last_link=0)
+// $arr_menu[1]=array(2 => menu3, 3 => menu4)
+
+function menu_barr_hierarchy($arr_menu, $name_get, $yes_last_link=0, $arr_final_menu=array(), $return_arr_menu=0)
 {
 
-	settype($_GET[$name_get], 'integer');
-	
-	$arr_final_menu=array();
+	load_libraries_views('common/utilities/menu_barr_hierarchy', $func_views=array('linkhierarchy', 'nolinkhierarchy', 'menuhierarchy'));
+
+	$_GET[$name_get]=slugify($_GET[$name_get]);
 
 	foreach($arr_menu as $key_menu => $menu)
 	{
-		if($_GET[$name_get]==$key_menu && $yes_last_link==0)
+	
+		if(gettype($menu[1])!='array')
 		{
+			if($_GET[$name_get]==$key_menu && $yes_last_link==0)
+			{
+				
+				$arr_final_menu[]=load_view(array($menu[0]), 'nolinkhierarchy');
 			
-			$arr_final_menu[]=$menu[0];
-		
-			break;
-		
+				break;
+			
+			}
+			else
+			{
+			
+				$arr_final_menu[]=load_view(array($menu[1], $menu[0]), 'linkhierarchy');
+			
+			}
+			
 		}
 		else
 		{
 		
-			$arr_final_menu[]='<a href="'.$menu[1].'">'.$menu[0].'</a>';
+			$arr_final_menu=menu_barr_hierarchy($arr_menu[1], $name_get, $yes_last_link, $arr_final_menu, 1);
 		
 		}
 	
 	}
 	
-	return implode(' &gt;&gt; ', $arr_final_menu);
+	if($return_arr_menu==0)
+	{
+	
+		return load_view(array($arr_final_menu), 'menuhierarchy');
+		
+	}
+	else
+	{
+	
+		return $arr_final_menu;
+	
+	}
 
 }
 
@@ -83,6 +107,8 @@ function menu_barr_hierarchy($arr_menu, $name_get, $value_get, $yes_last_link=0)
 
 function menu_barr_hierarchy_control($arr_menus)
 {
+
+	load_libraries_views('common/utilities/menu_barr_hierarchy', $func_views=array('linkhierarchy', 'nolinkhierarchy', 'menuhierarchy'));
 
 	//Begin process
 	
@@ -134,7 +160,7 @@ function menu_barr_hierarchy_control($arr_menus)
 		
 	}
 	
-	return implode(' &gt;&gt; ', $arr_final_menu);
+	return load_view(array($arr_final_menu), 'menuhierarchy'); //implode(' &gt;&gt; ', $arr_final_menu);
 
 }
 
@@ -143,17 +169,17 @@ function check_arr_menu($arr_menu, $arr_final_menu)
 
 	$return_break=0;
 
-	if($arr_menu['module']==PHANGO_SCRIPT_BASE_CONTROLLER && $arr_menu['controller']==PHANGO_SCRIPT_FUNC_NAME && $arr_menu['params'][$arr_menu['name_op']]==$_GET[$arr_menu['name_op']])
+	if($arr_menu['module']==PhangoVar::$script_module && $arr_menu['controller']==PhangoVar::$script_controller && $arr_menu['action']==PhangoVar::$script_action && $arr_menu['params'][$arr_menu['name_op']]==$_GET[$arr_menu['name_op']])
 	{
 	
-		$arr_final_menu[]=$arr_menu['text'];
+		$arr_final_menu[]=$arr_final_menu[]=load_view(array($arr_menu['text']), 'nolinkhierarchy'); //$arr_menu['text'];
 		$return_break=1;
 	
 	}
 	else
 	{
 	
-		$arr_final_menu[]='<a href="'.make_fancy_url(PhangoVar::$base_url, $arr_menu['module'], $arr_menu['controller'], $arr_menu['text'], $arr_menu['params']).'">'.$arr_menu['text'].'</a>';
+		$arr_final_menu[]=load_view(array(make_fancy_url(PhangoVar::$base_url, $arr_menu['module'], $arr_menu['controller'], array($arr_menu['action']), $arr_menu['params']), $arr_menu['text']), 'linkhierarchy');//'<a href="'.make_fancy_url(PhangoVar::$base_url, $arr_menu['module'], $arr_menu['controller'], array($arr_menu['action']), $arr_menu['params']).'">'.$arr_menu['text'].'</a>';
 	
 	}
 	

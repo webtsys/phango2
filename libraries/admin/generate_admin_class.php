@@ -83,7 +83,7 @@ class GenerateAdminClass {
 				if($_GET['op_edit']==0)
 				{
 
-					echo '<p>'.menu_barr_hierarchy($arr_menu, 'op_action', $_GET['op_action']).'</p>';
+					echo '<p>'.menu_barr_hierarchy($arr_menu, 'op_action').'</p>';
 				
 					echo '<p class="add_new_item"><a class="'.$this->class_add.'" href="'.add_extra_fancy_url($this->url_options, array('op_action' => 1)).'">'.$this->txt_add_new_item.'</a> '.$this->extra_menu_create.'</p>';
 					
@@ -91,7 +91,7 @@ class GenerateAdminClass {
 				else
 				{
 				
-					echo '<p>'.menu_barr_hierarchy($arr_menu_edit, 'op_edit', $_GET['op_edit']).'</p>';
+					echo '<p>'.menu_barr_hierarchy($arr_menu_edit, 'op_edit').'</p>';
 				
 				}
 				
@@ -147,7 +147,7 @@ class GenerateAdminClass {
 				if($_GET['op_edit']==0)
 				{
 
-					echo '<p>'.menu_barr_hierarchy($arr_menu, 'op_action', $_GET['op_action']).'</p>';
+					echo '<p>'.menu_barr_hierarchy($arr_menu, 'op_action').'</p>';
 					
 				}
 				
