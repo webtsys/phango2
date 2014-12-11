@@ -99,12 +99,23 @@ function menu_barr_hierarchy($arr_menu, $name_get, $yes_last_link=0, $arr_final_
 
 }
 
+function menu_barr_hierarchy_urls()
+{
+
+	
+
+}
+
+
+
 //$arr_menu[0]=array('module' => 'module', 'controller' => 'controller', 'text' => 'text', 'name_op' => , 'params' => array())
 
 //$arr_menu[1]=array(0 => array('module' => 'module', 'controller' => 'controller', 'name_op' => name_op, 'text' => 'text', 'params' => array()), 1 => array('module' => 'module', 'controller' => 'controller', 'op' => op, 'text' => 'text', 'params' => array()) );
 
-//With the hope that write a function that create a menu_barr_hierarchy automatically
 
+
+//With the hope that write a function that create a menu_barr_hierarchy automatically
+/*
 function menu_barr_hierarchy_control($arr_menus)
 {
 
@@ -186,5 +197,5 @@ function check_arr_menu($arr_menu, $arr_final_menu)
 	return array($arr_final_menu, $return_break);
 
 }
-
+*/
 ?>
