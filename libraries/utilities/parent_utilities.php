@@ -1,9 +1,26 @@
 <?php
 
-function recursive_list($model_name, $arr_cat, $arr_list_father, $idfather, $url_cat, $arr_perm=array())
+function recursive_list($model_name, $idfather, $url_cat, $arr_fields, $arr_perm=array(), $sql_father='')
 {
 
-	$idfield=PhangoVar::$model[$model_name]->idmodel;
+	$arr_list_father=array();
+	$arr_cat=array();
+
+	$query=$model[$model_name]->select($sql_father, array($model[$model_name]->idmodel, $arr_fields['name_field'], $arr_fields['father_field']));
+
+	while(list($idcat, $title, $idfather)=webtsys_fetch_row($query))
+	{
+
+		settype($arr_list_father[$idfather], 'array');
+	
+		$arr_list_father[$idfather][]=$idcat;
+		$arr_cat[$idcat]=$title;
+
+	}
+
+	echo load_view(array($model_name, $arr_cat, $arr_list_father, $idfather, $url_cat, $arr_perm), 'parentlist');
+
+	/*$idfield=PhangoVar::$model[$model_name]->idmodel;
 	
 	$arr_hidden[0]='';
 	$arr_hidden[1]='';
@@ -59,7 +76,7 @@ function recursive_list($model_name, $arr_cat, $arr_list_father, $idfather, $url
 	
 	echo $end_ul;
 	
-	echo '</div>';
+	echo '</div>';*/
 
 }
 
