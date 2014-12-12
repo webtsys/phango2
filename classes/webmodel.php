@@ -285,6 +285,8 @@ class PhangoVar {
 	
 	static public $rurls=array();
 	
+	static public $actual_url=array();
+	
 	/**
 	* This variable is used for save the csrf token.
 	*
@@ -1675,6 +1677,18 @@ class Webmodel {
 		$this->forms=$arr_form_new;
 	
 	}
+	
+	
+	/**
+	* This method is used for checking if you prefer strings for where_sql.
+	*/
+	
+	static public function check_where_sql($name_component, $value)
+	{
+	
+		return $this->components[$name_component]->check($value);
+	
+	}
 
 }
 
@@ -2310,7 +2324,6 @@ class PhangoField {
 		return $this->check($value);
 	
 	}
-
 
 }
 
@@ -6340,6 +6353,10 @@ function load_controller()
 	
 	$request_uri=preg_replace('/\/get\/.*$/', '', $request_uri);
 	
+	//Create url for index, used by link generators.
+	
+	PhangoVar::$urls['']['']=array('pattern' => '/\/$/', 'url' => '/', 'module' => PhangoVar::$app_index, 'controller' => 'index', 'action' => 'index', 'parameters' => array());
+	
 	if($request_uri=='' || $request_uri=='index.php')
 	{
 		
@@ -6364,7 +6381,7 @@ function load_controller()
 		
 			$yes_match=0;
 		
-			foreach(PhangoVar::$urls[$search_in] as $arr_url)
+			foreach(PhangoVar::$urls[$search_in] as $ident_url => $arr_url)
 			{
 				
 				$pattern=$arr_url['pattern'];
@@ -6374,6 +6391,14 @@ function load_controller()
 				$controller=$arr_url['controller'];
 				
 				$action=$arr_url['action'];
+				
+				settype($arr_url['children_of']['field_url'], 'string');
+				settype($arr_url['children_of']['ident_url'], 'string');
+				
+				PhangoVar::$rurls[$arr_url['children_of']['field_url'] ][ $arr_url['children_of']['ident_url'] ]=array($search_in, $ident_url);
+				
+				PhangoVar::$actual_url=array($search_in, $ident_url);
+				
 				
 				if($yes_match==0)
 				{
