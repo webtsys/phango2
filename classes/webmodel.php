@@ -6365,6 +6365,8 @@ function load_controller()
 		PhangoVar::$script_controller='index';
 		
 		PhangoVar::$script_action='index';
+		
+		PhangoVar::$actual_url=array('', '');
 	
 	}
 	else
@@ -6392,10 +6394,10 @@ function load_controller()
 				
 				$action=$arr_url['action'];
 				
-				settype($arr_url['children_of']['field_url'], 'string');
+				/*settype($arr_url['children_of']['field_url'], 'string');
 				settype($arr_url['children_of']['ident_url'], 'string');
 				
-				PhangoVar::$rurls[$arr_url['children_of']['field_url'] ][ $arr_url['children_of']['ident_url'] ]=array($search_in, $ident_url);
+				PhangoVar::$rurls[$arr_url['children_of']['field_url'] ][ $arr_url['children_of']['ident_url'] ]=array($search_in, $ident_url);*/
 				
 				PhangoVar::$actual_url=array($search_in, $ident_url);
 				

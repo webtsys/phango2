@@ -99,12 +99,50 @@ function menu_barr_hierarchy($arr_menu, $name_get, $yes_last_link=0, $arr_final_
 
 }
 
-function menu_barr_hierarchy_urls()
+function menu_barr_hierarchy_urls($actual_url, $arr_links, $last_link=1)
 {
+
+	load_libraries_views('common/utilities/menu_barr_hierarchy', $func_views=array('linkhierarchy', 'nolinkhierarchy', 'menuhierarchy'));
 
 	//Need the actual url.
 	
+	$url=PhangoVar::$urls[$actual_url[0]][$actual_url[1]];
 	
+	settype($url['label'], 'string');
+	
+	if($last_link==0)
+	{
+	
+		$real_url=make_fancy_url(PhangoVar::$base_url, $actual_url[0], $actual_url[1], PhangoVar::$get, $_GET);
+	
+		$arr_links[]=load_view(array($real_url, $url['label']), 'linkhierarchy');
+		
+	}
+	else
+	{
+	
+		$arr_links[]=load_view(array($menu[0]), 'nolinkhierarchy');
+	
+	}
+	
+	if(isset($url['children_of']))
+	{
+	
+		$arr_links=menu_barr_hierarchy_urls($url['children_of'], $arr_links, 0);
+	
+	}
+	
+	return $arr_links;
+	
+
+}
+
+function show_menu_barr()
+{
+
+	$arr_links=menu_barr_hierarchy_urls(PhangoVar::$actual_url, $arr_links=array());
+
+	$arr_links=array_reverse($arr_links);
 
 }
 
