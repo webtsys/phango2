@@ -539,6 +539,27 @@ class Webmodel {
 	*/
 	
 	public $arr_fields_updated=array();
+	
+	/**
+	* Property that define if this model is cached or not.
+	*
+	*/
+	
+	public $cache=0;
+	
+	/**
+	* Property that define if this model was cached before, if not, obtain the query from the sql db.
+	*
+	*/
+	
+	public $cached=0;
+	
+	/**
+	* Property that define the cache type, nosql, cached in memory with memcached or redis, etc.
+	*
+	*/
+	
+	public $type_cache='';
 
 	//Construct the model
 

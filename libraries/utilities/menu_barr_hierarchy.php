@@ -112,8 +112,21 @@ function menu_barr_hierarchy_urls($actual_url, $arr_links, $last_link=1)
 	
 	if($last_link==0)
 	{
+		
+		$arr_get=array();
+		
+		$arr_extra_get=array();
 	
-		$real_url=make_fancy_url(PhangoVar::$base_url, $actual_url[0], $actual_url[1], PhangoVar::$get, $_GET);
+		if(isset($user['callback_parameters']))
+		{
+		
+			$func_callback=$user['callback_parameters'];
+			
+			list($arr_get, $arr_extra_get)=$func_callback();
+		
+		}
+	
+		$real_url=make_fancy_url(PhangoVar::$base_url, $actual_url[0], $actual_url[1], $arr_get, $arr_extra_get);
 	
 		$arr_links[]=load_view(array($real_url, $url['label']), 'linkhierarchy');
 		
