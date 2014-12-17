@@ -21,7 +21,7 @@ class ShowMediaSwitchClass extends ControllerSwitchClass {
 	
 	public function check_module_theme($module)
 	{
-	
+		
 		if($module!='none')
 		{
 		
@@ -64,6 +64,8 @@ class ShowMediaSwitchClass extends ControllerSwitchClass {
 	{
 	
 		$media_file=$this->check_path($media_file);
+		
+		$this->check_module_theme($module);
 
 		//theme path, can be a module theme. If module_theme_loaded exists, rewrite.
 		

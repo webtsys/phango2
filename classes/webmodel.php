@@ -6055,7 +6055,7 @@ if(PhangoVar::$THEME_MODULE==1)
 		
 		//Delete repeat scripts...
 
-		PhangoVar::$arr_cache_css=array_unique(PhangoVar::$arr_cache_css, SORT_STRING);
+		PhangoVar::$arr_cache_css=array_unique(PhangoVar::$arr_cache_css, SORT_REGULAR );
 		$arr_final_css=array();
 
 		foreach(PhangoVar::$arr_cache_css as $idcss => $css)
@@ -6067,6 +6067,8 @@ if(PhangoVar::$THEME_MODULE==1)
 			{
 				
 				$module_css=$idcss;
+				
+				$css=array_unique($css, SORT_REGULAR );
 				
 				foreach($css as $css_item)
 				{
@@ -6103,7 +6105,8 @@ if(PhangoVar::$THEME_MODULE==1)
 		
 		//Delete repeat scripts...
 
-		PhangoVar::$arr_cache_jscript=array_unique(PhangoVar::$arr_cache_jscript, SORT_STRING);
+		PhangoVar::$arr_cache_jscript=array_unique(PhangoVar::$arr_cache_jscript, SORT_REGULAR );
+		
 		$arr_final_jscript=array();
 
 		foreach(PhangoVar::$arr_cache_jscript as $idjscript => $jscript)
@@ -6115,6 +6118,8 @@ if(PhangoVar::$THEME_MODULE==1)
 			{
 				
 				$module_jscript=$idjscript;
+				
+				$jscript=array_unique($jscript, SORT_REGULAR );
 				
 				foreach($jscript as $jscript_item)
 				{
