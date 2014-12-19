@@ -6149,6 +6149,13 @@ if(PhangoVar::$THEME_MODULE==1)
 		return implode("\n", $arr_final_jscript)."\n";
 	
 	}
+	
+	function get_base_url_media($module, $directory)
+	{
+	
+		 return make_fancy_url(PhangoVar::$media_url, 'media', 'show', array('module' => $module, 'directory' => $directory));
+	
+	}
 }
 else
 {
@@ -6225,6 +6232,13 @@ else
 		}
 
 		return implode("\n", $arr_final_jscript)."\n";
+	
+	}
+	
+	function get_base_url_media($module, $directory)
+	{
+	
+		 return return PhangoVar::$media_url.'/media/'.PhangoVar::$dir_theme.'/'.$module.'/',$directory,'/';
 	
 	}
 
