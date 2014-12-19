@@ -3524,7 +3524,7 @@ class ImageField extends PhangoField {
 			
 				$arr_image=getimagesize($_FILES[$file]['tmp_name']);
 				
-				$_FILES[$file]['name']=form_text($_FILES[$file]['name']);
+				$_FILES[$file]['name']=slugify(form_text($_FILES[$file]['name']));
 				
 				if($this->prefix_id==1)
 				{
@@ -3811,7 +3811,7 @@ class ImageField extends PhangoField {
 	
 	function show_image_url($value)
 	{
-
+  
 		return $this->url_path.'/'.$value;
 
 	}
@@ -6238,7 +6238,7 @@ else
 	function get_base_url_media($module, $directory)
 	{
 	
-		 return return PhangoVar::$media_url.'/media/'.PhangoVar::$dir_theme.'/'.$module.'/',$directory,'/';
+		 return PhangoVar::$media_url.'/media/'.PhangoVar::$dir_theme.'/'.$module.'/'.$directory.'/';
 	
 	}
 
