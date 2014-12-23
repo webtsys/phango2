@@ -8,6 +8,8 @@ include('classes/webmodel.php');
 include('config.php');
 include('database/'.TYPE_DB.'.php');
 
+load_urls();
+
 date_default_timezone_set (MY_TIMEZONE);
 
 $utility_cli=1;

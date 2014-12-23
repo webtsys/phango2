@@ -2163,16 +2163,16 @@ class ControllerSwitchClass {
 	
 	}
 	
-	/*public function get_method_url($method_controller, $text, $arr_parameters)
+	public function get_method_url($arr_parameters)
 	{
 		
-		$my_controller=strtolower(str_replace('SwitchClass', '', get_class($this)));
+		/*$my_controller=strtolower(str_replace('SwitchClass', '', get_class($this)));
 		
-		$arr_parameters[$this->op_var]=$method_controller;
+		$arr_parameters[$this->op_var]=$method_controller;*/
 		
-		return make_fancy_url($this->base_url, $this->controller, $my_controller, $text, $arr_parameters);
+		return make_fancy_url($this->base_url, PhangoVar::$actual_url[0], PhangoVar::$actual_url[1], $arr_parameters);
 	
-	}*/
+	}
 	
 	public function redirect($direction,$l_text,$text,$ifno)
 	{
@@ -6315,20 +6315,9 @@ function get_token()
 
 }
 
-/**
-* Function for load the controller, first, load the urls, and check, with this info, load the controller from the module X and finally, the action.
-*
-*/
-
-function load_controller()
+function load_urls()
 {
 
-	//First, load and check urls. 
-	
-	//$server_host_php='http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . "{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
-	
-	//Load urls, you need load this for make_fancy_url
-	
 	foreach(PhangoVar::$activated_modules as $module)
 	{
 	
@@ -6343,6 +6332,24 @@ function load_controller()
 				
 	
 	}
+
+}
+
+/**
+* Function for load the controller, first, load the urls, and check, with this info, load the controller from the module X and finally, the action.
+*
+*/
+
+function load_controller()
+{
+
+	//First, load and check urls. 
+	
+	//$server_host_php='http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . "{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+	
+	//Load urls, you need load this for make_fancy_url
+	
+	load_urls();
 	
 	$request_uri=$_SERVER['REQUEST_URI'];
 	
@@ -6439,8 +6446,6 @@ function load_controller()
 				
 				PhangoVar::$rurls[$arr_url['children_of']['field_url'] ][ $arr_url['children_of']['ident_url'] ]=array($search_in, $ident_url);*/
 				
-				PhangoVar::$actual_url=array($search_in, $ident_url);
-				
 				
 				if($yes_match==0)
 				{
@@ -6479,6 +6484,8 @@ function load_controller()
 							$z++;
 						
 						}
+						
+						PhangoVar::$actual_url=array($search_in, $ident_url);
 						
 						$yes_match=1;
 					
@@ -6611,7 +6618,7 @@ function load_controller()
 		ob_clean();
 
 		$arr_no_controller[0]='<p>Don\'t exist module</p>';
-		$arr_no_controller[1]='<p>Don\'t exist module '.PhangoVar::$script_module.' on PhangoVar::$activated_modules</p></p>';
+		$arr_no_controller[1]='<p>Don\'t exist module '.PhangoVar::$script_module.' on PhangoVar::$activated_modules or not exists url ['.$search_in.'][]</p></p>';
 
 		echo show_error($arr_no_controller[0], $arr_no_controller[1], $output_external=$output);
 		

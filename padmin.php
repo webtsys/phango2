@@ -9,6 +9,8 @@ include('config.php');
 include('database/'.TYPE_DB.'.php');
 include('libraries/update_table.php');
 
+load_urls();
+
 $utility_cli=1;
 
 $config_data['dir_theme']='default';
