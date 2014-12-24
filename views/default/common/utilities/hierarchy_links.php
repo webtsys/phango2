@@ -1,9 +1,7 @@
 <?php
 
-function Hierarchy_LinksView($arr_hierarchy, $module, $controller, $idfield, $arr_parameters=array(), $last_link=0)
+function Hierarchy_LinksView($arr_hierarchy, $folder_url, $ident_url, $idfield, $arr_parameters=array(), $last_link=0)
 {
-
-	global $base_url;
 	
 	
 	$arr_final=array();
@@ -18,8 +16,10 @@ function Hierarchy_LinksView($arr_hierarchy, $module, $controller, $idfield, $ar
 		$arr_tmp_param=$arr_parameters;
 		
 		$arr_tmp_param[$idfield]=$arr_id['id'];
+		
+		$arr_tmp_param[]=slugify($arr_id['name']);
 	
-		$arr_final[$x]='<a href="'.make_fancy_url($base_url, $module, $controller, $arr_id['name'], $arr_tmp_param).'">'.$arr_id['name'].'</a>';
+		$arr_final[$x]='<a href="'.make_fancy_url(PhangoVar::$base_url, $folder_url, $ident_url, $arr_tmp_param).'">'.$arr_id['name'].'</a>';
 	
 	}
 	
@@ -37,8 +37,10 @@ function Hierarchy_LinksView($arr_hierarchy, $module, $controller, $idfield, $ar
 			$arr_tmp_param=$arr_parameters;
 		
 			$arr_tmp_param[$idfield]=$arr_hierarchy[$x]['id'];
+			
+			$arr_tmp_param[]=slugify($arr_hierarchy[$x]['name']);
 		
-			$arr_final[$x]='<a href="'.make_fancy_url($base_url, $module, $controller, $arr_hierarchy[$x]['name'], $arr_tmp_param).'">'.$arr_hierarchy[$x]['name'].'</a>';
+			$arr_final[$x]='<a href="'.make_fancy_url(PhangoVar::$base_url, $folder_url, $ident_url, $arr_tmp_param).'">'.$arr_hierarchy[$x]['name'].'</a>';
 		
 		break;
 		
