@@ -6,7 +6,7 @@
 *
 * @author  Antonio de la Rosa <webmaster@web-t-sys.com>
 * @file
-* @package Phango
+* @package Phango Core
 *
 */
 
@@ -4319,65 +4319,31 @@ class EmailField extends PhangoField {
 
 //in older versions of php, get_magic_quotes_gpc function was to add quotes automatically for certain operations, make_slashes is used to prevent this.
 
-if(function_exists('get_magic_quotes_gpc')) {
+/**
+* Function used for add slashes from _POST and _GET variables.
+*
+*
+* @param string $string String for add slashes
+*/
 
-	if ( !get_magic_quotes_gpc() )
-	{
-	
-		function make_slashes( $string )
-		{
-			return addslashes( $string );
-		} 
-
-		function unmake_slashes( $string )
-		{
-			return stripslashes( $string );
-		}
-
-	} 
-	else
-	{
-		function make_slashes( $string )
-		{
-			return $string;
-		}
-
-		function make_slashes( $string )
-		{
-			return $string;
-		} 
-	
-	}
-
-} 
-else
+function make_slashes( $string )
 {
+	return addslashes( $string );
+} 
 
-	/**
-	* Function used for add slashes from _POST and _GET variables.
-	*
-	*
-	* @param string $string String for add slashes
-	*/
+/**
+* Function used for strip slashes from _POST and _GET variables.
+*
+*
+* @param string $string String for strip slashes
+*/
 
-	function make_slashes( $string )
-	{
-		return addslashes( $string );
-	} 
-	
-	/**
-	* Function used for strip slashes from _POST and _GET variables.
-	*
-	*
-	* @param string $string String for strip slashes
-	*/
-
-	function unmake_slashes( $string )
-	{
-		return stripslashes( $string );
-	}
-
+function unmake_slashes( $string )
+{
+	return stripslashes( $string );
 }
+
+
 
 /**
 * This function is used to clean up the text of undesirable elements
@@ -6150,6 +6116,14 @@ if(PhangoVar::$THEME_MODULE==1)
 	
 	}
 	
+	/**
+	* Function used for obtain url for media files.
+	*
+	* @param string $module Module media.
+	* @param string $directory where media is saved.
+	*
+	*/
+	
 	function get_base_url_media($module, $directory)
 	{
 	
@@ -6234,6 +6208,14 @@ else
 		return implode("\n", $arr_final_jscript)."\n";
 	
 	}
+	
+	/**
+	* Function used for obtain url for media files.
+	*
+	* @param string $module Module media.
+	* @param string $directory where media is saved.
+	*
+	*/
 	
 	function get_base_url_media($module, $directory)
 	{
