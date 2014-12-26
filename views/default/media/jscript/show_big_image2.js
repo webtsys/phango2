@@ -40,6 +40,15 @@
 				width_css=$('#image_big_showed').css('width');
 				height_css=$('#image_big_showed').css('height');
 				
+				width_document=$(document).width();
+				
+				if(width_css>$(document).width())
+				{
+					
+					width_css=width_document;
+					
+				}
+				
 				$('#frame_image').animate({'width' : width_css, 'height': height_css}, function () {
 				
 					$('#image_big_showed').fadeIn('slow');
