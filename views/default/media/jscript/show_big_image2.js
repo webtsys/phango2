@@ -44,7 +44,7 @@
 				
 				if(width_css>$(document).width())
 				{
-					
+					$('#image_big_showed').css('width', width_document);
 					width_css=width_document;
 					
 				}
