@@ -6505,12 +6505,14 @@ function load_controller()
 	
 	$folder_controller='';
 	
-	if(@strpos('/', PhangoVar::$script_controller))
+	if(preg_match('/^.*\/.*$/', PhangoVar::$script_controller))
 	{
-	
+		
 		$arr_controller=explode('/', PhangoVar::$script_controller);
 		
 		$folder_controller=basename($arr_controller[0]).'/';
+		
+		PhangoVar::$script_controller=$arr_controller[1];
 	
 	}
 	
