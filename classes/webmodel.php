@@ -6,7 +6,7 @@
 *
 * @author  Antonio de la Rosa <webmaster@web-t-sys.com>
 * @file
-* @package Phango Core
+* @package Core
 *
 */
 
