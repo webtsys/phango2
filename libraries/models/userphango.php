@@ -113,7 +113,7 @@ class UserPhangoModel extends Webmodel {
 		$user=$this->components[$this->username]->check($user);
 		$email=$this->components[$this->email]->check($email);
 		
-		$where_sql='where (username="'.$user.'" or email="'.$email.'")';
+		$where_sql='where ('.$this->username.'="'.$user.'" or '.$this->email.'="'.$email.'")';
 		
 		settype($iduser, 'integer');
 		

@@ -37,6 +37,7 @@ class LoginClass {
 		
 		$this->arr_user_insert[]=$this->field_user;
 		$this->arr_user_insert[]=$this->field_password;
+		$this->arr_user_insert[]='repeat_password';
 		
 		$this->arr_user_insert=array_unique($this->arr_user_insert, SORT_STRING);
 		
@@ -53,7 +54,12 @@ class LoginClass {
 
 		//Initialize form
 		
-		PhangoVar::$model[$this->model_login]->create_form();
+		if(count(PhangoVar::$model[$this->model_login]->forms)==0)
+		{
+		
+			PhangoVar::$model[$this->model_login]->create_form();
+		
+		}
 		
 		if(count($this->arr_user_session)==0)
 		{
@@ -445,7 +451,7 @@ class LoginClass {
 		
 		if($this->was_prepared==0)
 		{
-		
+			
 			$this->prepare_insert_user();
 		
 		}

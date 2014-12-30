@@ -661,7 +661,7 @@ class Webmodel {
 		$method_connection=PhangoVar::$connection_func[$this->db_selected];
 		
 		$this->$method_connection();
-	
+		
 	}
 	
 	/**
@@ -1242,11 +1242,11 @@ class Webmodel {
 	* @param mixed $query The last insert id.
 	*/
 	
-	static public function insert_id()
+	public function insert_id()
 	{
 		
 		$this->set_phango_connection();
-	
+		
 		return webtsys_insert_id();
 	
 	}
@@ -2163,14 +2163,14 @@ class ControllerSwitchClass {
 	
 	}
 	
-	public function get_method_url($arr_parameters)
+	public function get_method_url($method, $arr_parameters=array(), $arr_extra_parameters=array())
 	{
 		
 		/*$my_controller=strtolower(str_replace('SwitchClass', '', get_class($this)));
 		
 		$arr_parameters[$this->op_var]=$method_controller;*/
 		
-		return make_fancy_url($this->base_url, PhangoVar::$actual_url[0], PhangoVar::$actual_url[1], $arr_parameters);
+		return make_fancy_url($this->base_url, PhangoVar::$actual_url[0], $method, $arr_parameters, $arr_extra_parameters);
 	
 	}
 	
@@ -5097,21 +5097,6 @@ function RadioIntFormSet($post, $value)
 
 function make_fancy_url($url, $folder_url, $ident_url, $arr_params=array(), $arr_get_params=array())
 {
-
-	/*$description_text=slugify($description_text, $respect_upper);
-
-	$arr_get=array();
-
-	foreach($arr_data as $key => $value)
-	{
-
-		$arr_get[]=$key.'/'.$value;
-
-	}
-	
-	$get_final=implode('/', $arr_get);
-	
-	return $url.$index_php.'/'.$controller.'/show/'.$func_controller.'/'.$description_text.'/'.$get_final;*/
 	
 	$index_php='/index.php';
 	
@@ -5122,35 +5107,46 @@ function make_fancy_url($url, $folder_url, $ident_url, $arr_params=array(), $arr
 	
 	}
 	
-	$part_url=PhangoVar::$urls[$folder_url][$ident_url]['url'];
-	
-	$parameters='';
-	
-	if(count(PhangoVar::$urls[$folder_url][$ident_url]['parameters'])>0)
+	if( isset( PhangoVar::$urls[$folder_url][$ident_url] ) )
 	{
 	
-		$parameters='/'.implode('/', $arr_params);
-	
-	}
-	
-	$extra_params='';
-
-	if(count($arr_get_params)>0)
-	{
-	
-		foreach($arr_get_params as $key => $value)
+		$part_url=PhangoVar::$urls[$folder_url][$ident_url]['url'];
+		
+		$parameters='';
+		
+		if(count(PhangoVar::$urls[$folder_url][$ident_url]['parameters'])>0)
 		{
-
-			$arr_get[]=$key.'/'.$value;
-
+		
+			$parameters='/'.implode('/', $arr_params);
+		
 		}
+		
+		$extra_params='';
+
+		if(count($arr_get_params)>0)
+		{
+		
+			foreach($arr_get_params as $key => $value)
+			{
+
+				$arr_get[]=$key.'/'.$value;
+
+			}
+		
+			$extra_params='/get/'.implode('/', $arr_get);
+		
+		}
+		
+		return $url.$index_php.$part_url.$parameters.$extra_params;
+
+	}
+	else
+	{
 	
-		$extra_params='/get/'.implode('/', $arr_get);
+		show_error('Url not exists', 'url['.$folder_url.']['.$ident_url.'] not exists', $output_external='');
 	
 	}
-	
-	return $url.$index_php.$part_url.$parameters.$extra_params;
-
+		
 }
 
 function add_extra_fancy_url($url_fancy, $arr_data)
