@@ -2200,6 +2200,15 @@ class ControllerSwitchClass {
 
 }
 
+function simple_redirect_location($url)
+{
+
+	header('Location: '.$url);
+
+	die;
+
+}
+
 /*****************************************
 
 Now, we define components for use in models. Components are fields on a table.
