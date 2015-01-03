@@ -5121,6 +5121,8 @@ function make_fancy_url($url, $folder_url, $ident_url, $arr_params=array(), $arr
 	
 		$part_url=PhangoVar::$urls[$folder_url][$ident_url]['url'];
 		
+		//$parameters=PhangoVar::$urls[$folder_url][$ident_url]['url'];
+		
 		$parameters='';
 		
 		if(count(PhangoVar::$urls[$folder_url][$ident_url]['parameters'])>0)
@@ -6389,7 +6391,9 @@ function load_controller()
 	
 	//Create url for index, used by link generators.
 	
-	PhangoVar::$urls['']['']=array('pattern' => '/\/$/', 'url' => '/', 'module' => PhangoVar::$app_index, 'controller' => 'index', 'action' => 'index', 'parameters' => array());
+	//PhangoVar::$urls['']['']=array('pattern' => '/\/$/', 'url' => '/', 'module' => PhangoVar::$app_index, 'controller' => 'index', 'action' => 'index', 'parameters' => array());
+	
+	PhangoVar::$urls['']['']=array('action' => 'index', 'parameters' => array());
 	
 	if($request_uri=='' || $request_uri=='index.php')
 	{
@@ -6412,6 +6416,64 @@ function load_controller()
 		
 		$search_in=$arr_uri[0];
 		
+		/*if(isset(PhangoVar::$urls[$search_in]))
+		{
+		
+			//$arr_search_in=explode('/', $search_in);
+			
+			if(!isset($arr_uri[1]))
+			{
+				
+				$module=$search_in;
+				
+				$controller='index';
+				
+				$action='index';
+			
+			}
+			else
+			{
+			
+				//make a foreach with all components of urls. 
+			
+			}
+			
+			PhangoVar::$script_module=$module;
+			
+			PhangoVar::$script_controller=$controller;
+			
+			PhangoVar::$script_action=$action;
+			
+			//Obtain get parameters.
+			
+			//Prepare string
+			
+			$arr_param['string']='slugify_get';
+			$arr_param['integer']='integer_get';
+			
+			$str_param=implode('|', array_keys($arr_url['parameters']));
+			
+			$str_parameters=preg_replace($pattern, $str_param, $request_uri);
+			
+			PhangoVar::$get=explode('|', $str_parameters);
+			
+			$z=0;
+			
+			foreach($arr_url['parameters'] as $key => $value)
+			{
+			
+				$check_param_func=$arr_param[ $value ];
+				
+				PhangoVar::$get[$z]=$check_param_func(PhangoVar::$get[$z]);
+			
+				$z++;
+			
+			}
+			
+			PhangoVar::$actual_url=array($search_in, $ident_url);
+		
+		}*/
+		
 		if(isset(PhangoVar::$urls[$search_in]))
 		{
 		
@@ -6427,12 +6489,6 @@ function load_controller()
 				$controller=$arr_url['controller'];
 				
 				$action=$arr_url['action'];
-				
-				/*settype($arr_url['children_of']['field_url'], 'string');
-				settype($arr_url['children_of']['ident_url'], 'string');
-				
-				PhangoVar::$rurls[$arr_url['children_of']['field_url'] ][ $arr_url['children_of']['ident_url'] ]=array($search_in, $ident_url);*/
-				
 				
 				if($yes_match==0)
 				{

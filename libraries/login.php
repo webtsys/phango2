@@ -8,6 +8,7 @@ class LoginClass {
 	public $field_password;
 	public $field_mail='email';
 	public $field_recovery='token_recovery';
+	public $name_cookie='';
 	public $arr_user_session;
 	public $arr_user_insert=array();
 	public $field_key;
@@ -32,6 +33,7 @@ class LoginClass {
 		$this->field_password=$field_password;
 		$this->arr_user_session=$arr_user_session;
 		$this->field_key=$field_key;
+		$this->name_cookie=PhangoVar::$model[$model_login]->name;
 		
 		$this->arr_user_insert=$arr_user_insert;
 		
@@ -144,29 +146,32 @@ class LoginClass {
 				
 				//Create token
 				
-				$new_token=get_token();
+				$new_token=sha1(get_token());
 				
 				PhangoVar::$model[$this->model_login]->reset_require();
 				
-				if( PhangoVar::$model[$this->model_login]->update(array($this->field_key => $new_token), 'where `'.PhangoVar::$model[$this->model_login]->idmodel.'`='.$arr_user[PhangoVar::$model[$this->model_login]->idmodel]) )
+				if( PhangoVar::$model[$this->model_login]->update(array($this->field_key => sha1($new_token)), 'where `'.PhangoVar::$model[$this->model_login]->idmodel.'`='.$arr_user[PhangoVar::$model[$this->model_login]->idmodel]) )
 				{
-					$_SESSION[PhangoVar::$model[$this->model_login]->idmodel]=$arr_user[PhangoVar::$model[$this->model_login]->idmodel];
-					$_SESSION[$this->field_key]=$new_token;
-				
+					
 					PhangoVar::$model[$this->model_login]->reload_require();
+					
+					$lifetime=0;
 					
 					if($no_expire_session==1)
 					{
 						
-						$lifetime=31536000;
+						$lifetime=time()+31536000;
 						
-						$arr_save=serialize( array( 'id' => $arr_user[PhangoVar::$model[$this->model_login]->idmodel] , 'token' => $new_token ) );
-						
-						setcookie(COOKIE_NAME.'_'.sha1($this->field_key), $arr_save,time()+$lifetime, PhangoVar::$cookie_path);
-						//setcookie(session_name(),0,-31536000, PhangoVar::$cookie_path);
 					
 					}
 					
+					if(!setcookie(COOKIE_NAME.'_'.sha1($this->name_cookie), $new_token,$lifetime, PhangoVar::$cookie_path))
+					{
+						
+						return false;
+					
+					}
+					//echo sha1($new_token); die;
 					return true;
 					
 				}
@@ -202,10 +207,10 @@ class LoginClass {
 	
 		session_destroy();
 		
-		setcookie(COOKIE_NAME.'_'.sha1($this->field_key), 0, 0, PhangoVar::$cookie_path);
+		//setcookie(COOKIE_NAME.'_'.sha1($this->field_key), 0, 0, PhangoVar::$cookie_path);
 		
 		setcookie(COOKIE_NAME, 0, 0, PhangoVar::$cookie_path);
-		
+		setcookie(COOKIE_NAME.'_'.sha1($this->name_cookie), 0, 0, PhangoVar::$cookie_path);
 	
 	}
 	
@@ -214,7 +219,7 @@ class LoginClass {
 		
 		$check_user=0;
 		
-		if(isset($_SESSION[$this->field_key]) && isset($_SESSION[PhangoVar::$model[$this->model_login]->idmodel]))
+		/*if(isset($_SESSION[$this->field_key]) && isset($_SESSION[PhangoVar::$model[$this->model_login]->idmodel]))
 		{
 			
 			$check_user=1;
@@ -242,12 +247,22 @@ class LoginClass {
 			}
 			
 		
+		}*/
+		$cookie_val='';
+		
+		if(isset($_COOKIE[COOKIE_NAME.'_'.sha1($this->name_cookie)]))
+		{
+		
+			$cookie_val=sha1($_COOKIE[COOKIE_NAME.'_'.sha1($this->name_cookie)]);
+		
+			$check_user=1;
+		
 		}
 		
 		if($check_user==1)
 		{
 			
-			$arr_user=PhangoVar::$model[$this->model_login]->select_a_row_where('where '.$this->field_key.'="'.$_SESSION[$this->field_key].'" and '.PhangoVar::$model[$this->model_login]->idmodel.'='.$_SESSION[PhangoVar::$model[$this->model_login]->idmodel], $this->arr_user_session);
+			$arr_user=PhangoVar::$model[$this->model_login]->select_a_row_where('where '.$this->field_key.'="'.$cookie_val.'"', $this->arr_user_session);
 			
 			settype($arr_user[PhangoVar::$model[$this->model_login]->idmodel], 'integer');
 			
