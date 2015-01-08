@@ -6,7 +6,7 @@ function recursive_list($model_name, $idfather, $url_cat, $arr_fields, $arr_perm
 	$arr_list_father=array();
 	$arr_cat=array();
 
-	$query=$model[$model_name]->select($sql_father, array($model[$model_name]->idmodel, $arr_fields['name_field'], $arr_fields['father_field']));
+	$query=PhangoVar::$model[$model_name]->select($sql_father, array(PhangoVar::$model[$model_name]->idmodel, $arr_fields['name_field'], $arr_fields['father_field']));
 
 	while(list($idcat, $title, $idfather)=webtsys_fetch_row($query))
 	{
@@ -17,8 +17,8 @@ function recursive_list($model_name, $idfather, $url_cat, $arr_fields, $arr_perm
 		$arr_cat[$idcat]=$title;
 
 	}
-
-	echo load_view(array($model_name, $arr_cat, $arr_list_father, $idfather, $url_cat, $arr_perm), 'parentlist');
+	
+	echo load_view(array($model_name, $arr_cat, $arr_list_father, $idfather, $url_cat, $arr_perm), 'common/utilities/parentlist');
 
 	/*$idfield=PhangoVar::$model[$model_name]->idmodel;
 	
@@ -124,6 +124,36 @@ function obtain_parent_list($model_name, $title_field, $parent_field, $sql_fathe
 
 	return array($arr_list_father, $arr_cat);
 
+}
+
+function recursive_list_ng($model_name, $idfather, $name_field, $parent_field, $url_base, $id_ul='menu', $class_ul='menu', $name_ul='')
+{
+	
+	$arr_list_father=array();
+	
+	$query=PhangoVar::$model[$model_name]->select('', array(PhangoVar::$model[$model_name]->idmodel, $name_field, $parent_field), 1);
+
+	while(list($idmodel, $name, $parent)=PhangoVar::$model[$model_name]->fetch_row($query))
+	{
+	
+		if($idmodel==$idfather)
+		{
+		
+			$arr_list_father[$parent][$idmodel]=PhangoVar::$model[$model_name]->components[$name_field]->show_formatted($name);
+		
+		}
+		else
+		{
+		
+			$arr_list_father[$parent][$idmodel]='<a href="'.$url_base.''.$idmodel.'">'.PhangoVar::$model[$model_name]->components[$name_field]->show_formatted($name).'</a>';
+		
+		}
+	}
+	
+	
+	settype($arr_list_father[$idfather], 'array');
+	
+	return load_view(array($idfather, $arr_list_father, $id_ul, $class_ul, $name_ul), 'common/utilities/parentlistng');
 }
 
 ?>
