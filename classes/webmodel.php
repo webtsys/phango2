@@ -78,16 +78,46 @@ class PhangoVar {
 	*/
 	
 	static public $prefix_db='';
+	
+	/**
+	* Variable for the cookie path. Normally the value is /, but if you install is in a subdirectory you need fill this value with the value of the subdirectory. For example, for a folder called phango you can use a value how this: '/phango/'
+	*
+	*/
     
 	static public $cookie_path='';
+	
+	/**
+	* base url, without last slash. Put here tipically, the url of home page of your site.
+	*
+	*/
     
 	static public $base_url='';
 	
+	/**
+	* base url for media, if you want put this on other server, without last slash. Put here tipically, the same value thar $base_url.
+	*
+	*/
+	
 	static public $media_url='';
+	
+	/**
+	* base path, the REAL PATH where you have installed phango. Example: /home/username/phango_folder/. With last slash.
+	*
+	*/
     
 	static public $base_path='../';
 	
+	/**
+	* media path, the REAL PATH where you want install the media files.
+	*
+	*/
+	
 	static public $media_path='../';
+	
+	/**
+	* Path where the application path is installed.
+	*
+	*/
 	
 	static public $application_path='';
 	
