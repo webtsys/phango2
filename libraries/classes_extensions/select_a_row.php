@@ -1,5 +1,14 @@
 <?php
 
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package Core/ModelExtraMethods
+*
+*
+*/
+
 function select_a_row_method_class($class, $idrow, $arr_select=array(), $raw_query=0, $assoc=0)
 {
 

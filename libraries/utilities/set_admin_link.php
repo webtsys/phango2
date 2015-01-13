@@ -1,5 +1,14 @@
 <?php
 
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package CoreAdmin/Links
+*
+*
+*/
+
 function set_admin_link($text_admin, $parameters)
 {
 	

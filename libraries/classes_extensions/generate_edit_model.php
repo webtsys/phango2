@@ -1,5 +1,14 @@
 <?php
 
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package Core/ModelExtraMethods
+*
+*
+*/
+
 function generate_edit_model_method_class($class, $idrow, $arr_fields, $url_admin, $url_back, $yes_insert=1, $where_sql='')
 {
 

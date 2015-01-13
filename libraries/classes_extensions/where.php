@@ -1,4 +1,12 @@
 <?php
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package Core/ModelExtraMethods
+*
+*
+*/
 
 /**
 *

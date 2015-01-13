@@ -1,5 +1,15 @@
 <?php
 
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package Core/ModelExtraMethods
+*
+*
+*/
+
+
 function element_exists_method_class($class, $idrow, $field_search='')
 {
 

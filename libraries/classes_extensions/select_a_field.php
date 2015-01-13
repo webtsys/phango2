@@ -1,5 +1,14 @@
 <?php
 
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package Core/ModelExtraMethods
+*
+*
+*/
+
 function select_a_field_method_class($class, $where, $field)
 {
 	

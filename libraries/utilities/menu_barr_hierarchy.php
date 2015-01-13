@@ -1,5 +1,14 @@
 <?php
 
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package ExtraUtils/Menus
+*
+*
+*/
+
 //First element -> second element -> third element -> fourth element 
 //                                                 -> fourth element 2 -> five element (name_get) 
 // 'link0' => array('link1' => link1, 'link2'=> link2, 'link3' => link3)

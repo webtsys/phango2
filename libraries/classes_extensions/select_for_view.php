@@ -1,5 +1,14 @@
 <?php
 
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package Core/ModelExtraMethods
+*
+*
+*/
+
 function select_for_view_method_class($class, $param_templates, $conditions="", $arr_select=array(), $raw_query=0)
 {
 

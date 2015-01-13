@@ -57,6 +57,11 @@ if(PhangoVar::$THEME_MODULE==1)
 
 }
 
+//Load extra libraries
+
+load_libraries(array('fields/corefields'));
+load_libraries(array('forms/coreforms'));
+
 //start session
 
 //Check session_id, if exists $_COOKIE[COOKIE_NAME], change id to COOKIE_NAME id...

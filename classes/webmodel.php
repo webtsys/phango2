@@ -4439,9 +4439,5 @@ function generate_random_password($length_pass=14)
 
 }
 
-//Load extra libraries
-
-load_libraries(array('fields/corefields'));
-load_libraries(array('forms/coreforms'));
 
 ?>

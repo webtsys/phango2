@@ -6,6 +6,11 @@ ob_start();
 
 include('classes/webmodel.php');
 include('config.php');
+//Load extra libraries
+
+load_libraries(array('fields/corefields'));
+load_libraries(array('forms/coreforms'));
+
 include('database/'.TYPE_DB.'.php');
 include('libraries/update_table.php');
 

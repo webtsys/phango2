@@ -1,5 +1,14 @@
 <?php
 
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package ExtraUtils/Menus
+*
+*
+*/
+
 function hierarchy_links($model_name, $parentfield_name, $field_name, $idmodel)
 {
 
@@ -48,13 +57,13 @@ function recursive_obtain_father($arr_id_father, $id, $arr_id_name, $arr_hierarc
 	return $arr_hierarchy;
 
 }
-
+/*
 function hierarchy_links_ctl($arr_controller)
 {
 
 	
 
 }
-
+*/
 
 ?>

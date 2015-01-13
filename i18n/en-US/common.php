@@ -4,36 +4,6 @@ PhangoVar::$lang['common']['field_required']='field_required';
 
 PhangoVar::$lang['common']['error_in_field']='error_in_field';
 
-PhangoVar::$lang['common']['no']='no';
-
-PhangoVar::$lang['common']['yes']='yes';
-
-PhangoVar::$lang['common']['error_cannot_upload_this_file_to_the_server']='error_cannot_upload_this_file_to_the_server';
-
-PhangoVar::$lang['common']['cannot_delete_file']='cannot_delete_file';
-
-PhangoVar::$lang['common']['image_size_is_not_correct']='image_size_is_not_correct';
-
-PhangoVar::$lang['common']['min_size']='min_size';
-
-PhangoVar::$lang['common']['a_image_with_same_name_exists']='a_image_with_same_name_exists';
-
-PhangoVar::$lang['common']['error_cannot_upload_this_image_to_the_server']='error_cannot_upload_this_image_to_the_server';
-
-PhangoVar::$lang['common']['cannot_delete_image']='cannot_delete_image';
-
-PhangoVar::$lang['common']['any_option_chosen']='No option chosen';
-
-PhangoVar::$lang['common']['delete_file']='delete_file';
-
-PhangoVar::$lang['common']['delete_image']='delete_image';
-
-PhangoVar::$lang['common']['hour']='hour';
-
-PhangoVar::$lang['common']['minute']='minute';
-
-PhangoVar::$lang['common']['second']='second';
-
 PhangoVar::$lang['common']['thanks']='thanks';
 
 PhangoVar::$lang['common']['go_back']='go_back';
@@ -70,6 +40,18 @@ PhangoVar::$lang['common']['pages']='pages';
 
 PhangoVar::$lang['common']['no_element_chosen']='Any item no chosen';
 
+PhangoVar::$lang['common']['delete_file']='delete_file';
+
+PhangoVar::$lang['common']['delete_image']='delete_image';
+
+PhangoVar::$lang['common']['hour']='hour';
+
+PhangoVar::$lang['common']['minute']='minute';
+
+PhangoVar::$lang['common']['second']='second';
+
+PhangoVar::$lang['common']['any_option_chosen']='No option chosen';
+
 PhangoVar::$lang['common']['delete_model']='delete_model';
 
 PhangoVar::$lang['common']['delete']='delete';
@@ -79,6 +61,24 @@ PhangoVar::$lang['common']['error_you_need_this_language_field']='error_you_need
 PhangoVar::$lang['common']['cannot_load_jquery']='cannot_load_jquery';
 
 PhangoVar::$lang['common']['last']='last';
+
+PhangoVar::$lang['common']['no']='no';
+
+PhangoVar::$lang['common']['yes']='yes';
+
+PhangoVar::$lang['common']['error_cannot_upload_this_file_to_the_server']='error_cannot_upload_this_file_to_the_server';
+
+PhangoVar::$lang['common']['cannot_delete_file']='cannot_delete_file';
+
+PhangoVar::$lang['common']['image_size_is_not_correct']='image_size_is_not_correct';
+
+PhangoVar::$lang['common']['min_size']='min_size';
+
+PhangoVar::$lang['common']['a_image_with_same_name_exists']='a_image_with_same_name_exists';
+
+PhangoVar::$lang['common']['error_cannot_upload_this_image_to_the_server']='error_cannot_upload_this_image_to_the_server';
+
+PhangoVar::$lang['common']['cannot_delete_image']='cannot_delete_image';
 
 PhangoVar::$lang['common']['the_value_can_not_be_greater_than_100']='the_value_can_not_be_greater_than_100';
 
@@ -131,6 +131,8 @@ PhangoVar::$lang['common']['zip_code']='zip_code';
 PhangoVar::$lang['common']['phone']='phone';
 
 PhangoVar::$lang['common']['fax']='fax';
+
+PhangoVar::$lang['common']['register_user']='register_user';
 
 PhangoVar::$lang['common']['categories']='categories';
 

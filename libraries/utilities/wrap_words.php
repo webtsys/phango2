@@ -1,5 +1,14 @@
 <?php
 
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package ExtraUtils/Text
+*
+*
+*/
+
 function wrap_words($text, $num_words, $text_explain='...', $yes_more_ever=0)
 {
 

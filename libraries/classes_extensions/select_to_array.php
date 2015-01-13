@@ -1,5 +1,14 @@
 <?php
 
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package Core/ModelExtraMethods
+*
+*
+*/
+
 function select_to_array_method_class($class, $conditions="", $arr_select=array(), $raw_query=0, $index_id='')
 {
 

@@ -1,5 +1,14 @@
 <?php
 
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package ExtraUtils/Menus
+*
+*
+*/
+
 function recursive_list($model_name, $idfather, $url_cat, $arr_fields, $arr_perm=array(), $sql_father='')
 {
 
