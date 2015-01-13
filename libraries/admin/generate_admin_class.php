@@ -1,5 +1,15 @@
 <?php
 
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package CoreAdmin
+*
+* A set of classes for create listings and simple admin interfaces for models.
+*
+*/
+
 load_libraries(array('utilities/menu_barr_hierarchy', 'simplelist', 'generate_admin_ng'));
 
 class GenerateAdminClass {
@@ -189,7 +199,7 @@ class GenerateAdminClass {
 		
 		}
 		
-		set_values_form($post, PhangoVar::$model[$this->model_name]->forms, 0);
+		ModelForm::set_values_form($post, PhangoVar::$model[$this->model_name]->forms, 0);
 		
 		//nsertModelForm($model_name, $url_admin, $url_back, $arr_fields=array(), $id=0, $goback=1)
 		
@@ -283,7 +293,7 @@ class GenerateAdminClass {
 
 						$post=filter_fields_array($arr_fields, $_POST);
 						
-						set_values_form($post, PhangoVar::$model[$model_name]->forms);
+						ModelForm::set_values_form($post, PhangoVar::$model[$model_name]->forms);
 
 						echo load_view(array(PhangoVar::$model[$model_name]->forms, $arr_fields, $url_post, PhangoVar::$model[$model_name]->enctype, '_generate_admin_'.$model_name, $this->arr_categories), 'common/forms/updatemodelform');
 
@@ -691,7 +701,7 @@ class ListModelClass {
 			
 			//model_set_form($this->model_name, $post, NO_SHOW_ERROR);
 			
-			set_values_form($post, PhangoVar::$model[$this->model_name]->forms, 0);
+			ModelForm::set_values_form($post, PhangoVar::$model[$this->model_name]->forms, 0);
 			
 			$url_options_edit=add_extra_fancy_url($this->url_options, array('op_edit' =>1, PhangoVar::$model[$this->model_name]->idmodel => $_GET[PhangoVar::$model[$this->model_name]->idmodel]) );
 			

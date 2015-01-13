@@ -1,4 +1,13 @@
 <?php
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file question.php
+* @package ExtraUtils\Captcha\Question
+*
+* Functions for question captcha
+*
+*/
 
 //Check if exists variable $key_captcha...
 

@@ -3,10 +3,16 @@
 /**
 *
 * @author  Antonio de la Rosa <webmaster@web-t-sys.com>
-* @file
-* @package ExtraFields
+* @file i18n_fields.php
+* @package ExtraFields\I18nFields
 *
 *
+*/
+
+/**
+* Multilanguage fields. 
+*
+* With this field you can create fields for i18n sites.
 */
 
 class I18nField extends PhangoField {
@@ -125,9 +131,12 @@ class I18nField extends PhangoField {
 	
 }
 
-//Now, class slugifyfield. This class can be used for create orders or searchs in mysql if you need other thing distinct to default search of default order (default order don't work fine with serializefields how i18nfield). The programmer have the responsability of update this fields via update or insert method.
+/** This class can be used for create orders or searchs in mysql if you need other thing distinct to default search of default order (default order don't work fine with serializefields how i18nfield). The programmer have the responsability of update this fields via update or insert method.
+*
+*/
 
 class SlugifyField extends PhangoField {
+
 
 	public $value="";
 	public $label="";

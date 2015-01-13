@@ -1,5 +1,15 @@
 <?php
 
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file recaptcha.php
+* @package ExtraUtils\Captcha\Recaptcha
+*
+* Functions for make work ReCaptcha forms...
+*
+*/
+
 //Check if exists variable $key_captcha...
 
 if(!isset(PhangoVar::$key_recaptcha) || !isset(PhangoVar::$key_recaptcha_private))
@@ -9,7 +19,12 @@ if(!isset(PhangoVar::$key_recaptcha) || !isset(PhangoVar::$key_recaptcha_private
 
 }
 
-function CaptchaForm($name="", $class='', $value='')
+/**
+* Form for recaptcha.
+*
+*/
+
+function ReCaptchaForm($name="", $class='', $value='')
 {
 
 	?>
@@ -27,7 +42,7 @@ function CaptchaForm($name="", $class='', $value='')
 
 }
 
-function CaptchaCheck($arr_post_value)
+function ReCaptchaCheck($arr_post_value)
 {
 
 	/*
@@ -67,7 +82,7 @@ function CaptchaCheck($arr_post_value)
 
 }
 
-function CaptchaSet($post, $value)
+function ReCaptchaFormSet($post, $value)
 {
 
 	return $value;

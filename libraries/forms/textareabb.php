@@ -41,7 +41,9 @@ function TextAreaBBForm($name="", $class='', $value='', $profile='all')
 		
 		//Load editor
 		
-		load_jscript_editor($name, $value, $profile);
+		$func_load_script='load_jscript_editor_'.PhangoVar::$textbb_type.'_'.$profile;
+		
+		$func_load_script($name, $value, $profile);
 
 	}
 

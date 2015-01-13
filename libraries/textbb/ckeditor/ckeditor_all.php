@@ -1,6 +1,6 @@
 <?php
 
-function load_jscript_editor($name_editor, $value, $profiles='all')
+function load_jscript_editor_ckeditor_all($name_editor, $value, $profiles='all')
 {
 	
 	load_libraries(array('emoticons'));

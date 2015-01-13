@@ -1,6 +1,20 @@
 <?php
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package ExtraUtils/Login
+*
+* Now, we define components for use in models. Components are fields on a table.
+*
+*/
 
 load_lang('users');
+
+/**
+* Children class of webmodel for use with login class
+*
+*/
 
 class UserPhangoModel extends Webmodel {
 
