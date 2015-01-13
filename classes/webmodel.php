@@ -21,45 +21,40 @@ class PhangoVar {
 
 	/**
 	* Variable for save ip
-	*
 	*/
 
 	static public $ip='';
 	
 	/**
 	* Database hosts array.
-	*
 	*/
 	
 	static public $host_db=array();
 
 	/**
 	* Database hosts array.
-	*
 	*/
 	
 	static public $db=array();
-    
+	
 	static public $login_db=array();
-    
+	
 	static public $pass_db=array();
 	
 	/**
 	* Connection to db.
-	*
 	*/
 	
 	static public $connection=array();
 	
 	/**
-	* Variable for cache the connection.
-	*
+	* Variable for cache the connections.
 	*/
 
 	static public $connection_func=array();
 	
 	/**
-	*
+	* Array where the select_db's are saved.
 	*
 	*/
 	
@@ -67,99 +62,122 @@ class PhangoVar {
 	
 	/**
 	* String where save the query if error.
-	*
 	*/
 	
 	static public $save_query=array();
 	
 	/**
 	* Variable for the db prefix. For security, change this always.
-	*
 	*/
 	
 	static public $prefix_db='';
 	
 	/**
 	* Variable for the cookie path. Normally the value is /, but if you install is in a subdirectory you need fill this value with the value of the subdirectory. For example, for a folder called phango you can use a value how this: '/phango/'
-	*
 	*/
-    
+	
 	static public $cookie_path='';
 	
 	/**
 	* base url, without last slash. Put here tipically, the url of home page of your site.
-	*
 	*/
-    
+	
 	static public $base_url='';
 	
 	/**
 	* base url for media, if you want put this on other server, without last slash. Put here tipically, the same value thar $base_url.
-	*
 	*/
 	
 	static public $media_url='';
 	
 	/**
 	* base path, the REAL PATH where you have installed phango. Example: /home/username/phango_folder/. With last slash.
-	*
 	*/
-    
+	
 	static public $base_path='../';
 	
 	/**
 	* media path, the REAL PATH where you want install the media files.
-	*
 	*/
 	
 	static public $media_path='../';
 	
 	/**
 	* Path where the application path is installed.
-	*
 	*/
 	
 	static public $application_path='';
 	
+	/**
+	* Path where addons based on composer are installed.
+	*/
+	
 	static public $addons_composer_path='';
-    
+	
+	/**
+	* Default i18n language used by the framework.
+	*/
+	
 	static public $language='';
 	
-	static public $lang=array();
-    
-	static public $arr_i18n=array();
-    
-	static public $arr_i18n_ckeditor=array();
-    
-	static public $arr_i18n_tinycme=array();
-    
-	static public $app_index='';
- 
-	static public $activated_modules=array('media');
- 
 	/**
-	*
+	* An array where the language strings are saved. The format is, first key is the module where the string is and second key is the codename of the string.
+	*/
+	
+	static public $lang=array();
+	
+	/**
+	* An array where provided languages are saved
+	*/
+	
+	static public $arr_i18n=array();
+	
+	/**
+	* An array where provided ckeditor languages are saved
+	*/
+	
+	static public $arr_i18n_ckeditor=array();
+	
+	/**
+	* An array where provided tinycme languages are saved
+	*/
+	
+	static public $arr_i18n_tinycme=array();
+	
+	/**
+	* The value of this property is used how the home module. When not module will be specified on url, phango use this value how module base, with controller_index how controller and index how action method.
+	*/
+	
+	static public $app_index='';
+
+	/**
+	* Array where you define activated modules. An activated module is the module that you can access via http.
+	*/
+
+	static public $activated_modules=array('media');
+
+	/**
 	* Variable for define the theme, by default is 'default'
 	*/
- 
+
 	static public $dir_theme='default';
 
 	/**
-	*
 	* Is theme are in a module, define the module here.
-	*
 	*/
 	
 	static public $module_theme='';
 	
 	/**
-	*
 	* This "constant" define that the media are in a module or view if is set to 1. If 0, phango search the media in a normal url.
-	*
 	*/
 	
 	static public $THEME_MODULE=1;
- 
+
+	/**
+	* A key use for fuzzy tokens and secret keys.
+	*/
+
 	static public $prefix_key='';	
 	
 	/**
@@ -183,57 +201,91 @@ class PhangoVar {
 	
 	/**
 	* Internal variable used for things how cli.php script
-	*
 	*/
 
 	static public $utility_cli=0;
 	
 	/**
 	*This variable is needed for add new fields to models without lost when you execute load_model without extension. Is saved in optional file added_fields.php
-	*
 	*/
 
 	static public $arr_models_loading=array();
-
-	//dir_theme  | module_theme        | portal_name              | portal_email        | x_avatar | y_avatar | date_format | time_format | timezone      | ampm  | accept_bbcode_signature | total_users | total_messages | name_guest | metatags | meta_description | meta_author | meta_copyright | foot           | active_users | ssl_feature | censoring | wait_message | surveys | index_page | user_extra | create_user | textbb_type | captcha_type | mailer_type | cond_register
+	
+	/**
+	* Define the website name, can be used for general titles on home or for example admin
+	*/
 	
 	static public $portal_name='';
 	
+	/**
+	* Variable that define a global email used for communications of phango
+	*/
+	
 	static public $portal_email='';
+	
+	/**
+	* Variable that define a global date format for use with format date functions
+	*/
 	
 	static public $date_format='';
 	
+	/**
+	* Variable that define a global time format for use with format time functions
+	*/
+	
 	static public $time_format='';
+	
+	/**
+	* Variable that define the timezone of the application
+	*/
 	
 	static public $timezone='';
 	
+	/**
+	* @deprecated
+	*
+	* Variable that define if time format will be with amp/pm format or 24h format. With time_format and date format edited directly, don't need this method anymore. 
+	*/
+	
 	static public $ampm='';
+	
+	/**
+	* Variable used for set the textbb_type for textarea elements
+	*
+	*/
 	
 	static public $textbb_type='';
 	
+	/**
+	* Variable used for set the captcha type used for internal libraries.
+	*
+	*/
+	
 	static public $captcha_type='';
+	
+	/**
+	* Variable used for set the mailer class type, used for internal library send_email
+	*
+	*/
 	
 	static public $mailer_type='';
 	
 	/**
 	* Model, in this array you have access to the all models registered on your system with load_model
-	* 
 	*/
 	
 	static public $model=array();
 	
 	/**
 	* Global Internal Array for save the field codified for use in public forms.
-	*
 	*/
 
 	static public $arr_form_public=array();
 	
 	/** 
 	* Array for check if a model exists searching in arr_check_table array created in framework.php file.
-	*
 	*/
-
+	
 	static public $arr_check_table=array();
 	
 	/**
@@ -248,7 +300,17 @@ class PhangoVar {
 	
 	static public $script_module='';
 	
+	/**
+	* An internal variable used for save the actual controller that is used for set the name of controller file
+	*
+	*/
+	
 	static public $script_controller='';
+	
+	/**
+	* An internal variable used for save the actual controller that is used for set the name of controller file
+	*
+	*/
 	
 	static public $script_action='';
 	
@@ -260,7 +322,6 @@ class PhangoVar {
 	
 	/**
 	* Internal variable used for load model extensions.
-	*
 	*/
 	
 	static public $arr_extension_model=array();
@@ -273,29 +334,24 @@ class PhangoVar {
 
 	/**
 	* Array used for know about language filed loaded.
-	*
 	*/
 	
 	static public $cache_lang=array();
 	
 	/**
 	* Array used for load contents for html headers on home views...
-	*
 	*/
 	
 	static public $arr_cache_header=array();
 	
 	/**
-	*
 	* Global variable that control the css cache
-	*
 	*/
 
 	static public $arr_cache_css=array();
 	
 	/**
 	* Variable used for load the jscript files.
-	*
 	*/
 
 	static public $arr_cache_jscript=array();
@@ -308,71 +364,55 @@ class PhangoVar {
 	
 	/**
 	* This variable is used for save the urls of different modules
-	*
 	*/
 	
 	static public $urls=array();
 	
 	static public $rurls=array();
 	
+	/**
+	* This variable is used for save the actual url
+	*/
+	
 	static public $actual_url=array();
 	
 	/**
 	* This variable is used for save the csrf token.
-	*
 	*/
 	
 	static public $key_csrf='';
 	
 	/**
 	* This array save the get obtained from url phango format.
-	*
 	*/
 	
 	static public $get=array();
 	
+	/**
+	* This array is used for check that urls need the module for use. Use this on urls.php. If you load only urls, you don't need 
+	*/
+	
 	static public $url_module_requires=array();
+	
+	/**
+	* Simple internal variable used for pagination functions.
+	*/
 	
 	static public $begin_page=0;
 	
+	/**
+	* Array where phango save the actual functions used for load media files
+	*
+	*/
+	
+	static public $arr_func_media=array();
+	
 }
-
-
-/**
-*
-* Actual timestamp
-*
-*/
-
-//define("TODAY", mktime( date('H'), date('i'), date('s') ) );
-
-/**
-*
-* Timestamp today to 00:00:00 hours
-*
-*/
-
-//define("TODAY_FIRST", mktime(0, 0, 0));
-
-/**
-*
-* Timestamp today to 23:59:59 hours
-*
-*/
-
-//define("TODAY_LAST", mktime(23, 59, 59));
-
-/**
-*
-* Timestamp today in this hour
-*
-*/
-
-//define("TODAY_HOUR", mktime(date('H'), 0, 0));
 
 /**
 * Simple class for save datetime of the script.
 *
+* With this class you have a global timedates statement for use in your functions 
 */
 
 class DateTimeNow {
@@ -684,6 +724,11 @@ class Webmodel {
 		
 	
 	}
+	
+	/**
+	* Method used for connet to db, if you are connected, execute a dummy db connection method.
+	* 
+	*/
 	
 	public function set_phango_connection()
 	{
@@ -1993,7 +2038,7 @@ class ModelForm {
 	{
 	
 		return $this->html_field_name;
-	
+        
 	}
 	
 	
@@ -6035,231 +6080,235 @@ function get_url_media($name_media, $module='none')
 
 }
 
-if(PhangoVar::$THEME_MODULE==1)
+function get_base_url_media_static($module, $directory)
 {
 
-	function get_url_image($img_name, $module='none')
+	return PhangoVar::$media_url.'/media/'.PhangoVar::$dir_theme.'/'.$module.'/'.$directory.'/';
+
+}
+
+function get_base_url_media_dynamic($module, $directory)
+{
+
+	return make_fancy_url(PhangoVar::$media_url, 'media', 'show', array('module' => $module, 'directory' => $directory));
+
+}
+
+function get_url_image_static($img_name, $module='none')
+{
+	
+	return PhangoVar::$media_url.'/media/'.PhangoVar::$dir_theme.'/'.$module.'/images/'.$img_name;
+	
+}
+
+function get_url_image_dynamic($img_name, $module='none')
+{
+	
+	return get_url_media('images/'.$img_name, $module);
+	
+}
+
+function load_css_view_static()
+{
+
+	//Delete repeat scripts...
+
+	PhangoVar::$arr_cache_css=array_unique(PhangoVar::$arr_cache_css, SORT_STRING);
+	$arr_final_css=array();
+
+	foreach(PhangoVar::$arr_cache_css as $idcss => $css)
 	{
 	
-		//Redirect to php
-		
-		//$img_name=urlencode_redirect($img_name, 1);
-		
-		//$arr_image_def=array('module' => $module, 'image' => 'images/'.$img_name);
-		
-		//return make_fancy_url(PhangoVar::$media_url, 'media', 'image', $arr_image_def);
-		
-		return get_url_media('images/'.$img_name, $module);
-	
+			if(gettype($css)=='array') {
+			
+					foreach($css as $css_item)
+					{
+					
+							$arr_final_css[]='<link href="'.PhangoVar::$media_url.'/media/'.PhangoVar::$dir_theme.'/'.$idcss.'/css/'.$css_item.'" rel="stylesheet" type="text/css"/>'."\n";
+					
+					}
+			
+			}
+			else
+			{
+					$arr_final_css[]='<link href="'.PhangoVar::$media_url.'/media/'.PhangoVar::$dir_theme.'/css/'.$css.'" rel="stylesheet" type="text/css"/>'."\n";
+			}
 	}
-	
-	function load_css_view()
+
+	return implode("\n", $arr_final_css)."\n";
+
+}
+
+function load_css_view_dynamic()
+{
+
+	//Delete repeat scripts...
+
+	PhangoVar::$arr_cache_css=array_unique(PhangoVar::$arr_cache_css, SORT_REGULAR);
+	$arr_final_css=array();
+
+	foreach(PhangoVar::$arr_cache_css as $idcss => $css)
 	{
-		
-		//Delete repeat scripts...
-
-		PhangoVar::$arr_cache_css=array_unique(PhangoVar::$arr_cache_css, SORT_REGULAR );
-		$arr_final_css=array();
-
-		foreach(PhangoVar::$arr_cache_css as $idcss => $css)
-		{
 			
 			$module_css='none';
 			
-			if(gettype($css)=='array')
-			{
-				
-				$module_css=$idcss;
-				
-				$css=array_unique($css, SORT_REGULAR );
-				
-				foreach($css as $css_item)
-				{
-					/*$css_item=slugify(urlencode_redirect($css_item, 1), 1);
-				
-					$url=make_fancy_url(PhangoVar::$media_url, 'media', 'css', array('module' => $module_css, 'css' => $css_item));
-					*/
+			if(gettype($css)=='array') {
 					
-					$url=get_url_media('css/'.$css_item, $module_css);
+					$module_css=$idcss;
 					
-					$arr_final_css[]='<link href="'.$url.'" rel="stylesheet" type="text/css"/>'."\n";
-				}
+					$css=array_unique($css, SORT_REGULAR);
+					
+					foreach($css as $css_item)
+					{
+							/*$css_item=slugify(urlencode_redirect($css_item, 1), 1);
+	
+							$url=make_fancy_url(PhangoVar::$media_url, 'media', 'css', array('module' => $module_css, 'css' => $css_item));
+							*/
+							
+							$url=get_url_media('css/'.$css_item, $module_css);
+							
+							$arr_final_css[]='<link href="'.$url.'" rel="stylesheet" type="text/css"/>'."\n";
+					}
 			}
 			else
 			{
-				
-				/*$css=slugify(urlencode_redirect($css, 1), 1);
-				
-				$url=make_fancy_url(PhangoVar::$media_url, 'media', 'css', array('module' => $module_css, 'css' => $css));*/
-				
-				$url=get_url_media('css/'.$css, $module_css);
-				
-				$arr_final_css[]='<link href="'.$url.'" rel="stylesheet" type="text/css"/>'."\n";
+					
+					/*$css=slugify(urlencode_redirect($css, 1), 1);
+	
+					$url=make_fancy_url(PhangoVar::$media_url, 'media', 'css', array('module' => $module_css, 'css' => $css));*/
+					
+					$url=get_url_media('css/'.$css, $module_css);
+					
+					$arr_final_css[]='<link href="'.$url.'" rel="stylesheet" type="text/css"/>'."\n";
 
 			}
-		}
-
-		return implode("\n", $arr_final_css)."\n";
-
 	}
-	
-	function load_jscript_view()
+
+	return implode("\n", $arr_final_css)."\n";
+
+}
+
+function load_jscript_view_static()
+{
+	//Delete repeat scripts...
+
+	PhangoVar::$arr_cache_jscript=array_unique(PhangoVar::$arr_cache_jscript, SORT_STRING);
+	$arr_final_jscript=array();
+
+	foreach(PhangoVar::$arr_cache_jscript as $idjscript => $jscript)
 	{
-		
-		//Delete repeat scripts...
+	
+			if(gettype($jscript)=='array') {
+			
+					foreach($jscript as $jscript_item)
+					{
+					
+							$arr_final_jscript[]='<script language="javascript" src="'.PhangoVar::$media_url.'/media/'.PhangoVar::$dir_theme.'/'.$idjscript.'/jscript/'.$jscript_item.'"></script>'."\n";
+					
+					}
+			
+			}
+			else
+			{
+					$arr_final_jscript[]='<script language="Javascript" src="'.PhangoVar::$media_url.'/media/jscript/'.$jscript.'"></script>'."\n";
+			}
+	}
 
-		PhangoVar::$arr_cache_jscript=array_unique(PhangoVar::$arr_cache_jscript, SORT_REGULAR );
-		
-		$arr_final_jscript=array();
+	return implode("\n", $arr_final_jscript)."\n";
+}
 
-		foreach(PhangoVar::$arr_cache_jscript as $idjscript => $jscript)
-		{
+function load_jscript_view_dynamic()
+{
+	//Delete repeat scripts...
+
+	PhangoVar::$arr_cache_jscript=array_unique(PhangoVar::$arr_cache_jscript, SORT_REGULAR);
+	
+	$arr_final_jscript=array();
+
+	foreach(PhangoVar::$arr_cache_jscript as $idjscript => $jscript)
+	{
 			
 			$module_jscript='none';
 			
-			if(gettype($jscript)=='array')
-			{
-				
-				$module_jscript=$idjscript;
-				
-				$jscript=array_unique($jscript, SORT_REGULAR );
-				
-				foreach($jscript as $jscript_item)
-				{
-					/*$jscript_item=slugify(urlencode_redirect($jscript_item, 1), 1);
-				
-					$url=make_fancy_url(PhangoVar::$media_url, 'media', 'jscript', array('module' => $module_jscript, 'jscript' => $jscript_item));*/
+			if(gettype($jscript)=='array') {
 					
-					$url=get_url_media('jscript/'.$jscript_item, $module_jscript);
+					$module_jscript=$idjscript;
 					
-					$arr_final_jscript[]='<script language="javascript" src="'.$url.'"></script>'."\n";
-				}
+					$jscript=array_unique($jscript, SORT_REGULAR);
+					
+					foreach($jscript as $jscript_item)
+					{
+							/*$jscript_item=slugify(urlencode_redirect($jscript_item, 1), 1);
+	
+							$url=make_fancy_url(PhangoVar::$media_url, 'media', 'jscript', array('module' => $module_jscript, 'jscript' => $jscript_item));*/
+							
+							$url=get_url_media('jscript/'.$jscript_item, $module_jscript);
+							
+							$arr_final_jscript[]='<script language="javascript" src="'.$url.'"></script>'."\n";
+					}
 			}
 			else
 			{
-				
-				/*$jscript=slugify(urlencode_redirect($jscript, 1), 1);
-				
-				$url=make_fancy_url(PhangoVar::$media_url, 'media', 'jscript', array('module' => $module_jscript, 'jscript' => $jscript));*/
-				
-				$url=get_url_media('jscript/'.$jscript, $module_jscript);
-				
-				$arr_final_jscript[]='<script language="javascript" src="'.$url.'"></script>'."\n";
+					
+					/*$jscript=slugify(urlencode_redirect($jscript, 1), 1);
+	
+					$url=make_fancy_url(PhangoVar::$media_url, 'media', 'jscript', array('module' => $module_jscript, 'jscript' => $jscript));*/
+					
+					$url=get_url_media('jscript/'.$jscript, $module_jscript);
+					
+					$arr_final_jscript[]='<script language="javascript" src="'.$url.'"></script>'."\n";
 
 			}
-		}
-		
-		return implode("\n", $arr_final_jscript)."\n";
-	
 	}
 	
-	/**
-	* Function used for obtain url for media files.
-	*
-	* @param string $module Module media.
-	* @param string $directory where media is saved.
-	*
-	*/
-	
-	function get_base_url_media($module, $directory)
-	{
-	
-		 return make_fancy_url(PhangoVar::$media_url, 'media', 'show', array('module' => $module, 'directory' => $directory));
-	
-	}
+	return implode("\n", $arr_final_jscript)."\n";
+}
+
+if(PhangoVar::$THEME_MODULE==1) {
+
+	PhangoVar::$arr_func_media=array('get_url_image' => 'get_url_image_dynamic', 'load_css_view' => 'load_css_view_dynamic', 'load_jscript_view' => 'load_jscript_view_dynamic', 'get_base_url_media' => 'get_base_url_media_dynamic');
+
 }
 else
 {
 
-	function get_url_image($img_name, $module='')
-	{
+	PhangoVar::$arr_func_media=array('get_url_image' => 'get_url_image_static', 'load_css_view' => 'load_css_view_static', 'load_jscript_view' => 'load_jscript_view_static', 'get_base_url_media' => 'get_base_url_media_static');
 	
-		//Redirect to image
-		//media/default/images
+}
+
+function get_url_image($img_name, $module='none')
+{
+
+	$func=PhangoVar::$arr_func_media['get_url_image'];
+
+	return $func($img_name, $module);
+
+}
+
+function load_css_view()
+{
+
+	$func=PhangoVar::$arr_func_media['load_css_view'];
+
+	return $func();
+
+}
+
+function load_jscript_view()
+{
+
+	$func=PhangoVar::$arr_func_media['load_jscript_view'];
+
+	return $func();
+
+}
+
+function get_base_url_media($module, $directory)
+{
 		
-		return PhangoVar::$media_url.'/media/'.PhangoVar::$dir_theme.'/'.$module.'/images/'.$img_name;
-	
-	}
-	
-	function load_css_view()
-	{
-
-		//Delete repeat scripts...
-
-		PhangoVar::$arr_cache_css=array_unique(PhangoVar::$arr_cache_css, SORT_STRING);
-		$arr_final_css=array();
-
-		foreach(PhangoVar::$arr_cache_css as $idcss => $css)
-		{
+	$func=PhangoVar::$arr_func_media['get_base_url_media'];
 		
-			if(gettype($css)=='array')
-			{
-			
-				foreach($css as $css_item)
-				{
-				
-					$arr_final_css[]='<link href="'.PhangoVar::$media_url.'/media/'.PhangoVar::$dir_theme.'/'.$idcss.'/css/'.$css_item.'" rel="stylesheet" type="text/css"/>'."\n";
-				
-				}
-			
-			}
-			else
-			{
-				$arr_final_css[]='<link href="'.PhangoVar::$media_url.'/media/'.PhangoVar::$dir_theme.'/css/'.$css.'" rel="stylesheet" type="text/css"/>'."\n";
-			}
-		}
-
-		return implode("\n", $arr_final_css)."\n";
-
-	}
-	
-	function load_jscript_view()
-	{
-
-
-		//Delete repeat scripts...
-
-		PhangoVar::$arr_cache_jscript=array_unique(PhangoVar::$arr_cache_jscript, SORT_STRING);
-		$arr_final_jscript=array();
-
-		foreach(PhangoVar::$arr_cache_jscript as $idjscript => $jscript)
-		{
-		
-			if(gettype($jscript)=='array')
-			{
-			
-				foreach($jscript as $jscript_item)
-				{
-				
-					$arr_final_jscript[]='<script language="javascript" src="'.PhangoVar::$media_url.'/media/'.PhangoVar::$dir_theme.'/'.$idjscript.'/jscript/'.$jscript_item.'"></script>'."\n";
-				
-				}
-			
-			}
-			else
-			{
-				$arr_final_jscript[]='<script language="Javascript" src="'.PhangoVar::$media_url.'/media/jscript/'.$jscript.'"></script>'."\n";
-			}
-		}
-
-		return implode("\n", $arr_final_jscript)."\n";
-	
-	}
-	
-	/**
-	* Function used for obtain url for media files.
-	*
-	* @param string $module Module media.
-	* @param string $directory where media is saved.
-	*
-	*/
-	
-	function get_base_url_media($module, $directory)
-	{
-	
-		 return PhangoVar::$media_url.'/media/'.PhangoVar::$dir_theme.'/'.$module.'/'.$directory.'/';
-	
-	}
+	return $func($module, $directory);
 
 }
 
