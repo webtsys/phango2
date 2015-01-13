@@ -1,5 +1,14 @@
 <?php
 
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package ExtraForms
+*
+*
+*/
+
 function SelectModelForm($name, $class, $value, $model_name, $identifier_field, $where='')
 {
 
@@ -39,6 +48,12 @@ function SelectModelForm($name, $class, $value, $model_name, $identifier_field, 
 	return SelectForm($name, $class, $arr_model);
 
 }
+
+/**
+*
+* @package ExtraForms
+*
+*/
 
 function SelectModelFormSet($post, $value)
 {

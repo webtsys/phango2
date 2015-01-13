@@ -1,5 +1,14 @@
 <?php
 
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package ExtraForms
+*
+*
+*/
+
 function SelectModelFormByOrder($name, $class, $value, $model_name, $identifier_field, $field_parent, $where='', $null_yes=1)
 {
 
@@ -44,6 +53,12 @@ function SelectModelFormByOrder($name, $class, $value, $model_name, $identifier_
 
 }
 
+/**
+*
+* @package ExtraForms
+*
+*/
+
 function recursive_list_select($arr_elements, $element_id, $arr_result, $separator)
 {
 
@@ -72,6 +87,12 @@ function recursive_list_select($arr_elements, $element_id, $arr_result, $separat
 	return $arr_result;
 
 }
+
+/**
+*
+* @package ExtraForms
+*
+*/
 
 function SelectModelFormByOrderSet($post, $value)
 {

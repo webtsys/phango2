@@ -1,8 +1,17 @@
 <?php
 
-function form_time( $time, $format_time, $ampm )
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package ExtraUtils
+*
+*
+*/
+
+function form_time( $time )
 {
-    return date( $ampm, $format_time + $time );
+    return date( PhangoVar::$ampm, $time );
 } 
 
 ?>

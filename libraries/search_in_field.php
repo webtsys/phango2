@@ -1,5 +1,14 @@
 <?php
 
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package ExtraAdmin
+*
+*
+*/
+
 function search_in_field($model_name, $fields, $phrase_search)
 {
 

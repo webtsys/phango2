@@ -1,10 +1,13 @@
 <?php
-
-/*****************************************
-
-Now, we define components for use in models. Components are fields on a table.
-
-******************************************/
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package CoreFields
+*
+* Now, we define components for use in models. Components are fields on a table.
+*
+*/
 
 /**
 * PhangoField class is the base for make class used on Webmodel::components property.
@@ -961,13 +964,6 @@ class SerializeField extends PhangoField {
 	
 }
 
-/**
-* @package PhangoFields
-*
-* ArrayField Array field is a field for save an array with values based in a TypeField.
-*
-*/
-
 class ArrayField extends SerializeField {
 
 	/**
@@ -1121,7 +1117,7 @@ class DateField extends PhangoField {
 
 		load_libraries(array('form_date'));
 		
-		return form_date( $value, PhangoVar::$format_date , PhangoVar::$format_time);
+		return form_date( $value );
 	
 	}
 

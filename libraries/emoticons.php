@@ -1,5 +1,19 @@
 <?php
 
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package ExtraUtils
+*
+*
+*/
+
+/**
+* A simple function used for obtain icons for html forms.
+*
+*/
+
 function set_emoticons()
 {
 

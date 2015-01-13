@@ -1,5 +1,14 @@
 <?php
 
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package ExtraUtils
+*
+*
+*/
+
 function pages( $begin_page, $total_elements, $num_elements, $link ,$initial_num_pages=20, $variable='begin_page', $label='', $func_jscript='')
 {
 

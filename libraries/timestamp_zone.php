@@ -1,5 +1,14 @@
 <?php
 
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package ExtraUtils
+*
+*
+*/
+
 function obtain_timestamp_zone($timezone, $default_timezone=MY_TIMEZONE)
 {
 

@@ -1,5 +1,14 @@
 <?php
 
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package ExtraUtils
+*
+*
+*/
+
 function redirect_webtsys($direction,$l_text,$text,$ifno, $arr_block='')
 {
 

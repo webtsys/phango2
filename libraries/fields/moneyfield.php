@@ -1,4 +1,12 @@
 <?php
+
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package ExtraFields
+*
+*/
  
 //Special field PercentField for discount, taxes_for_group, transport_for_group
 

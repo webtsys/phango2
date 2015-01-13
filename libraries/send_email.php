@@ -1,5 +1,14 @@
 <?php
 
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package ExtraUtils
+*
+*
+*/
+
 //Now, we use swiftmailer.
 
 function send_mail($email, $subject, $message, $content_type='plain', $bcc='', $attachments=array())

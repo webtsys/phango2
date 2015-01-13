@@ -242,7 +242,6 @@ class PhangoVar {
 	static public $timezone='';
 	
 	/**
-	* @deprecated
 	*
 	* Variable that define if time format will be with amp/pm format or 24h format. With time_format and date format edited directly, don't need this method anymore. 
 	*/

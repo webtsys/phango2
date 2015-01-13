@@ -1,5 +1,14 @@
 <?php
 
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package ExtraForms
+*
+*
+*/
+
 function TextAreaBBForm($name="", $class='', $value='', $profile='all')
 {
 
@@ -52,6 +61,12 @@ function TextAreaBBForm($name="", $class='', $value='', $profile='all')
 
 
 }
+
+/**
+*
+* @package ExtraForms
+*
+*/
 
 function TextAreaBBFormSet($post, $value)
 {

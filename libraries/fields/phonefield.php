@@ -1,5 +1,13 @@
 <?php
 
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package ExtraFields
+*
+*/
+
 class PhoneField extends CharField{
 
 

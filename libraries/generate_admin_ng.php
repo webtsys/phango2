@@ -1,5 +1,14 @@
 <?php
 
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package ExtraAdmin
+*
+* Simple functions and classes for use on admin system
+*/
+
 load_libraries(array('table_config', 'pages'));
 
 function BasicOptionsListModel($url_options, $model_name, $id)

@@ -1,5 +1,13 @@
 <?php
 
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package ExtraFields
+*
+*/
+
 class DateTimeField extends DateField
 {
 
@@ -70,6 +78,12 @@ class DateTimeField extends DateField
 	
 }
 
+/**
+*
+* @package ExtraForms
+*
+*/
+
 
 function DateTimeForm($field, $class='', $value='', $set_time=1)
 {
@@ -79,6 +93,12 @@ function DateTimeForm($field, $class='', $value='', $set_time=1)
 	return DateForm($field, $class, $timestamp, $set_time);
 
 }
+
+/**
+*
+* @package ExtraForms
+*
+*/
 
 function DateTimeFormSet($post, $value)
 {

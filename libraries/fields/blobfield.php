@@ -1,6 +1,18 @@
 <?php
 
-//Warning, blobfield is dangerous because don't check the binary value. If you use this you must make sure that you obtain data from safe sources.
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package ExtraFields
+*
+*/
+
+/**
+* A field for save blob type data
+*
+* @warning Warning, blobfield is dangerous because don't check the binary value. If you use this you must make sure that you obtain data from safe sources.
+*/
 
 class BlobField extends PhangoField {
 

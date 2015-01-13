@@ -1,5 +1,14 @@
 <?php
 
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package ExtraForms
+*
+*
+*/
+
 function SelectWindowForm($name="", $class='', $value='', $module='', $model_name='', $field='', $category_field='', $category_model='', $category_model_field='')
 {
 	
@@ -34,6 +43,12 @@ function SelectWindowForm($name="", $class='', $value='', $module='', $model_nam
 
 
 }
+
+/**
+*
+* @package ExtraForms
+*
+*/
 
 function SelectWindowFormSet($post, $value)
 {
