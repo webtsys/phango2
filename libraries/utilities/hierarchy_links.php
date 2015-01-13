@@ -9,6 +9,10 @@
 *
 */
 
+/**
+* Function for create a menu based on father and children elements
+*/
+
 function hierarchy_links($model_name, $parentfield_name, $field_name, $idmodel)
 {
 
@@ -41,6 +45,10 @@ function hierarchy_links($model_name, $parentfield_name, $field_name, $idmodel)
 	//echo load_view(array($arr_hierarchy), 'common/utilities/hierarchy_links');
 
 }
+
+/**
+* Internal function used for hierarchy_links for order elements recursively
+*/
 
 function recursive_obtain_father($arr_id_father, $id, $arr_id_name, $arr_hierarchy)
 {

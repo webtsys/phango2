@@ -8,6 +8,11 @@ include('classes/webmodel.php');
 include('config.php');
 include('database/'.TYPE_DB.'.php');
 
+//Load extra libraries
+
+load_libraries(array('fields/corefields'));
+load_libraries(array('forms/coreforms'));
+
 load_urls();
 
 date_default_timezone_set (MY_TIMEZONE);

@@ -9,6 +9,11 @@
 *
 */
 
+/**
+* Old function used for create parent listings based on a model. You now can use recursive_list_ng for the same thing
+* @deprecated 
+*/
+
 function recursive_list($model_name, $idfather, $url_cat, $arr_fields, $arr_perm=array(), $sql_father='')
 {
 
@@ -89,6 +94,10 @@ function recursive_list($model_name, $idfather, $url_cat, $arr_fields, $arr_perm
 
 }
 
+/**
+* Function for make a recursive array for use in listings.
+*/
+
 function recursive_select($arr_father, $arr_cat, $arr_list_father, $idfather, $separator='')
 {
 
@@ -109,6 +118,10 @@ function recursive_select($arr_father, $arr_cat, $arr_list_father, $idfather, $s
 	return $arr_father;
 
 }
+
+/**
+* Function for obtain an array with father and children from sql statement
+*/
 
 function obtain_parent_list($model_name, $title_field, $parent_field, $sql_father='')
 {
@@ -134,6 +147,10 @@ function obtain_parent_list($model_name, $title_field, $parent_field, $sql_fathe
 	return array($arr_list_father, $arr_cat);
 
 }
+
+/**
+* Function for create a list with fathers and childrens ordered
+*/
 
 function recursive_list_ng($model_name, $idfather, $name_field, $parent_field, $url_base, $id_ul='menu', $class_ul='menu', $name_ul='')
 {

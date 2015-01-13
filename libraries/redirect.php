@@ -9,6 +9,10 @@
 *
 */
 
+/**
+* Function for create a home view that make automatic redirect
+*/
+
 function redirect_webtsys($direction,$l_text,$text,$ifno, $arr_block='')
 {
 
@@ -29,6 +33,10 @@ function redirect_webtsys($direction,$l_text,$text,$ifno, $arr_block='')
 	die();
 
 }
+
+/**
+* Function for create a view that make automatic redirect without home view
+*/
 
 function simple_redirect($url_return, $l_text, $text, $ifno, $content_view='content')
 {

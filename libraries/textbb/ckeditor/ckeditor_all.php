@@ -1,5 +1,19 @@
 <?php
 
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package ExtraForms\TextAreaBB\CkEditor
+*
+*
+*/
+
+/**
+* Function used for load necessary javascript for use ckeditor with all options on
+*
+*/
+
 function load_jscript_editor_ckeditor_all($name_editor, $value, $profiles='all')
 {
 	

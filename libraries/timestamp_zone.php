@@ -9,6 +9,10 @@
 *
 */
 
+/**
+* Function for obtain the actual timezone
+*/
+
 function obtain_timestamp_zone($timezone, $default_timezone=MY_TIMEZONE)
 {
 
@@ -25,6 +29,10 @@ function obtain_timestamp_zone($timezone, $default_timezone=MY_TIMEZONE)
 	return $dateTimeZone->getOffset($dateTimeNow);
 
 }
+
+/**
+* Function for obtain timezones list
+*/
 
 function timezones_list($timezone_chosen)
 {
@@ -54,6 +62,10 @@ function timezones_list($timezone_chosen)
 
 	
 }
+
+/**
+* Function for obtain an array with timezones. You can use this array for create values for SelectForm
+*/
 
 function timezones_array()
 {

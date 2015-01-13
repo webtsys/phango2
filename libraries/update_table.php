@@ -9,6 +9,12 @@
 *
 */
 
+/**
+* This Function is used for padmin.php for create new tables and fields based in Webmodel class.
+*
+* @param Webmodel $model The model used for create or update a sql table.
+*/
+
 function update_table($model)
 {
 	
@@ -358,7 +364,7 @@ function update_table($model)
 	}*/
 
 }
-
+/*
 function add_module($arr_modules)
 {
 
@@ -437,7 +443,8 @@ function add_module($arr_modules)
 	return $return;
 
 }
-
+*/
+/*
 function update_models_from_module($arr_modules)
 {
 	global $arr_padmin_mod, $model, $base_path,$arr_module_insert, $arr_module_sql, $lang;
@@ -492,20 +499,25 @@ function update_models_from_module($arr_modules)
 	echo '</p>';
 
 }
+*/
+
+/**
+* Internal function used by update_table for obtain the index id on foreingkeyfields.
+*/
 
 function load_id_model_related($foreignkeyfield)
 {
 
-	global $model, $cache_model;
+	//global $model;
 
 	$table_related=$foreignkeyfield->related_model;
 	
 	$id_table_related='';
 					
-	if(!isset($model[ $table_related ]->idmodel))
+	if(!isset(PhangoVar::$model[ $table_related ]->idmodel))
 	{
 		
-		//$id_table_related='Id'.ucfirst($model[$key]->components[$new_field]->related_model);
+		//$id_table_related='Id'.ucfirst(PhangoVar::$model[$key]->components[$new_field]->related_model);
 		//Need load the model
 		
 		if(isset($foreignkeyfield->params_loading_mod['module']) && isset($foreignkeyfield->params_loading_mod['model']))
@@ -515,9 +527,9 @@ function load_id_model_related($foreignkeyfield)
 			
 			//obtain id
 			
-			$id_table_related=$model[ $foreignkeyfield->params_loading_mod['model'] ]->idmodel;
+			$id_table_related=PhangoVar::$model[ $foreignkeyfield->params_loading_mod['model'] ]->idmodel;
 			
-			/*unset($model[ $foreignkeyfield->params_loading_mod['model'] ]);
+			/*unset(PhangoVar::$model[ $foreignkeyfield->params_loading_mod['model'] ]);
 			
 			unset($cache_model);*/
 			
@@ -527,7 +539,7 @@ function load_id_model_related($foreignkeyfield)
 	else
 	{
 	
-		$id_table_related=$model[ $table_related ]->idmodel;
+		$id_table_related=PhangoVar::$model[ $table_related ]->idmodel;
 	
 	}
 	
