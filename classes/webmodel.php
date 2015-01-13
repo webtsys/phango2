@@ -2429,12 +2429,13 @@ class PhangoField {
 		return $this->check($value);
 	
 	}
-
+	
+	
 }
 
 /**
 * 
-* CharField is a PhangoField that defined a varchar element in the model-table.
+* CharField is a PhangoField that define a varchar element in the model-table.
 * 
 */
 
@@ -2474,7 +2475,7 @@ class CharField extends PhangoField {
 	* This function is used for show the value on a human format
 	*/
 
-	function show_formatted($value)
+	public function show_formatted($value)
 	{
 
 		return $value;
@@ -2633,8 +2634,12 @@ class IntegerField extends PhangoField {
 		return 'INT('.$this->size.') NOT NULL';
 
 	}
+	
+	/**
+	* This function is used for show the value on a human format
+	*/
 
-	function show_formatted($value)
+	public function show_formatted($value)
 	{
 
 		return $value;
@@ -2699,8 +2704,12 @@ class BooleanField extends PhangoField {
 		return 'INT('.$this->size.') NOT NULL';
 
 	}
+	
+	/**
+	* This function is used for show the value on a human format
+	*/
 
-	function show_formatted($value)
+	public function show_formatted($value)
 	{
 
 		switch($value)
@@ -2771,8 +2780,12 @@ class DoubleField extends PhangoField {
 		return 'DOUBLE NOT NULL';
 
 	}
+	
+	/**
+	* This function is used for show the value on a human format
+	*/
 
-	function show_formatted($value)
+	public function show_formatted($value)
 	{
 
 		return $value;
@@ -2894,8 +2907,12 @@ class ChoiceField extends PhangoField {
 		 }	
 
 	}
+	
+	/**
+	* This function is used for show the value on a human format
+	*/
 
-	function show_formatted($value)
+	public function show_formatted($value)
 	{
 		
 		return $this->arr_formatted[$value];
@@ -2974,8 +2991,12 @@ class TextField extends PhangoField {
 		
 
 	}
+	
+	/**
+	* This function is used for show the value on a human format
+	*/
 
-	function show_formatted($value)
+	public function show_formatted($value)
 	{
 
 		return $value;
@@ -3075,8 +3096,12 @@ class TextHTMLField extends PhangoField {
 		
 
 	}
+	
+	/**
+	* This function is used for show the value on a human format
+	*/
 
-	function show_formatted($value)
+	public function show_formatted($value)
 	{
 
 		return $value;
@@ -3185,8 +3210,12 @@ class SerializeField extends PhangoField {
 		
 
 	}
+	
+	/**
+	* This function is used for show the value on a human format
+	*/
 
-	function show_formatted($value)
+	public function show_formatted($value)
 	{
 
 		$real_value=unserialize($value);
@@ -3220,7 +3249,11 @@ class SerializeField extends PhangoField {
 
 class ArrayField extends SerializeField {
 
-	function show_formatted($value, $key_value='')
+	/**
+	* This function is used for show the value on a human format
+	*/
+
+	public function show_formatted($value, $key_value='')
 	{
 	
 		$real_value=unserialize($value);
@@ -3350,8 +3383,12 @@ class DateField extends PhangoField {
 		
 
 	}
+	
+	/**
+	* This function is used for show the value on a human format
+	*/
 
-	function show_formatted($value)
+	public function show_formatted($value)
 	{
 
 		return $this->format_date($value);
@@ -3481,8 +3518,12 @@ class FileField extends PhangoField {
 		return 'VARCHAR(255) NOT NULL';
 
 	}
+	
+	/**
+	* This function is used for show the value on a human format
+	*/
 
-	function show_formatted($value)
+	public function show_formatted($value)
 	{
 
 		return $value;
@@ -3954,6 +3995,10 @@ class ImageField extends PhangoField {
 	
 	}
 	
+	/**
+	* Method for return a formatted value readable for humans.
+	*/
+	
 	public function show_formatted($value)
 	{
 	
@@ -4024,8 +4069,12 @@ class KeyField extends PhangoField {
 		return 'INT('.$this->size.') NOT NULL';
 
 	}
+	
+	/**
+	* This function is used for show the value on a human format
+	*/
 
-	function show_formatted($value)
+	public function show_formatted($value)
 	{
 
 		return $value;
@@ -4157,7 +4206,11 @@ class ForeignKeyField extends IntegerField{
 
 	}
 
-	function show_formatted($value)
+	/**
+	* This function is used for show the value on a human format
+	*/
+	
+	public function show_formatted($value)
 	{
 		
 		return PhangoVar::$model[$this->related_model]->components[$this->name_field_to_field]->show_formatted($value);
@@ -4241,8 +4294,12 @@ class ParentField extends IntegerField{
 		
 
 	}
+	
+	/**
+	* This function is used for show the value on a human format
+	*/
 
-	function show_formatted($value)
+	public function show_formatted($value)
 	{
 
 		return $value;
@@ -4391,7 +4448,11 @@ class EmailField extends PhangoField {
 
 	}
 
-	function show_formatted($value)
+	/**
+	* This function is used for show the value on a human format
+	*/
+	
+	public function show_formatted($value)
 	{
 
 		return $value;
@@ -5235,6 +5296,13 @@ function make_fancy_url($url, $folder_url, $ident_url, $arr_params=array(), $arr
 		
 }
 
+/**
+* Function used for add get parameters to a well-formed url based on make_fancy_url
+*
+* @param string $url_fancy well-formed url
+* @param string $arr_data Hash with format key => value. The result is $_GET['key']=value
+*/
+
 function add_extra_fancy_url($url_fancy, $arr_data)
 {
 
@@ -5931,7 +5999,12 @@ function load_lang()
 
 }
 
-//Set raw variables from a array
+/**
+* Set raw variables from a array
+*
+* @param $arr_variables array Hash with contents, for example a $_POST array with values
+* @param $fields Array with the fields to check
+*/
 
 function check_variables($arr_variables, $fields=array())
 {
