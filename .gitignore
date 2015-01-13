@@ -3,3 +3,13 @@ application/media/upload_images/*
 config.php
 modules/*/config/*
 vendor/*
+modules/*
+!modules/admin
+!modules/lang
+!modules/media
+!modules/users
+!modules/welcome
+views/*
+!views/default
+
+
