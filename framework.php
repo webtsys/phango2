@@ -50,6 +50,13 @@ if(!include("config.php"))
 
 }
 
+if(PhangoVar::$THEME_MODULE==1) 
+{
+
+	PhangoVar::$arr_func_media=array('get_url_image' => 'get_url_image_dynamic', 'load_css_view' => 'load_css_view_dynamic', 'load_jscript_view' => 'load_jscript_view_dynamic', 'get_base_url_media' => 'get_base_url_media_dynamic');
+
+}
+
 //start session
 
 //Check session_id, if exists $_COOKIE[COOKIE_NAME], change id to COOKIE_NAME id...

@@ -1788,69 +1788,6 @@ class Webmodel {
 
 }
 
-/**
-*
-* Fill a ModelForm array with default values.
-*
-* With this method you can set an array consisting of ModelForm items with the values from $post.
-*
-* @param array $post is an array with the values to be inserted on $arr_form. The keys must have the same name that keys from $arr_form
-* @param array $arr_form is an array of ModelForms. The key of each item is the name of the ModelForm item.
-* @param array $show_error An option for choose if in the form is showed 
-*/
-
-function set_values_form($post, $arr_form, $show_error=1)
-{
-	
-	//Foreach to $post values
-	
-	if(gettype($post)=='array')
-	{
-		foreach($post as $name_field => $value)
-		{
-			
-			//If exists a ModelForm into $arr_form with the same name to $name_field check if have a $component field how "type" and set error if exists
-
-			if(isset($arr_form[$name_field]))
-			{	
-				
-				if($arr_form[$name_field]->type->std_error!='' && $show_error==1)
-				{
-					
-					/*if($arr_form[$name_field]->std_error!='')
-					{
-						
-						$arr_form[$name_field]->std_error=$arr_form[$name_field]->txt_error;
-						
-
-					}
-					else*/
-					if($arr_form[$name_field]->std_error=='')
-					{
-						
-						$arr_form[$name_field]->std_error=$arr_form[$name_field]->type->std_error;
-
-					}
-
-				}
-
-				//Set value for ModelForm to $value
-				
-				$arr_form[$name_field]->set_param_value_form($value);
-		
-			}
-			else
-			{
-
-				unset($post[$name_field]);
-
-			}
-
-		}
-
-	}
-}
-
 
 //Class ModelForm is the base class for create forms...
 
@@ -2051,7 +1988,7 @@ class ModelForm {
 	*
 	*/
 
-	function set_param_value_form($value, $form_type_set='')
+	public function set_param_value_form($value, $form_type_set='')
 	{
 		
 		$func_setvalue=$this->form.'Set';
@@ -2069,7 +2006,7 @@ class ModelForm {
 	*
 	*/
 	
-	function set_parameter_value($parameters)
+	public function set_parameter_value($parameters)
 	{
 		
 		$this->parameters[2]=$parameters;
@@ -2084,7 +2021,7 @@ class ModelForm {
 	*
 	*/
 	
-	function set_parameters_form($parameters=array())
+	public function set_parameters_form($parameters=array())
 	{
 	
 		$z=1;
@@ -2100,7 +2037,7 @@ class ModelForm {
 		
 	}
 	
-	function set_parameter($key, $value)
+	public function set_parameter($key, $value)
 	{
 		
 		$this->parameters[$key]=$value;
@@ -2117,7 +2054,7 @@ class ModelForm {
 	*
 	*/
 	
-	function set_all_parameters_form($parameters)
+	public function set_all_parameters_form($parameters)
 	{
 		
 		$this->parameters=$parameters;
@@ -2135,7 +2072,7 @@ class ModelForm {
 	*
 	*/
 
-	static function check_form($arr_form, $post)
+	static public function check_form($arr_form, $post)
 	{
 
 		$error=0;
@@ -2198,11 +2135,67 @@ class ModelForm {
 
 	}
 	
+	/**
+	*
+	* Fill a ModelForm array with default values.
+	*
+	* With this method you can set an array consisting of ModelForm items with the values from $post.
+	*
+	* @param array $post is an array with the values to be inserted on $arr_form. The keys must have the same name that keys from $arr_form
+	* @param array $arr_form is an array of ModelForms. The key of each item is the name of the ModelForm item.
+	* @param array $show_error An option for choose if in the form is showed 
+	*/
+
 	static public function set_values_form($post, $arr_form, $show_error=1)
 	{
 		
-		set_values_form($post, $arr_form, $show_error);
+		//Foreach to $post values
+		
+		if(gettype($post)=='array')
+		{
+			foreach($post as $name_field => $value)
+			{
+				
+				//If exists a ModelForm into $arr_form with the same name to $name_field check if have a $component field how "type" and set error if exists
 
+				if(isset($arr_form[$name_field]))
+				{	
+					
+					if($arr_form[$name_field]->type->std_error!='' && $show_error==1)
+					{
+						
+						/*if($arr_form[$name_field]->std_error!='')
+						{
+							
+							$arr_form[$name_field]->std_error=$arr_form[$name_field]->txt_error;
+							
+
+						}
+						else*/
+						if($arr_form[$name_field]->std_error=='')
+						{
+							
+							$arr_form[$name_field]->std_error=$arr_form[$name_field]->type->std_error;
+
+						}
+
+					}
+
+					//Set value for ModelForm to $value
+					
+					$arr_form[$name_field]->set_param_value_form($value);
+			
+				}
+				else
+				{
+
+					unset($post[$name_field]);
+
+				}
+
+			}
+
+		}
 	}
 		
 }
@@ -2219,9 +2212,9 @@ class ControllerSwitchClass {
 
 	public $op_var='action';
 	public $controller;
-	public $model, $ip, $lang, $base_path, $base_url, $cookie_path, $arr_block, $prefix_key, $block_title, $block_content, $block_urls, $block_type, $block_id, $text_url, $key_csrf;
+	//public $model, $ip, $lang, $base_path, $base_url, $cookie_path, $arr_block, $prefix_key, $block_title, $block_content, $block_urls, $block_type, $block_id, $text_url, $key_csrf;
 	
-	public function __construct()
+	/*public function __construct()
 	{
 	
 	
@@ -2236,7 +2229,7 @@ class ControllerSwitchClass {
 		$this->key_csrf=&PhangoVar::$key_csrf;
 		$this->controller=&PhangoVar::$script_controller;
 	
-	}
+	}*/
 	
 	public function get_method_url($method, $arr_parameters=array(), $arr_extra_parameters=array())
 	{
@@ -2245,7 +2238,7 @@ class ControllerSwitchClass {
 		
 		$arr_parameters[$this->op_var]=$method_controller;*/
 		
-		return make_fancy_url($this->base_url, PhangoVar::$actual_url[0], $method, $arr_parameters, $arr_extra_parameters);
+		return make_fancy_url(PhangoVar::$base_url, PhangoVar::$actual_url[0], $method, $arr_parameters, $arr_extra_parameters);
 	
 	}
 	
@@ -2275,6 +2268,248 @@ class ControllerSwitchClass {
 
 }
 
+/**
+*
+* A simple class for create where strings with checking.
+*
+* With this extension, you can create sql strings for use on where parameter of select method from Webmodel.
+*
+* Example ['AND']->array( 'field' => array('!=', 25), 'field2' => array('=', 'value_field'), 'field3' => array('LIKE', 'value_field'), 'field4' => array('IN',  array('1','2','3'), 'limit_sql' => array('LIMIT', array(1, 10), 'order_by' => array('order_fieldY', 'ASC'
+))
+* 
+* You can join differents sql sentences 
+*/
+
+class WhereSql {
+
+	public $initial_sql;
+	public $arr_conditions;
+	public $order_by;
+	public $limit;
+
+	public function __construct($model_name, $arr_conditions=array(), $order_by=array(), $limit=array())
+	{
+	
+		$this->model_name=$model_name;
+		$this->initial_sql='WHERE 1=1 ';
+		$this->arr_conditions=$arr_conditions;
+		$this->order_by=$order_by;
+		$this->limit=$limit;
+	
+	}
+	
+	public function get_where_sql()
+	{
+	
+		$arr_to_glued=array();
+		
+		/*
+		$arr_conditions['union1_AND']['AND'][]=array('moderator' => array('=', $arr_user['IdUser_admin']));
+		$arr_conditions['union1_AND']['AND'][]=array('moderator' => array('!=', 0));
+		$arr_conditions['union1_AND']['OR'][]=array('moderator' => array('!=', 0));
+		$arr_conditions['union1_AND']['AND'][]=array('moderator' => array('=', $arr_user['IdUser_admin']));
+		
+		$arr_conditions['union2_OR']['AND'][]=array('moderator' => array('=', $arr_user['IdUser_admin']));
+		$arr_conditions['union2_OR']['OR'][]=array('moderator' => array('!=', 1));
+		$arr_conditions['union2_OR']['AND'][]=array('moderator' => array('=', '25'));
+		
+		$where_class->order_by[]=array('field' => 'moderator', 'order' => 'ASC');
+		$where_class->order_by[]=array('field' => 'moderator', 'order' => 'ASC');
+		
+		$where_class->limit=array(0, 25);
+		*/
+		
+		$arr_define_sql=array();
+		
+		$arr_final_sql=array();
+		
+		$first_sep=0;
+		
+		foreach($this->arr_conditions as $group => $arr_glue)
+		{
+		
+			foreach($arr_glue as $glue => $arr_elements)
+			{
+				
+				foreach($arr_elements as $arr_fields_where)
+				{
+					
+					foreach($arr_fields_where as $field => $operation)
+					{
+					
+						
+					
+						list($field_select, $model_name, $field_name)=$this->set_safe_name_field(PhangoVar::$model[$this->model_name], $field);
+								
+						$op=$operation[0];
+						
+						$value=$operation[1];
+						
+						switch($op)
+						{
+						
+							case '=':
+							
+								$value=PhangoVar::$model[$model_name]->components[$field_name]->simple_check($value);
+							
+								$arr_to_glued[]=$field_select.' '.$op.' \''.$value.'\'';
+							
+							break;
+							
+							case '!=':
+								
+								$value=PhangoVar::$model[$model_name]->components[$field_name]->simple_check($value);
+								
+								$arr_to_glued[]=$field_select.' '.$op.' \''.$value.'\'';
+							
+							break;
+							
+							case 'LIKE':
+							
+								$value=PhangoVar::$model[$model_name]->components[$field_name]->simple_check($value);
+							
+								$arr_to_glued[]=$field_select.' '.$op.' \''.$value.'\'';
+							
+							break;
+							
+							case 'IN':
+							case 'NOT IN':
+							
+								foreach($value as $key_val => $val)
+								{
+								
+									$value[$key_val]=PhangoVar::$model[$model_name]->components[$field_name]->check($val);
+								
+								}
+								
+								$arr_to_glued[]=$field_select.' '.$op.' (\''.implode('\',\'', $value).'\')';
+							
+							break;
+						
+						}
+						
+					}
+				
+				}
+				
+				$arr_define_sql[$glue]=' '.implode(' '.$glue.' ', $arr_to_glued).' ';
+				
+				$arr_to_glued=array();
+			
+			}
+			
+			$arr_group=explode('_', $group);
+			
+			$separator_group=end($arr_group);
+			
+			if($first_sep==0)
+			{
+			
+				$separator_group='AND';
+			
+			}
+			
+			$first_sep++;
+			
+			$arr_final_sql[]=$separator_group.' ( '.implode(' '.$glue.' ', $arr_define_sql).' ) ';
+			
+			//$arr_define_sql=array();
+		
+		}
+		
+		$this->initial_sql.=implode('', $arr_final_sql);
+		
+		return $this->initial_sql;
+	
+	}
+	
+	public function get_order_sql()
+	{
+	
+		$arr_order_final=array();
+		
+		$final_order='';
+		
+		//$order_by[]=array('field' => 'moderator', 'order' => 'ASC'
+		
+		if(count($this->order_by)>0)
+		{
+			foreach($this->order_by as $arr_order)
+			{
+			
+				list($field_select, $model_name, $field_name)=$this->set_safe_name_field(PhangoVar::$model[$this->model_name], $arr_order['field']);
+			
+				$arr_order_final[]=$field_name.' '.$arr_order['order'];
+			
+			}
+		
+			$final_order=' ORDER BY '.implode(' ,', $arr_order_final);
+		
+		}
+		
+		return $final_order;
+	
+	}
+	
+	public function get_limit_sql()
+	{
+			
+		if(count($this->limit)>0)
+		{
+		
+			return ' LIMIT '.implode(' ,', $this->limit);
+		
+		}
+		
+		return '';
+	
+	}
+	
+	public function get_all_sql()
+	{
+	
+		return $this->get_where_sql().$this->get_order_sql().$this->get_limit_sql();
+	
+	}
+	
+	public function set_safe_name_field($class, $field)
+	{
+		
+		$pos_dot=strpos($field, '.');
+		
+		$model_name='';
+		$field_name='';
+		
+		if($pos_dot!==false)
+		{
+		
+			//The model need to be loading previously.
+			
+			//substr ( string $string , int $start [, int $length ] )
+			
+			$model_name=substr($field, 0, $pos_dot);
+			$field_name=substr($field, $pos_dot+1);
+			
+			$field_select='`'.$model_name.'`.`'.$field_name.'`';
+		
+		}
+		else
+		{
+			
+			$model_name=$class->name;
+			$field_name=$field;
+			
+			$field_select='`'.$class->name.'`.`'.$field.'`';
+			
+		}
+		
+		return array($field_select, $model_name, $field_name);
+
+	}
+
+}
+
+
 function simple_redirect_location($url)
 {
 
@@ -2284,2183 +2519,7 @@ function simple_redirect_location($url)
 
 }
 
-/*****************************************
 
-Now, we define components for use in models. Components are fields on a table.
-
-******************************************/
-
-/**
-* PhangoField class is the base for make class used on Webmodel::components property.
-*
-*/
-
-class PhangoField {
-
-	/**
-	* Property used for set this field how indexed in the database table.
-	*/
-
-	public $indexed=0;
-	
-	/**
-	* Property used for set this field how unique value in the database table.
-	*/
-
-	public $unique=0;
-	
-	/**
-	* The name of the model where this component or field live
-	*/
-	
-	public $name_model='';
-	
-	/**
-	* Name of the field or component.
-	*/
-	
-	public $name_component='';
-	
-	/**
-	* Method used for internal searchs for format the values.
-	*
-	* 
-	*/
-	
-	/**
-	* Required define if this field is required when insert or update a row of this model...
-	*/
-	public $required=0;
-	
-	/** 
-	* $quote_open is used if you need a more flexible sql sentence, 
-	* @warning USE THIS FUNCTION IF YOU KNOW WHAT YOU ARE DOING
-	*/
-	public $quot_open='\'';
-	
-	/** 
-	* $quote_close is used if you need a more flexible sql sentence, 
-	* @warning USE THIS PROPERTY IF YOU KNOW WHAT YOU ARE DOING
-	*/
-	
-	public $quot_close='\'';
-	
-	/**
-	* $std_error contain error in field if exists...
-	*/
-	
-	public $std_error='';
-	
-	/**
-	* Label is the name of field
-	*/
-	public $label="";
-	
-	/**
-	* Value of field...
-	*/
-	public $value="";
-	
-	/**
-	* Form define the function for use in forms...
-	*/
-	
-	public $form="";
-	
-	/**
-	* Array for create initial parameters for form..
-	*/
-	
-	public $parameters=array();
-	
-	/**
-	* Method used for internal tasks related with searchs. You can overwrite this method in your PhangoField object if you need translate the value that the user want search to a real value into the database.
-	*/
-	
-	function search_field($value)
-	{
-	
-		return form_text($value);
-	
-	}
-	
-	/**
-	* Method used for internal tasks related with foreignkeys. By default make nothing.
-	*
-	* 
-	*/
-	
-	function set_relationships()
-	{
-	
-		
-	
-	}
-
-	/** 
-	* This method is used for describe the new field in a sql language format.
-	*/
-
-	public function get_type_sql()
-	{
-
-		return 'VARCHAR('.$this->size.') NOT NULL';
-
-	}
-	
-	/** 
-	* This method is used for return a default value for a form.
-	*/
-
-	public function get_parameters_default()
-	{
-
-		return array($this->name_component, '', '');
-
-	}
-	
-	/**
-	* This method is used for simple checking, used for WhereSql.
-	*/
-	
-	public function simple_check($value)
-	{
-	
-		return $this->check($value);
-	
-	}
-	
-	
-}
-
-/**
-* 
-* CharField is a PhangoField that define a varchar element in the model-table.
-* 
-*/
-
-class CharField extends PhangoField {
-
-	//Basic variables that define the field
-
-	/**
-	* Size of field in database
-	*/
-	public $size=20;
-	
-	/**
-	* Form define the function for use in forms...
-	* @deprecated Used on older versions of generate_admin
-	*/
-	public $set_form="";
-	
-
-	/**
-	* Construct field with basic data...
-	*
-	* @param integer $size The size of the varchar. If you put 250, for example, you will can put strings with 250 characters on this.
-	* @param boolean $multilang Don't use, don't need for nothing.
-	*
-	*/
-
-	function __construct($size=20)
-	{
-
-		$this->size=$size;
-		$this->form='TextForm';
-
-	}
-	
-	/**
-	* This function is used for show the value on a human format
-	*/
-
-	public function show_formatted($value)
-	{
-
-		return $value;
-
-	}
-	
-	/**
-	* This function is for check if the value for field is valid
-	*/
-
-	public function check($value)
-	{
-
-		//Delete Javascript tags and simple quotes.
-		$this->value=form_text($value);
-		return form_text($value);
-
-	}
-
-
-}
-//Selections always integers
-//PrimaryField is used for primary keys for models
-
-class PrimaryField extends PhangoField {
-	
-	/**
-	* Initial value for the field.
-	*/
-	
-	public $value=0;
-	
-	/**
-	* Initial label for the field. The label is used for create forms from a PhangoField.
-	*/
-	
-	public $label="";
-	
-	/**
-	* Boolean value that is used for check if the field is required for fill a row in the db model.
-	*/
-	
-	public $required=0;
-	
-	/**
-	* By default, the form used for this field is HiddenForm.
-	*/
-	
-	public $form="HiddenForm";
-	
-	/**
-	* @deprecated Value used on older versions for created admins on phango.
-	*
-	*/
-	
-	public $set_form="list_value";
-
-	/**
-	* Check function that convert the value on a PrimaryField value.
-	*
-	* @param string $value The value to convert on a PrimaryField value.
-	*/
-	
-	public function check($value)
-	{
-
-		$this->value=form_text($value);
-		settype($value, "integer");
-		return $value;
-
-	}
-	
-	/**
-	* Method for return the sql type for this PhangoField
-	*/
-	
-	public function get_type_sql()
-	{
-
-		return 'INT PRIMARY KEY AUTO_INCREMENT';
-
-	}
-	
-	/**
-	* Method for return a formatted value readable for humans.
-	*/
-
-	public function show_formatted($value)
-	{
-
-		return $value;
-
-	}
-
-}
-
-///Integerfield is a field for integers values.
-
-class IntegerField extends PhangoField {
-
-	public $size=11;
-	public $value=0;
-	public $label="";
-	public $required=0;
-	public $only_positive=false;
-	public $min_num=0;
-	public $max_num=0;
-
-	function __construct($size=11, $only_positive=false, $min_num=0, $max_num=0)
-	{
-
-		$this->size=$size;
-		$this->form='TextForm';
-		$this->set_form='list_value';
-		$this->only_positive=$only_positive;
-		$this->min_num=$min_num;
-		$this->max_num=$max_num;
-
-	}
-
-	function check($value)
-	{
-
-		$this->value=form_text($value);
-		
-		settype($value, "integer");
-		
-		if($this->only_positive==true && $value<0)
-		{
-		
-			$value=0;
-		
-		}
-		
-		if($this->min_num<>0 && $value<$this->min_num)
-		{
-		
-			$value=$this->min_num;
-		
-		}
-		
-		if($this->max_num<>0 && $value>$this->max_num)
-		{
-		
-			$value=$this->max_num;
-		
-		}
-		
-		return $value;
-
-	}
-
-	function get_type_sql()
-	{
-
-		return 'INT('.$this->size.') NOT NULL';
-
-	}
-	
-	/**
-	* This function is used for show the value on a human format
-	*/
-
-	public function show_formatted($value)
-	{
-
-		return $value;
-
-	}
-
-	function get_parameters_default()
-	{
-
-		return array($this->name_component, '', 0);
-
-	}
-
-}
-
-///Booleanfield is a field for boolean values.
-
-class BooleanField extends PhangoField {
-
-	public $size=1;
-	public $value=0;
-	public $label="";
-	public $required=0;
-	public $form="";
-	public $set_form='';
-	public $quot_open='\'';
-	public $quot_close='\'';
-	public $std_error='';
-	public $default_value=0;
-
-	function __construct()
-	{
-
-		$this->size=1;
-		$this->form='SelectForm';
-		$this->set_form='list_value';
-
-	}
-
-	function check($value)
-	{
-
-		//$this->value=form_text($value);
-		settype($value, "integer");
-
-		if($value!=0 && $value!=1)
-		{
-
-			$value=0;
-
-		}
-
-		return $value;
-
-	}
-
-	function get_type_sql()
-	{
-
-		//Int for simple compatibility with sql dbs.
-	
-		return 'INT('.$this->size.') NOT NULL';
-
-	}
-	
-	/**
-	* This function is used for show the value on a human format
-	*/
-
-	public function show_formatted($value)
-	{
-
-		switch($value)
-		{
-			default:
-
-				return PhangoVar::$lang['common']['no'];
-
-			break;
-
-			case 1:
-
-				return PhangoVar::$lang['common']['yes'];
-
-			break;
-
-	
-		}
-
-	}
-
-	function get_parameters_default()
-	{
-	
-		$arr_values=array($this->default_value, PhangoVar::$lang['common']['no'], 0, PhangoVar::$lang['common']['yes'], 1);;
-
-		return array($this->name_component, '', $arr_values);
-
-	}
-
-}
-
-///Doublefield is a field for doubles values.
-
-class DoubleField extends PhangoField {
-
-	public $size=11;
-	public $value=0;
-	public $label="";
-	public $required=0;
-	public $form="";
-	public $set_form='';
-	public $quot_open='\'';
-	public $quot_close='\'';
-	public $std_error='';
-
-	function __construct($size=11)
-	{
-
-		$this->size=$size;
-		$this->form='TextForm';
-		$this->set_form='list_value';
-
-	}
-
-	function check($value)
-	{
-
-		$this->value=form_text($value);
-		settype($value, "double");
-		return $value;
-
-	}
-
-	function get_type_sql()
-	{
-
-		return 'DOUBLE NOT NULL';
-
-	}
-	
-	/**
-	* This function is used for show the value on a human format
-	*/
-
-	public function show_formatted($value)
-	{
-
-		return $value;
-
-	}
-
-	function get_parameters_default()
-	{
-
-		return array($this->name_component, '', 0);
-
-	}
-
-
-}
-
-class ChoiceField extends PhangoField {
-
-	public $size=11;
-	public $value=0;
-	public $label="";
-	public $required=0;
-	public $form="";
-	public $set_form='';
-	public $quot_open='\'';
-	public $quot_close='\'';
-	public $std_error='';
-	public $type='integer';
-	public $arr_values=array();
-	public $arr_formatted=array();
-	public $default_value='';
-
-	
-
-	function __construct($size=11, $type='integer', $arr_values=array(), $default_value='')
-	{
-
-		$this->size=$size;
-		$this->form='SelectForm';
-		$this->type=$type;
-		$this->arr_values=$arr_values;
-		$this->default_value=$default_value;
-		$this->arr_formatted['']='';
-		
-		foreach($arr_values as $value)
-		{
-			
-			$this->arr_formatted[$value]=$value;
-		
-		}
-	
-	}
-	
-	function restart_formatted()
-	{
-	
-		foreach($this->arr_values as $value)
-		{
-			
-			$this->arr_formatted[$value]=$value;
-		
-		}
-	
-	}
-
-	function check($value)
-	{
-		
-		switch($this->type)
-		{
-		
-			case 'integer':
-
-				settype($value, "integer");
-
-			break;
-
-			case 'string':
-
-				$value=form_text($value);
-
-			break;
-
-		}
-		
-		if(in_array($value, $this->arr_values))
-		{	
-			
-			return $value;
-
-		}
-		else
-		{
-
-			return $this->default_value;
-
-		}
-
-	}
-
-	function get_type_sql()
-	{
-
-		switch($this->type)
-		{
-		
-			case 'integer':
-
-			return 'INT('.$this->size.') NOT NULL';
-			
-			break;
-
-			case 'string':
-
-			return 'VARCHAR('.$this->size.') NOT NULL';
-
-			break;
-
-		 }	
-
-	}
-	
-	/**
-	* This function is used for show the value on a human format
-	*/
-
-	public function show_formatted($value)
-	{
-		
-		return $this->arr_formatted[$value];
-
-	}
-
-	function get_parameters_default()
-	{	
-
-		if(count($this->arr_values)>0)
-		{
-			$arr_return=array($this->default_value);
-
-			foreach($this->arr_values as $value)
-			{
-
-				$arr_return[]=$this->arr_formatted[$value];
-				$arr_return[]=$value;
-
-			}
-
-			$arr_values=$arr_return;
-
-		}
-		else
-		{
-
-			$arr_values=array(0, 'Option 1', 0, 'Option 2', 1);
-
-		}
-		
-		return array($this->name_component, '', $arr_values);
-
-	}
-
-}
-
-//Textfield is a field for long text values.
-
-class TextField extends PhangoField {
-
-	public $value="";
-	public $label="";
-	public $required=0;
-	public $form="TextAreaForm";
-	public $set_form='list_value';
-	public $quot_open='\'';
-	public $quot_close='\'';
-	public $std_error='';
-	public $multilang=0;
-	public $br=1;
-
-	function __construct($multilang=0)
-	{
-
-		$this->form='TextAreaForm';
-		$this->multilang=$multilang;
-
-	}
-
-	function check($value)
-	{
-		
-		//Delete Javascript tags and simple quotes.
-		$this->value=$value;
-		return form_text($value, $this->br);
-
-	}
-
-	//Function check_form
-
-	function get_type_sql()
-	{
-
-		return 'TEXT NOT NULL';
-		
-
-	}
-	
-	/**
-	* This function is used for show the value on a human format
-	*/
-
-	public function show_formatted($value)
-	{
-
-		return $value;
-
-	}
-
-	function get_parameters_default()
-	{
-
-		return array($this->name_component, '', '');
-
-	}
-	
-}
-
-//TextHTMLfield is a field for long text values based in html.
-
-class TextHTMLField extends PhangoField {
-
-	public $value="";
-	public $label="";
-	public $required=0;
-	public $form="TextAreaForm";
-	public $set_form='list_value';
-	public $quot_open='\'';
-	public $quot_close='\'';
-	public $std_error='';
-	public $multilang=0;
-
-	//This variable is used for write rules what accept html tags
-
-	public $allowedtags=array();
-
-	function __construct($multilang=0)
-	{
-
-		$this->form='TextAreaForm';
-		$this->multilang=$multilang;
-
-	}
-
-	function check($value)
-	{
-		
-		//Delete Javascript tags and simple quotes.
-		
-		$txt_without_tags=str_replace('&nbsp;', '', strip_tags($value, '<img>') );
-		
-		$txt_without_tags=trim(str_replace(' ', '', $txt_without_tags));
-		
-		if($txt_without_tags=='')
-		{
-		
-			return '';
-		
-		}
-
-		if(PhangoVar::$textbb_type=='')
-		{
-			
-			$this->value=unform_text($value);
-
-		}
-		else
-		{
-			
-			$this->value=$value;
-
-		}
-		
-		return form_text_html($value, $this->allowedtags);
-
-	}
-
-	//Methot for show the allowed html tags to the user
-
-	function show_allowedtags()
-	{
-
-		$arr_example_tags=array();
-
-		foreach($this->allowedtags as $tag => $arr_tag)
-		{
-
-			$arr_example_tags[]=htmlentities($arr_tag['example']);
-
-		}
-		
-		return implode(', ', $arr_example_tags);
-
-	}
-
-	function get_type_sql()
-	{
-
-		return 'TEXT NOT NULL';
-		
-
-	}
-	
-	/**
-	* This function is used for show the value on a human format
-	*/
-
-	public function show_formatted($value)
-	{
-
-		return $value;
-
-	}
-
-	function get_parameters_default()
-	{
-
-		return array($this->name_component, '', '');
-
-	}
-
-	function set_safe_html_tags()
-	{
-
-		$this->allowedtags['a']=array('pattern' => '/&lt;a.*?href=&quot;(http:\/\/.*?)&quot;.*?&gt;(.*?)&lt;\/a&gt;/', 'replace' => '<a_tmp href="$1">$2</a_tmp>', 'example' => '<a href=""></a>');
-		$this->allowedtags['p']=array('pattern' => '/&lt;p.*?&gt;(.*?)&lt;\/p&gt;/s', 'replace' => '<p_tmp>$1</p_tmp>','example' => '<p></p>');
-		$this->allowedtags['br']=array('pattern' => '/&lt;br.*?\/&gt;/', 'replace' => '<br_tmp />', 'example' => '<br />');
-		$this->allowedtags['strong']=array('pattern' => '/&lt;strong.*?&gt;(.*?)&lt;\/strong&gt;/s', 'replace' => '<strong_tmp>$1</strong_tmp>', 'example' => '<strong></strong>');
-		$this->allowedtags['em']=array('pattern' => '/&lt;em.*?&gt;(.*?)&lt;\/em&gt;/s', 'replace' => '<em_tmp>$1</em_tmp>', 'example' => '<em></em>');
-		$this->allowedtags['i']=array('pattern' => '/&lt;i.*?&gt;(.*?)&lt;\/i&gt;/s', 'replace' => '<i_tmp>$1</i_tmp>', 'example' => '<i></i>');
-		$this->allowedtags['u']=array('pattern' => '/&lt;u.*?&gt;(.*?)&lt;\/u&gt;/s', 'replace' => '<u_tmp>$1</u_tmp>', 'example' => '<u></u>');
-		$this->allowedtags['blockquote']=array('pattern' => '/&lt;blockquote.*?&gt;(.*?)&lt;\/blockquote&gt;/s', 'replace' => '<blockquote_tmp>$1</blockquote_tmp>', 'example' => '<blockquote></blockquote>', 'recursive' => 1);
-		$this->allowedtags['img']=array('pattern' => '/&lt;img.*?alt=&quot;([aA-zZ]+)&quot;.*?src=&quot;('.str_replace('/', '\/', PhangoVar::$base_url).'\/media\/smileys\/[^\r\n\t<"].*?)&quot;.*?\/&gt;/', 'replace' => '<img_tmp alt="$1" src="$2"/>', 'example' => '<img alt="emoticon" src="" />');	
-
-	}
-	
-}
-
-//Serializefield is a field if you need save serialize values
-
-class SerializeField extends PhangoField {
-
-	public $value="";
-	public $label="";
-	public $required=0;
-	public $form="TextForm";
-	public $set_form='list_serialize';
-	public $quot_open='\'';
-	public $quot_close='\'';
-	public $std_error='';
-	public $related_type='';
-	
-	//type_data can be any field type that is loaded IntegerField, etc..
-	
-	function __construct($related_type)
-	{
-	
-		$this->related_type=&$related_type;
-		
-	}
-	
-	public $type_data='';
-
-	//This method is used for check all members from serialize
-
-	function recursive_form($value)
-	{
-
-		if(gettype($value)=="array")
-		{
-
-			foreach($value as $key => $value_key)
-			{
-
-				if(gettype($value_key)=="array")
-				{
-
-					$value[$key]=$this->recursive_form($value_key);
-
-				}
-				else
-				{
-
-					//Create new type.
-					//$type_field=new $this->related_type();
-				
-					$value[$key]=$this->related_type->check($value_key);
-
-				}
-
-			}
-
-		}
-
-		return $value;
-
-	}
-
-	function check($value)
-	{
-		
-		$value=$this->recursive_form($value);
-
-		$this->value=$value;
-		
-		return webtsys_escape_string(serialize($value));
-
-	}
-
-	function get_type_sql()
-	{
-
-		return 'TEXT NOT NULL';
-		
-
-	}
-	
-	/**
-	* This function is used for show the value on a human format
-	*/
-
-	public function show_formatted($value)
-	{
-
-		$real_value=unserialize($value);
-		
-		return implode(', ', $return_value);
-
-	}
-	
-	static function unserialize($value)
-	{
-
-		$real_value=@unserialize($value);
-		
-		if($real_value!==false)
-		{
-			return $real_value;
-		}
-		else
-		{
-		
-			//$this->std_error='';
-			return false;
-		
-		}
-
-	}
-	
-}
-
-//Array field is a field for save an array with values based in a TypeField.
-
-class ArrayField extends SerializeField {
-
-	/**
-	* This function is used for show the value on a human format
-	*/
-
-	public function show_formatted($value, $key_value='')
-	{
-	
-		$real_value=unserialize($value);
-	
-		if($key_value==='')
-		{
-			
-			return implode(', ', $return_value);
-			
-		}
-		else
-		if(isset($real_value[$key_value]))
-		{
-		
-			return $real_value[$key_value];
-		
-		}
-
-	}
-
-}
-
-//Datefield is a field for save dates in timestamp, this value is a timestamp and you need use form_date or form_time for format DateField
-
-class DateField extends PhangoField {
-
-	public $size=11;	
-	public $value="";	
-	public $required=0;
-	public $form="";
-	public $label="";
-	public $set_form='';
-	public $quot_open='\'';
-	public $quot_close='\'';
-	public $set_default_time=0;
-	public $std_error='';
-
-	function __construct($size=11)
-	{
-
-		$this->size=$size;
-		$this->form='DateForm';
-		$this->set_form='list_date';
-
-	}
-
-	//The check have 3 parts, in a part you have a default time, other part if you have an array from a form, last part if you send a timestamp directly.
-	
-	function check($value)
-	{
-
-		$final_value=0;
-
-		if($this->set_default_time==0)
-		{
-
-			$final_value=mktime(date('H'), date('i'), date('s'));
-		
-		}
-		
-		if(gettype($value)=='array')
-		{
-			
-			settype($value[0], 'integer');
-			settype($value[1], 'integer');
-			settype($value[2], 'integer');
-			settype($value[3], 'integer');
-			settype($value[4], 'integer');
-			settype($value[5], 'integer');
-			
-			if($value[0]>0 && $value[1]>0 && $value[2]>0)	
-			{
-
-				/*$substr_time=$user_data['format_time']/3600;
-	
-				$value[3]-=$substr_time;*/
-
-				$final_value=mktime ($value[3], $value[4], $value[5], $value[1], $value[0], $value[2] );
-	
-			}
-			
-			/*echo date('H-i-s', $final_value);
-			
-			//echo $final_value;
-			
-			die;*/
-
-		}
-		else if(strpos($value, '-')!==false)
-		{
-		
-			$arr_time=explode('-',trim($value));
-			
-			settype($arr_time[0], 'integer');
-			settype($arr_time[1], 'integer');
-			settype($arr_time[2], 'integer');
-			
-			$final_value=mktime (0, 0, 0, $arr_time[1], $arr_time[0], $arr_time[2] );
-			
-			if($final_value===false)
-			{
-			
-				$final_value=mktime (0, 0, 0, $arr_time[1], $arr_time[2], $arr_time[0] );
-			
-			}
-		
-		}
-		else
-		if(gettype($value)=='string' || gettype($value)=='integer')
-		{
-			
-			settype($value, 'integer');
-			$final_value=$value;
-
-		}
-		
-		$this->value=form_text($final_value);
-
-		return $final_value;
-
-	}
-
-	function get_type_sql()
-	{
-
-		return 'INT('.$this->size.') NOT NULL';
-		
-
-	}
-	
-	/**
-	* This function is used for show the value on a human format
-	*/
-
-	public function show_formatted($value)
-	{
-
-		return $this->format_date($value);
-
-	}
-	
-	static public function format_date($value)
-	{
-
-		load_libraries(array('form_date'));
-		
-		return form_date( $value, PhangoVar::$format_date , PhangoVar::$format_time);
-	
-	}
-
-	function get_parameters_default()
-	{
-
-		return array($this->name_component, '', time());
-
-	}
-	
-}
-
-class FileField extends PhangoField {
-
-	public $value="";
-	public $label="";
-	public $required=0;
-	public $form="FileForm";
-	public $name_file="";
-	public $path="";
-	public $url_path="";
-	//public $type='';
-	public $quot_open='\'';
-	public $quot_close='\'';
-	public $std_error='';
-
-	function __construct($name_file, $path, $url_path)
-	{
-
-		$this->name_file=$name_file;
-		$this->path=$path;
-		$this->url_path=$url_path;
-		//$this->type=$type;
-
-	}
-
-	//Check if the file is correct..
-	
-	function check($file)
-	{	
-		
-		$file_field=$this->name_file;
-
-		settype($_POST['delete_'.$file_field], 'integer');
-		
-		if($_POST['delete_'.$file_field]==1)
-		{
-
-			$file_delete=form_text($_POST[$file_field]);
-
-			if($file_delete!='')
-			{
-
-				@unlink($this->path.'/'.$file_delete);
-
-				$file='';
-
-			}
-
-		}
-		
-		if(isset($_FILES[$file_field]['tmp_name']))
-		{
-				
-			if($_FILES[$file_field]['tmp_name']!='')
-			{
-	
-				if( move_uploaded_file ( $_FILES[$file_field]['tmp_name'] , $this->path.'/'.$_FILES[$file_field]['name'] ) )
-				{
-
-					return $_FILES[$file_field]['name'];
-
-					//return $this->path.'/'.$_FILES[$file]['name'];
-					
-				}
-				else
-				{
-
-					$this->std_error=PhangoVar::$lang['common']['error_cannot_upload_this_file_to_the_server'];
-
-					return '';
-
-				}
-					
-
-			}
-			else if($file!='')
-			{
-
-				return $file;
-
-			}
-
-		}
-		else
-		{
-		
-			$this->std_error=PhangoVar::$lang['error_model']['check_error_enctype_for_upload_file'];
-		
-			return '';
-		
-		}
-
-		$this->value='';
-		
-		return '';
-
-
-	}
-
-
-	function get_type_sql()
-	{
-
-		return 'VARCHAR(255) NOT NULL';
-
-	}
-	
-	/**
-	* This function is used for show the value on a human format
-	*/
-
-	public function show_formatted($value)
-	{
-
-		return $value;
-
-	}
-	
-	function show_file_url($value)
-	{
-
-		return $this->url_path.'/'.$value;
-
-	}
-
-	function get_parameters_default()
-	{
-
-		return array($this->name_component, '', '');
-
-	}
-	
-	function process_delete_field($model, $name_field, $conditions)
-	{
-	
-		$query=$model->select($conditions, array($name_field));
-		
-		while(list($file_name)=webtsys_fetch_row($query))
-		{
-		
-			if(!unlink($this->path.'/'.$file_name))
-			{
-			
-				$this->std_error=PhangoVar::$lang['common']['cannot_delete_file'];
-			
-			}
-		
-		}
-	
-	}
-
-}
-
-//Imagefield is a field for upload images
-//This field don't have for now a maximum width and height. To fix in next releases.
-
-class ImageField extends PhangoField {
-
-	public $value="";
-	public $label="";
-	public $required=0;
-	public $form="ImageForm";
-	public $name_file="";
-	public $path="";
-	public $url_path="";
-	public $type='';
-	public $thumb=0;
-	public $img_width=100;
-	public $quot_open='\'';
-	public $quot_close='\'';
-	public $std_error='';
-	public $quality_jpeg=75;
-	public $min_size=array(0, 0);
-	public $prefix_id=1;
-	public $img_minimal_height=array();
-	public $func_token='get_token';
-
-	function __construct($name_file, $path, $url_path, $type, $thumb=0, $img_width=array('mini' => 150), $quality_jpeg=85)
-	{
-
-		$this->name_file=$name_file;
-		$this->path=$path;
-		$this->url_path=$url_path;
-		$this->type=$type;
-		$this->thumb=$thumb;
-		$this->img_width=$img_width;
-		$this->quality_jpeg=$quality_jpeg;
-
-	}
-
-	//Check if the image is correct..
-	
-	function check($image)
-	{	
-		//Only accept jpeg, gif y png
-		
-		
-		
-		$file=$this->name_file;
-		$image=basename($image);
-
-		settype($_POST['delete_'.$file], 'integer');
-		
-		if($_POST['delete_'.$file]==1)
-		{
-
-			//Delete old_image
-
-			$image_file=form_text($_POST[$file]);
-
-			if($image_file!='')
-			{
-
-				@unlink($this->path.'/'.$image_file);
-				
-				foreach($this->img_width as $key => $value)
-				{
-
-					@unlink($this->path.'/'.$key.'_'.$image_file);
-				
-				}
-
-				$image='';
-
-			}
-
-		}
-		
-		if(isset($_FILES[$file]['tmp_name']))
-		{
-				
-			if($_FILES[$file]['tmp_name']!='')
-			{	
-			
-			
-				$arr_image=getimagesize($_FILES[$file]['tmp_name']);
-				
-				$_FILES[$file]['name']=slugify(form_text($_FILES[$file]['name']));
-				
-				if($this->prefix_id==1)
-				{
-				
-					$func_token=$this->func_token;
-				
-					$_FILES[$file]['name']=$func_token().'_'.$_FILES[$file]['name'];
-				
-				}
-				
-				$this->value=$_FILES[$file]['name'];
-				
-				//Check size
-				
-				if($this->min_size[0]>0 && $this->min_size[1]>0)
-				{
-				
-					if($arr_image[0]<$this->min_size[0] || $arr_image[1]<$this->min_size[1])
-					{
-					
-						$this->std_error=PhangoVar::$lang['common']['image_size_is_not_correct'].'<br />'.PhangoVar::$lang['common']['min_size'].': '.$this->min_size[0].'x'.$this->min_size[1];
-						
-						$this->value='';
-						return '';
-						
-					
-					}
-				
-				}
-				
-				/*//Check if exists a image with same name.
-				
-				if(file_exists($this->path.'/'.$_FILES[$file]['name']))
-				{
-				
-					$this->std_error=PhangoVar::$lang['common']['a_image_with_same_name_exists'];
-					
-					return $image;
-				
-				}*/
-				
-				//Delete other image if exists..
-				
-				if($image!='')
-				{
-				
-					unlink($this->path.'/'.$image);
-				
-				}
-				
-				//gif 1
-				//jpg 2
-				//png 3
-				//Only gifs y pngs...
-				
-				//Need checking gd support...
-				
-				$func_image[1]='imagecreatefromgif';
-				$func_image[2]='imagecreatefromjpeg';
-				$func_image[3]='imagecreatefrompng';
-				
-				if($arr_image[2]==1 || $arr_image[2]==2 || $arr_image[2]==3)
-				{
-				
-					$image_func_create='imagejpeg';
-
-					switch($arr_image[2])
-					{
-
-						case 1:
-
-							//$_FILES[$file]['name']=str_replace('.gif', '.jpg', $_FILES[$file]['name']);
-							$image_func_create='imagegif';
-
-						break;
-
-						case 3:
-
-							//$_FILES[$file]['name']=str_replace('.png', '.jpg', $_FILES[$file]['name']);
-							$image_func_create='imagepng';
-							//Make conversion to png scale
-							$this->quality_jpeg=floor($this->quality_jpeg/10);
-							
-							if($this->quality_jpeg>9)
-							{
-							
-								$this->quality_jpeg=9;
-							
-							}
-
-						break;
-
-					}
-
-					
-					if( move_uploaded_file ( $_FILES[$file]['tmp_name'] , $this->path.'/'.$_FILES[$file]['name'] ))
-					{
-						
-						//Make jpeg.
-
-						$func_final=$func_image[$arr_image[2]];
-
-						$img = $func_final($this->path.'/'.$_FILES[$file]['name']);
-						
-						//imagejpeg ( $img, $this->path.'/'.$_FILES[$file]['name'], $this->quality_jpeg );
-						
-						/*$mini_photo=$_FILES[$file]['name'];
-				
-						$mini_photo=str_replace('.gif', '.jpg', $mini_photo);
-						$mini_photo=str_replace('.png', '.jpg', $mini_photo);*/
-						
-						//Reduce size for default if $this->img_width['']
-						
-						if(isset($this->img_width['']))
-						{
-							if($arr_image[0]>$this->img_width[''])
-							{
-								$width=$this->img_width[''];
-							
-								$ratio = ($arr_image[0] / $width);
-								$height = round($arr_image[1] / $ratio);
-							
-								$thumb = imagecreatetruecolor($width, $height);
-								
-								imagecopyresampled ($thumb, $img, 0, 0, 0, 0, $width, $height, $arr_image[0], $arr_image[1]);
-								
-								$image_func_create ( $thumb, $this->path.'/'.$_FILES[$file]['name'], $this->quality_jpeg );
-								
-							}
-							
-							unset($this->img_width['']);
-						}
-
-						//Make thumb if specific...
-						if($this->thumb==1)
-						{
-							
-							//Convert to jpeg.
-							
-							foreach($this->img_width as $name_width => $width)
-							{
-							
-								$ratio = ($arr_image[0] / $width);
-								$height = round($arr_image[1] / $ratio);
-								
-								if(isset($this->img_minimal_height[$name_width]))
-								{
-									
-									if($height<$this->img_minimal_height[$name_width])
-									{
-											
-										//Need recalculate the adecuate width and height.
-										
-										$height=$this->img_minimal_height[$name_width];
-										
-										$ratio=($arr_image[1] / $height);
-										
-										$width=round($arr_image[0]/$ratio);
-										
-										//$width=
-									
-									}
-								
-								}
-							
-								$thumb = imagecreatetruecolor($width, $height);
-								
-								imagecopyresampled ($thumb, $img, 0, 0, 0, 0, $width, $height, $arr_image[0], $arr_image[1]);
-								
-								$image_func_create ( $thumb, $this->path.'/'.$name_width.'_'.$_FILES[$file]['name'], $this->quality_jpeg );
-								;
-								//imagepng ( resource $image [, string $filename [, int $quality [, int $filters ]]] )
-
-							}
-
-						}
-						
-						//unlink($_FILES[$file]['tmp_name']);
-						
-						//Unlink if exists image
-						
-						if(isset($_POST[$file]))
-						{
-						
-							if($_POST[$file]!='')
-							{
-								$image_file=form_text($_POST[$file]);
-
-								if($image_file!='')
-								{
-
-									@unlink($this->path.'/'.$image_file);
-									
-									foreach($this->img_width as $key => $value)
-									{
-
-										@unlink($this->path.'/'.$key.'_'.$image_file);
-									
-									}
-
-									$image='';
-
-								}
-						
-							}
-						
-						}
-						
-						return $_FILES[$file]['name'];
-
-						//return $this->path.'/'.$_FILES[$file]['name'];
-						
-					}
-					else
-					{
-
-						$this->std_error=PhangoVar::$lang['common']['error_cannot_upload_this_image_to_the_server'];
-
-						return '';
-
-					}
-					
-
-				}
-				else
-				{
-
-					$this->std_error.=PhangoVar::$lang['error_model']['img_format_error'];
-
-				}
-
-			}
-			else if($image!='')
-			{
-
-				return $image;
-
-			}
-
-
-		}
-		else if($image!=='')
-		{
-			
-			
-			if(file_exists($this->path.'/'.$image))
-			{
-
-				$this->value=$this->path.'/'.$image;
-				return $image;
-
-			}
-			else
-			{
-			
-				$this->std_error=PhangoVar::$lang['error_model']['check_error_enctype_for_upload_file'];
-				return '';
-			
-			}
-			
-			
-
-		}
-		else
-		{
-		
-			$this->std_error=PhangoVar::$lang['error_model']['check_error_enctype_for_upload_file'];
-		
-		}
-
-		$this->value='';
-		return '';
-
-
-	}
-
-
-	function get_type_sql()
-	{
-
-		return 'VARCHAR(255) NOT NULL';
-
-	}
-	
-	function show_image_url($value)
-	{
-  
-		return $this->url_path.'/'.$value;
-
-	}
-	
-	function process_delete_field($model, $name_field, $conditions)
-	{
-	
-		
-		
-		//die;
-		$query=$model->select($conditions, array($name_field));
-		
-		while(list($image_name)=webtsys_fetch_row($query))
-		{
-		
-			if( file_exists($this->path.'/'.$image_name) && !is_dir($this->path.'/'.$image_name) )
-			{
-				if(unlink($this->path.'/'.$image_name))
-				{
-				
-					//Unlink mini_images
-					
-					unset($this->img_width['']);
-					
-					foreach($this->img_width as $key => $value)
-					{
-					
-						if(!unlink($this->path.'/'.$key.'_'.$image_name))
-						{
-							
-							$this->std_error.=PhangoVar::$lang['common']['cannot_delete_image'].': '.$key.'_'.$image_name;
-						
-						}
-					
-					}
-				
-					$this->std_error.=PhangoVar::$lang['common']['cannot_delete_image'].': '.$image_name;
-				
-				}
-				else
-				{
-				
-					$this->std_error.=PhangoVar::$lang['common']['cannot_delete_image'].': '.$image_name;
-				
-				}
-				
-			}
-			else
-			{
-			
-				$this->std_error.=PhangoVar::$lang['common']['cannot_delete_image'].': '.$image_name;
-			
-			}
-		
-		}
-	
-	}
-	
-	/**
-	* Method for return a formatted value readable for humans.
-	*/
-	
-	public function show_formatted($value)
-	{
-	
-		//Size
-		
-		$size=150;
-	
-		if($this->thumb==1)
-		{
-		
-			reset($this->img_width);
-			
-			$key=key($this->img_width);
-			
-			$value=$key.'_'.$value;
-			
-			$size=$this->img_width[$key];
-			
-		
-		}
-	
-		return '<img src="'.$this->show_image_url($value).'" width="'.$size.'"/>';
-	
-	}
-
-}
-
-//Keyfield is a indexed field in a sql statement...
-
-class KeyField extends PhangoField {
-
-	public $size=11;
-	public $value=0;
-	public $label="";
-	public $required=0;
-	public $form="";
-	public $set_form='';
-	public $quot_open='\'';
-	public $quot_close='\'';
-	public $fields=array();
-	public $table='';
-	public $model='';
-	public $ident='';
-	public $std_error='';
-
-	function __construct($size=11)
-	{
-
-		$this->size=$size;
-		$this->form='TextForm';
-		$this->set_form='list_value';
-
-	}
-
-	function check($value)
-	{
-
-		$this->value=form_text($value);
-
-		settype($value, "integer");
-		return $value;
-
-	}
-
-	function get_type_sql()
-	{
-
-		return 'INT('.$this->size.') NOT NULL';
-
-	}
-	
-	/**
-	* This function is used for show the value on a human format
-	*/
-
-	public function show_formatted($value)
-	{
-
-		return $value;
-
-	}
-
-}
-
-//ForeignKeyfield is a relantioship between two models...
-
-class ForeignKeyField extends IntegerField{
-
-	//field related in the model...
-	public $related_model='';
-	public $container_model='';
-	public $null_relation=1;
-	public $params_loading_mod=array();
-	public $default_id=0;
-	public $yes_zero=0;
-	
-	function __construct($related_model, $size=11, $null_relation=1, $default=0)
-	{
-
-		$this->size=$size;
-		$this->form='SelectForm';
-		$this->related_model=$related_model;
-		$this->container_model=$this->related_model;
-		//Fields obtained from related_model if you make a query...
-		$this->fields_related_model=array();
-		//Representative field for related model...
-		$this->name_field_to_field='';
-		$this->null_relation=$null_relation;
-		$this->default_id=$default;
-		
-		//PhangoVar::$model[$related_model]->related_models_delete[]=array('model' => $this->name_model, 'related_field' => $this->name_component);
-		
-		//echo get_parent_class();
-
-	}
-	
-	function set_relationships()
-	{
-		
-		//We need the model loaded...
-		
-		if(isset(PhangoVar::$model[$this->related_model]))
-		{
-			PhangoVar::$model[$this->related_model]->related_models_delete[]=array('model' => $this->name_model, 'related_field' => $this->name_component);
-		}
-		else
-		{
-		
-			show_error('You need load class before set relantionship', 'You need load class '.$this->related_model.' before set relantionship with ForeignKeyField on model '.$this->name_model, $output_external='');
-			
-			die;
-		
-		}
-	}
-
-	function check($value)
-	{
-		
-		settype($value, "integer");
-
-		//Reload related model if not exists, if exists, only check cache models...
-
-		if(!isset(PhangoVar::$model[$this->related_model]))
-		{
-
-			load_model($this->container_model);
-
-		}
-
-		//Need checking if the value exists with a select_count
-		
-		$num_rows=PhangoVar::$model[$this->related_model]->select_count('where '.$this->related_model.'.'.PhangoVar::$model[$this->related_model]->idmodel.'='.$value, PhangoVar::$model[$this->related_model]->idmodel);
-		
-		if($num_rows>0)
-		{
-		
-			if($value==0 && $this->yes_zero==0)
-			{
-				
-				return NULL;
-			
-			}
-			
-			return $value;
-
-		}
-		else
-		{
-		
-			if($this->default_id<=0 && $this->yes_zero==0)
-			{
-			
-				return NULL;
-				
-			}
-			else
-			{
-			
-				return $this->default_id;
-			
-			}
-
-		}
-		
-
-	}
-	
-	function simple_check($value)
-	{
-	
-		settype($value, 'integer');
-		
-		return $value;
-	
-	}
-	
-	
-	function get_type_sql()
-	{
-	
-		$arr_null[0]='NOT NULL';
-		$arr_null[1]='NULL';
-
-		return 'INT('.$this->size.') '.$arr_null[$this->null_relation];
-
-	}
-
-	/**
-	* This function is used for show the value on a human format
-	*/
-	
-	public function show_formatted($value)
-	{
-		
-		return PhangoVar::$model[$this->related_model]->components[$this->name_field_to_field]->show_formatted($value);
-
-		//return $value;
-
-	}
-
-	function get_parameters_default()
-	{
-		
-		
-		load_libraries(array('forms/selectmodelform'));
-		
-		//SelectModelForm($name, $class, $value, $model_name, $identifier_field, $where='')
-		
-		//Prepare parameters for selectmodelform
-		
-		if(isset($this->name_component) && $this->name_field_to_field!='' && $this->name_model!='' && count(PhangoVar::$model[$this->name_model]->forms)>0)
-		{
-			PhangoVar::$model[$this->name_model]->forms[$this->name_component]->form='SelectModelForm';
-			
-			return array($this->name_component, '', '', $this->related_model, $this->name_field_to_field, '');
-			
-		}
-		else
-		{
-		
-			$arr_values=array('', PhangoVar::$lang['common']['any_option_chosen'], '');
-			
-			return array($this->name_component, '', $arr_values);
-			
-		}
-
-	}
-	
-	function get_all_fields()
-	{
-		
-		return array_keys(PhangoVar::$model[$this->related_model]->components);
-	
-	}
-
-}
-
-class ParentField extends IntegerField{
-
-	//field related in the model...
-	public $parent_model='';
-
-	function __construct($parent_model, $size=11)
-	{
-
-		$this->parent_model=$parent_model;
-		$this->size=$size;
-		$this->form='SelectForm';
-
-	}
-
-	function check($value)
-	{
-		
-		settype($value, "integer");
-
-		//Check model
-		
-		$num_rows=PhangoVar::$model[$this->parent_model]->select_count('where '.PhangoVar::$model[$this->parent_model]->idmodel.'='.$value, PhangoVar::$model[$this->parent_model]->idmodel);
-		
-		if($num_rows>0)
-		{
-
-			return $value;
-
-		}
-		else
-		{
-			
-			return 0;
-
-		}
-		
-
-	}
-	
-	/**
-	* This function is used for show the value on a human format
-	*/
-
-	public function show_formatted($value)
-	{
-
-		return $value;
-
-	}
-
-	function get_parameters_default()
-	{
-		
-
-		$arr_values=array('', PhangoVar::$lang['common']['any_option_chosen'], '');
-		
-		return array($this->name_component, '', $arr_values);
-
-	}
-	
-	public function process_update_field($class, $name_field, $conditions, $value)
-	{
-	
-		$num_rows=$class->select_count($conditions.' and '.$class->idmodel.'='.$value);
-		
-		if($num_rows==0)
-		{
-		
-			return true;
-		
-		}
-		else
-		{
-		
-			return false;
-		
-		}
-	
-	}
-	
-	public function obtain_parent_tree($id, $field_ident, $url_op)
-	{
-		
-		$arr_parent=array();
-		$arr_link_parent=array();
-		
-		$query=PhangoVar::$model[$this->parent_model]->select('', array( PhangoVar::$model[$this->parent_model]->idmodel, $this->name_component, $field_ident) );
-		
-		while(list($id_block, $parent, $name)=webtsys_fetch_row($query))
-		{
-		
-			$arr_parent[$id_block]=array($parent, $name);
-		
-		}
-		
-		$arr_link_parent=$this->obtain_recursive_parent($id, $arr_parent, $arr_link_parent, $field_ident, $url_op);
-		
-		$arr_link_parent=array_reverse($arr_link_parent, true);
-		
-		return $arr_link_parent;
-	
-	}
-	
-	public function obtain_recursive_parent($id, $arr_parent, $arr_link_parent, $field_ident, $url_op)
-	{
-	
-		//$arr_link_parent[]=array('nombre', 'enlace');
-		
-		//$arr_link_parent=array();
-		
-		if($id>0)
-		{
-			
-			$arr_link_parent[$id]=array(PhangoVar::$model[$this->parent_model]->components[$field_ident]->show_formatted($arr_parent[$id][1]), add_extra_fancy_url($url_op, array($this->name_component => $id) ) );
-			
-			if($arr_parent[$id][0]>0)
-			{
-			
-				$arr_link_parent=$this->obtain_recursive_parent($arr_parent[$id][0], $arr_parent, $arr_link_parent, $field_ident, $url_op);
-		
-			}
-		
-		}
-	
-		return $arr_link_parent;
-	}
-
-}
-
-//Emailfield is a field that only accepts emails
-
-class EmailField extends PhangoField {
-
-	public $size=200;
-	public $value="";
-	public $label="";
-	public $form="TextForm";
-	public $set_form="";
-	public $class="";
-	public $required=0;
-	public $quot_open='\'';
-	public $quot_close='\'';
-	public $std_error='';
-
-	function __construct($size=200)
-	{
-
-		$this->size=$size;
- 		$this->set_form='list_value';
-
-	}
-
-	//Method for accept valid emails only
-	
-	function check($value)
-	{
-		
-		//Delete Javascript tags and simple quotes.
-
-		
-
-		$value=form_text($value);
-
-		$this->value=$value;
-
-		$email_expression='([\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+\.)*(?:[\w\!\#$\%\'\*\+\-\/\=\?\^\`{\|\}\~]|&amp;)+@((((([a-z0-9]{1}[a-z0-9\-]{0,62}[a-z0-9]{1})|[a-z])\.)+[a-z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)';
-		
-		if(preg_match('/^'.$email_expression.'$/i', $value))
-		{
-			
-			return $value;
-
-		}
-		else
-		{
-			
-			$this->std_error.=PhangoVar::$lang['error_model']['email_format_error'].' ';
-			
-			return '';
-
-		}
-		
-
-	}
-
-	function get_type_sql()
-	{
-
-		return 'VARCHAR('.$this->size.') NOT NULL';
-
-	}
-
-	/**
-	* This function is used for show the value on a human format
-	*/
-	
-	public function show_formatted($value)
-	{
-
-		return $value;
-
-	}
-
-
-}
 
 //in older versions of php, get_magic_quotes_gpc function was to add quotes automatically for certain operations, make_slashes is used to prevent this.
 
@@ -4748,492 +2807,6 @@ function replace_quote_text( $text )
 
 }
 
-
-/***********************************************************
-
-Functions used for generate forms from models 
-This functions are called via $model->form
-
-************************************************************/
-
-/** 
-* Function form used for text fields on a form. Show a text html input.
-* 
-*
-* @param string $name Name of this text field for use in forms
-* @param string $class Css class used in the text field
-* @param string $value Initial value for the form
-*/
-
-function TextForm($name="", $class='', $value='')
-{
-
-	return '<input type="text" name="'.$name.'" id="'.$name.'_field_form" class="'.$class.'" value="'.$value.'" />';
-
-}
-
-//Prepare a value for input text
-
-function TextFormSet($post, $value)
-{
-
-	$value = replace_quote_text( $value );
-	return $value;
-
-}
-
-//Create a input password
-
-function PasswordForm($name="", $class='', $value='')
-{
-
-	$value = replace_quote_text( $value );
-
-	return '<input type="password" name="'.$name.'" class="'.$class.'" id="'.$name.'_field_form" value="'.$value.'" />';
-
-}
-
-//Prepare a value for input password
-
-function PasswordFormSet($post, $value)
-{
-
-	$value = ''; //replace_quote_text( $value );
-
-	return $value;
-
-}
-
-//Create a input file
-
-function FileForm($name="", $class='', $value='', $delete_inline=0, $path_file='')
-{
-	
-	
-
-	$file_url=$path_file.'/'.$value;
-	
-	$file_exist='';
-
-	if($value!='')
-	{
-
-		$file_exist='<a href="'.$file_url.'">'.basename($value).'</a> ';
-		
-		if($delete_inline==1)
-		{
-
-			$file_exist.=PhangoVar::$lang['common']['delete_file'].' <input type="checkbox" name="delete_'.$name.'" class="'.$class.'" value="1" />';
-
-		}
-
-	}
-
-	return '<input type="hidden" name="'.$name.'" value="'.$value.'"/><input type="file" name="'.$name.'" class="'.$class.'" value="" /> '.$file_exist;
-
-}
-
-//Prepare a value for input password
-
-function FileFormSet($post, $value)
-{
-	
-	$value = replace_quote_text( $value );
-
-	return $value;
-
-}
-
-
-//Create a special form for a image
-
-function ImageForm($name="", $class='', $value='', $delete_inline=0, $path_image='')
-{
-
-	$image_url=$path_image.'/'.$value;
-	
-	$image_exist='';
-
-	if($value!='')
-	{
-
-		$image_exist='<a href="'.$image_url.'">'.basename($value).'</a> ';
-		
-		if($delete_inline==1)
-		{
-
-			$image_exist.=PhangoVar::$lang['common']['delete_image'].' <input type="checkbox" name="delete_'.$name.'" class="'.$class.'" value="1" />';
-
-		}
-
-	}
-
-	return '<input type="hidden" name="'.$name.'" value="'.$value.'"/><input type="file" name="'.$name.'" class="'.$class.'" value="" /> '.$image_exist;
-
-}
-
-//Prepare a value for input password
-
-function ImageFormSet($post, $value)
-{
-	
-	$value = replace_quote_text( $value );
-
-	return $value;
-
-}
-
-//Create a textarea 
-
-function TextAreaForm($name="", $class='', $value='')
-{
-
-	return '<textarea name="'.$name.'" class="'.$class.'" id="'.$name.'_field_form">'.$value.'</textarea>';
-
-}
-
-//Prepare the value for the textarea
-
-function TextAreaFormSet($post, $value)
-{
-
-	$value = replace_quote_text( $value );
-
-	return $value;
-
-}
-
-//Create a input hidden
-
-function HiddenForm($name="", $class='', $value='')
-{
-
-	return '<input type="hidden" name="'.$name.'" value="'.$value.'" id="'.$name.'_field_form"/>';
-
-}
-
-//Prepare the value for a input hidden
-
-function HiddenFormSet($post, $value)
-{
-
-	$value = replace_quote_text( $value );
-
-	return $value;
-
-}
-
-//Create a input checkbox
-
-function CheckBoxForm($name="", $class='', $value='')
-{
-	
-	$arr_checked[$value]='';
-
-	$arr_checked[0]='';
-	$arr_checked[1]='checked';
-	
-	return '<input type="checkbox" name="'.$name.'" value="1" id="'.$name.'_field_form" class="'.$class.'" '.$arr_checked[$value].'/>';
-
-}
-
-//Prepare the value for the checkbox
-
-function CheckBoxFormSet($post, $value)
-{
-
-	settype($value, 'integer');
-	
-	return $value;
-
-}
-
-//Create a select
-
-function SelectForm($name="", $class='', $value='', $more_options='')
-{
-	
-	$select='<select name="'.$name.'" id="'.$name.'_field_form" class="'.$class.'" '.$more_options.'>'."\n";
-
-	list($key, $default)= each($value);
-
-	$arr_selected=array();
-
-	$arr_selected[$default]="selected=\"selected\"";
-
-	//Check if array is safe. 
-	
-	$z=count($value);
-	
-	for($x=1;$x<$z;$x+=2)
-	{
-		
-		$val=$value[$x+1];
-		
-		settype($val, "string");
-		settype($arr_selected[$val], "string");
-
-		if($val=='optgroup')
-		{
-    			$select.='<optgroup label="'.$value[$x].'">';
-		}
-		else 
-		if($val=="end_optgroup")
-		{
-
-			$select.='</optgroup>';
-
-		}
-		else
-		{
-
-			$select.= '<option value="'.$val.'" '.$arr_selected[$val].'>'.$value[$x].'</option>'."\n";
-
-		}
-	}
-
-	$select.='</select>'."\n";
-
-	return $select;
-
-}
-
-//Prepare the value for the select
-
-function SelectFormSet($post, $value)
-{
-	
-	$value = preg_replace('/<(.*?)\/(.*?)option(.*?)>/', '', $value);
-	
-	$post[0]=$value;
-	
-	return $post;
-
-}
-
-//Crate a multiple select
-
-function SelectManyForm($name="", $class='', $value='', $more_options='' )
-{
-	
-	$select='<select name="'.$name.'[]" id="'.$name.'_field_form" class="'.$class.'" '.$more_options.' multiple>'."\n";
-
-	list($key, $arr_values)= each($value);
-	
-	$arr_selected=array();
-	
-	foreach($arr_values as $default)
-	{
-
-		$arr_selected[$default]="selected";
-
-	}
-
-	//Check if array is safe. 
-	
-	$z=count($value);
-	
-	for($x=1;$x<$z;$x+=2)
-	{
-		
-		$val=$value[$x+1];
-		
-		settype($val, "string");
-		settype($arr_selected[$val], "string");
-
-		if($val=='optgroup')
-		{
-    			$select.='<optgroup label="'.$value[$x].'">';
-		}
-		else 
-		if($val=="end_optgroup")
-		{
-
-			$select.='</optgroup>';
-
-		}
-		else
-		{
-
-			$select.= '<option value="'.$val.'" '.$arr_selected[$val].'>'.$value[$x].'</option>'."\n";
-
-		}
-	}
-
-	$select.='</select>'."\n";
-
-	return $select;
-
-}
-
-//Prepare the value for the multiple select
-
-function SelectManyFormSet($post, $value)
-{
-	
-	if(gettype($value)!='array')
-	{
-	
-		$arr_value=unserialize($value);
-	}
-	else
-	{
-	
-		$arr_value=$value;
-	
-	}
-	//$value = preg_replace('/<(.*?)\/(.*?)option(.*?)>/', '', $value);
-	
-	$post[0]=$arr_value;
-	
-	return $post;
-
-}
-
-//A special form for dates in format day/month/year
-
-function DateForm($field, $class='', $value='', $set_time=1, $see_title=1)
-{
-	
-	if($value==0)
-	{
-
-		$day='';
-		$month='';
-		$year='';
-		$hour='';
-		$minute='';
-		$second='';
-
-	}
-	else
-	{
-		
-		//$value+=$user_data['format_time'];
-		
-		$day=date('j', $value);
-		$month=date('n', $value);
-		$year=date('Y', $value);
-		$hour=date('G', $value);
-		$minute=date('i', $value);
-		$second=date('s', $value);
-	}
-	
-	$date='<span id="'.$field.'_field_form" class="'.$class.'">';
-	
-	if($set_time<=1)
-	{
-
-		$date.='<input type="text" name="'.$field.'[]" value="'.$day.'" size="2" maxlength="2"/>'."\n";
-		$date.='<input type="text" name="'.$field.'[]" value="'.$month.'" size="2" maxlength="2"/>'."\n";
-		$date.='<input type="text" name="'.$field.'[]" value="'.$year.'" size="4" maxlength="4"/>'."\n&nbsp;&nbsp;&nbsp;";
-		
-	}
-	
-	if($set_time>0)
-	{
-	
-		$hour_txt=PhangoVar::$lang['common']['hour'];
-		$minute_txt=PhangoVar::$lang['common']['minute'];
-		$second_txt=PhangoVar::$lang['common']['second'];
-		
-		if($see_title==0)
-		{
-		
-			$hour_txt='';
-			$minute_txt='';
-			$second_txt='';
-		
-		}
-
-		$date.=$hour_txt.' <input type="text" name="'.$field.'[]" value="'.$hour.'" size="2" maxlength="2" />'."\n";
-		$date.=$minute_txt.' <input type="text" name="'.$field.'[]" value="'.$minute.'" size="2" maxlength="2" />'."\n";
-		$date.=$second_txt.' <input type="text" name="'.$field.'[]" value="'.$second.'" size="2" maxlength="2" />'."\n";
-		
-	}
-
-	echo '</span>';
-	
-	return $date;
-
-}
-
-//Prepare value form dateform
-
-function DateFormSet($post, $value)
-{
-
-	if(gettype($value)=='array')
-	{
-		foreach($value as $key => $val)
-		{
-
-			settype($value[$key], 'integer');
-
-		}
-		
-		settype($value[3], 'integer');
-		settype($value[4], 'integer');
-		settype($value[5], 'integer');
-		
-		$final_value=mktime ($value[3], $value[4], $value[5], $value[1], $value[0], $value[2] );
-
-	}
-	else
-	{
-
-		settype($value, 'integer');
-
-		$final_value=$value;
-
-	}
-
-
-	return $final_value;
-
-}
-
-function RadioIntForm($name="", $class='', $value=array(), $more_options='')
-{
-	$select='';
-
-	list($key, $default)= each($value);
-
-	$arr_selected=array();
-
-	$arr_selected[$default]="checked";
-
-	//Check if array is safe. 
-
-	$z=count($value);
-	
-	for($x=1;$x<$z;$x+=2)
-	{
-	
-		$val=$value[$x+1];
-		
-		settype($arr_selected[$val], "string");
-	
-		$select.= $value[$x].' <input type="radio" name="'.$name.'" value="'.$val.'" '.$arr_selected[$val].' />'."\n";
-		
-	}
-
-	return $select;
-
-}
-
-//Prepare the value for the select
-
-function RadioIntFormSet($post, $value)
-{
-	
-	settype($value, 'integer');
-
-	$post[0]=$value;
-	
-	return $post;
-
-}
 //Function for make pretty urls...
 
 //If active fancy urls...
@@ -6030,7 +3603,7 @@ function check_variables($arr_variables, $fields=array())
 }
 
 //Fill arr_check_table for check if exists model
-
+/*
 function load_check_model()
 {
 
@@ -6048,7 +3621,7 @@ function load_check_model()
 
 	return PhangoVar::$arr_check_table;
 
-}
+}*/
 
 //Function for strip values with keys inside $array_strip
 
@@ -6102,6 +3675,14 @@ function set_csrf_key()
 
 }
 
+function get_csrf_key_form()
+{
+
+        return "\n".HiddenForm('csrf_token', '', PhangoVar::$key_csrf)."\n";
+
+}
+
+
 function show_error($txt_error_normal, $txt_error_debug, $output_external='')
 {
 
@@ -6142,9 +3723,11 @@ function load_header_view()
 
 }
 
-//A function for load all files into media folder, on application, theme view, or module.
-//Here is load from theme view or module views. Without base64 code.
-//the type is the folder where you search into media.
+/**
+* A function for load all files into media folder, on application, theme view, or module.
+* Here is load from theme view or module views. Without base64 code.
+* the type is the folder where you search into media.
+*/
 
 function get_url_media($name_media, $module='none')
 {
@@ -6223,38 +3806,30 @@ function load_css_view_dynamic()
 	foreach(PhangoVar::$arr_cache_css as $idcss => $css)
 	{
 			
-			$module_css='none';
-			
-			if(gettype($css)=='array') {
-					
-					$module_css=$idcss;
-					
-					$css=array_unique($css, SORT_REGULAR);
-					
-					foreach($css as $css_item)
-					{
-							/*$css_item=slugify(urlencode_redirect($css_item, 1), 1);
-	
-							$url=make_fancy_url(PhangoVar::$media_url, 'media', 'css', array('module' => $module_css, 'css' => $css_item));
-							*/
-							
-							$url=get_url_media('css/'.$css_item, $module_css);
-							
-							$arr_final_css[]='<link href="'.$url.'" rel="stylesheet" type="text/css"/>'."\n";
-					}
-			}
-			else
+		$module_css='none';
+		
+		if(gettype($css)=='array') {
+				
+			$module_css=$idcss;
+				
+			$css=array_unique($css, SORT_REGULAR);
+				
+			foreach($css as $css_item)
 			{
-					
-					/*$css=slugify(urlencode_redirect($css, 1), 1);
-	
-					$url=make_fancy_url(PhangoVar::$media_url, 'media', 'css', array('module' => $module_css, 'css' => $css));*/
-					
-					$url=get_url_media('css/'.$css, $module_css);
-					
-					$arr_final_css[]='<link href="'.$url.'" rel="stylesheet" type="text/css"/>'."\n";
-
+				
+				$url=get_url_media('css/'.$css_item, $module_css);
+				
+				$arr_final_css[]='<link href="'.$url.'" rel="stylesheet" type="text/css"/>'."\n";
 			}
+		}
+		else
+		{
+				
+			$url=get_url_media('css/'.$css, $module_css);
+			
+			$arr_final_css[]='<link href="'.$url.'" rel="stylesheet" type="text/css"/>'."\n";
+
+		}
 	}
 
 	return implode("\n", $arr_final_css)."\n";
@@ -6311,9 +3886,6 @@ function load_jscript_view_dynamic()
 					
 					foreach($jscript as $jscript_item)
 					{
-							/*$jscript_item=slugify(urlencode_redirect($jscript_item, 1), 1);
-	
-							$url=make_fancy_url(PhangoVar::$media_url, 'media', 'jscript', array('module' => $module_jscript, 'jscript' => $jscript_item));*/
 							
 							$url=get_url_media('jscript/'.$jscript_item, $module_jscript);
 							
@@ -6337,17 +3909,12 @@ function load_jscript_view_dynamic()
 	return implode("\n", $arr_final_jscript)."\n";
 }
 
-if(PhangoVar::$THEME_MODULE==1) {
+/**
+* Default values for media functions 
+*
+*/
 
-	PhangoVar::$arr_func_media=array('get_url_image' => 'get_url_image_dynamic', 'load_css_view' => 'load_css_view_dynamic', 'load_jscript_view' => 'load_jscript_view_dynamic', 'get_base_url_media' => 'get_base_url_media_dynamic');
-
-}
-else
-{
-
-	PhangoVar::$arr_func_media=array('get_url_image' => 'get_url_image_static', 'load_css_view' => 'load_css_view_static', 'load_jscript_view' => 'load_jscript_view_static', 'get_base_url_media' => 'get_base_url_media_static');
-	
-}
+PhangoVar::$arr_func_media=array('get_url_image' => 'get_url_image_static', 'load_css_view' => 'load_css_view_static', 'load_jscript_view' => 'load_jscript_view_static', 'get_base_url_media' => 'get_base_url_media_static');
 
 function get_url_image($img_name, $module='none')
 {
@@ -6477,7 +4044,7 @@ function load_urls()
 }
 
 /**
-* Function for load the controller, first, load the urls, and check, with this info, load the controller from the module X and finally, the action.
+* Function for load the controller, first, load the urls, and check. With this info, load the controller from the module X and finally, the action.
 *
 */
 
@@ -6873,245 +4440,9 @@ function generate_random_password($length_pass=14)
 
 }
 
-/**
-*
-* A simple class for create where strings with checking.
-*
-* With this extension, you can create sql strings for use on where parameter of select method from Webmodel.
-*
-* Example ['AND']->array( 'field' => array('!=', 25), 'field2' => array('=', 'value_field'), 'field3' => array('LIKE', 'value_field'), 'field4' => array('IN',  array('1','2','3'), 'limit_sql' => array('LIMIT', array(1, 10), 'order_by' => array('order_fieldY', 'ASC'
-))
-* 
-* You can join differents sql sentences 
-*/
+//Load extra libraries
 
-class WhereSql {
-
-	public $initial_sql;
-	public $arr_conditions;
-	public $order_by;
-	public $limit;
-
-	public function __construct($model_name, $arr_conditions=array(), $order_by=array(), $limit=array())
-	{
-	
-		$this->model_name=$model_name;
-		$this->initial_sql='WHERE 1=1 ';
-		$this->arr_conditions=$arr_conditions;
-		$this->order_by=$order_by;
-		$this->limit=$limit;
-	
-	}
-	
-	public function get_where_sql()
-	{
-	
-		$arr_to_glued=array();
-		
-		/*
-		$arr_conditions['union1_AND']['AND'][]=array('moderator' => array('=', $arr_user['IdUser_admin']));
-		$arr_conditions['union1_AND']['AND'][]=array('moderator' => array('!=', 0));
-		$arr_conditions['union1_AND']['OR'][]=array('moderator' => array('!=', 0));
-		$arr_conditions['union1_AND']['AND'][]=array('moderator' => array('=', $arr_user['IdUser_admin']));
-		
-		$arr_conditions['union2_OR']['AND'][]=array('moderator' => array('=', $arr_user['IdUser_admin']));
-		$arr_conditions['union2_OR']['OR'][]=array('moderator' => array('!=', 1));
-		$arr_conditions['union2_OR']['AND'][]=array('moderator' => array('=', '25'));
-		
-		$where_class->order_by[]=array('field' => 'moderator', 'order' => 'ASC');
-		$where_class->order_by[]=array('field' => 'moderator', 'order' => 'ASC');
-		
-		$where_class->limit=array(0, 25);
-		*/
-		
-		$arr_define_sql=array();
-		
-		$arr_final_sql=array();
-		
-		$first_sep=0;
-		
-		foreach($this->arr_conditions as $group => $arr_glue)
-		{
-		
-			foreach($arr_glue as $glue => $arr_elements)
-			{
-				
-				foreach($arr_elements as $arr_fields_where)
-				{
-					
-					foreach($arr_fields_where as $field => $operation)
-					{
-					
-						
-					
-						list($field_select, $model_name, $field_name)=$this->set_safe_name_field(PhangoVar::$model[$this->model_name], $field);
-								
-						$op=$operation[0];
-						
-						$value=$operation[1];
-						
-						switch($op)
-						{
-						
-							case '=':
-							
-								$value=PhangoVar::$model[$model_name]->components[$field_name]->simple_check($value);
-							
-								$arr_to_glued[]=$field_select.' '.$op.' \''.$value.'\'';
-							
-							break;
-							
-							case '!=':
-								
-								$value=PhangoVar::$model[$model_name]->components[$field_name]->simple_check($value);
-								
-								$arr_to_glued[]=$field_select.' '.$op.' \''.$value.'\'';
-							
-							break;
-							
-							case 'LIKE':
-							
-								$value=PhangoVar::$model[$model_name]->components[$field_name]->simple_check($value);
-							
-								$arr_to_glued[]=$field_select.' '.$op.' \''.$value.'\'';
-							
-							break;
-							
-							case 'IN':
-							case 'NOT IN':
-							
-								foreach($value as $key_val => $val)
-								{
-								
-									$value[$key_val]=PhangoVar::$model[$model_name]->components[$field_name]->check($val);
-								
-								}
-								
-								$arr_to_glued[]=$field_select.' '.$op.' (\''.implode('\',\'', $value).'\')';
-							
-							break;
-						
-						}
-						
-					}
-				
-				}
-				
-				$arr_define_sql[$glue]=' '.implode(' '.$glue.' ', $arr_to_glued).' ';
-				
-				$arr_to_glued=array();
-			
-			}
-			
-			$arr_group=explode('_', $group);
-			
-			$separator_group=end($arr_group);
-			
-			if($first_sep==0)
-			{
-			
-				$separator_group='AND';
-			
-			}
-			
-			$first_sep++;
-			
-			$arr_final_sql[]=$separator_group.' ( '.implode(' '.$glue.' ', $arr_define_sql).' ) ';
-			
-			//$arr_define_sql=array();
-		
-		}
-		
-		$this->initial_sql.=implode('', $arr_final_sql);
-		
-		return $this->initial_sql;
-	
-	}
-	
-	public function get_order_sql()
-	{
-	
-		$arr_order_final=array();
-		
-		$final_order='';
-		
-		//$order_by[]=array('field' => 'moderator', 'order' => 'ASC'
-		
-		if(count($this->order_by)>0)
-		{
-			foreach($this->order_by as $arr_order)
-			{
-			
-				list($field_select, $model_name, $field_name)=$this->set_safe_name_field(PhangoVar::$model[$this->model_name], $arr_order['field']);
-			
-				$arr_order_final[]=$field_name.' '.$arr_order['order'];
-			
-			}
-		
-			$final_order=' ORDER BY '.implode(' ,', $arr_order_final);
-		
-		}
-		
-		return $final_order;
-	
-	}
-	
-	public function get_limit_sql()
-	{
-			
-		if(count($this->limit)>0)
-		{
-		
-			return ' LIMIT '.implode(' ,', $this->limit);
-		
-		}
-		
-		return '';
-	
-	}
-	
-	public function get_all_sql()
-	{
-	
-		return $this->get_where_sql().$this->get_order_sql().$this->get_limit_sql();
-	
-	}
-	
-	public function set_safe_name_field($class, $field)
-	{
-		
-		$pos_dot=strpos($field, '.');
-		
-		$model_name='';
-		$field_name='';
-		
-		if($pos_dot!==false)
-		{
-		
-			//The model need to be loading previously.
-			
-			//substr ( string $string , int $start [, int $length ] )
-			
-			$model_name=substr($field, 0, $pos_dot);
-			$field_name=substr($field, $pos_dot+1);
-			
-			$field_select='`'.$model_name.'`.`'.$field_name.'`';
-		
-		}
-		else
-		{
-			
-			$model_name=$class->name;
-			$field_name=$field;
-			
-			$field_select='`'.$class->name.'`.`'.$field.'`';
-			
-		}
-		
-		return array($field_select, $model_name, $field_name);
-
-	}
-
-}
+load_libraries(array('fields/corefields'));
+load_libraries(array('forms/coreforms'));
 
 ?>

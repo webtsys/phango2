@@ -15,7 +15,7 @@ class ShowMediaSwitchClass extends ControllerSwitchClass {
 		
 		$this->container_theme=PhangoVar::$module_theme;
 		
-		parent::__construct();
+		//parent::__construct();
 	
 	}
 	
@@ -108,17 +108,6 @@ class ShowMediaSwitchClass extends ControllerSwitchClass {
 			$check_file=1;
 		
 		}
-		
-		/*$finfo = finfo_open(FILEINFO_MIME_TYPE);
-		$type_mime=finfo_file($finfo, $file_path);
-		finfo_close($finfo);
-		
-		if($type_mime=='text/x-c')
-		{
-		
-			$type_mime='text/css';
-		
-		}*/
 		
 		$ext_info=pathinfo($media_file);
 		
