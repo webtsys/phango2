@@ -2200,11 +2200,21 @@ class ModelForm {
 }
 
 /**
+* A New class for use methods and not switchs for complex controllers how was build on phango older versions. 
 *
-* A New class for use methods and not switchs for complex controllers. 
+* This class is the base for create controllers and actions directed by a PhangoVar::$urls.
 *
-* 
+* @example
 *
+* class MyAppSwitchClass extends ControllerSwitchClass {
+*
+*   public function index($argument_from_url) 
+* 	{
+*
+*		echo 'This is a content';
+*
+*	}
+*}
 */
 
 class ControllerSwitchClass {
@@ -2229,6 +2239,11 @@ class ControllerSwitchClass {
 		$this->controller=&PhangoVar::$script_controller;
 	
 	}*/
+	
+	/**
+	* A simple method for obtain an url in the acual controller
+	*
+	*/
 	
 	public function get_method_url($method, $arr_parameters=array(), $arr_extra_parameters=array())
 	{

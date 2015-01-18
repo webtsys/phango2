@@ -46,22 +46,12 @@ function down_table_config()
 * Function  used for show pagination on a table.
 * @param string $pages A string from a pagination function
 * @param string $more data If you want add more data, fill this element.
-* @note Need split view and the php function
 */
 
 function pages_table($pages, $more_data='')
 {
 	
-	?>
-	<div class="head_list">
-		<?php echo PhangoVar::$lang['common']['pages']; ?>: <?php echo $pages; ?>
-	</div>
-
-	<div class="head_list_right">
-		<?php echo $more_data; ?>
-	</div>
-	<?php
-	
+	echo load_view(array(), 'common/table_config/pagestable');
 
 }
 

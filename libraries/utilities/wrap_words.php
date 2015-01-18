@@ -3,10 +3,14 @@
 /**
 *
 * @author  Antonio de la Rosa <webmaster@web-t-sys.com>
-* @file
+* @file wrap_words.php
 * @package ExtraUtils/Text
 *
 *
+*/
+
+/**
+* Function used for wrap words..., :P
 */
 
 function wrap_words($text, $num_words, $text_explain='...', $yes_more_ever=0)

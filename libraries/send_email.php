@@ -48,7 +48,8 @@ function send_mail($email, $subject, $message, $content_type='plain', $bcc='', $
 	
 	case 'swiftmailer':
 		
-		require_once PhangoVar::$base_path.'libraries/mailers/swiftmailer/lib/swift_required.php';
+		//require_once PhangoVar::$base_path.'libraries/mailers/swiftmailer/lib/swift_required.php';
+		load_libraries(array('lib/swift_required'), PhangoVar::$addons_composer_path.'/swiftmailer/swiftmailer/');
 		
 		// Transport
 		

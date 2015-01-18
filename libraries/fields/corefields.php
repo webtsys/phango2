@@ -5,8 +5,6 @@
 * @file
 * @package CoreFields
 *
-* Now, we define components for use in models. Components are fields on a table.
-*
 */
 
 /**
@@ -153,9 +151,9 @@ class PhangoField {
 }
 
 /**
-* 
 * CharField is a PhangoField that define a varchar element in the model-table.
 * 
+* A simple PhangoField that define in the database a varchar element with the size that you like.
 */
 
 class CharField extends PhangoField {
@@ -166,12 +164,6 @@ class CharField extends PhangoField {
 	* Size of field in database
 	*/
 	public $size=20;
-	
-	/**
-	* Form define the function for use in forms...
-	* @deprecated Used on older versions of generate_admin
-	*/
-	public $set_form="";
 	
 
 	/**
@@ -216,8 +208,11 @@ class CharField extends PhangoField {
 
 
 }
-//Selections always integers
-//PrimaryField is used for primary keys for models
+/**
+* PrimaryField is used for primary keys for models
+*
+* PrimaryField is the most important and the only component used by default for models.
+*/
 
 class PrimaryField extends PhangoField {
 	
@@ -244,13 +239,6 @@ class PrimaryField extends PhangoField {
 	*/
 	
 	public $form="HiddenForm";
-	
-	/**
-	* @deprecated Value used on older versions for created admins on phango.
-	*
-	*/
-	
-	public $set_form="list_value";
 
 	/**
 	* Check function that convert the value on a PrimaryField value.
@@ -291,7 +279,11 @@ class PrimaryField extends PhangoField {
 
 }
 
-///Integerfield is a field for integers values.
+/**
+* Integerfield is a field for integers values.
+* 
+* 
+*/
 
 class IntegerField extends PhangoField {
 
@@ -308,7 +300,6 @@ class IntegerField extends PhangoField {
 
 		$this->size=$size;
 		$this->form='TextForm';
-		$this->set_form='list_value';
 		$this->only_positive=$only_positive;
 		$this->min_num=$min_num;
 		$this->max_num=$max_num;
@@ -383,7 +374,6 @@ class BooleanField extends PhangoField {
 	public $label="";
 	public $required=0;
 	public $form="";
-	public $set_form='';
 	public $quot_open='\'';
 	public $quot_close='\'';
 	public $std_error='';
@@ -394,7 +384,6 @@ class BooleanField extends PhangoField {
 
 		$this->size=1;
 		$this->form='SelectForm';
-		$this->set_form='list_value';
 
 	}
 
@@ -470,7 +459,6 @@ class DoubleField extends PhangoField {
 	public $label="";
 	public $required=0;
 	public $form="";
-	public $set_form='';
 	public $quot_open='\'';
 	public $quot_close='\'';
 	public $std_error='';
@@ -480,7 +468,6 @@ class DoubleField extends PhangoField {
 
 		$this->size=$size;
 		$this->form='TextForm';
-		$this->set_form='list_value';
 
 	}
 
@@ -528,7 +515,6 @@ class ChoiceField extends PhangoField {
 	public $label="";
 	public $required=0;
 	public $form="";
-	public $set_form='';
 	public $quot_open='\'';
 	public $quot_close='\'';
 	public $std_error='';
@@ -677,7 +663,6 @@ class TextField extends PhangoField {
 	public $label="";
 	public $required=0;
 	public $form="TextAreaForm";
-	public $set_form='list_value';
 	public $quot_open='\'';
 	public $quot_close='\'';
 	public $std_error='';
@@ -739,7 +724,6 @@ class TextHTMLField extends PhangoField {
 	public $label="";
 	public $required=0;
 	public $form="TextAreaForm";
-	public $set_form='list_value';
 	public $quot_open='\'';
 	public $quot_close='\'';
 	public $std_error='';
@@ -859,7 +843,6 @@ class SerializeField extends PhangoField {
 	public $label="";
 	public $required=0;
 	public $form="TextForm";
-	public $set_form='list_serialize';
 	public $quot_open='\'';
 	public $quot_close='\'';
 	public $std_error='';
@@ -1002,7 +985,6 @@ class DateField extends PhangoField {
 	public $required=0;
 	public $form="";
 	public $label="";
-	public $set_form='';
 	public $quot_open='\'';
 	public $quot_close='\'';
 	public $set_default_time=0;
@@ -1013,7 +995,6 @@ class DateField extends PhangoField {
 
 		$this->size=$size;
 		$this->form='DateForm';
-		$this->set_form='list_date';
 
 	}
 
@@ -1752,7 +1733,6 @@ class KeyField extends PhangoField {
 	public $label="";
 	public $required=0;
 	public $form="";
-	public $set_form='';
 	public $quot_open='\'';
 	public $quot_close='\'';
 	public $fields=array();
@@ -1766,7 +1746,6 @@ class KeyField extends PhangoField {
 
 		$this->size=$size;
 		$this->form='TextForm';
-		$this->set_form='list_value';
 
 	}
 
@@ -2110,7 +2089,6 @@ class EmailField extends PhangoField {
 	public $value="";
 	public $label="";
 	public $form="TextForm";
-	public $set_form="";
 	public $class="";
 	public $required=0;
 	public $quot_open='\'';
@@ -2121,7 +2099,6 @@ class EmailField extends PhangoField {
 	{
 
 		$this->size=$size;
- 		$this->set_form='list_value';
 
 	}
 
