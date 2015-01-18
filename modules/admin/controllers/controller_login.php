@@ -26,7 +26,7 @@ class LoginSwitchClass extends ControllerSwitchClass {
 		
 		$this->login->field_key='token_client';
 	
-		parent::__construct();
+		# parent::__construct();
 	
 	}
 
