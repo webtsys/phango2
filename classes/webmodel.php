@@ -14,8 +14,12 @@
 
 // First, define basic variables
 
-//Class for basic variables for phango. 
-//This variables is used for internal functions in phango
+/**
+* Class for basic variables for phango. 
+*
+* This variables are used for basic configuration of phango
+* 
+*/
 
 class PhangoVar {
 
@@ -2256,6 +2260,11 @@ class ControllerSwitchClass {
 	
 	}
 	
+	/**
+	* A method for make a redirect based on a theme
+	*
+	*/
+	
 	public function redirect($direction,$l_text,$text,$ifno)
 	{
 		
@@ -2264,12 +2273,23 @@ class ControllerSwitchClass {
 	
 	}
 	
+	/**
+	* A method for make a redirect based on a theme
+	*
+	*/
+	
 	public function load_theme($title, $cont_index)
 	{
 		
 		echo load_view(array($title, $cont_index),'home');
 	
 	}
+	
+	/**
+	* A method for make a silenced redirect
+	* 
+	* 
+	*/
 	
 	public function simple_redirect($url)
 	{
@@ -2283,7 +2303,6 @@ class ControllerSwitchClass {
 }
 
 /**
-*
 * A simple class for create where strings with checking.
 *
 * With this extension, you can create sql strings for use on where parameter of select method from Webmodel.
@@ -2291,7 +2310,10 @@ class ControllerSwitchClass {
 * Example ['AND']->array( 'field' => array('!=', 25), 'field2' => array('=', 'value_field'), 'field3' => array('LIKE', 'value_field'), 'field4' => array('IN',  array('1','2','3'), 'limit_sql' => array('LIMIT', array(1, 10), 'order_by' => array('order_fieldY', 'ASC'
 ))
 * 
-* You can join differents sql sentences 
+*You can join differents sql sentences 
+*
+* @warning Phango developers recommend use Webmodel::check_where_sql method on a simple sql string
+*
 */
 
 class WhereSql {
@@ -2316,22 +2338,6 @@ class WhereSql {
 	{
 	
 		$arr_to_glued=array();
-		
-		/*
-		$arr_conditions['union1_AND']['AND'][]=array('moderator' => array('=', $arr_user['IdUser_admin']));
-		$arr_conditions['union1_AND']['AND'][]=array('moderator' => array('!=', 0));
-		$arr_conditions['union1_AND']['OR'][]=array('moderator' => array('!=', 0));
-		$arr_conditions['union1_AND']['AND'][]=array('moderator' => array('=', $arr_user['IdUser_admin']));
-		
-		$arr_conditions['union2_OR']['AND'][]=array('moderator' => array('=', $arr_user['IdUser_admin']));
-		$arr_conditions['union2_OR']['OR'][]=array('moderator' => array('!=', 1));
-		$arr_conditions['union2_OR']['AND'][]=array('moderator' => array('=', '25'));
-		
-		$where_class->order_by[]=array('field' => 'moderator', 'order' => 'ASC');
-		$where_class->order_by[]=array('field' => 'moderator', 'order' => 'ASC');
-		
-		$where_class->limit=array(0, 25);
-		*/
 		
 		$arr_define_sql=array();
 		
