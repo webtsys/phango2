@@ -36,8 +36,6 @@ PhangoVar::$lang['common']['order']='Orden';
 
 PhangoVar::$lang['common']['no_exists_elements_to_order']='No existe elemento a ordenar';
 
-PhangoVar::$lang['common']['pages']='Páginas';
-
 PhangoVar::$lang['common']['no_element_chosen']='No se ha elegido ningún elemento';
 
 PhangoVar::$lang['common']['delete_file']='Borrar archivo';
@@ -85,6 +83,8 @@ PhangoVar::$lang['common']['the_value_can_not_be_greater_than_100']='El valor no
 PhangoVar::$lang['common']['home']='Home';
 
 PhangoVar::$lang['common']['options']='Opciones';
+
+PhangoVar::$lang['common']['pages']='Páginas';
 
 PhangoVar::$lang['common']['login']='Identificarse';
 

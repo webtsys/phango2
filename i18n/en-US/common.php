@@ -36,8 +36,6 @@ PhangoVar::$lang['common']['order']='order';
 
 PhangoVar::$lang['common']['no_exists_elements_to_order']='no_exists_elements_to_order';
 
-PhangoVar::$lang['common']['pages']='pages';
-
 PhangoVar::$lang['common']['no_element_chosen']='Any item no chosen';
 
 PhangoVar::$lang['common']['delete_file']='delete_file';
@@ -85,6 +83,8 @@ PhangoVar::$lang['common']['the_value_can_not_be_greater_than_100']='the_value_c
 PhangoVar::$lang['common']['home']='home';
 
 PhangoVar::$lang['common']['options']='options';
+
+PhangoVar::$lang['common']['pages']='pages';
 
 PhangoVar::$lang['common']['login']='login';
 

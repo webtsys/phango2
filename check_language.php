@@ -174,87 +174,100 @@ function check_i18n_file($file_path)
 				
 				$pos=strpos($module_path, "_");
 				//echo $module_path."\n";
+				
+				$yes_check_file=1;
+				
 				if($pos!==false)
 				{
-
+				
 					$arr_path=explode('_', $module_path);
 
 					$module_path=$arr_path[0];
 					
-				}
-
-				if(file_exists(PhangoVar::$base_path.'/modules/'.$module_path))
-				{
-
-					/*foreach(PhangoVar::$arr_i18n as $lang_dir) 
-					{*/
-
-					if(!file_exists(PhangoVar::$base_path.'/modules/'.$module_path.'/i18n/'.$language)) 
+					if($arr_path[1]=='admin')
 					{
-						//echo PhangoVar::$base_path.'/modules/'.$lang_file.'/i18n/'.$language;
-						mkdir(PhangoVar::$base_path.'/modules/'.$module_path.'/i18n/'.$language, 0755, true);
-
+					
+						$yes_check_file=0;
+					
 					}
-
-					//}
-
-					$path_lang_file=PhangoVar::$base_path.'/modules/'.$module_path.'/i18n/'.$language.'/'.$lang_file.'.php';
-
+					
 				}
 				
-				include($path_lang_file);
-					
-				//print_r($lang);
-					
-				$arr_file_lang=array("<?php\n\n");
+				if($yes_check_file==1)
+				{
 
-				foreach(PhangoVar::$lang[$lang_file] as $key_trad => $trad) 
-				{
-					
-					$arr_file_lang[]="PhangoVar::\$lang['".$lang_file."']['".$key_trad."']='".str_replace("'", "\'", $trad)."';\n\n";
-					
-				}
-					
-				/*foreach($lang as $file_lang => $value_lang) 
-				{
-					
-					foreach($value_lang as $key_trad => $trad) 
+					if(file_exists(PhangoVar::$base_path.'/modules/'.$module_path))
 					{
+
+						/*foreach(PhangoVar::$arr_i18n as $lang_dir) 
+						{*/
+
+						if(!file_exists(PhangoVar::$base_path.'/modules/'.$module_path.'/i18n/'.$language)) 
+						{
+							//echo PhangoVar::$base_path.'/modules/'.$lang_file.'/i18n/'.$language;
+							mkdir(PhangoVar::$base_path.'/modules/'.$module_path.'/i18n/'.$language, 0755, true);
+
+						}
+
+						//}
+
+						$path_lang_file=PhangoVar::$base_path.'/modules/'.$module_path.'/i18n/'.$language.'/'.$lang_file.'.php';
+
+					}
 					
-						$arr_file_lang[]="\$lang['".$file_lang."']['".$key_trad."']='".$trad."';\n\n";
+					include($path_lang_file);
+						
+					//print_r($lang);
+						
+					$arr_file_lang=array("<?php\n\n");
+
+					foreach(PhangoVar::$lang[$lang_file] as $key_trad => $trad) 
+					{
+						
+						$arr_file_lang[]="PhangoVar::\$lang['".$lang_file."']['".$key_trad."']='".str_replace("'", "\'", $trad)."';\n\n";
 						
 					}
+						
+					/*foreach($lang as $file_lang => $value_lang) 
+					{
+						
+						foreach($value_lang as $key_trad => $trad) 
+						{
+						
+							$arr_file_lang[]="\$lang['".$file_lang."']['".$key_trad."']='".$trad."';\n\n";
+							
+						}
+						
+					}*/
 					
-				}*/
-				
-				$arr_file_lang[]="?>\n";
-				
-				$file=fopen ($path_lang_file, 'w');
-				
-				if($file!==false) 
-				{
-				
-					echo "--->Writing in this file: ".$path_lang_file."...\n";
-				
-					if(fwrite($file, implode('', $arr_file_lang))==false) 
+					$arr_file_lang[]="?>\n";
+					
+					$file=fopen ($path_lang_file, 'w');
+					
+					if($file!==false) 
+					{
+					
+						echo "--->Writing in this file: ".$path_lang_file."...\n";
+					
+						if(fwrite($file, implode('', $arr_file_lang))==false) 
+						{
+						
+							echo "I cannot open this file: $path_lang_file\n";
+							die;
+						
+						}
+					
+						fclose($file);
+					
+					}
+					else
 					{
 					
 						echo "I cannot open this file: $path_lang_file\n";
 						die;
 					
 					}
-				
-					fclose($file);
-				
 				}
-				else
-				{
-				
-					echo "I cannot open this file: $path_lang_file\n";
-					die;
-				
-				}
-				
 			}
 		
 			

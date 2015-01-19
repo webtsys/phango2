@@ -10,6 +10,7 @@ class LoginSwitchClass extends ControllerSwitchClass {
 
 	public function __construct()
 	{
+	
 		$this->login=new LoginClass('user_admin', 'username', 'password', '', $arr_user_session=array('IdUser_admin', 'privileges_user'), $arr_user_insert=array('username', 'password', 'repeat_password', 'email'));
 	
 		$this->login->field_name='username';
@@ -170,7 +171,7 @@ class LoginSwitchClass extends ControllerSwitchClass {
 			
 				if($this->login->create_account())
 				{
-				
+					
 					$url_return=make_fancy_url(PhangoVar::$base_url, ADMIN_FOLDER, 'login');
 			
 					$this->simple_redirect($url_return);

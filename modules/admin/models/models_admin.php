@@ -11,7 +11,7 @@ PhangoVar::$model['user_admin']->set_component('password', 'PasswordField', arra
 
 PhangoVar::$model['user_admin']->set_component('email', 'EmailField', array(255), 1);
 
-PhangoVar::$model['user_admin']->set_component('privileges_user', 'ChoiceAdminField', array($size=11, $type='string', $arr_values=array(0, 1), $default_value=1));
+PhangoVar::$model['user_admin']->set_component('privileges_user', 'ChoiceAdminField', array($size=11, $type='integer', $arr_values=array(0, 1), $default_value=1));
 
 PhangoVar::$model['user_admin']->set_component('token_client', 'CharField', array(255));
 
