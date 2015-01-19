@@ -299,6 +299,8 @@ class PhangoVar {
 
 	/**
 	* An internal variable used for save the actual module that is used for construct the base directory for controllers.
+	*
+	* A module CANNOT use underscores. If you need have i18n files for distinct identifier on the same module, check_language.php use underscores for detect father ident and children ident.
 	*/
 	
 	static public $script_module='';

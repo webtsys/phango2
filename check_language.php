@@ -2,6 +2,7 @@
 <?php
 //Little script for create variables for i18n files.
 //Format variable Lang: lang['file']['variable']
+//For others languages used
 include('classes/webmodel.php');
 include('config.php');
 //
