@@ -113,6 +113,18 @@ update_table(PhangoVar::$model);
 
 //add_module($arr_padmin_mod);
 
+//Here execute a php script with post_install function, for example, populating data.
+
+$post_install_script=PhangoVar::$base_path.'modules/'.$argv[1].'/install/post_install.php';
+
+if(file_exists($post_install_script))
+{
+	include($post_install_script);
+
+	post_install();
+
+}
+
 ob_end_flush();
 
 ?>
