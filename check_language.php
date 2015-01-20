@@ -5,6 +5,9 @@
 //For others languages used
 include('classes/webmodel.php');
 include('config.php');
+
+//Need redirect stderr.
+
 //
 
 echo "This script create language files...\n";

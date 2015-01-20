@@ -8,11 +8,11 @@ include('classes/webmodel.php');
 include('config.php');
 //Load extra libraries
 
-load_libraries(array('fields/corefields'));
-load_libraries(array('forms/coreforms'));
+load_libraries(array('database/'.TYPE_DB), PhangoVar::$base_path);
+load_libraries(array('fields/corefields', 'forms/coreforms', 'update_table'));
 
-include('database/'.TYPE_DB.'.php');
-include('libraries/update_table.php');
+/*include_once('database/'.TYPE_DB.'.php');
+include_once('libraries/update_table.php');*/
 
 load_urls();
 
@@ -28,7 +28,6 @@ PhangoVar::$model=array();
 
 if($argc<2)
 {
-
 
 	die("Use: php padmin.php model [file_model]\n");
 
@@ -117,13 +116,42 @@ update_table(PhangoVar::$model);
 
 $post_install_script=PhangoVar::$base_path.'modules/'.$argv[1].'/install/post_install.php';
 
-if(file_exists($post_install_script))
+$post_install_lock=PhangoVar::$base_path.'modules/'.$argv[1].'/install/lock';
+
+if(file_exists($post_install_script) && !file_exists($post_install_lock))
 {
+
+	echo "Executing post_install script...\n";
+
 	include($post_install_script);
 
-	post_install();
+	if(post_install())
+	{
+	
+		if(!file_put_contents($post_install_lock, 'installed'))
+		{
+		
+			echo "Done, but cannot create this file: ".$post_install_lock.". Check your permissions and create the file if the script executed satisfactorally \n";
+		
+		}
+		else
+		{
+		
+			echo "Done\n";
+		
+		}
+	
+	}
+	else
+	{
+	
+		echo "Error, please, check ${post_install_script} file and execute padmin.php again\n";
+	
+	}
 
 }
+
+echo "All things done\n";
 
 ob_end_flush();
 

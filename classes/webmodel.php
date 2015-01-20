@@ -673,7 +673,8 @@ class Webmodel {
 	public function connect_to_db()
 	{
 		
-		include(PhangoVar::$base_path.'database/'.TYPE_DB.'.php');
+		//include(PhangoVar::$base_path.'database/'.TYPE_DB.'.php');
+		load_libraries(array('database/'.TYPE_DB), PhangoVar::$base_path);
 	
 		if(!webtsys_connect( PhangoVar::$host_db[$this->db_selected], PhangoVar::$login_db[$this->db_selected], PhangoVar::$pass_db[$this->db_selected] , $this->db_selected))
 		{
@@ -3560,7 +3561,7 @@ function load_lang()
 			
 			$file_path=PhangoVar::$base_path.'modules/'.$module_path.'/i18n/'.PhangoVar::$language.'/'.$lang_file.'.php';
 			
-			if(!include($file_path))
+			if(!@include($file_path))
 			{
 
 				$output_error_lang=ob_get_contents();

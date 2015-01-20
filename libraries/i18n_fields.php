@@ -64,6 +64,30 @@ class I18nField extends PhangoField {
 		return $ser_value;
 
 	}
+	
+	/*static function set_valid_value($value, $language, $arr_lang)
+	{
+	
+		$arr_lang[$language]=$value;
+		
+		return $arr_lang;
+	
+	}
+	
+	static function set_valid_arr_value($arr_value)
+	{
+		$arr_lang=array();
+	
+		foreach($arr_value as $lang => $value)
+		{
+		
+			$arr_lang=I18nField::set_valid_value($value, $language, $arr_lang);
+		
+		}
+		
+		return $arr_lang;
+	
+	}*/
 
 	function get_type_sql()
 	{
