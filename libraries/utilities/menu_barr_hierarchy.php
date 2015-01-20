@@ -168,6 +168,8 @@ function show_menu_barr()
 
 }
 
+//$arr_menu[0]=array('url_folder' => 'url_folder', 'url_ident' => 'url_ident')
+
 
 
 //$arr_menu[0]=array('module' => 'module', 'controller' => 'controller', 'text' => 'text', 'name_op' => , 'params' => array())

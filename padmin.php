@@ -11,6 +11,8 @@ include('config.php');
 load_libraries(array('database/'.TYPE_DB), PhangoVar::$base_path);
 load_libraries(array('fields/corefields', 'forms/coreforms', 'update_table'));
 
+load_lang('common', 'error_model');
+
 /*include_once('database/'.TYPE_DB.'.php');
 include_once('libraries/update_table.php');*/
 
