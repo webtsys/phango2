@@ -117,6 +117,8 @@ class GenerateAdminClass {
 				
 				$listmodel->url_back=$this->url_back;
 				
+				$listmodel->arr_fields_no_showed=$this->arr_fields_no_showed;
+				
 				if($listmodel->url_back=='')
 				{
 					
@@ -656,6 +658,8 @@ class ListModelClass {
 			$list=new SimpleList($this->model_name);
 			
 			$list->arr_fields=$this->arr_fields;
+			
+			$list->arr_fields_no_showed=$this->arr_fields_no_showed;
 			
 			if($this->yes_id)
 			{
