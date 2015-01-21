@@ -1785,7 +1785,7 @@ class Webmodel {
 	* This method is used for checking if you prefer strings for where_sql.
 	*/
 	
-	static public function check_where_sql($name_component, $value)
+	public function check_where_sql($name_component, $value)
 	{
 	
 		return $this->components[$name_component]->check($value);
