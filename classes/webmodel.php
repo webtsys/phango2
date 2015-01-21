@@ -4142,7 +4142,7 @@ function load_controller()
 	
 	foreach($arr_set_get as $key_check)
 	{
-	
+		
 		$_GET[$key_check]=urldecode(slugify(substr($_GET[$key_check], 0, 255), 1));
 	
 	}
@@ -4187,72 +4187,16 @@ function load_controller()
 		
 		$arr_uri=explode('/', $request_uri);
 		
+		//Cjeck arr_uri
+		
 		foreach($arr_uri as $key_uri => $uri)
 		{
 		
-			$arr_uri[$key_uri]=basename($uri);
+			$arr_uri[$key_uri]=basename(slugify($uri, 1));
 		
 		}
 		
 		$search_in=$arr_uri[0];
-		
-		/*if(isset(PhangoVar::$urls[$search_in]))
-		{
-		
-			//$arr_search_in=explode('/', $search_in);
-			
-			if(!isset($arr_uri[1]))
-			{
-				
-				$module=$search_in;
-				
-				$controller='index';
-				
-				$action='index';
-			
-			}
-			else
-			{
-			
-				//make a foreach with all components of urls. 
-			
-			}
-			
-			PhangoVar::$script_module=$module;
-			
-			PhangoVar::$script_controller=$controller;
-			
-			PhangoVar::$script_action=$action;
-			
-			//Obtain get parameters.
-			
-			//Prepare string
-			
-			$arr_param['string']='slugify_get';
-			$arr_param['integer']='integer_get';
-			
-			$str_param=implode('|', array_keys($arr_url['parameters']));
-			
-			$str_parameters=preg_replace($pattern, $str_param, $request_uri);
-			
-			PhangoVar::$get=explode('|', $str_parameters);
-			
-			$z=0;
-			
-			foreach($arr_url['parameters'] as $key => $value)
-			{
-			
-				$check_param_func=$arr_param[ $value ];
-				
-				PhangoVar::$get[$z]=$check_param_func(PhangoVar::$get[$z]);
-			
-				$z++;
-			
-			}
-			
-			PhangoVar::$actual_url=array($search_in, $ident_url);
-		
-		}*/
 		
 		$yes_match=0;
 		
@@ -4323,21 +4267,9 @@ function load_controller()
 		if($yes_match==0)
 		{
 		
-			//echo $request_uri; die;
-			//Format without pretty urls is : module/folder_controler/folder_controller/controller => module/controllers/folder_controller/folder_controller/controller
-			//If is root folder search controller_index.index_php
-			
-			/*print_r($arr_uri);
-			die;*/
-			//Need action get and 
-			
-			/*if(count($arr_uri<3))
-			{
-			
-				//
-			
-			}*/
-			//$controller_path=
+			//Format without pretty urls
+			//Url example: https://www.example.com/index.php/wserver2/debian/wheezy/webserver/apache -> /home/repos/wserver2/modules/wserver2/controllers/debian/wheezy/webserver/controller_apache.php
+			//For action you need add https://www.example.com/index.php/wserver2/debian/wheezy/webserver/apache/get/action/action_method
 			
 			PhangoVar::$script_module=$arr_uri[0];
 			
@@ -4349,28 +4281,12 @@ function load_controller()
 			}
 			else
 			{
-			
-				$arr_get_controller=array_slice($arr_uri, 1, count($arr_uri)-1);
+				
+				$arr_get_controller=array_slice($arr_uri, 1, count($arr_uri));
 				
 				PhangoVar::$script_controller=implode('/', $arr_get_controller);
 				
 			}
-			
-			/*if(count($arr_uri)>2)
-			{
-			
-				PhangoVar::$script_controller=$controller;
-						
-				//PhangoVar::$script_action=$action;
-				
-			}
-			else
-			{
-			
-				
-			
-			}*/
-			
 			
 			if(!isset($_GET['action']))
 			{
@@ -4416,12 +4332,14 @@ function load_controller()
 		
 		$arr_controller=explode('/', PhangoVar::$script_controller);
 		
-		$folder_controller=basename($arr_controller[0]).'/';
+		$c_controller=count($arr_controller)-1;
 		
-		PhangoVar::$script_controller=$arr_controller[1];
+		$folder_controller=implode('/', array_slice($arr_controller, 0, $c_controller)).'/';
+		
+		PhangoVar::$script_controller=$arr_controller[$c_controller];
 	
 	}
-	echo PhangoVar::$base_path.'modules/'.PhangoVar::$script_module.'/controllers/'.$folder_controller.'controller_'.PhangoVar::$script_controller.'.php';
+	
 	if(in_array(PhangoVar::$script_module, PhangoVar::$activated_modules)) 
 	{
 		
@@ -4436,6 +4354,13 @@ function load_controller()
 			if(class_exists($script_class_name))
 			{
 			
+				$p = new  ReflectionMethod($script_class_name, PhangoVar::$script_action); 
+				
+				//print_r($p); die;
+				$num_parameters=$p->getNumberOfRequiredParameters();
+				
+				//print_r($p->getParameters());
+			
 				if(isset(PhangoVar::$get[0]))
 				{
 					if(PhangoVar::$get[0]=='')
@@ -4446,24 +4371,55 @@ function load_controller()
 					}
 				}
 				
+				foreach($p->getParameters() as $parameter)
+				{
+				
+					if(isset($_GET[$parameter->name]))
+					{
+					
+						PhangoVar::$get[$parameter->name]=$_GET[$parameter->name];
+					
+					}
+				
+				}
+				
 				$script_class=new $script_class_name();
 				
-				if(call_user_func_array(array($script_class, PhangoVar::$script_action), PhangoVar::$get)===false)
+				if(count(PhangoVar::$get)==$num_parameters)
+				{
+				
+					if(call_user_func_array(array($script_class, PhangoVar::$script_action), PhangoVar::$get)===false)
+					{
+					
+						$output=ob_get_contents();
+
+						ob_clean();
+
+						$arr_no_controller[0]='<p>Don\'t exist controller method</p>';
+						$arr_no_controller[1]='<p>Don\'t exist '.PhangoVar::$script_action.' on <strong>'.$path_script_controller.'.php</strong></p>';
+
+						echo show_error($arr_no_controller[0], $arr_no_controller[1], $output_external=$output);
+						
+						die;
+					
+					}
+			
+				}
+				else
 				{
 				
 					$output=ob_get_contents();
 
-					ob_clean();
+						ob_clean();
 
-					$arr_no_controller[0]='<p>Don\'t exist controller method</p>';
-					$arr_no_controller[1]='<p>Don\'t exist '.PhangoVar::$script_action.' on <strong>'.$path_script_controller.'.php</strong></p><p>Output: '.$output.'</p>';
+						$arr_no_controller[0]='<p>Incorrent num of parameters</p>';
+						$arr_no_controller[1]='<p>Incorrent num of parameters in '.PhangoVar::$script_action.' from <strong>'.$path_script_controller.'.php</strong></p>';
 
-					echo show_error($arr_no_controller[0], $arr_no_controller[1], $output_external=$output);
-					
-					die;
+						echo show_error($arr_no_controller[0], $arr_no_controller[1], $output_external=$output);
+						
+						die;
 				
 				}
-			
 			
 			}
 			else 
