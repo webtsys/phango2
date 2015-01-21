@@ -4101,6 +4101,8 @@ function load_controller()
 	
 	$arr_extra_get=explode('/get/', $request_uri);
 	
+	$arr_name_get=array();
+	
 	if(isset($arr_extra_get[1]))
 	{
 	
@@ -4125,12 +4127,23 @@ function load_controller()
 				//Cut big variables...
 
 				$_GET[$arr_variables[$x]]=urldecode(slugify(substr($arr_variables[$x+1], 0, 255), 1));
+				
+				$arr_name_get[]=$arr_variables[$x];
 
 			}
 
 		}
-		
-		
+	
+	}
+	
+	$arr_key_get=array_keys($_GET);
+	
+	$arr_set_get=array_diff($arr_key_get, $arr_name_get);
+	
+	foreach($arr_set_get as $key_check)
+	{
+	
+		$_GET[$key_check]=urldecode(slugify(substr($_GET[$key_check], 0, 255), 1));
 	
 	}
 	
@@ -4165,7 +4178,21 @@ function load_controller()
 	
 		//Search in 
 		
+		if($request_uri[strlen($request_uri)-1]=='/')
+		{
+		
+			$request_uri=substr($request_uri, 0, -1);
+		
+		}
+		
 		$arr_uri=explode('/', $request_uri);
+		
+		foreach($arr_uri as $key_uri => $uri)
+		{
+		
+			$arr_uri[$key_uri]=basename($uri);
+		
+		}
 		
 		$search_in=$arr_uri[0];
 		
@@ -4227,10 +4254,10 @@ function load_controller()
 		
 		}*/
 		
+		$yes_match=0;
+		
 		if(isset(PhangoVar::$urls[$search_in]))
 		{
-		
-			$yes_match=0;
 		
 			foreach(PhangoVar::$urls[$search_in] as $ident_url => $arr_url)
 			{
@@ -4292,6 +4319,71 @@ function load_controller()
 			}
 			
 		}
+		
+		if($yes_match==0)
+		{
+		
+			//echo $request_uri; die;
+			//Format without pretty urls is : module/folder_controler/folder_controller/controller => module/controllers/folder_controller/folder_controller/controller
+			//If is root folder search controller_index.index_php
+			
+			/*print_r($arr_uri);
+			die;*/
+			//Need action get and 
+			
+			/*if(count($arr_uri<3))
+			{
+			
+				//
+			
+			}*/
+			//$controller_path=
+			
+			PhangoVar::$script_module=$arr_uri[0];
+			
+			if(!isset($arr_uri[1]))
+			{
+			
+				PhangoVar::$script_controller='index';
+			
+			}
+			else
+			{
+			
+				$arr_get_controller=array_slice($arr_uri, 1, count($arr_uri)-1);
+				
+				PhangoVar::$script_controller=implode('/', $arr_get_controller);
+				
+			}
+			
+			/*if(count($arr_uri)>2)
+			{
+			
+				PhangoVar::$script_controller=$controller;
+						
+				//PhangoVar::$script_action=$action;
+				
+			}
+			else
+			{
+			
+				
+			
+			}*/
+			
+			
+			if(!isset($_GET['action']))
+			{
+			
+				$_GET['action']='index';
+			
+			}
+			else
+			{
+				PhangoVar::$script_action=$_GET['action'];
+			}
+			
+		}
 	
 	}
 	
@@ -4329,7 +4421,7 @@ function load_controller()
 		PhangoVar::$script_controller=$arr_controller[1];
 	
 	}
-	
+	echo PhangoVar::$base_path.'modules/'.PhangoVar::$script_module.'/controllers/'.$folder_controller.'controller_'.PhangoVar::$script_controller.'.php';
 	if(in_array(PhangoVar::$script_module, PhangoVar::$activated_modules)) 
 	{
 		
