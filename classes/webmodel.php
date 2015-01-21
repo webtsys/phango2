@@ -4084,7 +4084,18 @@ function load_controller()
 	
 	$request_uri=$_SERVER['REQUEST_URI'];
 	
-	$request_uri=str_replace(PhangoVar::$cookie_path, '', $request_uri);
+	if(PhangoVar::$cookie_path!='/')
+	{
+	
+		$request_uri=str_replace(PhangoVar::$cookie_path, '', $request_uri);
+		
+	}
+	else
+	{
+	
+		$request_uri=substr($request_uri, 1);
+	
+	}
 	
 	$request_uri=str_replace('index.php/', '', $request_uri);
 	
