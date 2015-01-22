@@ -4145,8 +4145,12 @@ function load_controller()
 	
 	if(PhangoVar::$cookie_path!='/')
 	{
-	
-		$request_uri=str_replace(PhangoVar::$cookie_path, '', $request_uri);
+		
+		$pos=strpos($request_uri, PhangoVar::$cookie_path);
+		
+		$len=strlen(PhangoVar::$cookie_path);
+		
+		$request_uri=substr($request_uri, $len);
 		
 	}
 	else
