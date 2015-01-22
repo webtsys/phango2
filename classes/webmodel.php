@@ -4437,7 +4437,7 @@ function load_controller()
 				
 					foreach($p->getParameters() as $parameter)
 					{
-					
+						
 						if(isset($_GET[$parameter->name]))
 						{
 						

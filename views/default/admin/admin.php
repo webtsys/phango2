@@ -81,6 +81,8 @@ function AdminView($header, $title, $content, $name_modules, $url_modules, $extr
 				</div>
 			</div>
 		</div>
+		<div id="loading_ajax">
+		</div>
 	</body>
 	</html>
 	<?php

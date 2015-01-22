@@ -583,6 +583,13 @@ class LoginClass {
 	
 	}
 	
+	public function obtain_cookie_token()
+	{
+	
+		return $_COOKIE[COOKIE_NAME.'_'.sha1($this->name_cookie)];
+	
+	}
+	
 	
 }
 

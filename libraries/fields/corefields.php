@@ -1779,7 +1779,10 @@ class KeyField extends PhangoField {
 
 }
 
-//ForeignKeyfield is a relantioship between two models...
+/**
+* ForeignKeyfield is a relantioship between two models...
+*
+*/
 
 class ForeignKeyField extends IntegerField{
 
@@ -1790,6 +1793,8 @@ class ForeignKeyField extends IntegerField{
 	public $params_loading_mod=array();
 	public $default_id=0;
 	public $yes_zero=0;
+	public $fields_related_model;
+	public $name_field_to_field;
 	
 	function __construct($related_model, $size=11, $null_relation=1, $default=0)
 	{
