@@ -2903,6 +2903,15 @@ function make_fancy_url($url, $folder_url, $ident_url, $arr_params=array(), $arr
 function make_direct_url($base_url, $module, $controller_folders, $parameters_func=array(), $extra_parameters=array())
 {
 
+	$index_php='/index.php';
+	
+	if(defined('NO_INDEX_PHP'))
+	{
+	
+		$index_php='';
+	
+	}
+
 	$arr_get=array();
 	
 	$url_direct='';
@@ -2921,7 +2930,7 @@ function make_direct_url($base_url, $module, $controller_folders, $parameters_fu
 
 	}
 
-	$url_direct=$base_url.'/'.$module.'/'.$controller_folders;
+	$url_direct=$base_url.$index_php.'/'.$module.'/'.$controller_folders;
 	
 	if(count($arr_get)>0)
 	{
@@ -3511,6 +3520,8 @@ function load_libraries($names, $path='')
 		if(!isset(PhangoVar::$cache_libraries[$library]))
 		{
 		
+			$old_path=$path;
+		
 			if(is_file($path.$library.'.php'))
 			{
 				include($path.$library.'.php');
@@ -3528,7 +3539,7 @@ function load_libraries($names, $path='')
 			
 					$output=ob_get_contents();
 
-					$check_error_lib[1]='Error: Don\'t exists '.$library.'.<p>Output: '.$output.'</p>';
+					$check_error_lib[1]='Error: Don\'t exists '.$library.' on path '.$path.' and path '.$old_path.'<p>Output: '.$output.'</p>';
 					$check_error_lib[0]='Error loading library.';
 
 					ob_end_clean();
