@@ -4,8 +4,10 @@ load_libraries(array('login'));
 load_model('admin');
 load_config('admin');
 
-class IndexSwitchClass extends ControllerSwitchClass {
+class AdminSwitchClass extends ControllerSwitchClass {
 
+
+	static public $login;
 
 	public function index($module_id='none')
 	{
@@ -13,9 +15,9 @@ class IndexSwitchClass extends ControllerSwitchClass {
 
 		//global $model, $lang, PhangoVar::$base_url, PhangoVar::$base_path, $user_data, $arr_module_admin, $config_data, $arr_block, $original_theme, $module_admin, $header;
 		
-		$login=new LoginClass('user_admin', 'username', 'password', '', $arr_user_session=array('IdUser_admin', 'privileges_user', 'username'), $arr_user_insert=array('username', 'password', 'repeat_password', 'email'));
+		AdminSwitchClass::$login=new LoginClass('user_admin', 'username', 'password', '', $arr_user_session=array('IdUser_admin', 'privileges_user', 'username', 'token_client'), $arr_user_insert=array('username', 'password', 'repeat_password', 'email'));
 		
-		$login->field_key='token_client';
+		AdminSwitchClass::$login->field_key='token_client';
 		
 		$header='';
 		$content='';
@@ -34,7 +36,7 @@ class IndexSwitchClass extends ControllerSwitchClass {
 		//Make menu...
 		//Admin was internationalized
 		
-		if($login->check_login())
+		if(AdminSwitchClass::$login->check_login())
 		{
 			
 			//variables for define titles for admin page
@@ -155,7 +157,7 @@ class IndexSwitchClass extends ControllerSwitchClass {
 			
 			$file_include=PhangoVar::$base_path.'modules/'.$arr_admin_script[ $module_id ][0].'/controllers/admin/admin_'.$arr_admin_script[ $module_id ][1].'.php';
 			
-			if($login->session['privileges_user']==1)
+			if(AdminSwitchClass::$login->session['privileges_user']==1)
 			{
 			
 				$arr_permissions_admin=array();
