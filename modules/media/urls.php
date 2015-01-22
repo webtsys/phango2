@@ -11,6 +11,6 @@ PhangoVar::$urls['media']['font']=array('pattern' => '/^media\/font\/(\w+)\/([a-
 PhangoVar::$urls['media']['jscript']=array('pattern' => '/^media\/jscript\/(\w+)\/([a-zA-Z0-9+]+\.{0,2})$/', 'url' => '/media/jscript', 'module' => 'media', 'controller' => 'index', 'action' => 'jscript', 'parameters' => array('$1' => 'string', '$2' => 'string'));
 */
 
-PhangoVar::$urls['media']['show']=array('pattern' => '/^media\/show\/(.*?)\/(.*?)$/', 'url' => '/media/show', 'module' => 'media', 'controller' => 'showmedia', 'action' => 'show', 'parameters' => array('$1' => 'string', '$2' => 'string'));
+PhangoVar::$urls['media']['show']=array('pattern' => '/^media\/show\/(\w+)\/(.*?)$/', 'url' => '/media/show', 'module' => 'media', 'controller' => 'showmedia', 'action' => 'show', 'parameters' => array('$1' => 'string', '$2' => 'string'));
 
 ?>
