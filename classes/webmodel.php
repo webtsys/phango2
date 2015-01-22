@@ -3478,7 +3478,10 @@ function load_extension()
 
 }
 
-//Load libraries, well, simply a elegant include
+/**
+* Load libraries, well, simply a elegant include
+*
+*/ 
 
 function load_libraries($names, $path='')
 {
@@ -3497,7 +3500,7 @@ function load_libraries($names, $path='')
 	if($path=='')
 	{
 
-		$path=PhangoVar::$base_path.'libraries/';
+		$path=PhangoVar::$base_path.'/modules/'.PhangoVar::$script_module.'/libraries/';
 
 	}
 	
@@ -3508,12 +3511,17 @@ function load_libraries($names, $path='')
 		if(!isset(PhangoVar::$cache_libraries[$library]))
 		{
 		
-			if(!include($path.$library.'.php')) 
+			if(is_file($path.$library.'.php'))
 			{
-			
-				//Libraries path
+				include($path.$library.'.php');
 				
-				$path=PhangoVar::$base_path.'/modules/'.PhangoVar::$script_module.'/libraries/';
+				PhangoVar::$cache_libraries[$library]=1;
+				
+			}
+			else
+			{
+				//Libraries path
+				$path=PhangoVar::$base_path.'libraries/';
 				
 				if(!include($path.$library.'.php')) 
 				{
@@ -3536,13 +3544,7 @@ function load_libraries($names, $path='')
 					PhangoVar::$cache_libraries[$library]=1;
 
 				}
-			
-			}
-			else
-			{
-
-				PhangoVar::$cache_libraries[$library]=1;
-
+								
 			}
 
 		}
@@ -3586,7 +3588,7 @@ function load_lang()
 
 			//echo PhangoVar::$base_path.'modules/'.$lang_file.'/i18n/'.PhangoVar::$language.'/'.$lang_file.'.php';
 
-			ob_start();
+			//ob_start();
 
 			$module_path=$lang_file;
 				
@@ -3603,17 +3605,20 @@ function load_lang()
 			
 			$file_path=PhangoVar::$base_path.'modules/'.$module_path.'/i18n/'.PhangoVar::$language.'/'.$lang_file.'.php';
 			
-			if(!@include($file_path))
+			if(is_file($file_path))
+			{
+				include($file_path);
+			}
+			else
 			{
 
-				$output_error_lang=ob_get_contents();
+				//$output_error_lang=ob_get_contents();
 			
 				if(!include(PhangoVar::$base_path.'i18n/'.PhangoVar::$language.'/'.$lang_file.'.php')) 
 				{
 					
 					$output=ob_get_contents();
 				
-					ob_end_clean();
 					ob_end_clean();
 					//'.$output_error_lang.' '.$output.'
 					$check_error_lang[1]='Error: Don\'t exists PhangoVar::$lang['.$lang_file.']variable. Do you execute <strong>check_language.php</strong>?.<p></p>';
@@ -3622,12 +3627,13 @@ function load_lang()
 					/*echo load_view(array('Internationalization error', $check_error_lang[DEBUG]), 'common/common');
 					die();*/
 					show_error($check_error_lang[0], $check_error_lang[1], $output);
+					die;
 				
 				}
 
 			}
 			
-			ob_end_clean();
+			//ob_end_clean();
 
 			PhangoVar::$cache_lang[$lang_file]=1;
 
