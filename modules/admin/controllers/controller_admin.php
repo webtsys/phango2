@@ -38,6 +38,8 @@ class AdminSwitchClass extends ControllerSwitchClass {
 		
 		if(AdminSwitchClass::$login->check_login())
 		{
+		
+			AdminSwitchClass::$login->session['token_client']=sha1(AdminSwitchClass::$login->session['token_client']);
 			
 			//variables for define titles for admin page
 
