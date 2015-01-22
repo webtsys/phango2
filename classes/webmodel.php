@@ -4399,15 +4399,13 @@ function load_controller()
 		{
 			if(class_exists($script_class_name))
 			{
-				$p = new  ReflectionMethod($script_class_name, PhangoVar::$script_action); 
-				
-				//print_r($p); die;
-				$num_parameters=$p->getNumberOfRequiredParameters();
 				
 				//print_r($p->getParameters());
-			
+				
+				$num_parameters=0;
+				
 				if(isset(PhangoVar::$get[0]))
-				{
+				{	
 					if(PhangoVar::$get[0]=='')
 					{
 					
@@ -4415,22 +4413,29 @@ function load_controller()
 					
 					}
 				}
-				
-				foreach($p->getParameters() as $parameter)
+				else
 				{
 				
-					if(isset($_GET[$parameter->name]))
+					$p = new  ReflectionMethod($script_class_name, PhangoVar::$script_action); 
+					
+					$num_parameters=$p->getNumberOfRequiredParameters();
+				
+					foreach($p->getParameters() as $parameter)
 					{
 					
-						PhangoVar::$get[$parameter->name]=$_GET[$parameter->name];
+						if(isset($_GET[$parameter->name]))
+						{
+						
+							PhangoVar::$get[$parameter->name]=$_GET[$parameter->name];
+						
+						}
 					
 					}
-				
 				}
 				
 				$script_class=new $script_class_name();
 				
-				if(count(PhangoVar::$get)==$num_parameters)
+				if(count(PhangoVar::$get)>=$num_parameters)
 				{
 				
 					if(call_user_func_array(array($script_class, PhangoVar::$script_action), PhangoVar::$get)===false)
