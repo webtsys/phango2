@@ -2893,6 +2893,48 @@ function make_fancy_url($url, $folder_url, $ident_url, $arr_params=array(), $arr
 }
 
 /**
+* Function for create direct links to controllers.
+*
+* @param string $base_url The base url of the phango system
+* @param string $module The module used
+* @param string $controller_folders
+*/
+
+function make_direct_url($base_url, $module, $controller_folders, $parameters_func=array(), $extra_parameters=array())
+{
+
+	$arr_get=array();
+	
+	$url_direct='';
+	
+	foreach($parameters_func as $key => $value)
+	{
+
+		$arr_get[]=$key.'/'.$value;
+
+	}
+	
+	foreach($extra_parameters as $key => $value)
+	{
+
+		$arr_get[]=$key.'/'.$value;
+
+	}
+
+	$url_direct=$base_url.'/'.$module.'/'.$controller_folders;
+	
+	if(count($arr_get)>0)
+	{
+	
+		$url_direct.='/get/'.implode('/', $arr_get);
+	
+	}
+	
+	return $url_direct;
+
+}
+
+/**
 * Function used for add get parameters to a well-formed url based on make_fancy_url
 *
 * @param string $url_fancy well-formed url
@@ -4294,10 +4336,8 @@ function load_controller()
 				$_GET['action']='index';
 			
 			}
-			else
-			{
-				PhangoVar::$script_action=$_GET['action'];
-			}
+			
+			PhangoVar::$script_action=$_GET['action'];
 			
 		}
 	
@@ -4353,7 +4393,6 @@ function load_controller()
 		{
 			if(class_exists($script_class_name))
 			{
-			
 				$p = new  ReflectionMethod($script_class_name, PhangoVar::$script_action); 
 				
 				//print_r($p); die;
@@ -4396,7 +4435,7 @@ function load_controller()
 						ob_clean();
 
 						$arr_no_controller[0]='<p>Don\'t exist controller method</p>';
-						$arr_no_controller[1]='<p>Don\'t exist '.PhangoVar::$script_action.' on <strong>'.$path_script_controller.'.php</strong></p>';
+						$arr_no_controller[1]='<p>Don\'t exist '.PhangoVar::$script_action.' on <strong>'.$path_script_controller.'</strong></p>';
 
 						echo show_error($arr_no_controller[0], $arr_no_controller[1], $output_external=$output);
 						
@@ -4413,7 +4452,7 @@ function load_controller()
 						ob_clean();
 
 						$arr_no_controller[0]='<p>Incorrent num of parameters</p>';
-						$arr_no_controller[1]='<p>Incorrent num of parameters in '.PhangoVar::$script_action.' from <strong>'.$path_script_controller.'.php</strong></p>';
+						$arr_no_controller[1]='<p>Incorrent num of parameters in '.PhangoVar::$script_action.' from <strong>'.$path_script_controller.'</strong></p>';
 
 						echo show_error($arr_no_controller[0], $arr_no_controller[1], $output_external=$output);
 						
