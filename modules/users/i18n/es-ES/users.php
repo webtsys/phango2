@@ -1,12 +1,26 @@
 <?php
 
+PhangoVar::$lang['users']['login']='Conectar';
+
+PhangoVar::$lang['users']['name']='name';
+
+PhangoVar::$lang['users']['last_name']='last_name';
+
+PhangoVar::$lang['users']['enterprise_name']='enterprise_name';
+
+PhangoVar::$lang['users']['email']='email';
+
+PhangoVar::$lang['users']['nif']='nif';
+
+PhangoVar::$lang['users']['zip_code']='zip_code';
+
+PhangoVar::$lang['users']['city']='city';
+
 PhangoVar::$lang['users']['username']='Nombre de usuario';
 
 PhangoVar::$lang['users']['privileges_user']='Privilegios';
 
 PhangoVar::$lang['users']['repeat_password']='Repetir password';
-
-PhangoVar::$lang['users']['login']='Conectar';
 
 PhangoVar::$lang['users']['need_class_special']='Necesita una clase especial no cargada, informe al administrador';
 
@@ -59,20 +73,6 @@ PhangoVar::$lang['users']['remember_password']='Recordar contraseña';
 PhangoVar::$lang['users']['register']='Registrar';
 
 PhangoVar::$lang['users']['remember_password_explain']='Por favor, introduzca el email con el que se registró en la web, que será donde reciba su nueva contraseña';
-
-PhangoVar::$lang['users']['name']='name';
-
-PhangoVar::$lang['users']['last_name']='last_name';
-
-PhangoVar::$lang['users']['enterprise_name']='enterprise_name';
-
-PhangoVar::$lang['users']['email']='email';
-
-PhangoVar::$lang['users']['nif']='nif';
-
-PhangoVar::$lang['users']['zip_code']='zip_code';
-
-PhangoVar::$lang['users']['city']='city';
 
 PhangoVar::$lang['users']['users_zone']='Zona de usuarios';
 

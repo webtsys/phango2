@@ -133,7 +133,13 @@ function send_mail($email, $subject, $message, $content_type='plain', $bcc='', $
 		
 		$failures=array();
 		
-		if(!$mailer->send($mail_set, $failures))
+		try {
+		
+			$mailer->send($mail_set, $failures);
+			
+			return 1;
+		}
+		catch(Exception $e)
 		{
 			
 			return 0;

@@ -1,12 +1,26 @@
 <?php
 
+PhangoVar::$lang['users']['login']='login';
+
+PhangoVar::$lang['users']['name']='name';
+
+PhangoVar::$lang['users']['last_name']='last_name';
+
+PhangoVar::$lang['users']['enterprise_name']='enterprise_name';
+
+PhangoVar::$lang['users']['email']='email';
+
+PhangoVar::$lang['users']['nif']='nif';
+
+PhangoVar::$lang['users']['zip_code']='zip_code';
+
+PhangoVar::$lang['users']['city']='city';
+
 PhangoVar::$lang['users']['username']='username';
 
 PhangoVar::$lang['users']['privileges_user']='privileges_user';
 
 PhangoVar::$lang['users']['repeat_password']='repeat_password';
-
-PhangoVar::$lang['users']['login']='login';
 
 PhangoVar::$lang['users']['need_class_special']='need_class_special';
 
@@ -59,20 +73,6 @@ PhangoVar::$lang['users']['remember_password']='remember_password';
 PhangoVar::$lang['users']['register']='register';
 
 PhangoVar::$lang['users']['remember_password_explain']='remember_password_explain';
-
-PhangoVar::$lang['users']['name']='name';
-
-PhangoVar::$lang['users']['last_name']='last_name';
-
-PhangoVar::$lang['users']['enterprise_name']='enterprise_name';
-
-PhangoVar::$lang['users']['email']='email';
-
-PhangoVar::$lang['users']['nif']='nif';
-
-PhangoVar::$lang['users']['zip_code']='zip_code';
-
-PhangoVar::$lang['users']['city']='city';
 
 PhangoVar::$lang['users']['users_zone']='users_zone';
 
