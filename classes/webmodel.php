@@ -412,6 +412,13 @@ class PhangoVar {
 	
 	static public $arr_func_media=array();
 	
+	/**
+	* Array for check if a normal user can read a list on selectwindowform
+	*
+	*/
+	
+	static public $arr_module_list_form=array();
+	
 }
 
 /**

@@ -14,7 +14,7 @@ function SelectWindowForm($name="", $class='', $value='', $module='', $model_nam
 	
 	settype($value, 'integer');
 	
-	$url_choose_option=make_fancy_url(PhangoVar::$base_url, 'jscript', 'browser_list_field', 'browser_list_field', array('module' => $module, 'model' => $model_name, 'field' => $field, 'field_fill' => $name, 'category_field' => $category_field, 'category_model' => $category_model, 'category_model_field' => $category_model_field ));
+	$url_choose_option=make_direct_url(PhangoVar::$base_url, 'forms', 'browser_list_field', array('module' => $module, 'model' => $model_name, 'field' => $field, 'field_fill' => $name, 'category_field' => $category_field, 'category_model' => $category_model, 'category_model_field' => $category_model_field ));
 
 	if($value==0)
 	{

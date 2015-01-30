@@ -1,5 +1,7 @@
 <?php
 
+PhangoVar::$lang['admin']['applications']='Aplicaciones';
+
 PhangoVar::$lang['admin']['welcome_to_admin']='Bienvenido a administrador';
 
 PhangoVar::$lang['admin']['welcome_text']='Bienvenido al administrador de Phango!';
@@ -19,8 +21,6 @@ PhangoVar::$lang['admin']['home']='Home';
 PhangoVar::$lang['admin']['admin_zone']='Zona de administración';
 
 PhangoVar::$lang['admin']['administrator']='Administrador';
-
-PhangoVar::$lang['admin']['applications']='Aplicaciones';
 
 PhangoVar::$lang['admin']['users_admin']='Usuarios administrador';
 
