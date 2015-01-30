@@ -852,7 +852,7 @@ class SerializeField extends PhangoField {
 	
 	function __construct($related_type)
 	{
-	
+		
 		$this->related_type=&$related_type;
 		
 	}

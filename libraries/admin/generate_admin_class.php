@@ -771,6 +771,32 @@ class ListModelClass {
 	}
 
 }
+/**
+* Function for overwrite old admin functions for old code
+*
+* @deprecated
+* NO USE THIS FUNCTION, use GenerateAdminClass in all places.
+*/
+
+function generate_admin_model_ng($model_name, $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', $where_sql='', $arr_fields_form=array(), $type_list='Basic', $no_search=false)
+{
+
+	$admin=new GenerateAdminClass($model_name);
+	
+	$admin->arr_fields=$arr_fields;
+	
+	$admin->arr_fields_edit=$arr_fields_edit;
+	
+	$admin->set_url_post($url_options);
+	
+	$admin->options_func=$options_func;
+	
+	$admin->no_search=$no_search;
+	
+	$admin->show();
+
+}
+
 /*
 class SearchFormClass {
 
