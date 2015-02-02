@@ -10,7 +10,7 @@
 */
 
 /**
-* Function used for load necessary javascript for use ckeditor with simple text option selected
+* Function used for load necessary javascript for use ckeditor with all options on
 *
 */
 
@@ -20,19 +20,17 @@ function load_jscript_editor_ckeditor_comment($name_editor, $value, $profiles='a
 	load_libraries(array('emoticons'));
 
 	list($smiley_text, $smiley_img)=set_emoticons();
-
+	
+	ob_start();
+	
+	PhangoVar::$arr_cache_header[]=ob_get_contents();
+	
+	ob_end_clean();
+	
+	//PhangoVar::$arr_cache_jscript[]='ckeditor_path.js';
 	PhangoVar::$arr_cache_jscript[]='jquery.min.js';
 	PhangoVar::$arr_cache_jscript[]='textbb/ckeditor/ckeditor.js';
 
-	$edit_image='';
-
-	if(ini_get ( "allow_url_fopen" )==1)
-	{
-
-		$edit_image=', \'Image\'';
-
-	}
-	
 	ob_start();
 	
 	?>
@@ -46,23 +44,39 @@ function load_jscript_editor_ckeditor_comment($name_editor, $value, $profiles='a
 
 		// Replace the <textarea id="editor"> with an CKEditor
 		// instance, using default configurations.
-		
-	$(document).ready(function () {
-
-		CKEDITOR.config.entities = true;
-		
+	<?php
+	/*filebrowserImageBrowseUrl : '<?php echo make_fancy_url(PhangoVar::$base_url, 'jscript', 'browser_image', 'browser_image', array()); ?>',
+			
+			filebrowserBrowseUrl: '<?php echo make_fancy_url(PhangoVar::$base_url, 'jscript', 'browser_image', 'browser_image', array()); ?>',*/
+	?>
+	
+	$(document).ready( function () {
+	
+		//CKEDITOR.config.baseHref='<?php echo PhangoVar::$base_url; ?>/media/jscript/textbb/ckeditor/';
+	
 		CKEDITOR.replace( '<?php echo $name_editor; ?>' , 
 		{
 			//Here, function, load_profile
-			//extraPlugins : 'devtools',
+			//extraPlugins : 'bbcodeweb,devtools',
 			//removePlugins: 'flash,div,filebrowser,flash,format,forms,horizontalrule,iframe',
-			language: '<?php echo PhangoVar::$arr_i18n_ckeditor[PhangoVar::$language]; ?>',
+			
+			filebrowserWindowWidth : '800',
+			filebrowserWindowHeight : '600',
+			
+			removePlugins: 'div,forms,iframe',
 			enterMode : CKEDITOR.ENTER_BR,
+			language: '<?php echo PhangoVar::$arr_i18n_ckeditor[PhangoVar::$language]; ?>',
 			toolbar :[
 
-				['Source'],'-', ['Bold', 'Italic','Underline'], '-', ['Blockquote'] , '-', ['Link', 'Unlink'], '-', ['SpecialChar'<?php echo $edit_image; ?>],  '-', ['Undo','Redo'], '-', ['Smiley']
+				['Source'],'-', ['Bold', 'Italic','Underline'], '-', ['Blockquote'] , '-', ['Link', 'Unlink'], '-', ['SpecialChar'],  '-', ['Undo','Redo'], '-', ['Smiley']
 
 				],
+
+			/*toolbar :[
+
+				['Source'],'-', ['Bold', 'Italic','Underline'], '-', ['Blockquote'] , '-', ['Link', 'Unlink'], '-', ['TextColor', 'SpecialChar', 'FontSize'], '-', ['Image','Table'], '-', ['Undo','Redo'], '-', ['Smiley']
+
+				],*/
 			smiley_columns: 10,
 			smiley_path: [''], //['<?php echo PhangoVar::$base_url; ?>/media/smileys/'],
 			smiley_images :
@@ -93,12 +107,11 @@ function load_jscript_editor_ckeditor_comment($name_editor, $value, $profiles='a
 
 				echo '\''.implode('\',\'', $arr_smiley).'\'';
 
-				?>
-				
-
+				?> 
+			
 			]
 
-			,on :
+			/*,on :
 			{
 				instanceReady : function( ev )
 				{
@@ -112,82 +125,21 @@ function load_jscript_editor_ckeditor_comment($name_editor, $value, $profiles='a
 						breakAfterClose : true
 					});
 				}
-			}
+			}*/
 
 		}
+	);
 
-
-		);
-
-// When opening a dialog, its "definition" is created for it, for
-// each editor instance. The "dialogDefinition" event is then
-// fired. We should use this event to make customizations to the
-// definition of existing dialogs.
-	//CKEDITOR.config.protectedSource.push( /<p>/g );
-CKEDITOR.on( 'dialogDefinition', function( ev )
-	{
-		// Take the dialog name and its definition from the event
-		// data.
-		var dialogName = ev.data.name;
-		var dialogDefinition = ev.data.definition;
-
-		// Check if the definition is from the dialog we're
-		// interested on (the "Link" dialog).
-		if ( dialogName == 'link' )
-		{
-			// Get a reference to the "Link Info" tab.
-			var infoTab = dialogDefinition.getContents( 'info' );
-			/*
-			// Add a text field to the "info" tab.
-			infoTab.add( {
-					type : 'text',
-					label : 'My Custom Field',
-					id : 'customField',
-					'default' : 'Sample!',
-					validate : function()
-					{
-						if ( /\d/.test( this.getValue() ) )
-							return 'My Custom Field must not contain digits';
-					}
-				});*/
-
-			// Remove the "Link Type" combo and the "Browser
-			// Server" button from the "info" tab.
-			infoTab.remove( 'linkType' );
-			infoTab.remove( 'browse' );
-			dialogDefinition.removeContents( 'target' );
-			dialogDefinition.removeContents( 'advanced' );
-		}
-
-		if ( dialogName == 'image' )
-		{
-
-			var infoTab = dialogDefinition.getContents( 'info' );
-			infoTab.remove( 'txtAlt' );
-			infoTab.remove( 'txtWidth' );
-			infoTab.remove( 'txtHeight' );
-			infoTab.remove( 'ratioLock' );
-			infoTab.remove( 'txtHSpace' );
-			infoTab.remove( 'txtVSpace' );
-			infoTab.remove( 'txtBorder' );
-			infoTab.remove( 'cmbAlign' );
-			infoTab.remove( 'htmlPreview' );
-			
-			dialogDefinition.removeContents( 'target' );
-			dialogDefinition.removeContents( 'advanced' );
-			dialogDefinition.removeContents( 'Link' );
-
-		}
-	});
-	
-	});
+});
+	//]]>
 	</script>
 
 	<?php
-	
-	PhangoVar::$arr_cache_header[]=ob_get_contents();
 
-	ob_end_clean();
+PhangoVar::$arr_cache_header[]=ob_get_contents();
+
+ob_end_clean();
+	
 }
 
 ?>

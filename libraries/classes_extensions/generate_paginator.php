@@ -12,7 +12,7 @@
 function generate_paginator_method_class($class, $where, $arr_fields, $arr_extra_fields, $url_paginament,$num_elements, $initial_num_pages=20, $begin_page_var='begin_page', $raw_query=0)
 {
 
-	global $lang;
+	//global $lang;
 	
 	load_libraries(array('table_config', 'pages', 'generate_admin_ng'));
 	
@@ -80,7 +80,7 @@ function generate_paginator_method_class($class, $where, $arr_fields, $arr_extra
 	
 	down_table_config();
 	
-	echo '<p class="paginator">'.$lang['common']['pages'].': '.pages( $_GET['begin_page'], $total_elements, $num_elements, $url_paginament ,$initial_num_pages, $begin_page_var).'</p>';
+	echo '<p class="paginator">'.PhangoVar::$lang['common']['pages'].': '.pages( $_GET['begin_page'], $total_elements, $num_elements, $url_paginament ,$initial_num_pages, $begin_page_var).'</p>';
 
 }
 

@@ -797,6 +797,37 @@ function generate_admin_model_ng($model_name, $arr_fields, $arr_fields_edit, $ur
 
 }
 
+/**
+* Function for overwrite old admin functions for old code
+*
+* @deprecated
+* NO USE THIS FUNCTION, use GenerateAdminClass in all places.
+*/
+
+function ListModel($model_name, $arr_fields, $url_options, $options_func='BasicOptionsListModel', $where_sql='', $arr_fields_form=array(), $type_list='Basic', $no_search=false, $yes_id=1, $yes_options=1, $extra_fields=array(), $separator_element='<br />', $simple_redirect=0)
+{
+
+	$list=new SimpleList($model_name);
+	
+	$list->arr_fields=$arr_fields;
+	
+	$list->url_options=$url_options;
+	
+	$list->options_func=$options_func;
+	
+	$list->where_sql=$where_sql;
+	
+	$list->no_search=$no_search;
+	
+	$list->yes_options=$yes_options;
+	
+	$list->separator_element=$separator_element;
+	
+	$list->show();
+	
+}
+		
+
 /*
 class SearchFormClass {
 

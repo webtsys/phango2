@@ -1709,6 +1709,13 @@ class ImageField extends PhangoField {
 		
 			reset($this->img_width);
 			
+			if(isset($this->img_width['']))
+			{
+			
+				next($this->img_width);
+			
+			}
+			
 			$key=key($this->img_width);
 			
 			$value=$key.'_'.$value;
