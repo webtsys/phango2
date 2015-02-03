@@ -1,5 +1,15 @@
 <?php
 
+PhangoVar::$lang['users']['automatic_login']='Conexión automática';
+
+PhangoVar::$lang['users']['remember_password']='Recordar contraseña';
+
+PhangoVar::$lang['users']['register']='Registrar';
+
+PhangoVar::$lang['users']['remember_password_explain']='Por favor, introduzca el email con el que se registró en la web, que será donde reciba su nueva contraseña';
+
+PhangoVar::$lang['users']['repeat_password']='Repetir password';
+
 PhangoVar::$lang['users']['need_class_special']='Necesita una clase especial no cargada, informe al administrador';
 
 PhangoVar::$lang['users']['need_class_special_phango_class']='Necesita la clase especial PhangoUserClass';
@@ -38,8 +48,6 @@ PhangoVar::$lang['users']['error_token_pass']='Error: ha utilizado un código in
 
 PhangoVar::$lang['users']['user_or_email_exists']='Usuario o email existe';
 
-PhangoVar::$lang['users']['repeat_password']='Repetir password';
-
 PhangoVar::$lang['users']['accept_cond_register']='Aceptar condiciones de registro';
 
 PhangoVar::$lang['users']['pasword_not_equal_repeat_password']='Los password son diferentes';
@@ -47,14 +55,6 @@ PhangoVar::$lang['users']['pasword_not_equal_repeat_password']='Los password son
 PhangoVar::$lang['users']['cannot_insert_user_email_or_user']='Ya existe un usuario con ese email o nombre de usuario';
 
 PhangoVar::$lang['users']['login']='Conectar';
-
-PhangoVar::$lang['users']['automatic_login']='Conexión automática';
-
-PhangoVar::$lang['users']['remember_password']='Recordar contraseña';
-
-PhangoVar::$lang['users']['register']='Registrar';
-
-PhangoVar::$lang['users']['remember_password_explain']='Por favor, introduzca el email con el que se registró en la web, que será donde reciba su nueva contraseña';
 
 PhangoVar::$lang['users']['username']='Nombre de usuario';
 

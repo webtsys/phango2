@@ -2951,6 +2951,26 @@ function make_direct_url($base_url, $module, $controller_folders, $parameters_fu
 }
 
 /**
+* Function for create direct links to controllers adding old style description.
+*
+* @param string $base_url The base url of the phango system
+* @param string $module The module used
+* @param string $controller_folders
+* @param string $description_text A descriptive text about the url
+*/
+
+function make_description_url($base_url, $module, $controller_folders, $description_text, $parameters_func=array(), $extra_parameters=array())
+{
+
+	$description_text=slugify($description_text);
+	
+	$extra_parameters['description']=$description_text;
+	
+	return make_direct_url($base_url, $module, $controller_folders, $parameters_func, $extra_parameters);
+
+}
+
+/**
 * Function used for add get parameters to a well-formed url based on make_fancy_url
 *
 * @param string $url_fancy well-formed url
@@ -4196,7 +4216,7 @@ function load_controller()
 				
 				//Cut big variables...
 
-				$_GET[$arr_variables[$x]]=urldecode(slugify(substr($arr_variables[$x+1], 0, 255), 1));
+				$_GET[$arr_variables[$x]]=htmlentities(urldecode(substr($arr_variables[$x+1], 0, 255)));
 				
 				$arr_name_get[]=$arr_variables[$x];
 
@@ -4213,7 +4233,7 @@ function load_controller()
 	foreach($arr_set_get as $key_check)
 	{
 		
-		$_GET[$key_check]=urldecode(slugify(substr($_GET[$key_check], 0, 255), 1));
+		$_GET[$key_check]=htmlentities(urldecode(substr($_GET[$key_check], 0, 255)));
 	
 	}
 	
