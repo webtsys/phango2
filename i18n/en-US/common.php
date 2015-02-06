@@ -2,27 +2,27 @@
 
 PhangoVar::$lang['common']['send']='send';
 
-PhangoVar::$lang['common']['with_*_field_required']='with_-_field_required';
+PhangoVar::$lang['common']['with_*_field_required']='with * field required';
 
 PhangoVar::$lang['common']['login']='login';
 
-PhangoVar::$lang['common']['order_by']='order_by';
+PhangoVar::$lang['common']['order_by']='order by';
 
-PhangoVar::$lang['common']['in_order']='in_order';
+PhangoVar::$lang['common']['in_order']='in order';
 
-PhangoVar::$lang['common']['search']='search';
+PhangoVar::$lang['common']['search']='Search';
 
-PhangoVar::$lang['common']['search_by']='search_by';
+PhangoVar::$lang['common']['search_by']='Search by';
 
-PhangoVar::$lang['common']['reset']='reset';
+PhangoVar::$lang['common']['reset']='Reset';
 
-PhangoVar::$lang['common']['order_and_search']='order_and_search';
+PhangoVar::$lang['common']['order_and_search']='order and search';
 
 PhangoVar::$lang['common']['home']='home';
 
-PhangoVar::$lang['common']['pages']='pages';
+PhangoVar::$lang['common']['pages']='Pages';
 
-PhangoVar::$lang['common']['go_back']='go_back';
+PhangoVar::$lang['common']['go_back']='go back';
 
 PhangoVar::$lang['common']['edit']='edit';
 
@@ -36,21 +36,21 @@ PhangoVar::$lang['common']['redirect']='redirect';
 
 PhangoVar::$lang['common']['success']='success';
 
-PhangoVar::$lang['common']['press_here_redirecting']='press_here_redirecting';
+PhangoVar::$lang['common']['press_here_redirecting']='press here redirecting';
 
 PhangoVar::$lang['common']['image']='image';
 
-PhangoVar::$lang['common']['zip_code']='zip_code';
+PhangoVar::$lang['common']['zip_code']='zip code';
 
 PhangoVar::$lang['common']['address']='address';
 
-PhangoVar::$lang['common']['error_cannot_upload_this_image_to_the_server']='error_cannot_upload_this_image_to_the_server';
+PhangoVar::$lang['common']['error_cannot_upload_this_image_to_the_server']='Error: cannot upload this image to the server';
 
-PhangoVar::$lang['common']['field_required']='field_required';
+PhangoVar::$lang['common']['field_required']='field required';
 
-PhangoVar::$lang['common']['error_in_field']='error_in_field';
+PhangoVar::$lang['common']['error_in_field']='error in field';
 
-PhangoVar::$lang['common']['thanks']='thanks';
+PhangoVar::$lang['common']['thanks']='Thanks';
 
 PhangoVar::$lang['common']['captcha']='captcha';
 
