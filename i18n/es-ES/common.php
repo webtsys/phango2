@@ -1,5 +1,23 @@
 <?php
 
+PhangoVar::$lang['common']['redirect']='Redirigiendo';
+
+PhangoVar::$lang['common']['success']='Éxito';
+
+PhangoVar::$lang['common']['press_here_redirecting']='Pulse aquí para que se produzca la redirección';
+
+PhangoVar::$lang['common']['image']='image';
+
+PhangoVar::$lang['common']['zip_code']='Código Postal';
+
+PhangoVar::$lang['common']['address']='Dirección';
+
+PhangoVar::$lang['common']['email']='Email';
+
+PhangoVar::$lang['common']['error_cannot_upload_this_image_to_the_server']='Error: no puedo subir esta imagen al servidor';
+
+PhangoVar::$lang['common']['go_back']='Volver atrás';
+
 PhangoVar::$lang['common']['send']='Enviar';
 
 PhangoVar::$lang['common']['with_*_field_required']='* Campo requerido';
@@ -22,29 +40,11 @@ PhangoVar::$lang['common']['home']='Home';
 
 PhangoVar::$lang['common']['pages']='Páginas';
 
-PhangoVar::$lang['common']['go_back']='Volver atrás';
-
 PhangoVar::$lang['common']['edit']='Editar';
 
 PhangoVar::$lang['common']['delete']='Borrar';
 
 PhangoVar::$lang['common']['password']='Contraseña';
-
-PhangoVar::$lang['common']['email']='Email';
-
-PhangoVar::$lang['common']['redirect']='Redirigiendo';
-
-PhangoVar::$lang['common']['success']='Éxito';
-
-PhangoVar::$lang['common']['press_here_redirecting']='Pulse aquí para que se produzca la redirección';
-
-PhangoVar::$lang['common']['image']='image';
-
-PhangoVar::$lang['common']['zip_code']='Código Postal';
-
-PhangoVar::$lang['common']['address']='Dirección';
-
-PhangoVar::$lang['common']['error_cannot_upload_this_image_to_the_server']='Error: no puedo subir esta imagen al servidor';
 
 PhangoVar::$lang['common']['field_required']='Campo requerido';
 
