@@ -3841,6 +3841,13 @@ function load_header_view()
 function get_url_media($name_media, $module='none')
 {
 
+	if($module=='')
+	{
+	
+		$module='none';
+		
+	}
+
 	return make_fancy_url(PhangoVar::$media_url, 'media', 'show', array('module' => $module, 'media' => $name_media));
 
 }
@@ -3859,14 +3866,14 @@ function get_base_url_media_dynamic($module, $directory)
 
 }
 
-function get_url_image_static($img_name, $module='none')
+function get_url_image_static($img_name, $module='')
 {
 	
 	return PhangoVar::$media_url.'/media/'.PhangoVar::$dir_theme.'/'.$module.'/images/'.$img_name;
 	
 }
 
-function get_url_image_dynamic($img_name, $module='none')
+function get_url_image_dynamic($img_name, $module='')
 {
 	
 	return get_url_media('images/'.$img_name, $module);
@@ -4026,7 +4033,7 @@ function load_jscript_view_dynamic()
 
 PhangoVar::$arr_func_media=array('get_url_image' => 'get_url_image_static', 'load_css_view' => 'load_css_view_static', 'load_jscript_view' => 'load_jscript_view_static', 'get_base_url_media' => 'get_base_url_media_static');
 
-function get_url_image($img_name, $module='none')
+function get_url_image($img_name, $module='')
 {
 
 	$func=PhangoVar::$arr_func_media['get_url_image'];
