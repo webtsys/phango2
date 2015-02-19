@@ -3855,7 +3855,7 @@ function get_url_media($name_media, $module='none')
 function get_base_url_media_static($module, $directory)
 {
 
-	return PhangoVar::$media_url.'/media/'.PhangoVar::$dir_theme.'/'.$module.'/'.$directory.'/';
+	return PhangoVar::$media_url.'/media/'.PhangoVar::$dir_theme.'/'.$module.'/'.$directory;
 
 }
 
@@ -3869,7 +3869,12 @@ function get_base_url_media_dynamic($module, $directory)
 function get_url_image_static($img_name, $module='')
 {
 	
-	return PhangoVar::$media_url.'/media/'.PhangoVar::$dir_theme.'/'.$module.'/images/'.$img_name;
+	//$module.='/';
+	$arr_module[$module]=$module.'/';
+	$arr_module['']='';
+	
+	
+	return PhangoVar::$media_url.'/media/'.PhangoVar::$dir_theme.'/'.$arr_module[$module].'images/'.$img_name;
 	
 }
 
