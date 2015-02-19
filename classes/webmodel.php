@@ -3878,7 +3878,7 @@ function load_css_view_static()
 
 	//Delete repeat scripts...
 
-	PhangoVar::$arr_cache_css=array_unique(PhangoVar::$arr_cache_css, SORT_STRING);
+	PhangoVar::$arr_cache_css=array_unique(PhangoVar::$arr_cache_css, SORT_REGULAR);
 	$arr_final_css=array();
 
 	foreach(PhangoVar::$arr_cache_css as $idcss => $css)
@@ -3949,7 +3949,8 @@ function load_jscript_view_static()
 {
 	//Delete repeat scripts...
 
-	PhangoVar::$arr_cache_jscript=array_unique(PhangoVar::$arr_cache_jscript, SORT_STRING);
+	PhangoVar::$arr_cache_jscript=array_unique(PhangoVar::$arr_cache_jscript, SORT_REGULAR);
+	
 	$arr_final_jscript=array();
 
 	foreach(PhangoVar::$arr_cache_jscript as $idjscript => $jscript)
@@ -3967,7 +3968,7 @@ function load_jscript_view_static()
 			}
 			else
 			{
-					$arr_final_jscript[]='<script language="Javascript" src="'.PhangoVar::$media_url.'/media/jscript/'.$jscript.'"></script>'."\n";
+					$arr_final_jscript[]='<script language="Javascript" src="'.PhangoVar::$media_url.'/media/'.PhangoVar::$dir_theme.'/jscript/'.$jscript.'"></script>'."\n";
 			}
 	}
 
