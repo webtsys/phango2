@@ -118,20 +118,32 @@ if(count($_POST)>0)
 	//Check csrf_token
 
 	settype($_POST['csrf_token'], 'string');
-
-	//If no isset $_POST['csrf_token'] check $_GET['csrf_token']
+	
+	if($_POST['csrf_token']=='')
+	{
+	
+		settype($_GET['csrf_token'], 'string');
+		
+		$_POST['csrf_token']=$_GET['csrf_token'];
+	
+	}
 
 	if($_POST['csrf_token']!=PhangoVar::$key_csrf)
 	{
 
 		//Check if csrf_token in variable basic_csrf for anonymous connect, necessary for gateways payment for example...
+		
+		if($_POST['csrf_token']!=PhangoVar::$prefix_key)
+		{
 
-		$arr_error_sql[0]='Post denied';
-		$arr_error_sql[1]='Post denied. Error in csrf_token';
+			$arr_error_sql[0]='Post denied';
+			$arr_error_sql[1]='Post denied. Error in csrf_token';
 
-		show_error($arr_error_sql[0], $arr_error_sql[1], $output_external='');
+			show_error($arr_error_sql[0], $arr_error_sql[1], $output_external='');
 
-		die;
+			die;
+			
+		}
 
 	}
 	
