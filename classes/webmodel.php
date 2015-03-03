@@ -3872,6 +3872,7 @@ function get_url_image_static($img_name, $module='')
 	//$module.='/';
 	$arr_module[$module]=$module.'/';
 	$arr_module['']='';
+	$arr_module['none']='';
 	
 	
 	return PhangoVar::$media_url.'/media/'.PhangoVar::$dir_theme.'/'.$arr_module[$module].'images/'.$img_name;
