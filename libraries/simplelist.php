@@ -22,6 +22,7 @@ class SimpleList
 	public $model_name;
 	public $where_sql='';
 	public $options_func='BasicOptionsListModel';
+	public $options_func_extra_args=array();
 	public $url_options='';
 	public $separator_element='<br />';
 	public $limit_rows=10;
@@ -43,7 +44,7 @@ class SimpleList
 		{	
 			PhangoVar::$model[$this->model_name]->create_form();
 		}
-	
+		
 	}
 	
 	public function show()
@@ -130,7 +131,7 @@ class SimpleList
 				
 			}
 			
-			$arr_row_final=$this->$options_method($arr_row_final, $arr_row, $this->options_func, $this->url_options, $this->model_name, PhangoVar::$model[$this->model_name]->idmodel, $this->separator_element);
+			$arr_row_final=$this->$options_method($arr_row_final, $arr_row, $this->options_func, $this->url_options, $this->model_name, PhangoVar::$model[$this->model_name]->idmodel, $this->separator_element, $this->options_func_extra_args);
 		
 			middle_table_config($arr_row_final, $cell_sizes=array());
 		
@@ -151,10 +152,10 @@ class SimpleList
 	
 	}
 	
-	private function yes_add_options($arr_row, $arr_row_raw, $options_func, $url_options, $model_name, $model_idmodel, $separator_element)
+	private function yes_add_options($arr_row, $arr_row_raw, $options_func, $url_options, $model_name, $model_idmodel, $separator_element, $options_func_extra_args)
 	{
 		
-		$arr_row[]=implode($separator_element, $options_func($url_options, $model_name, $arr_row_raw[$model_idmodel], $arr_row_raw) );
+		$arr_row[]=implode($separator_element, $options_func($url_options, $model_name, $arr_row_raw[$model_idmodel], $arr_row_raw, $options_func_extra_args) );
 		
 		return $arr_row;
 
@@ -162,7 +163,7 @@ class SimpleList
 
 
 
-	private function no_add_options($arr_row, $arr_row_raw, $options_func, $url_options, $model_name, $model_idmodel, $separator_element)
+	private function no_add_options($arr_row, $arr_row_raw, $options_func, $url_options, $model_name, $model_idmodel, $separator_element, $options_func_extra_args)
 	{
 
 		return $arr_row;

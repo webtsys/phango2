@@ -1,5 +1,21 @@
 <?php
 
+PhangoVar::$lang['users']['login']='Conectar';
+
+PhangoVar::$lang['users']['name']='name';
+
+PhangoVar::$lang['users']['last_name']='last_name';
+
+PhangoVar::$lang['users']['enterprise_name']='enterprise_name';
+
+PhangoVar::$lang['users']['email']='email';
+
+PhangoVar::$lang['users']['nif']='nif';
+
+PhangoVar::$lang['users']['zip_code']='zip_code';
+
+PhangoVar::$lang['users']['city']='city';
+
 PhangoVar::$lang['users']['need_class_special']='Necesita una clase especial no cargada, informe al administrador';
 
 PhangoVar::$lang['users']['need_class_special_phango_class']='Necesita la clase especial PhangoUserClass';
@@ -46,8 +62,6 @@ PhangoVar::$lang['users']['pasword_not_equal_repeat_password']='Los password son
 
 PhangoVar::$lang['users']['cannot_insert_user_email_or_user']='Ya existe un usuario con ese email o nombre de usuario';
 
-PhangoVar::$lang['users']['login']='Conectar';
-
 PhangoVar::$lang['users']['automatic_login']='Conexión automática';
 
 PhangoVar::$lang['users']['remember_password']='Recordar contraseña';
@@ -59,20 +73,6 @@ PhangoVar::$lang['users']['remember_password_explain']='Por favor, introduzca el
 PhangoVar::$lang['users']['username']='Nombre de usuario';
 
 PhangoVar::$lang['users']['privileges_user']='Privilegios';
-
-PhangoVar::$lang['users']['name']='name';
-
-PhangoVar::$lang['users']['last_name']='last_name';
-
-PhangoVar::$lang['users']['enterprise_name']='enterprise_name';
-
-PhangoVar::$lang['users']['email']='email';
-
-PhangoVar::$lang['users']['nif']='nif';
-
-PhangoVar::$lang['users']['zip_code']='zip_code';
-
-PhangoVar::$lang['users']['city']='city';
 
 PhangoVar::$lang['users']['users_zone']='Zona de usuarios';
 
