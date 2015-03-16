@@ -50,6 +50,8 @@ PhangoVar::$lang['common']['delete']='delete';
 
 PhangoVar::$lang['common']['pages']='Pages';
 
+PhangoVar::$lang['common']['with_*_field_required']='with * field required';
+
 PhangoVar::$lang['common']['field_required']='field required';
 
 PhangoVar::$lang['common']['error_in_field']='error in field';
@@ -117,8 +119,6 @@ PhangoVar::$lang['common']['the_value_can_not_be_greater_than_100']='the_value_c
 PhangoVar::$lang['common']['home']='home';
 
 PhangoVar::$lang['common']['login']='login';
-
-PhangoVar::$lang['common']['with_*_field_required']='with * field required';
 
 PhangoVar::$lang['common']['order_by']='order by';
 

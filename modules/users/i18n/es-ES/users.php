@@ -1,20 +1,22 @@
 <?php
 
+PhangoVar::$lang['users']['name']='Nombre';
+
+PhangoVar::$lang['users']['last_name']='Apellidos';
+
+PhangoVar::$lang['users']['nif']='Nif';
+
+PhangoVar::$lang['users']['city']='Ciudad';
+
+PhangoVar::$lang['users']['zip_code']='Codigo postal';
+
 PhangoVar::$lang['users']['login']='Conectar';
 
-PhangoVar::$lang['users']['name']='name';
+PhangoVar::$lang['users']['register']='Registrarse en la web';
 
-PhangoVar::$lang['users']['last_name']='last_name';
+PhangoVar::$lang['users']['enterprise_name']='Nombre de empresa';
 
-PhangoVar::$lang['users']['enterprise_name']='enterprise_name';
-
-PhangoVar::$lang['users']['email']='email';
-
-PhangoVar::$lang['users']['nif']='nif';
-
-PhangoVar::$lang['users']['zip_code']='zip_code';
-
-PhangoVar::$lang['users']['city']='city';
+PhangoVar::$lang['users']['email']='Email';
 
 PhangoVar::$lang['users']['need_class_special']='Necesita una clase especial no cargada, informe al administrador';
 
@@ -65,8 +67,6 @@ PhangoVar::$lang['users']['cannot_insert_user_email_or_user']='Ya existe un usua
 PhangoVar::$lang['users']['automatic_login']='Conexión automática';
 
 PhangoVar::$lang['users']['remember_password']='Recordar contraseña';
-
-PhangoVar::$lang['users']['register']='Registrar';
 
 PhangoVar::$lang['users']['remember_password_explain']='Por favor, introduzca el email con el que se registró en la web, que será donde reciba su nueva contraseña';
 
