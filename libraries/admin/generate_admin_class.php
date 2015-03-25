@@ -31,6 +31,7 @@ class GenerateAdminClass {
 		$this->url_back=$this->url_options;
 		$this->no_search=false;
 		$this->options_func='BasicOptionsListModel';
+		$this->options_func_extra_args=array();
 		$this->num_by_page=20;
 		$this->where_sql='';
 		$this->where_sql_class=new WhereSql($this->model_name, $arr_conditions=array(), $order_by=array(), $limit=array(PhangoVar::$begin_page, $this->num_by_page));
@@ -113,7 +114,7 @@ class GenerateAdminClass {
 				
 				//$this->set_where_sql();
 				
-				$listmodel=new ListModelClass($this->model_name, $this->arr_fields, $this->url_options, $this->options_func, $this->where_sql, $this->arr_fields_edit, $this->type_list, $this->no_search, $this->show_id, $this->yes_options, $this->extra_fields, $this->separator_element_opt);
+				$listmodel=new ListModelClass($this->model_name, $this->arr_fields, $this->url_options, $this->options_func,$this->options_func_extra_args, $this->where_sql, $this->arr_fields_edit, $this->type_list, $this->no_search, $this->show_id, $this->yes_options, $this->extra_fields, $this->separator_element_opt);
 				
 				$listmodel->url_back=$this->url_back;
 				
@@ -557,18 +558,19 @@ class GenerateAdminClass {
 
 class ListModelClass {
 
-	public $model_name, $arr_fields, $url_options, $options_func='BasicOptionsListModel', $where_sql='', $arr_fields_form=array(), $type_list='Basic', $no_search=false, $yes_id=1, $yes_options=1, $extra_fields=array(), $separator_element='<br />', $simple_redirect=0, $admin_class, $arr_fields_no_showed;
+	public $model_name, $arr_fields, $url_options, $options_func='BasicOptionsListModel', $options_func_extra_args=array(), $where_sql='', $arr_fields_form=array(), $type_list='Basic', $no_search=false, $yes_id=1, $yes_options=1, $extra_fields=array(), $separator_element='<br />', $simple_redirect=0, $admin_class, $arr_fields_no_showed;
 	
 	public $search_asc;
 	public $search_desc;
 
-	function __construct($model_name, $arr_fields, $url_options, $options_func='BasicOptionsListModel', $where_sql='', $arr_fields_form=array(), $type_list='Basic', $no_search=false, $yes_id=1, $yes_options=1, $extra_fields=array(), $separator_element='<br />', $simple_redirect=0)
+	function __construct($model_name, $arr_fields, $url_options, $options_func='BasicOptionsListModel', $options_func_extra_args=array(), $where_sql='', $arr_fields_form=array(), $type_list='Basic', $no_search=false, $yes_id=1, $yes_options=1, $extra_fields=array(), $separator_element='<br />', $simple_redirect=0)
 	{
 	
 		$this->model_name=$model_name;
 		$this->arr_fields=$arr_fields;
 		$this->url_options=$url_options;
 		$this->options_func=$options_func; 
+		$this->options_func_extra_args=$options_func_extra_args; 
 		$this->where_sql=$where_sql; 
 		$this->arr_fields_form=$arr_fields_form; 
 		$this->type_list=$type_list; 
@@ -690,6 +692,7 @@ class ListModelClass {
 			$list->url_options=$this->url_options;
 			
 			$list->options_func=$this->options_func;
+			$list->options_func_extra_args=$this->options_func_extra_args;
 			
 			$list->show();
 

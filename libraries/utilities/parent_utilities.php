@@ -152,7 +152,7 @@ function obtain_parent_list($model_name, $title_field, $parent_field, $sql_fathe
 * Function for create a list with fathers and childrens ordered
 */
 
-function recursive_list_ng($model_name, $idfather, $name_field, $parent_field, $url_base, $id_ul='menu', $class_ul='menu', $name_ul='')
+function recursive_list_ng($model_name, $idfather, $name_field, $parent_field, $url_base, $id_ul='menu', $class_ul='menu', $name_ul='', $parent_list_view='common/utilities/parentlistng')
 {
 	
 	$arr_list_father=array();
@@ -179,7 +179,7 @@ function recursive_list_ng($model_name, $idfather, $name_field, $parent_field, $
 	
 	settype($arr_list_father[$idfather], 'array');
 	
-	return load_view(array($idfather, $arr_list_father, $id_ul, $class_ul, $name_ul), 'common/utilities/parentlistng');
+	return load_view(array($idfather, $arr_list_father, $id_ul, $class_ul, $name_ul), $parent_list_view);
 }
 
 ?>
