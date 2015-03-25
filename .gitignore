@@ -9,6 +9,7 @@ modules/*
 !modules/media
 !modules/users
 !modules/welcome
+!modules/forms
 views/*
 !views/default
 
