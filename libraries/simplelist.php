@@ -108,7 +108,7 @@ class SimpleList
 		
 		up_table_config($arr_fields_show, $this->arr_cell_sizes);
 		
-		$query=PhangoVar::$model[$this->model_name]->select($this->where_sql, $this->arr_fields, $this->raw_query);
+		$query=PhangoVar::$model[$this->model_name]->select($this->where_sql.' limit '.$this->begin_page.', '.$this->num_by_page, $this->arr_fields, $this->raw_query);
 		
 		while($arr_row=webtsys_fetch_array($query))
 		{
