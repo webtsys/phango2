@@ -6,7 +6,9 @@ ob_start();
 
 include('classes/webmodel.php');
 include('config.php');
-include('database/'.TYPE_DB.'.php');
+load_libraries(array('database/'.TYPE_DB), PhangoVar::$base_path);
+
+load_lang('common');
 
 //Load extra libraries
 
@@ -72,7 +74,7 @@ $config_data=$model['config_webtsys']->select_a_row_where('');*/
 
 //Include cli_controller
 
-if(include($base_path.'modules/'.$module.'/cli/controller_'.$cli_controller.'.php'))
+if(include(PhangoVar::$base_path.'modules/'.$module.'/cli/controller_'.$cli_controller.'.php'))
 {
 
 	$script_base_controller=$module;

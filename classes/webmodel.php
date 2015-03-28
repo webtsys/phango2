@@ -643,6 +643,13 @@ class Webmodel {
 	
 	public $type_cache='';
 
+	/**
+	* Property that define if id is modified.
+	*
+	*/
+	
+	public $modify_id=0;
+	
 	//Construct the model
 
 	/**
@@ -791,6 +798,47 @@ class Webmodel {
 	//@param $post is a array where each key is referred to a model field. 
 	
 	/**
+	* This method prepare the new sql query
+	*
+	* @warning This method don't check value of $fields. Use $this->check_all for this task.
+	*
+	* @param array $fields Is an array with data to insert. You have a key that represent the name of field to fill with data, and the value that is the data for fill.
+	*
+	*/
+	
+	public function prepare_insert_sql($fields)
+	{
+	
+		//Foreach for create the query that comes from the $post array
+			
+		foreach($fields as $key => $field)
+		{
+		
+			$quot_open=$this->components[$key]->quot_open;
+			$quot_close=$this->components[$key]->quot_close;
+		
+			if(get_class($this->components[$key])=='ForeignKeyField' && $fields[$key]==NULL)
+			{
+			
+				
+				$quot_open='';
+				$quot_close='';
+				
+				if($this->components[$key]->yes_zero==0)
+				{
+					$fields[$key]='NULL';
+				}
+			}
+		
+			$arr_fields[]=$quot_open.$fields[$key].$quot_close;
+		
+		}
+			
+		return 'insert into '.$this->name.' (`'.implode("`, `", array_keys($fields)).'`) VALUES ('.implode(", ",$arr_fields).') ';
+	
+	}
+	
+	/**
 	* This method insert a row in database using model how mirage of table.
 	* 
 	* On a db, you need insert data. If you have created a model that reflect a sql table struct, with this method you can insert new rows easily without write sql directly.
@@ -809,39 +857,19 @@ class Webmodel {
 		
 		//Check if minimal fields are fill and if fields exists in components.Check field's values.
 		
-		unset($post[$this->idmodel]);
+		if(!$this->modify_id)
+		{
+		
+			unset($post[$this->idmodel]);
+			
+		}
 		
 		$arr_fields=array();
 		
 		if( $fields=$this->check_all($post) )
 		{	
-			
-			//Foreach for create the query that comes from the $post array
-			
-			foreach($fields as $key => $field)
-			{
-			
-				$quot_open=$this->components[$key]->quot_open;
-				$quot_close=$this->components[$key]->quot_close;
-			
-				if(get_class($this->components[$key])=='ForeignKeyField' && $fields[$key]==NULL)
-				{
-				
-					
-					$quot_open='';
-					$quot_close='';
-					
-					if($this->components[$key]->yes_zero==0)
-					{
-						$fields[$key]='NULL';
-					}
-				}
-			
-				$arr_fields[]=$quot_open.$fields[$key].$quot_close;
-			
-			}
 		
-			if( !( $query=webtsys_query('insert into '.$this->name.' (`'.implode("`, `", array_keys($fields)).'`) VALUES ('.implode(", ",$arr_fields).') ', $this->db_selected) ) )
+			if( !( $query=webtsys_query($this->prepare_insert_sql($fields), $this->db_selected) ) )
 			{
 			
 				$this->std_error.=PhangoVar::$lang['error_model']['cant_insert'].' ';
@@ -892,7 +920,12 @@ class Webmodel {
 
 		//Unset the id field from the model for security
 		
-		unset($post[$this->idmodel]);
+		if(!$this->modify_id)
+		{
+		
+			unset($post[$this->idmodel]);
+			
+		}
 		
 		$post=$this->unset_no_required($post);
 		

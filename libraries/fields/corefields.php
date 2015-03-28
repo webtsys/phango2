@@ -1286,6 +1286,7 @@ class ImageField extends PhangoField {
 	public $prefix_id=1;
 	public $img_minimal_height=array();
 	public $func_token='get_token';
+	public $move_file_func='move_uploaded_file';
 
 	function __construct($name_file, $path, $url_path, $type, $thumb=0, $img_width=array('mini' => 150), $quality_jpeg=85)
 	{
@@ -1441,9 +1442,11 @@ class ImageField extends PhangoField {
 						break;
 
 					}
+					
+					$move_file_func=$this->move_file_func;
 
 					
-					if( move_uploaded_file ( $_FILES[$file]['tmp_name'] , $this->path.'/'.$_FILES[$file]['name'] ))
+					if( $move_file_func ( $_FILES[$file]['tmp_name'] , $this->path.'/'.$_FILES[$file]['name'] ))
 					{
 						
 						//Make jpeg.
@@ -1565,6 +1568,13 @@ class ImageField extends PhangoField {
 					{
 
 						$this->std_error=PhangoVar::$lang['common']['error_cannot_upload_this_image_to_the_server'];
+						
+						if(DEBUG==1)
+						{
+						
+							$this->std_error.=' Image origin '.$_FILES[$file]['tmp_name'].' in this path '.$this->path;
+						
+						}
 
 						return '';
 
