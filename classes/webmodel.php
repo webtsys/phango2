@@ -2875,6 +2875,14 @@ function replace_quote_text( $text )
 //If active fancy urls...
 	
 //Url don't have final slash!!
+/**
+* Function used for create pretty urls. The configuration for this urls are created on urls.php in the module selected.
+*
+*
+* @param $url The base url, normally is PhangoVar::$base_url
+* @param $folder_url The folder url.
+* 
+*/
 
 function make_fancy_url($url, $folder_url, $ident_url, $arr_params=array(), $arr_get_params=array())
 {
@@ -3397,7 +3405,6 @@ function check_model_exists()
 //Function for load the models..., if the model_file != models_path.php put model in format path/model_file
 
 /**
-*
 * Function used for load models on controllers (or where you like, ;) ).
 *
 * When you call load_model with a name, or many names, phango look if exists a folder on modules called how $name_model. If find this, try open a file called "models_$name_model.php". If not exists, you obtain a phango exception error. If you want load a model file with other name, you can use this format: module_name/other_model_name being module_name, the name of the module an other_model_name the name of the model.
@@ -3858,8 +3865,9 @@ function get_csrf_key_form()
 }
 
 /**
-*
 * Simple function used for show errors with clean format
+*
+* A function used for show errors with clean format with a text depending on if debug is enabled or not
 *
 * @param string $txt_error_normal A string with the error used in no debug mode of phango
 *
