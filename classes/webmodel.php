@@ -3563,6 +3563,9 @@ function load_extension()
 *
 * Very important function used for load the functions and method necessaries on your probles. Is simple, you create a file php and put in a libraries folder. Use the name without php used in file and magically the file is loaded. You can use this function in many places, phango use a little cache for know who file is loaded.
 *
+* @param string $names The name of php file without .php extension. If you want specific many libraries you can use an array 
+* @param string $path The base path where search the library if is not in standard path. By default the path is on PhangoVar::$base_path/libraries/ or PhangoVar::$base_path/modules/$module/libraries/
+*
 */ 
 
 function load_libraries($names, $path='')
@@ -3641,8 +3644,13 @@ function load_libraries($names, $path='')
 
 }
 
-//Load a language file...
-//Other elegant include...
+/**
+* Load a language file...
+* 
+* Other elegant include function for load language files used by internacionalization. Use multiple files how arguments and search this files on i18n/$lang_code/ and i18n/modules/$name_module/i18n. You can create your files easily use check_language.php command.
+*
+* @param $lang_file 
+*/
 
 function load_lang()
 {
@@ -3825,12 +3833,22 @@ function filter_fields_array($array_strip, $array_source)
 	}
 }
 
+/**
+* Function used for show on stdout a csrf_token used by POST phango controllers for check if is a real POST from phango.
+*
+*/
+
 function set_csrf_key()
 {
 
         echo "\n".HiddenForm('csrf_token', '', PhangoVar::$key_csrf)."\n";
 
 }
+
+/**
+* Function used for return a csrf_token used by POST phango controllers for check if is a real POST from phango.
+*
+*/
 
 function get_csrf_key_form()
 {
@@ -4209,21 +4227,23 @@ function get_token()
 
 }
 
+/**
+* A function for load beauty urls array from modules. 
+*
+*/
+
 function load_urls()
 {
 
 	foreach(PhangoVar::$activated_modules as $module)
 	{
-	
-		if(!include(PhangoVar::$base_path.'modules/'.$module.'/urls.php'))
+		
+		if(is_file(PhangoVar::$base_path.'modules/'.$module.'/urls.php'))
 		{
 		
-			echo show_error('Not found urls.php for the module '.$module, 'Not found urls.php for the module '.$module, $output_external='');
-			
-			die;
+			include(PhangoVar::$base_path.'modules/'.$module.'/urls.php');
 		
 		}
-				
 	
 	}
 
@@ -4231,6 +4251,8 @@ function load_urls()
 
 /**
 * Function for load the controller, first, load the urls, and check. With this info, load the controller from the module X and finally, the action.
+*
+* A very important function used in framework.php, the file used for show webpages rendered using phango. This method process normal and pretty urls and load the controllers.Also make a preview check
 *
 */
 
@@ -4310,7 +4332,7 @@ function load_controller()
 	foreach($arr_set_get as $key_check)
 	{
 		
-		$_GET[$key_check]=htmlentities(urldecode(substr($_GET[$key_check], 0, 255)));
+		$_GET[$key_check]=form_text(urldecode(substr($_GET[$key_check], 0, 255)));
 	
 	}
 	
