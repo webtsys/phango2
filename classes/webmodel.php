@@ -3561,6 +3561,8 @@ function load_extension()
 /**
 * Load libraries, well, simply an elegant include
 *
+* Very important function used for load the functions and method necessaries on your probles. Is simple, you create a file php and put in a libraries folder. Use the name without php used in file and magically the file is loaded. You can use this function in many places, phango use a little cache for know who file is loaded.
+*
 */ 
 
 function load_libraries($names, $path='')
@@ -3568,13 +3570,15 @@ function load_libraries($names, $path='')
 	
 	if(gettype($names)!='array')
 	{
-		ob_clean();
-		$check_error_lib[1]='Error: You need an array how parameter in load_libraries. Return value: '.$names;
-		$check_error_lib[0]='Error';
 		
-		echo load_view(array('Load libraries error', $check_error_lib[DEBUG]), 'common/common');
-		die();
+		$arr_names[]=$names;
 
+	}
+	else
+	{
+	
+		$arr_names=&$names;
+	
 	}
 
 	if($path=='')
@@ -3584,7 +3588,7 @@ function load_libraries($names, $path='')
 
 	}
 	
-	foreach($names as $library) 
+	foreach($arr_names as $library) 
 	{
 		
 
