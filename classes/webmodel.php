@@ -3004,7 +3004,7 @@ function make_description_url($base_url, $module, $controller_folders, $descript
 }
 
 /**
-* Function used for add get parameters to a well-formed url based on make_fancy_url
+* Function used for add get parameters to a well-formed url based on make_fancy_url, make_direct_url and others.
 *
 * @param string $url_fancy well-formed url
 * @param string $arr_data Hash with format key => value. The result is $_GET['key']=value
@@ -4681,6 +4681,12 @@ function load_controller()
 
 }
 
+/**
+* Simple internal function used for filter get parameters using slugify
+*
+* @param string $value The value for filter
+*/
+
 function slugify_get($value)
 {
 
@@ -4689,6 +4695,13 @@ function slugify_get($value)
 	return slugify($value, 1);
 
 }
+
+/**
+* Simple internal function used for filter get integer parameters using settype
+*
+* @param string $value The value for filter
+*
+*/
 
 function integer_get($value)
 {
@@ -4699,13 +4712,20 @@ function integer_get($value)
 
 }
 
+/**
+* Function used for generate a simple random password. Have two random process for shuffle the string.
+*
+* @param string $length_pass A variable used for set the character's length the password. More length, more secure password.
+*
+*/
+
 function generate_random_password($length_pass=14)
 {
 
 	$x=0;
 	$z=0;
 
-	$abc = array( 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '*', '+', '!', '-', '_');
+	$abc = array( 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '*', '+', '!', '-', '_', '@', '%', '&');
 	
 	shuffle($abc);
 	
@@ -4721,6 +4741,8 @@ function generate_random_password($length_pass=14)
 		$password_final.=$abc[$z];
 
 	}
+	
+	$password_final=str_shuffle($password_final);
 
 	return $password_final;
 
