@@ -3192,51 +3192,6 @@ function load_view($arr_template, $template, $module_theme='', $load_if_no_cache
 			include($theme_view);
 		
 		}
-		
-		/*if(!include(PhangoVar::$base_path.$container_theme.'views/'.$theme.'/'.strtolower($template).'.php')) 
-		{
-
-			$output_error_view=ob_get_contents();
-
-			ob_clean();
-
-			//No exists view in theme, load view respect to the PhangoVar::$script_module views
-			
-			if(!include(PhangoVar::$base_path.'modules/'.PhangoVar::$script_module.'/views/'.strtolower($template).'.php')) 
-			{
-
-				$output_error_view.=ob_get_contents();
-
-				ob_clean();
-
-				//No exists view in module where , load view respect to the module_theme variable...
-
-				if(!include(PhangoVar::$base_path.'modules/'.$module_theme.'/views/'.strtolower($template).'.php')) 
-				{
-
-					//No exists view, see error from phango framework
-					
-					$output=ob_get_contents();
-
-					ob_clean();
-					
-					include(PhangoVar::$base_path.'views/default/common/common.php');
-				
-					$template=@form_text($template);
-
-					CommonView('Phango Framework error','<p>Error while loading template <strong>'.$template.'</strong>, check config.php or that template exists... </p><p>Output: '.$output_error_view.'<p>'.$output.'</p>');
-					
-					ob_end_flush();
-					
-					die;
-
-				}
-
-			}
-
-		}*/
-
-		//ob_end_flush();
 
 		//If load view, save function name for call write the html again without call include view too
 		
@@ -3604,7 +3559,7 @@ function load_extension()
 }
 
 /**
-* Load libraries, well, simply a elegant include
+* Load libraries, well, simply an elegant include
 *
 */ 
 
