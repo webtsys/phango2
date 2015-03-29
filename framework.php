@@ -201,19 +201,6 @@ if(count($_POST)>0)
 
 }
 
-//Check begin_page variable
-
-settype($_GET['begin_page'], 'integer');
-
-if($_GET['begin_page']<0)
-{
-
-	$_GET['begin_page']=0;
-	
-	PhangoVar::$begin_page=$_GET['begin_page'];
-
-}
-
 load_controller();
 
 ob_end_flush();

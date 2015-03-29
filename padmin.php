@@ -4,6 +4,8 @@
 //In the future can update files independently
 ob_start();
 
+ini_set('html_errors', 0);
+
 include('classes/webmodel.php');
 include('config.php');
 //Load extra libraries

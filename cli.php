@@ -4,6 +4,8 @@
 
 ob_start();
 
+ini_set('html_errors', 0);
+
 include('classes/webmodel.php');
 include('config.php');
 load_libraries(array('database/'.TYPE_DB), PhangoVar::$base_path);

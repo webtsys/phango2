@@ -3104,10 +3104,8 @@ function slugify($text, $respect_upper=0, $replace_space='-', $replace_dot=0, $r
 
 }
 
-//Load_view is a very important function. Phango is an MVC framework and has separate code and html.
-
 /**
-* Very important function used for load views. Is the V in the MVC paradigm.
+* Very important function used for load views. Is the V in the MVC paradigm. Phango is an MVC framework and has separate code and html.
 *
 * load_view is used for load the views. Views in Phango are php files with a function that have a special name with "View" suffix. For example, if you create a view file with the name blog.php, inside you need create a php function called BlogView(). The arguments of this function can be that you want, how on any normal php function. The view files need to be saved on a "view" folders inside of a theme folder, or a "views/module_name" folder inside of a module being "module_name" the name of the module.
 *
@@ -3130,14 +3128,72 @@ function load_view($arr_template, $template, $module_theme='', $load_if_no_cache
 	
 	if(!isset(PhangoVar::$cache_template[$template])) 
 	{
-
-		//First, load view from module...
-
-		ob_start();
 		
-		//Load view from theme...
+		//Search view first on an theme
 		
-		if(!include(PhangoVar::$base_path.$container_theme.'views/'.$theme.'/'.strtolower($template).'.php')) 
+		$theme_view=PhangoVar::$base_path.$container_theme.'views/'.$theme.'/'.strtolower($template).'.php';
+		
+		//Search view on the real module
+		
+		$script_module_view=PhangoVar::$base_path.'modules/'.PhangoVar::$script_module.'/views/'.strtolower($template).'.php';
+		
+		//Search view on other module specified.
+		
+		$module_view=PhangoVar::$base_path.'modules/'.$module_theme.'/views/'.strtolower($template).'.php';
+		
+		if(!is_file($theme_view))
+		{
+		
+			if(!is_file($script_module_view))
+			{
+			
+				if(!is_file($module_view))
+				{
+				
+					$output=ob_get_contents();
+
+					ob_clean();
+					
+					/*include(PhangoVar::$base_path.'views/default/common/common.php');
+				
+					$template=@form_text($template);
+
+					CommonView('Phango Framework error','<p>Error while loading template <strong>'.$template.'</strong>, check config.php or that template exists... </p><p>Output: '.$output_error_view.'<p>'.$output.'</p>');*/
+					
+					$check_error_lang[0]='Error while loading template, check that the view exists...';
+					$check_error_lang[1]='Error while loading template library '.$template.' in path '.$theme_view.' ,'.$script_module_view.' and '.$module_view.', check config.php or that template library exists... ';
+
+					show_error($check_error_lang[0], $check_error_lang[1], $output);
+					
+					ob_end_flush();
+					
+					die;
+				
+				}
+				else
+				{
+				
+					include($module_view);
+				
+				}
+			
+			}
+			else
+			{
+			
+				include($script_module_view);
+			
+			}
+		
+		}
+		else
+		{
+		
+			include($theme_view);
+		
+		}
+		
+		/*if(!include(PhangoVar::$base_path.$container_theme.'views/'.$theme.'/'.strtolower($template).'.php')) 
 		{
 
 			$output_error_view=ob_get_contents();
@@ -3178,9 +3234,9 @@ function load_view($arr_template, $template, $module_theme='', $load_if_no_cache
 
 			}
 
-		}
+		}*/
 
-		ob_end_flush();
+		//ob_end_flush();
 
 		//If load view, save function name for call write the html again without call include view too
 		
@@ -3692,7 +3748,7 @@ function load_lang()
 				
 					ob_end_clean();
 					//'.$output_error_lang.' '.$output.'
-					$check_error_lang[1]='Error: Don\'t exists PhangoVar::$lang['.$lang_file.']variable. Do you execute <strong>check_language.php</strong>?.<p></p>';
+					$check_error_lang[1]='Error: Don\'t exists PhangoVar::$lang['.$lang_file.']variable. Do you execute <strong>check_language.php</strong>?.';
 					$check_error_lang[0]='Error: Do you execute <strong>check_language.php</strong>?.';
 
 					/*echo load_view(array('Internationalization error', $check_error_lang[DEBUG]), 'common/common');
@@ -3824,17 +3880,32 @@ function get_csrf_key_form()
 
 }
 
+/**
+*
+* Simple function used for show errors with clean format
+*
+* @param string $txt_error_normal A string with the error used in no debug mode of phango
+*
+* @param string $txt_error_debug A string with the error used in debug mode of phango
+*
+* @param string $output_external if you have catched some php error, put here if you want
+* 
+*/
+
 
 function show_error($txt_error_normal, $txt_error_debug, $output_external='')
 {
 
+	$arr_pre[0]=array('<p>', '</p>');
+	$arr_pre[1]=array('', '');
+
 	
-	$arr_error[0]='<p>'.$txt_error_normal.'</p>';    
-	$arr_error[1]='<p>'.$txt_error_debug.'</p>';
+	$arr_error[0]=$arr_pre[PhangoVar::$utility_cli][0].$txt_error_normal.$arr_pre[PhangoVar::$utility_cli][1];    
+	$arr_error[1]=$arr_pre[PhangoVar::$utility_cli][0].$txt_error_debug.$arr_pre[PhangoVar::$utility_cli][0];
 	
 	$output=ob_get_contents();
 
-	$arr_error[1].="\n\n".'<p>Output: '.$output."\n".$output_external.'</p>';
+	$arr_error[1].="\n\n".'Output: '.$output."\n".$output_external.'';
 
 	$arr_view[0]='common';
 	$arr_view[1]='commontxt';
@@ -4263,7 +4334,7 @@ function load_controller()
 				
 				//Cut big variables...
 
-				$_GET[$arr_variables[$x]]=htmlentities(urldecode(substr($arr_variables[$x+1], 0, 255)));
+				$_GET[$arr_variables[$x]]=form_text(urldecode(substr($arr_variables[$x+1], 0, 255)));
 				
 				$arr_name_get[]=$arr_variables[$x];
 
@@ -4282,6 +4353,19 @@ function load_controller()
 		
 		$_GET[$key_check]=htmlentities(urldecode(substr($_GET[$key_check], 0, 255)));
 	
+	}
+	
+	//Check begin_page variable
+
+	settype($_GET['begin_page'], 'integer');
+
+	if($_GET['begin_page']<0)
+	{
+
+		$_GET['begin_page']=0;
+		
+		PhangoVar::$begin_page=$_GET['begin_page'];
+
 	}
 	
 	//Delete $_GET elements.
