@@ -2572,6 +2572,11 @@ class WhereSql {
 
 }
 
+/**
+* Simple function for make a redirection via header()
+*
+* @param string $url Url to redirect the website
+*/
 
 function simple_redirect_location($url)
 {
