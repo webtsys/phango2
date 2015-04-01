@@ -2247,7 +2247,7 @@ class ModelForm {
 }
 
 /**
-* A New class for use methods and not switchs for complex controllers how was build on phango older versions. 
+* A New class for use methods and not switchs for complex controllers different to old methods in older versions of phango. 
 *
 * This class is the base for create controllers and actions directed by a PhangoVar::$urls.
 *
@@ -3067,8 +3067,9 @@ function controller_fancy_url($func_name, $description_text, $arr_data=array(), 
 */
 
 /**
-*
 * Function for normalize texts for use on urls or other things...
+*
+* This function is used for convert text in a format useful for cleaning and beauty urls or cleaning text
 *
 * @param string $text String for normalize
 * @param boolean $respect_upper If true or 1 respect uppercase, if false or 0 convert to lowercase the $text
@@ -3800,7 +3801,12 @@ function load_check_model()
 
 }*/
 
-//Function for strip values with keys inside $array_strip
+/**
+* Function for strip values with keys inside $array_strip
+*
+* @param array $array_strip The array with key values for delete
+* @param array $array_source The array that i want to clean of undesirable values
+*/
 
 function strip_fields_array($array_strip, $array_source)
 {
@@ -3818,7 +3824,13 @@ function strip_fields_array($array_strip, $array_source)
 
 }
 
-//Function for strip values without keys inside $array_strip
+/**
+* Internal function for set array values without keys inside $array_strip
+* 
+* @param array $array_strip The array with key values for set
+* @param array $array_source The array that i want fill with default values 
+*
+*/
 
 function filter_fields_array($array_strip, $array_source)
 {
@@ -3912,6 +3924,14 @@ function show_error($txt_error_normal, $txt_error_debug, $output_external='')
 	die();
 
 }
+
+/**
+* Function used for create code in a home view from a children view. You can include javascript or load directly css with this utility
+*
+* This function use the static array called PhangoVar::$arr_cache_header. 
+*
+* For example, you have a view that need a javascript code on <head> html code for work. You can create a new array item in PhangoVar::$arr_cache_header with the javascript code and phango load the code in home view (if home view have call to this function, of course).
+*/
 
 function load_header_view()
 {
@@ -4016,6 +4036,10 @@ function get_url_image_dynamic($img_name, $module='')
 	
 }
 
+/**
+* Internal function for load static css files based in info found on array PhangoVar::$arr_cache_css
+*/
+
 function load_css_view_static()
 {
 
@@ -4046,6 +4070,10 @@ function load_css_view_static()
 	return implode("\n", $arr_final_css)."\n";
 
 }
+
+/**
+* Internal function for load dynamic css files based in info found on array PhangoVar::$arr_cache_css
+*/
 
 function load_css_view_dynamic()
 {
@@ -4088,6 +4116,10 @@ function load_css_view_dynamic()
 
 }
 
+/**
+* Internal function for load static jscript (AKA javascript) files based in info found on array PhangoVar::$arr_cache_jscript
+*/
+
 function load_jscript_view_static()
 {
 	//Delete repeat scripts...
@@ -4117,6 +4149,10 @@ function load_jscript_view_static()
 
 	return implode("\n", $arr_final_jscript)."\n";
 }
+
+/**
+* Internal function for load dynamic jscript (AKA javascript) files based in info found on array PhangoVar::$arr_cache_jscript
+*/
 
 function load_jscript_view_dynamic()
 {
@@ -4238,6 +4274,13 @@ function load_jscript_view()
 
 }
 
+/**
+* Function used for create a base url used for media urls
+*
+* @param string $module The module where find the media files
+* @param string $directory Base directory
+*/
+
 function get_base_url_media($module, $directory)
 {
 		
@@ -4248,7 +4291,6 @@ function get_base_url_media($module, $directory)
 }
 
 /**
-*
 * Function for encode an url in base64 for use on normalized get parameters.
 *
 * @param string $url Url for encode in base64
@@ -4806,7 +4848,7 @@ function integer_get($value)
 /**
 * Function used for generate a simple random password. Have two random process for shuffle the string.
 *
-* @param string $length_pass A variable used for set the character's length the password. More length, more secure password.
+* @param string $length_pass A variable used for set the character's length the password. More length, password more secure
 *
 */
 
