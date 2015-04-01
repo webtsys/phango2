@@ -3928,8 +3928,12 @@ function load_header_view()
 
 /**
 * A function for load all files into media folder, on application, theme view, or module.
-* Here is load from theme view or module views. Without base64 code.
-* the type is the folder where you search into media.
+* 
+* The files are in media folders into application folder, themes or modules.
+*
+* @param string $name_media The name of the file, you can use a relative path.
+* @param string $module If the media are in a module, put here the module name.
+* 
 */
 
 function get_url_media($name_media, $module='none')
@@ -3946,6 +3950,14 @@ function get_url_media($name_media, $module='none')
 
 }
 
+/**
+* A function for get the base url of a static media file placed into media folder under application. 
+*
+* @param string $module If the media are in a module, put here the module name.
+* @param string $directory The relative path to the folder with media.
+* 
+*/
+
 function get_base_url_media_static($module, $directory)
 {
 
@@ -3953,12 +3965,28 @@ function get_base_url_media_static($module, $directory)
 
 }
 
+/**
+* A function for get the url of a dynamic media file placed into media folder on a module, . 
+*
+* @param string $module If the media are in a module, put here the module name.
+* @param string $directory The relative path to the folder with media. 
+*
+*/
+
 function get_base_url_media_dynamic($module, $directory)
 {
 
 	return make_fancy_url(PhangoVar::$media_url, 'media', 'show', array('module' => $module, 'directory' => $directory));
 
 }
+
+/**
+* A function for get the url of a static image file placed into media/images folder under application. 
+*
+* @param string $img_name The name of image, you can use a relative path. Example: myfolderimage/image.jpg
+* @param string $module If the media are in a module, put here the module name.
+* 
+*/
 
 function get_url_image_static($img_name, $module='')
 {
@@ -3972,6 +4000,14 @@ function get_url_image_static($img_name, $module='')
 	return PhangoVar::$media_url.'/media/'.PhangoVar::$dir_theme.'/'.$arr_module[$module].'images/'.$img_name;
 	
 }
+
+/**
+* A function for get the url of a dynamic image file placed into media/images folder under theme or module folders. 
+*
+* @param string $img_name The name of image, you can use a relative path. Example: myfolderimage/image.jpg
+* @param string $module If the media are in a module, put here the module name.
+* 
+*/
 
 function get_url_image_dynamic($img_name, $module='')
 {
@@ -4127,11 +4163,25 @@ function load_jscript_view_dynamic()
 }
 
 /**
-* Default values for media functions 
+* Default values for make media functions 
 *
 */
 
 PhangoVar::$arr_func_media=array('get_url_image' => 'get_url_image_static', 'load_css_view' => 'load_css_view_static', 'load_jscript_view' => 'load_jscript_view_static', 'get_base_url_media' => 'get_base_url_media_static');
+
+/**
+* Function for obtain an url of an image file. 
+*
+* The images can be load statically or dinamically.
+*
+* When you load dinamically, obtain a url that point to media module. The files are placed in a module or in a theme. If the file is in a module the path will be PhangoVar::$base_path/modules/name_module/medua/images/image_name.jpg, if not the path will be $base_path/views/theme_name/media/images/image_name.jpg
+*
+* When you load statically, obtain an url based on PhangoVar::$base_url. The images are saved on the chosen theme, into of PhangoVar::$base_url/media/theme_name/images. If you have specified a $module variable, the image file will be found in PhangoVar::$base_url/media/theme_name/images
+*
+* @param $img_name The name of image file. You can use a relative path. Example: icons/icon.jpg
+* @param $module The module where the image is searched
+*
+*/
 
 function get_url_image($img_name, $module='')
 {
@@ -4142,6 +4192,20 @@ function get_url_image($img_name, $module='')
 
 }
 
+/**
+* Function for obtain an url of a css file. 
+*
+* The css can be load statically or dinamically.
+*
+* When you load dinamically, obtain a url that point to media module. The files are placed in a module or in a theme. If the file is in a module the path will be PhangoVar::$base_path/modules/name_module/media/css/file.css, if not the path will be $base_path/views/theme_name/media/css/file.css
+*
+* When you load statically, obtain an url based on PhangoVar::$base_url. The css are saved on the chosen theme, into of PhangoVar::$base_url/media/theme_name/css. If you have specified a $module variable, the css file will be found in PhangoVar::$base_url/media/theme_name/css
+*
+* The function don't have parameters, for load the css you can use an static array property called PhangoVar::$arr_cache_css, 
+* Example: PhangoVar::$arr_cache_css[]='file.css' If you use a css from a module you can use PhangoVar::$arr_cache_css['module_name'][]='file.css' where module_name is the name of the module
+*
+*/
+
 function load_css_view()
 {
 
@@ -4150,6 +4214,20 @@ function load_css_view()
 	return $func();
 
 }
+
+/**
+* Function for obtain an url of a jscript file (AKA jscript=javascript file). 
+*
+* The jscript can be load statically or dinamically.
+*
+* When you load dinamically, obtain a url that point to media module. The files are placed in a module or in a theme. If the file is in a module the path will be PhangoVar::$base_path/modules/name_module/media/jscript/file.jscript, if not the path will be $base_path/views/theme_name/media/jscript/file.jscript
+*
+* When you load statically, obtain an url based on PhangoVar::$base_url. The jscript are saved on the chosen theme, into of PhangoVar::$base_url/media/theme_name/jscript. If you have specified a $module variable, the jscript file will be found in PhangoVar::$base_url/media/theme_name/jscript
+*
+* The function don't have parameters, for load the jscript you can use an static array property called PhangoVar::$arr_cache_jscript, 
+* Example: PhangoVar::$arr_cache_jscript[]='file.jscript' If you use a jscript from a module you can use PhangoVar::$arr_cache_jscript['module_name'][]='file.jscript' where module_name is the name of the module
+*
+*/
 
 function load_jscript_view()
 {
