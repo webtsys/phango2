@@ -9,6 +9,12 @@
 *
 */
 
+/**
+* A method for create forms for edit models
+*
+* @deprecated Use GenerateAdminClass for this tasks
+*/
+
 function generate_edit_model_method_class($class, $idrow, $arr_fields, $url_admin, $url_back, $yes_insert=1, $where_sql='')
 {
 

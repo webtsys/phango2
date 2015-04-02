@@ -1,5 +1,20 @@
 <?php
 
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package Core/ModelExtraMethods
+*
+*
+*/
+
+/**
+* Deprecated method used for create admin sites based on a model
+*
+* @deprecated Now, only is a hook of GenerateAdminClass
+*/
+
 function generate_admin_method_class($class, $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', $where_sql='', $arr_fields_form=array(), $type_list='Basic', $no_search=false)
 {
 

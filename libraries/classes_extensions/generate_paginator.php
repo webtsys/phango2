@@ -9,6 +9,12 @@
 *
 */
 
+/**
+* A utility for create paginated lists.
+* 
+* @deprecated use SimpleList class instead.
+*/
+
 function generate_paginator_method_class($class, $where, $arr_fields, $arr_extra_fields, $url_paginament,$num_elements, $initial_num_pages=20, $begin_page_var='begin_page', $raw_query=0)
 {
 
