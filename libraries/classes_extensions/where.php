@@ -9,7 +9,6 @@
 */
 
 /**
-*
 * A simple extension for create where strings with checking.
 *
 * With this extension, you can create sql strings for use on where parameter of select method from Webmodel.
@@ -18,6 +17,8 @@
 ))
 * 
 * You can join differents sql sentences 
+* 
+* @warning Experimental, don't use in production
 */
 
 function where_method_class($class, $arr_where, $initial_sql='WHERE', $parenthesis=0, $order_by=array(), $limit=array())
@@ -100,6 +101,10 @@ function where_method_class($class, $arr_where, $initial_sql='WHERE', $parenthes
 	return $initial_sql;
 	
 }
+
+/**
+* internal function for where_method_class
+*/
 
 function set_safe_name_field($class, $field)
 {

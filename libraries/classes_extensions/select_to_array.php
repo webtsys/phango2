@@ -9,7 +9,20 @@
 *
 */
 
-function select_to_array_method_class($class, $conditions="", $arr_select=array(), $raw_query=0, $index_id='')
+/**
+* A useful method for Webmodel for load an array of rows resulted from a query.
+* 
+* With this method you can load only a row specifyng the model id value using a where sql statement. 
+*
+* @param Webmodel $class The instance of the class used
+* @param string $where A where sql statement.
+* @param array $arr_select An array where the values are the correspondent fields of the model
+* @param boolean $raw_query If true, ForeignKeys will be ignored, if false, the return value will load the relationships specified.
+* @param integer $index_id If 0, return only associatives keys, if 1, return numeric keys.
+*
+*/
+
+function select_to_array_method_class($class, $where="", $arr_select=array(), $raw_query=0, $index_id='')
 {
 
 	$arr_return=array();
@@ -30,7 +43,7 @@ function select_to_array_method_class($class, $conditions="", $arr_select=array(
 	
 	}
 	
-	$query=$class->select($conditions, $arr_select, $raw_query);
+	$query=$class->select($where, $arr_select, $raw_query);
 	
 	while($arr_row=webtsys_fetch_array($query))
 	{
