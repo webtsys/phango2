@@ -3,7 +3,7 @@
 
 ob_start();
 
-include('../classes/webmodel.php');
+include(__DIR__.'/classes/webmodel.php');
 
 //Adding config...
 

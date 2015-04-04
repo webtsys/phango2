@@ -4423,6 +4423,8 @@ function load_controller()
 	
 	$arr_extra_get=explode('/get/', $request_uri);
 	
+	//Load Get variables from url
+	
 	$arr_name_get=array();
 	
 	if(isset($arr_extra_get[1]))
@@ -4457,6 +4459,8 @@ function load_controller()
 		}
 	
 	}
+	
+	//Checking get variables.
 	
 	$arr_key_get=array_keys($_GET);
 	
