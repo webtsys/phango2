@@ -11,8 +11,9 @@ if(!include("config.php"))
 {
 
 
-	PhangoVar::$base_path=str_replace('application/index.php', '', $_SERVER['SCRIPT_FILENAME']);
-
+	PhangoVar::$base_path=__DIR__.'/';
+	//str_replace('application/index.php', '', $_SERVER['SCRIPT_FILENAME']);
+	
 	$port=':'.$_SERVER['SERVER_PORT'];
 
 	if($port==':80')
@@ -30,11 +31,11 @@ if(!include("config.php"))
 		$http='https://';
 
 	}
-
+	
 	PhangoVar::$cookie_path=str_replace('/index.php', '', $_SERVER['SCRIPT_NAME']);
-
+	
 	PhangoVar::$base_url=$http.$_SERVER['SERVER_NAME'].$port.''.str_replace('/index.php', '', PhangoVar::$cookie_path);
-
+	
 	PhangoVar::$cookie_path=PhangoVar::$cookie_path.'/';
 
 	//If no config error message
