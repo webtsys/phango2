@@ -7,10 +7,10 @@ include(__DIR__.'/classes/webmodel.php');
 
 //Adding config...
 
-if(!include("config.php")) 
+if(!is_file(__DIR__."/config.php")) 
 {
 
-
+	
 	PhangoVar::$base_path=__DIR__.'/';
 	//str_replace('application/index.php', '', $_SERVER['SCRIPT_FILENAME']);
 	
@@ -32,6 +32,8 @@ if(!include("config.php"))
 
 	}
 	
+	
+	
 	PhangoVar::$cookie_path=str_replace('/index.php', '', $_SERVER['SCRIPT_NAME']);
 	
 	PhangoVar::$base_url=$http.$_SERVER['SERVER_NAME'].$port.''.str_replace('/index.php', '', PhangoVar::$cookie_path);
@@ -48,6 +50,12 @@ if(!include("config.php"))
 	echo load_view(array('Phango Framework is installed', '<p>Phango Framework is installed, but you need create config.php</p><p>Copy config_sample.php  to config.php and edit the file</p>'), 'common/common');
 	
 	die();
+
+}
+else
+{
+
+	include(__DIR__.'/config.php');
 
 }
 
