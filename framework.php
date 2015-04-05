@@ -26,6 +26,7 @@ if(!is_file(__DIR__."/config.php"))
 	$http='http://';
 
 	if(isset($_SERVER['HTTPS']))
+
 	{
 
 		$http='https://';
