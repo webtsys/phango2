@@ -12,9 +12,64 @@
 
 load_libraries(array('utilities/menu_barr_hierarchy', 'simplelist', 'generate_admin_ng'));
 
+/**
+* Class used for create beauty and simple model admin interfaces
+*
+*/
+
 class GenerateAdminClass {
 
-	public $class, $arr_fields, $arr_fields_edit, $url_options, $options_func, $where_sql, $arr_fields_form, $type_list, $url_back, $no_search, $txt_list_new, $txt_add_new_item, $txt_edit_item, $simple_redirect, $class_add, $separator_element_opt, $extra_menu_create, $listmodel, $number_id, $arr_fields_no_showed, $where_sql_class, $num_by_page;
+	/**
+	* The webmodel class instance used
+	*/
+
+	public $class;
+	
+	/**
+	* The fields showed in listings
+	*/
+	
+	public $arr_fields;
+	
+	/**
+	* The fields used in forms for create and update the model.
+	*/
+	
+	public $arr_fields_edit;
+	
+	/**
+	* The base url used for generate the links for the admin interface.
+	*/
+	
+	public $url_options;
+	
+	/**
+	* A callback to use in options field in listings.
+	*/
+	
+	public $options_func;
+	
+	/**
+	* A where sql statement used for generate listings.
+	*/
+	
+	public $where_sql;
+	public $arr_fields_form;
+	public $type_list;
+	public $url_back;
+	public $no_search;
+	public $txt_list_new;
+	public $txt_add_new_item;
+	public $txt_edit_item;
+	public $simple_redirect;
+	public $class_add;
+	public $separator_element_opt;
+	public $extra_menu_create;
+	public $listmodel;
+	public $number_id;
+	public $arr_fields_no_showed;
+	public $where_sql_class
+	public $num_by_page;
 
 	public $search_asc;
 	public $search_desc;
