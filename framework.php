@@ -3,6 +3,8 @@
 
 ob_start();
 
+//Include webmodel.php, where all base classes and functions live.
+
 include(__DIR__.'/classes/webmodel.php');
 
 //Adding config...
@@ -59,6 +61,8 @@ else
 	include(__DIR__.'/config.php');
 
 }
+
+//Check if is defined the theme on a module
 
 if(PhangoVar::$THEME_MODULE==1) 
 {
@@ -210,6 +214,8 @@ if(count($_POST)>0)
 	}
 
 }
+
+//Load the controller
 
 load_controller();
 
