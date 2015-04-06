@@ -3,7 +3,7 @@
 function error_model_l($msg)
 {
 
-	return dgettext('common', $msg);
+	return dgettext('error_model', $msg);
 
 }
 
