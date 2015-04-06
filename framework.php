@@ -121,6 +121,25 @@ else
 	PhangoVar::$ip = trim( nl2br( htmlentities( getenv( "REMOTE_ADDR" ), ENT_QUOTES) ) );
 }
 
+//Set first locales
+
+putenv('LC_ALL='.PhangoVar::$language);
+
+setlocale(LC_ALL, PhangoVar::$language);
+
+if(isset($_SESSION['language']))
+{
+
+	PhangoVar::$language=$_SESSION['language'];
+
+}
+else
+{
+
+	$_SESSION['language']=PhangoVar::$language;
+
+}
+
 load_lang('common', 'error_model');
 
 //Check for csrf attacks and obtain posts if debug.

@@ -131,6 +131,12 @@ class PhangoVar {
 	static public $lang=array();
 	
 	/**
+	* An array where the getttext module functions are saved.
+	*/
+	
+	static public $_l=array();
+	
+	/**
 	* An array where provided languages are saved
 	*/
 	
@@ -3668,25 +3674,42 @@ function load_libraries($names, $path='')
 function load_lang()
 {
 	
-	if(isset($_SESSION['language']))
-	{
-
-		PhangoVar::$language=$_SESSION['language'];
-
-	}
-	else
-	{
-	
-		$_SESSION['language']=PhangoVar::$language;
-	
-	}
-	
 	$arg_list = func_get_args();
 	
 	foreach($arg_list as $lang_file)
 	{
+	
+		//bind domain to gettext files and create a function called _l_modulename.
+		
+		if(!isset(PhangoVar::$cache_lang[$lang_file]))
+		{
 
-		$lang_file=basename($lang_file);
+			$module_path=$lang_file;
+			
+			$path=PhangoVar::$base_path.'modules/'.$module_path.'/i18n/';
+			
+			if(!is_file($path))
+			{
+			
+				$path=PhangoVar::$base_path.'i18n/';
+			
+			}
+			
+			bindtextdomain($lang_file, $path);
+			
+			bind_textdomain_codeset($lang_file , 'UTF-8');
+			
+			//Create function for dgettext in module.
+			
+			//$func_lang='_l_'.$lang_file;
+			
+			load_libraries($module_path.'_l', $path);
+			
+		}
+		
+		
+
+		/*$lang_file=basename($lang_file);
 
 		if(!isset(PhangoVar::$cache_lang[$lang_file]))
 		{
@@ -3731,8 +3754,7 @@ function load_lang()
 					$check_error_lang[1]='Error: Don\'t exists PhangoVar::$lang['.$lang_file.']variable. Do you execute <strong>check_language.php</strong>?.';
 					$check_error_lang[0]='Error: Do you execute <strong>check_language.php</strong>?.';
 
-					/*echo load_view(array('Internationalization error', $check_error_lang[DEBUG]), 'common/common');
-					die();*/
+					
 					show_error($check_error_lang[0], $check_error_lang[1], $output);
 					die;
 				
@@ -3744,7 +3766,7 @@ function load_lang()
 
 			PhangoVar::$cache_lang[$lang_file]=1;
 
-		}
+		}*/
 
 	}
 

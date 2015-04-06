@@ -63,12 +63,12 @@ define('DEBUG', '0');
 #Language variables
 
 //Language, define display language, you can create many new languages using check_language.php, for the code, use the l10n standard.
-PhangoVar::$language = 'en-US';
+PhangoVar::$language = 'en_US';
 //Avaliables languages, you can append a new language in the array.
-PhangoVar::$arr_i18n = array('es-ES','en-US');
+PhangoVar::$arr_i18n = array('es_ES','en_US');
 
 //Touch this variables only if you know that you make.
-PhangoVar::$arr_i18n_ckeditor = array('es-ES' => 'es.js','en-US' => 'en.js');
+PhangoVar::$arr_i18n_ckeditor = array('es_ES' => 'es.js','en-US' => 'en.js');
 PhangoVar::$arr_i18n_tinycme = array('es-ES' => 'es.js','en-ES' => 'en.js');
 
 //Timezone, define timezone, you can choose timezones from this list: http://php.net/manual/es/timezones.php
