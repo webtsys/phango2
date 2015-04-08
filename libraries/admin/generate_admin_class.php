@@ -54,7 +54,19 @@ class GenerateAdminClass {
 	*/
 	
 	public $where_sql;
+	
+	/**
+	* A deprecated array for selected fields for show model form with values
+	* @deprecated
+	*/
+	
 	public $arr_fields_form;
+	
+	/**
+	* A deprecated integer used on old version of admin model class
+	* @deprecated
+	*/
+	
 	public $type_list;
 	public $url_back;
 	public $no_search;
@@ -68,7 +80,7 @@ class GenerateAdminClass {
 	public $listmodel;
 	public $number_id;
 	public $arr_fields_no_showed;
-	public $where_sql_class
+	public $where_sql_class;
 	public $num_by_page;
 
 	public $search_asc;
