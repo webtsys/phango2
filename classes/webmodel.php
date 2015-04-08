@@ -3714,7 +3714,7 @@ function load_lang()
 			
 			}
 			
-			bindtextdomain($lang_file, $path);
+			bindtextdomain($lang_file, $path.'/mo/');
 			
 			bind_textdomain_codeset($lang_file , 'UTF-8');
 			
