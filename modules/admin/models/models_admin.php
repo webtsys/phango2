@@ -48,9 +48,9 @@ class ChoiceAdminField extends ChoiceField {
 
 }
 
-ChoiceAdminField::$arr_options_formated=array(0 => PhangoVar::$lang['admin']['administrator'], 1 => PhangoVar::$lang['admin']['moderator']);
+ChoiceAdminField::$arr_options_formated=array(0 => admin_l('Administrator'), 1 => admin_l('Moderator'));
 
-ChoiceAdminField::$arr_options_select=array(1, PhangoVar::$lang['admin']['administrator'], 0, PhangoVar::$lang['admin']['moderator'], 1);
+ChoiceAdminField::$arr_options_select=array(1, admin_l('Administrator'), 0, admin_l('Moderator'), 1);
 
 class ModuleAdmin {
 

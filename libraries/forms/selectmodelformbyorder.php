@@ -26,7 +26,7 @@ function SelectModelFormByOrder($name, $class, $value, $model_name, $identifier_
 	if($null_yes==1)
 	{
 	
-		$arr_model[]=PhangoVar::$lang['common']['no_element_chosen'];
+		$arr_model[]=common_l('No element chosen');
 		$arr_model[]=0;
 	
 	}

@@ -878,7 +878,7 @@ class Webmodel {
 			if( !( $query=webtsys_query($this->prepare_insert_sql($fields), $this->db_selected) ) )
 			{
 			
-				$this->std_error.=PhangoVar::$lang['error_model']['cant_insert'].' ';
+				$this->std_error.=error_model_l('Can\'t insert').' ';
 				return 0;
 			
 			}
@@ -892,7 +892,7 @@ class Webmodel {
 		else
 		{	
 			
-			$this->std_error.=PhangoVar::$lang['error_model']['cant_insert'].' ';
+			$this->std_error.=error_model_l('Can\'t insert').' ';
 
 			return 0;
 
@@ -979,7 +979,7 @@ class Webmodel {
 					if(!$this->components[$name_field]->process_update_field($this, $name_field, $conditions, $fields[$name_field]))
 					{
 						
-						$this->std_error.=PhangoVar::$lang['error_model']['cant_update'].' ';
+						$this->std_error.=error_model_l('Can\'t update').' ';
 
 						return 0;
 					
@@ -994,7 +994,7 @@ class Webmodel {
 			if(!($query=webtsys_query('update '.$this->name.' set '.implode(', ' , $arr_fields).' '.$conditions, $this->db_selected) ) )
 			{
 				
-				$this->std_error.=PhangoVar::$lang['error_model']['cant_update'].' ';
+				$this->std_error.=error_model_l('Can\'t update').' ';
 				return 0;
 			
 			}
@@ -1009,7 +1009,7 @@ class Webmodel {
 		{
 			//Validation of $post fail, add error to $model->std_error
 			
-			$this->std_error.=PhangoVar::$lang['error_model']['cant_update'].' ';
+			$this->std_error.=error_model_l('Can\'t update').' ';
 
 			return 0;
 
@@ -1497,11 +1497,11 @@ class Webmodel {
 					if($this->components[$key]->std_error=='')
 					{
 
-						$this->components[$key]->std_error=PhangoVar::$lang['common']['field_required'];
+						$this->components[$key]->std_error=common_l('Field required');
 
 					}
 
-					$arr_std_error[]=PhangoVar::$lang['error_model']['check_error_field'].' '.$key.' -> '.$this->components[$key]->std_error. ' ';
+					$arr_std_error[]=error_model_l('Error in field').' '.$key.' -> '.$this->components[$key]->std_error. ' ';
 					$set_error++;
 	
 				}
@@ -1512,12 +1512,12 @@ class Webmodel {
 	
 				//If isn't set the value and this value is required set std_error.
 
-				$arr_std_error[]=PhangoVar::$lang['error_model']['check_error_field_required'].' '.$key.' ';
+				$arr_std_error[]=error_model_l('Error: Field required').' '.$key.' ';
 	
 				if($this->components[$key]->std_error=='')
 				{
 
-					$this->components[$key]->std_error=PhangoVar::$lang['common']['field_required'];
+					$this->components[$key]->std_error=common_l('Field required');
 
 				}
 	
@@ -1953,7 +1953,7 @@ class ModelForm {
 		$this->type = $type;
 		$this->label = $label;
 		$this->std_error = '';
-		$this->txt_error = PhangoVar::$lang['common']['error_in_field'];
+		$this->txt_error = common_l('Error in field');
 		$this->required = $required;
 
 		$this->html_field_name=$name_field;
@@ -3683,14 +3683,33 @@ function load_lang()
 		
 		if(!isset(PhangoVar::$cache_lang[$lang_file]))
 		{
-
+			$cache_file=$lang_file;
+			
 			$module_path=$lang_file;
+				
+			$pos=strpos($module_path, "/");
+			
+			if($pos!==false)
+			{
+
+				$arr_path=explode('/', $module_path);
+
+				$module_path=$arr_path[0];
+				
+				$lang_file=$arr_path[1];
+				
+				
+			}
+			
+			$first_path='';
 			
 			$path=PhangoVar::$base_path.'modules/'.$module_path.'/i18n/';
 			
-			if(!is_file($path))
+			if(!is_file($path.$lang_file.'_l.php'))
 			{
 			
+				$first_path=' and '.$path.$lang_file.'_l.php';
+				
 				$path=PhangoVar::$base_path.'i18n/';
 			
 			}
@@ -3703,7 +3722,29 @@ function load_lang()
 			
 			//$func_lang='_l_'.$lang_file;
 			
-			load_libraries($module_path.'_l', $path);
+			//load_libraries($module_path.'_l', $path);
+			
+			if(!include($path.$lang_file.'_l.php'))
+			{
+			
+				$output=ob_get_contents();
+				
+// 				ob_end_clean();
+				//'.$output_error_lang.' '.$output.'
+				$check_error_lang[1]='Error: Don\'t exists file '.$module_path.'_l.php. Paths for include file are: '.$path.$module_path.'_l.php'.$first_path;
+				$check_error_lang[0]='Error: Do you execute check_language.php?.';
+
+				
+				show_error($check_error_lang[0], $check_error_lang[1], $output);
+				die;
+			
+			}
+			else
+			{
+			
+				PhangoVar::$cache_lang[$cache_file]=1;
+			
+			}
 			
 		}
 		

@@ -1,147 +1,147 @@
 <?php
 
-PhangoVar::$lang['common']['field_required']='Field required';
+common_l('Field required')='Field required';
 
-PhangoVar::$lang['common']['error_in_field']='Error in field';
+common_l('Error in field')='Error in field';
 
-PhangoVar::$lang['common']['thanks']='Thanks';
+common_l('Thanks')='Thanks';
 
-PhangoVar::$lang['common']['go_back']='Go back';
+common_l('Go back')='Go back';
 
-PhangoVar::$lang['common']['email']='Email';
+common_l('Email')='Email';
 
-PhangoVar::$lang['common']['captcha']='Captcha';
+common_l('Captcha')='Captcha';
 
-PhangoVar::$lang['common']['listing_new']='List of';
+common_l('List of')='List of';
 
-PhangoVar::$lang['common']['add_new_item']='Add new element';
+common_l('Add new element')='Add new element';
 
-PhangoVar::$lang['common']['edit']='Edit';
+common_l('Edit')='Edit';
 
-PhangoVar::$lang['common']['ascent']='Ascendent';
+common_l('Ascendent')='Ascendent';
 
-PhangoVar::$lang['common']['descent']='Descendent';
+common_l('Descendent')='Descendent';
 
-PhangoVar::$lang['common']['cannot_update_insert_in_model']='Cannot insert or update this item in the database';
+common_l('Cannot insert or update this item in the database')='Cannot insert or update this item in the database';
 
-PhangoVar::$lang['common']['success']='Success';
+common_l('Success')='Success';
 
-PhangoVar::$lang['common']['redirect']='Redirect';
+common_l('Redirect')='Redirect';
 
-PhangoVar::$lang['common']['press_here_redirecting']='Press here for redirecting';
+common_l('Press here for redirecting')='Press here for redirecting';
 
-PhangoVar::$lang['common']['send']='Send';
+common_l('Send')='Send';
 
-PhangoVar::$lang['common']['order']='Order';
+common_l('Order')='Order';
 
-PhangoVar::$lang['common']['no_exists_elements_to_order']='There is no item to order';
+common_l('There is no item to order')='There is no item to order';
 
-PhangoVar::$lang['common']['pages']='Pages';
+common_l('Pages')='Pages';
 
-PhangoVar::$lang['common']['no_element_chosen']='No element chosen';
+common_l('No element chosen')='No element chosen';
 
-PhangoVar::$lang['common']['delete_file']='Delete file';
+common_l('Delete file')='Delete file';
 
-PhangoVar::$lang['common']['delete_image']='Delete image';
+common_l('Delete image')='Delete image';
 
-PhangoVar::$lang['common']['hour']='Hour';
+common_l('Hour')='Hour';
 
-PhangoVar::$lang['common']['minute']='Minute';
+common_l('Minute')='Minute';
 
-PhangoVar::$lang['common']['second']='Second';
+common_l('Second')='Second';
 
-PhangoVar::$lang['common']['any_option_chosen']='Any option chosen';
+common_l('Any option chosen')='Any option chosen';
 
-PhangoVar::$lang['common']['delete_model']='Delete element';
+common_l('Delete element')='Delete element';
 
-PhangoVar::$lang['common']['delete']='Delete';
+common_l('Delete')='Delete';
 
-PhangoVar::$lang['common']['error_you_need_this_language_field']='Error: you need fill this language field.';
+common_l('Error: you need fill this language field.')='Error: you need fill this language field.';
 
-PhangoVar::$lang['common']['cannot_load_jquery']='Cannot load Jquery';
+common_l('Cannot load Jquery')='Cannot load Jquery';
 
-PhangoVar::$lang['common']['last']='Last';
+common_l('Last')='Last';
 
-PhangoVar::$lang['common']['no']='No';
+common_l('No')='No';
 
-PhangoVar::$lang['common']['yes']='Yes';
+common_l('Yes')='Yes';
 
-PhangoVar::$lang['common']['error_cannot_upload_this_file_to_the_server']='Error: Cannot upload this file to the server';
+common_l('Error: Cannot upload this file to the server')='Error: Cannot upload this file to the server';
 
-PhangoVar::$lang['common']['cannot_delete_file']='Cannot delete the file';
+common_l('Cannot delete the file')='Cannot delete the file';
 
-PhangoVar::$lang['common']['image_size_is_not_correct']='Image size is wrong';
+common_l('Image size is wrong')='Image size is wrong';
 
-PhangoVar::$lang['common']['min_size']='Minimal size';
+common_l('Minimal size')='Minimal size';
 
-PhangoVar::$lang['common']['a_image_with_same_name_exists']='There is an image with the same name';
+common_l('There is an image with the same name')='There is an image with the same name';
 
-PhangoVar::$lang['common']['error_cannot_upload_this_image_to_the_server']='Error: Cannot upload this image to the server';
+common_l('Error: Cannot upload this image to the server')='Error: Cannot upload this image to the server';
 
-PhangoVar::$lang['common']['cannot_delete_image']='Cannot delete the image';
+common_l('Cannot delete the image')='Cannot delete the image';
 
-PhangoVar::$lang['common']['the_value_can_not_be_greater_than_100']='The value cannot be greater than 100';
+common_l('The value cannot be greater than 100')='The value cannot be greater than 100';
 
-PhangoVar::$lang['common']['home']='Home';
+common_l('Home')='Home';
 
-PhangoVar::$lang['common']['options']='Options';
+common_l('Options')='Options';
 
-PhangoVar::$lang['common']['login']='Login';
+common_l('Login')='Login';
 
 PhangoVar::$lang['common']['with_*_field_required']='* Field required';
 
-PhangoVar::$lang['common']['order_by']='Order by';
+common_l('Order by')='Order by';
 
-PhangoVar::$lang['common']['in_order']='By order';
+common_l('By order')='By order';
 
-PhangoVar::$lang['common']['search']='Search';
+common_l('Search')='Search';
 
-PhangoVar::$lang['common']['search_by']='Search by';
+common_l('Search by')='Search by';
 
-PhangoVar::$lang['common']['reset']='Reset';
+common_l('Reset')='Reset';
 
-PhangoVar::$lang['common']['order_and_search']='Order and search';
+common_l('Order and search')='Order and search';
 
-PhangoVar::$lang['common']['filter_by_category']='Filter by category';
+common_l('Filter by category')='Filter by category';
 
-PhangoVar::$lang['common']['select']='select';
+common_l('select')='select';
 
-PhangoVar::$lang['common']['password']='password';
+common_l('password')='password';
 
-PhangoVar::$lang['common']['image']='image';
+common_l('image')='image';
 
-PhangoVar::$lang['common']['zip_code']='Zip code';
+common_l('Zip code')='Zip code';
 
-PhangoVar::$lang['common']['address']='Address';
+common_l('Address')='Address';
 
-PhangoVar::$lang['common']['any_option']='any option';
+common_l('any option')='any option';
 
-PhangoVar::$lang['common']['description']='description';
+common_l('description')='description';
 
-PhangoVar::$lang['common']['date']='date';
+common_l('date')='date';
 
-PhangoVar::$lang['common']['name']='name';
+common_l('name')='name';
 
-PhangoVar::$lang['common']['user']='user';
+common_l('user')='user';
 
-PhangoVar::$lang['common']['last_name']='last_name';
+common_l('last_name')='last_name';
 
-PhangoVar::$lang['common']['title']='Title';
+common_l('Title')='Title';
 
-PhangoVar::$lang['common']['city']='City';
+common_l('City')='City';
 
-PhangoVar::$lang['common']['region']='Region';
+common_l('Region')='Region';
 
-PhangoVar::$lang['common']['country']='Country';
+common_l('Country')='Country';
 
-PhangoVar::$lang['common']['phone']='Phone';
+common_l('Phone')='Phone';
 
-PhangoVar::$lang['common']['fax']='Fax';
+common_l('Fax')='Fax';
 
-PhangoVar::$lang['common']['register_user']='Register user';
+common_l('Register user')='Register user';
 
-PhangoVar::$lang['common']['categories']='Categories';
+common_l('Categories')='Categories';
 
-PhangoVar::$lang['common']['text']='Text';
+common_l('Text')='Text';
 
 ?>

@@ -18,7 +18,7 @@ function BasicOptionsListModel($url_options, $model_name, $id)
 	<script language="javascript">
 		function warning()
 		{
-			if(confirm('<?php echo PhangoVar::$lang['common']['delete_model']; ?>'))
+			if(confirm('<?php echo common_l('Delete element'); ?>'))
 			{
 				return true;
 			}
@@ -33,7 +33,7 @@ function BasicOptionsListModel($url_options, $model_name, $id)
 	$url_options_edit=add_extra_fancy_url($url_options, array('op_edit' =>1, PhangoVar::$model[$model_name]->idmodel => $id));
 	$url_options_delete=add_extra_fancy_url($url_options, array('op_edit' =>2, PhangoVar::$model[$model_name]->idmodel => $id));
 
-	$arr_options=array('<a href="'.$url_options_edit.'">'.PhangoVar::$lang['common']['edit'].'</a>', '<a href="'.$url_options_delete.'" onclick="javascript: if(warning()==false) { return false; }">'.PhangoVar::$lang['common']['delete'].'</a>');
+	$arr_options=array('<a href="'.$url_options_edit.'">'.common_l('Edit').'</a>', '<a href="'.$url_options_delete.'" onclick="javascript: if(warning()==false) { return false; }">'.common_l('Delete').'</a>');
 
 	return $arr_options;
 
@@ -99,9 +99,9 @@ function SearchInField($model_name, $arr_fields_order, $arr_fields_search, $wher
 	$arr_order[1]='DESC';
 
 	$arr_order_select[]=$_GET['order_desc'];
-	$arr_order_select[]=PhangoVar::$lang['common']['ascent'];
+	$arr_order_select[]=common_l('Ascendent');
 	$arr_order_select[]=0;
-	$arr_order_select[]=PhangoVar::$lang['common']['descent'];
+	$arr_order_select[]=common_l('Descendent');
 	$arr_order_select[]=1;
 
 	$arr_order_field=array($_GET['order_field']);
@@ -223,7 +223,7 @@ function GeneratePositionModel($model_name, $field_name, $field_position, $url, 
 				echo '<p><label for="'.$field_position.'">'.$name.'</label><input type="text" name="position['.$id.']" value="'.$position.'" size="3"/></p>';
 
 			}
-			echo '<input type="submit" value="'.PhangoVar::$lang['common']['send'].'"/>';
+			echo '<input type="submit" value="'.common_l('Send').'"/>';
 			echo '</div>';
 			echo '</form>';
 			
@@ -231,7 +231,7 @@ function GeneratePositionModel($model_name, $field_name, $field_position, $url, 
 
 			ob_end_clean();
 
-			echo load_view(array(PhangoVar::$lang['common']['order'], $cont_order), 'content');
+			echo load_view(array(common_l('Order'), $cont_order), 'content');
 
 		break;
 
@@ -259,10 +259,10 @@ function GeneratePositionModel($model_name, $field_name, $field_position, $url, 
 
 			load_libraries(array('redirect'));
 
-			die( redirect_webtsys( $url, PhangoVar::$lang['common']['redirect'], PhangoVar::$lang['common']['success'], PhangoVar::$lang['common']['press_here_redirecting']) );
+			die( redirect_webtsys( $url, common_l('Redirect'), common_l('Success'), common_l('Press here for redirecting')) );
 			
 			/*load_libraries(array('redirect'));
-			simple_redirect( $url, PhangoVar::$lang['common']['redirect'], PhangoVar::$lang['common']['success'], PhangoVar::$lang['common']['press_here_redirecting']);*/
+			simple_redirect( $url, common_l('Redirect'), common_l('Success'), common_l('Press here for redirecting'));*/
 
 		break;
 
@@ -272,7 +272,7 @@ function GeneratePositionModel($model_name, $field_name, $field_position, $url, 
 	else
 	{
 
-		echo '<p>'.PhangoVar::$lang['common']['no_exists_elements_to_order'].'</p>';
+		echo '<p>'.common_l('There is no item to order').'</p>';
 
 	}
 
@@ -294,8 +294,8 @@ class SearchInFieldClass {
 		$this->url_options=$url_options;
 		$this->yes_id=$yes_id;
 		$this->show_form=$show_form;
-		$this->lang_asc=PhangoVar::$lang['common']['ascent'];
-		$this->lang_desc=PhangoVar::$lang['common']['descent'];
+		$this->lang_asc=common_l('Ascendent');
+		$this->lang_desc=common_l('Descendent');
 	
 	
 	}

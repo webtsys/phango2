@@ -79,7 +79,7 @@ function FileForm($name="", $class='', $value='', $delete_inline=0, $path_file='
 		if($delete_inline==1)
 		{
 
-			$file_exist.=PhangoVar::$lang['common']['delete_file'].' <input type="checkbox" name="delete_'.$name.'" class="'.$class.'" value="1" />';
+			$file_exist.=common_l('Delete file').' <input type="checkbox" name="delete_'.$name.'" class="'.$class.'" value="1" />';
 
 		}
 
@@ -118,7 +118,7 @@ function ImageForm($name="", $class='', $value='', $delete_inline=0, $path_image
 		if($delete_inline==1)
 		{
 
-			$image_exist.=PhangoVar::$lang['common']['delete_image'].' <input type="checkbox" name="delete_'.$name.'" class="'.$class.'" value="1" />';
+			$image_exist.=common_l('Delete image').' <input type="checkbox" name="delete_'.$name.'" class="'.$class.'" value="1" />';
 
 		}
 
@@ -389,9 +389,9 @@ function DateForm($field, $class='', $value='', $set_time=1, $see_title=1)
 	if($set_time>0)
 	{
 	
-		$hour_txt=PhangoVar::$lang['common']['hour'];
-		$minute_txt=PhangoVar::$lang['common']['minute'];
-		$second_txt=PhangoVar::$lang['common']['second'];
+		$hour_txt=common_l('Hour');
+		$minute_txt=common_l('Minute');
+		$second_txt=common_l('Second');
 		
 		if($see_title==0)
 		{

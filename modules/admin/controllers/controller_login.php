@@ -91,7 +91,7 @@ class LoginSwitchClass extends ControllerSwitchClass {
 			
 			ob_end_clean();
 			
-			//$this->load_theme(PhangoVar::$lang['users']['login'], $cont_index);
+			//$this->load_theme(users_l('Login'), $cont_index);
 			echo load_view(array($cont_index), 'loginadmin');
 		
 		}
@@ -122,7 +122,7 @@ class LoginSwitchClass extends ControllerSwitchClass {
 			
 			ob_end_clean();
 			
-			//$this->load_theme(PhangoVar::$lang['users']['login'], $cont_index);
+			//$this->load_theme(users_l('Login'), $cont_index);
 			echo load_view(array($cont_index), 'loginadmin');
 			
 		}
@@ -143,7 +143,7 @@ class LoginSwitchClass extends ControllerSwitchClass {
 			
 			ob_end_clean();
 			
-			//$this->load_theme(PhangoVar::$lang['users']['login'], $cont_index);
+			//$this->load_theme(users_l('Login'), $cont_index);
 			echo load_view(array($cont_index), 'loginadmin');
 			
 		}
@@ -190,7 +190,7 @@ class LoginSwitchClass extends ControllerSwitchClass {
 			
 			ob_end_clean();
 			
-			$this->load_theme(PhangoVar::$lang['users']['login'], $cont_index);
+			$this->load_theme(users_l('Login'), $cont_index);
 		
 		}
 	

@@ -10,8 +10,8 @@ function AusersAdmin()
 	settype($_GET['op'], 'integer');
 	
 	PhangoVar::$model['user_admin']->label=PhangoVar::$lang['ausers_admin']['ausers_admin_name'];
-	PhangoVar::$model['user_admin']->components['username']->label=PhangoVar::$lang['users']['username'];
-	PhangoVar::$model['user_admin']->components['privileges_user']->label=PhangoVar::$lang['users']['privileges_user'];
+	PhangoVar::$model['user_admin']->components['username']->label=users_l('Username');
+	PhangoVar::$model['user_admin']->components['privileges_user']->label=users_l('Privileges');
 	
 	switch($_GET['op'])
 	{
@@ -22,7 +22,7 @@ function AusersAdmin()
 			
 			PhangoVar::$model['user_admin']->forms['privileges_user']->parameters=array('privileges_user', '', ChoiceAdminField::$arr_options_select);
 			
-			PhangoVar::$model['user_admin']->insert_after_field_form('password', 'repeat_password', new ModelForm('repeat_password', 'repeat_password', 'PasswordForm',  PhangoVar::$lang['users']['repeat_password'], new PasswordField(), $required=1, $parameters=''));
+			PhangoVar::$model['user_admin']->insert_after_field_form('password', 'repeat_password', new ModelForm('repeat_password', 'repeat_password', 'PasswordForm',  users_l('Repeat password'), new PasswordField(), $required=1, $parameters=''));
 			
 			$admin=new GenerateAdminClass('user_admin');
 			
@@ -51,7 +51,7 @@ function AusersAdmin()
 			if($arr_user['IdUser_admin']>0)
 			{
 			
-				echo '<h3>'.PhangoVar::$lang['admin']['add_moderator_to_module'].': <strong>'.$arr_user['username'].'</strong></h3>';
+				echo '<h3>'.admin_l('Add moderator to module').': <strong>'.$arr_user['username'].'</strong></h3>';
 				
 				$arr_fields=array('idmodule');
 				$arr_fields_edit=array();
@@ -65,7 +65,7 @@ function AusersAdmin()
 				PhangoVar::$model['moderators_module']->forms['moderator']->form='HiddenForm';
 				PhangoVar::$model['moderators_module']->forms['moderator']->set_param_value_form($arr_user['IdUser_admin']);
 				
-				PhangoVar::$model['moderators_module']->forms['moderator']->label=PhangoVar::$lang['admin']['moderator'];
+				PhangoVar::$model['moderators_module']->forms['moderator']->label=admin_l('Moderator');
 				
 				PhangoVar::$model['moderators_module']->forms['idmodule']->form='SelectForm';
 				
@@ -103,7 +103,7 @@ function AusersAdmin()
 			
 				//generate_admin_model_ng('moderators_module', $arr_fields, $arr_fields_edit, $url_options, $options_func='BasicOptionsListModel', $where_sql='where idmodule='.$_GET['idmodule'], $arr_fields_form=array(), $type_list='Basic');
 				
-				echo '<p><a href="'.set_admin_link('ausers', array()).'">'.PhangoVar::$lang['admin']['go_back_home'].'</a></p>';
+				echo '<p><a href="'.set_admin_link('ausers', array()).'">'.admin_l('go back to home').'</a></p>';
 				
 			}
 		
@@ -121,7 +121,7 @@ function UserOptionsListModel($url_options, $model_name, $id, $arr_row)
 	if($arr_row['privileges_user']==1)
 	{
 	
-		$arr_options[]='<a href="'.set_admin_link('ausers', array('op' => 1, 'IdUser_admin' => $id)).'">'.PhangoVar::$lang['admin']['change_user_modules'].'</a>';
+		$arr_options[]='<a href="'.set_admin_link('ausers', array('op' => 1, 'IdUser_admin' => $id)).'">'.admin_l('Change user modules').'</a>';
 	
 	}
 	

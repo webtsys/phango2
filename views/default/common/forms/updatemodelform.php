@@ -153,8 +153,8 @@ function UpdateModelFormView($model_form, $arr_fields=array(), $url_post, $encty
 	echo $html_tabs;
 	
 	?>
-	<input type="submit" value="<?php echo PhangoVar::$lang['common']['send']; ?>" />
-	<p class="error"><?php echo PhangoVar::$lang['common']['with_*_field_required']; ?></p>
+	<input type="submit" value="<?php echo common_l('Send'); ?>" />
+	<p class="error"><?php echo common_l('Field with * is required'); ?></p>
 	</form>
 	<?php
 

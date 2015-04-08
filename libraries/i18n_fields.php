@@ -53,7 +53,7 @@ class I18nField extends PhangoField {
 		if($this->required==1 && $value[PhangoVar::$language]=='')
 		{
 
-			$this->std_error=PhangoVar::$lang['common']['error_you_need_this_language_field'].' '.PhangoVar::$language;
+			$this->std_error=common_l('Error: you need fill this language field.').' '.PhangoVar::$language;
 
 			return '';
 
@@ -267,7 +267,7 @@ function MultiLangForm($field, $class='', $arr_values=array(), $type_form='TextF
 
 			if(typeof jQuery == 'undefined') 
 			{
-				alert('<?php echo PhangoVar::$lang['common']['cannot_load_jquery']; ?>');
+				alert('<?php echo common_l('Cannot load Jquery'); ?>');
 				return false;
 
 			}

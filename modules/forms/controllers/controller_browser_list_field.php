@@ -150,15 +150,15 @@ class Browser_list_fieldSwitchClass extends ControllerSwitchClass {
 					
 					/*if(isset(PhangoVar::$model[$model_name]->components[$field_parent_category]))
 					{
-						echo load_view(array('title' => PhangoVar::$lang['common']['filter_by_category'], SelectModelFormByOrder('category_id', '', $_GET['category_id'], $model_name, $category_model, $field_parent_category, $where='', $null_yes=1) ), 'content');
+						echo load_view(array('title' => common_l('Filter by category'), SelectModelFormByOrder('category_id', '', $_GET['category_id'], $model_name, $category_model, $field_parent_category, $where='', $null_yes=1) ), 'content');
 					}
 					else
 					{*/
 						
 					
-					$form_html='<form method="get" action="'.$url_options.'/">'.SelectModelForm('category_id', '', $_GET['category_id'], $category_model, $category_model_field, '').'<input type="submit" value="'.PhangoVar::$lang['common']['send'].'"/></form>';
+					$form_html='<form method="get" action="'.$url_options.'/">'.SelectModelForm('category_id', '', $_GET['category_id'], $category_model, $category_model_field, '').'<input type="submit" value="'.common_l('Send').'"/></form>';
 					
-					echo load_view(array('title' => PhangoVar::$lang['common']['filter_by_category'],  $form_html), 'content');
+					echo load_view(array('title' => common_l('Filter by category'),  $form_html), 'content');
 					
 					if($_GET['category_id']>0)
 					{
@@ -197,7 +197,7 @@ class Browser_list_fieldSwitchClass extends ControllerSwitchClass {
 			
 			ob_end_clean();
 			
-			$title=''; //PhangoVar::$lang['forms']['search_on_table'];
+			$title=''; //forms_l('Search on table');
 				
 			echo load_view(array($title, $content, $block_title=array(), $block_content=array(), $block_urls=array(), $block_type=array(), $block_id=array(), $headers), 'admin/admin_none');
 		//}
@@ -211,7 +211,7 @@ function ChooseOptionsListModel($url_options, $model_name, $id, $arr_row)
 	
 	$field_ident=slugify($_GET['field']);
 	
-	$arr_options[]='<a href="#" class="select_id select_id_'.$id.'"><span style="display:none;" id="text_field_'.$id.'">'.$arr_row[$field_ident].'</span>'.PhangoVar::$lang['common']['select'].'</a>';
+	$arr_options[]='<a href="#" class="select_id select_id_'.$id.'"><span style="display:none;" id="text_field_'.$id.'">'.$arr_row[$field_ident].'</span>'.common_l('select').'</a>';
 	
 	return $arr_options;
 

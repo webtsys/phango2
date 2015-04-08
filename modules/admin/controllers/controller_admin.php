@@ -12,7 +12,7 @@ class AdminSwitchClass extends ControllerSwitchClass {
 	public function index($module_id='none')
 	{
 		ob_start();
-
+		
 		//global $model, $lang, PhangoVar::$base_url, PhangoVar::$base_path, $user_data, $arr_module_admin, $config_data, $arr_block, $original_theme, $module_admin, $header;
 		
 		AdminSwitchClass::$login=new LoginClass('user_admin', 'username', 'password', '', $arr_user_session=array('IdUser_admin', 'privileges_user', 'username', 'token_client'), $arr_user_insert=array('username', 'password', 'repeat_password', 'email'));
@@ -43,8 +43,8 @@ class AdminSwitchClass extends ControllerSwitchClass {
 			
 			//variables for define titles for admin page
 
-			$title_admin=PhangoVar::$lang['admin']['admin'];
-			$title_module=PhangoVar::$lang['admin']['home'];
+			$title_admin=admin_l('Admin');
+			$title_module=admin_l('Home');
 			
 			$content='';
 
@@ -63,7 +63,7 @@ class AdminSwitchClass extends ControllerSwitchClass {
 
 			$module_admin[$module_id]='AdminIndex';
 
-			PhangoVar::$lang[$module_admin[$module_id].'_admin']['AdminIndex_admin_name']=ucfirst(PhangoVar::$lang['admin']['admin']);
+			PhangoVar::$lang[$module_admin[$module_id].'_admin']['AdminIndex_admin_name']=ucfirst(admin_l('Admin'));
 			
 			foreach(ModuleAdmin::$arr_modules_admin as $idmodule => $ser_admin_script)
 			{
@@ -78,25 +78,31 @@ class AdminSwitchClass extends ControllerSwitchClass {
 				if($arr_admin_script[$idmodule][0]!=$arr_admin_script[$idmodule][1])
 				{
 
-					$dir_lang_admin=$arr_admin_script[$idmodule][0].'_';
+					$dir_lang_admin=$arr_admin_script[$idmodule][0].'/';
 
 				}
-
+				
 				load_lang($dir_lang_admin.$name_module.'_admin');
 				
-				if(!isset(PhangoVar::$lang[$name_module.'_admin'][$name_module.'_admin_name']))
-				{
-
-					$name_modules[$name_module]=ucfirst($name_module);
-					PhangoVar::$lang[$name_module.'_admin'][$name_module.'_admin_name']=ucfirst($name_modules[$name_module]);
+				/*
 				
-				}
+				if(!isset(PhangoVar::$lang[$name_module.'_admin'][$name_module.'_admin_name']))
+				{*/
+				
+					$name_func_lang=$name_module.'_admin_l';
+
+					//Catch exception 
+					
+					$name_modules[$name_module]=$name_func_lang(ucfirst($name_module));
+					PhangoVar::$lang[$name_module.'_admin'][$name_module.'_admin_name']=$name_func_lang(ucfirst($name_modules[$name_module]));
+				
+				/*}
 				else
 				{
 					
 					$name_modules[$name_module]=ucfirst(PhangoVar::$lang[$name_module.'_admin'][$name_module.'_admin_name']);
 
-				}
+				}*/
 
 				$urls[$name_module]=set_admin_link($idmodule, array()); //(PhangoVar::$base_url, 'admin', 'index', $name_module, array('IdModule' => $idmodule));
 
@@ -248,7 +254,7 @@ class AdminSwitchClass extends ControllerSwitchClass {
 		
 			ob_end_clean();
 			
-			echo load_view(array('header' => $header, 'title' => PhangoVar::$lang['admin']['admin_zone'], 'content' => $content, 'name_modules' => $name_modules, 'urls' => $urls , 'extra_data' => $extra_data), 'admin/admin');
+			echo load_view(array('header' => $header, 'title' => admin_l('Admin zone'), 'content' => $content, 'name_modules' => $name_modules, 'urls' => $urls , 'extra_data' => $extra_data), 'admin/admin');
 
 		}
 		else

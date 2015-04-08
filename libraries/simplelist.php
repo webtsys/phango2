@@ -92,7 +92,7 @@ class SimpleList
 		if($this->yes_options)
 		{
 		
-			$arr_fields_show[]=PhangoVar::$lang['common']['options'];
+			$arr_fields_show[]=common_l('Options');
 			$options_method='yes_add_options';
 		
 		}
@@ -146,7 +146,7 @@ class SimpleList
 			
 			$total_elements=PhangoVar::$model[$this->model_name]->select_count($this->where_sql);
 			
-			echo '<p>'.PhangoVar::$lang['common']['pages'].': '.pages( $this->begin_page, $total_elements, $this->num_by_page, $this->url_options ,$this->initial_num_pages, $this->variable_page, $label='', $func_jscript='').'</p>';
+			echo '<p>'.common_l('Pages').': '.pages( $this->begin_page, $total_elements, $this->num_by_page, $this->url_options ,$this->initial_num_pages, $this->variable_page, $label='', $func_jscript='').'</p>';
 		
 		}
 	

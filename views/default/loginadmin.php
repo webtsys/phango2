@@ -7,7 +7,7 @@ function LoginAdminView($content)
 <!DOCTYPE html>
 <html>
 	<head>
-	<title><?php echo PhangoVar::$lang['users']['login']; ?></title>
+	<title><?php echo users_l('Login'); ?></title>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<?php 
 		PhangoVar::$arr_cache_css[]='login.css';
