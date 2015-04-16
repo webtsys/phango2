@@ -131,6 +131,12 @@ class PhangoVar {
 	static public $lang=array();
 	
 	/**
+	* An array used for show the strings with an agnostic method. When you use load_lang, a new element is saved in this array with the name of the lang file and you show the message string using PhangoVar::$l_['name_lang']->lang('code_lang', 'txt default lang');
+	*/
+	
+	static public $l_=array();
+	
+	/**
 	* An array where provided languages are saved
 	*/
 	
@@ -3721,7 +3727,9 @@ function load_lang()
 				
 			}
 			
-			$file_path=PhangoVar::$base_path.'modules/'.$module_path.'/i18n/'.PhangoVar::$language.'/'.$lang_file.'.php';
+			$path=PhangoVar::$base_path.'modules/'.$module_path.'/i18n/'.PhangoVar::$language.'/';
+			
+			$file_path=$path.$lang_file.'.php';
 			
 			if(is_file($file_path))
 			{
@@ -3730,7 +3738,7 @@ function load_lang()
 			else
 			{
 
-				//$output_error_lang=ob_get_contents();
+				$path=PhangoVar::$base_path.'i18n/'.PhangoVar::$language.'/';
 				$file_path=PhangoVar::$base_path.'i18n/'.PhangoVar::$language.'/'.$lang_file.'.php';
 			
 				if(!include($file_path)) 
@@ -3752,10 +3760,8 @@ function load_lang()
 
 			}
 			
-			//Include function lang...
-			
-			if(is_file(
-			
+			PhangoVar::$l_[$lang_file]=new PhaLang($lang_file);
+
 			//ob_end_clean();
 
 			PhangoVar::$cache_lang[$lang_file]=1;
@@ -3766,19 +3772,33 @@ function load_lang()
 
 }
 
-function var_lang($module, $code_lang, $txt)
-{
+class PhaLang {
 
-	if(!isset(PhangoVar::$lang[$module][$code_lang]))
+	public $name_lang='';
+
+	public function __construct($name_lang)
 	{
 	
-		PhangoVar::$lang[$module][$code_lang]=$txt;
+		$this->name_lang=$name_lang;
 	
 	}
-	
-	return PhangoVar::$lang[$module][$code_lang];
+
+	public function lang($code_lang, $txt)
+	{
+
+		if(!isset(PhangoVar::$lang[$this->name_lang][$code_lang]))
+		{
+		
+			PhangoVar::$lang[$this->name_lang][$code_lang]=$txt;
+		
+		}
+		
+		return PhangoVar::$lang[$this->name_lang][$code_lang];
+
+	}
 
 }
+
 
 /**
 * Set raw variables from a array
