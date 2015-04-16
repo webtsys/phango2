@@ -3662,7 +3662,7 @@ function load_libraries($names, $path='')
 * 
 * Other elegant include function for load language files used by internacionalization. Use multiple files how arguments and search this files on i18n/$lang_code/ and i18n/modules/$name_module/i18n. You can create your files easily use check_language.php command.
 *
-* @param $lang_file 
+* @param string $lang_file A list of lang files
 */
 
 function load_lang()
@@ -3670,8 +3670,19 @@ function load_lang()
 	
 	if(isset($_SESSION['language']))
 	{
+	
+		if(isset(PhangoVar::$arr_i18n[$_SESSION['language']]))
+		{
 
-		PhangoVar::$language=$_SESSION['language'];
+			PhangoVar::$language=$_SESSION['language'];
+			
+		}
+		else
+		{
+		
+			$_SESSION['language']=PhangoVar::$language;
+		
+		}
 
 	}
 	else
@@ -3685,7 +3696,7 @@ function load_lang()
 	
 	foreach($arg_list as $lang_file)
 	{
-
+		
 		$lang_file=basename($lang_file);
 
 		if(!isset(PhangoVar::$cache_lang[$lang_file]))
@@ -3781,25 +3792,6 @@ function check_variables($arr_variables, $fields=array())
 }
 
 //Fill arr_check_table for check if exists model
-/*
-function load_check_model()
-{
-
-	$table='';
-	PhangoVar::$arr_check_table=array();
-
-	$query=webtsys_query(SQL_SHOW_TABLES);
-
-	while(list($table)=webtsys_fetch_row($query))
-	{
-
-		PhangoVar::$arr_check_table[$table]=1;
-
-	}
-
-	return PhangoVar::$arr_check_table;
-
-}*/
 
 /**
 * Function for strip values with keys inside $array_strip
