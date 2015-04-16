@@ -4,6 +4,8 @@ PhangoVar::$lang['common']['field_required']='Campo requerido';
 
 PhangoVar::$lang['common']['error_in_field']='Error en campo';
 
+PhangoVar::$lang['common']['search_by_pepe']='Search by pepe';
+
 PhangoVar::$lang['common']['thanks']='Gracias';
 
 PhangoVar::$lang['common']['go_back']='Volver atrás';
@@ -56,10 +58,6 @@ PhangoVar::$lang['common']['delete_model']='Eliminar elemento';
 
 PhangoVar::$lang['common']['delete']='Borrar';
 
-PhangoVar::$lang['common']['error_you_need_this_language_field']='Error: necesitas este campo de lenguaje.';
-
-PhangoVar::$lang['common']['cannot_load_jquery']='No puedo cargar JQuery';
-
 PhangoVar::$lang['common']['last']='Último';
 
 PhangoVar::$lang['common']['no']='No';
@@ -105,6 +103,10 @@ PhangoVar::$lang['common']['order_and_search']='Ordenar y buscar';
 PhangoVar::$lang['common']['filter_by_category']='filter_by_category';
 
 PhangoVar::$lang['common']['select']='select';
+
+PhangoVar::$lang['common']['error_you_need_this_language_field']='Error: necesitas este campo de lenguaje.';
+
+PhangoVar::$lang['common']['cannot_load_jquery']='No puedo cargar JQuery';
 
 PhangoVar::$lang['common']['password']='Contraseña';
 

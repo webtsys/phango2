@@ -4,7 +4,7 @@ PhangoVar::$lang['admin']['applications']='Applications';
 
 PhangoVar::$lang['admin']['welcome_to_admin']='Welcome to admin';
 
-PhangoVar::$lang['admin']['welcome_text']='Welcome text';
+PhangoVar::$lang['admin']['welcome_text']='Welcome';
 
 PhangoVar::$lang['admin']['add_moderator_to_module']='Add moderator to module';
 

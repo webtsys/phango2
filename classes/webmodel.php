@@ -131,7 +131,7 @@ class PhangoVar {
 	static public $lang=array();
 	
 	/**
-	* An array used for show the strings with an agnostic method. When you use load_lang, a new element is saved in this array with the name of the lang file and you show the message string using PhangoVar::$l_['name_lang']->lang('code_lang', 'txt default lang');
+	* An array used for show the strings with an agnostic method. When you use load_lang, a new element is saved in this array with the name of the lang file and you show the message string using static method from PhangoVar $l_['name_lang']->lang('code_lang', 'txt default lang');
 	*/
 	
 	static public $l_=array();

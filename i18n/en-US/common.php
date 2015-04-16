@@ -1,9 +1,10 @@
 <?php
 
-
 PhangoVar::$lang['common']['field_required']='Field required';
 
 PhangoVar::$lang['common']['error_in_field']='Error in field';
+
+PhangoVar::$lang['common']['search_by_pepe']='Search by pepe';
 
 PhangoVar::$lang['common']['thanks']='Thanks';
 
@@ -57,10 +58,6 @@ PhangoVar::$lang['common']['delete_model']='Delete element';
 
 PhangoVar::$lang['common']['delete']='Delete';
 
-PhangoVar::$lang['common']['error_you_need_this_language_field']='Error: you need fill this language field.';
-
-PhangoVar::$lang['common']['cannot_load_jquery']='Cannot load Jquery';
-
 PhangoVar::$lang['common']['last']='Last';
 
 PhangoVar::$lang['common']['no']='No';
@@ -106,6 +103,10 @@ PhangoVar::$lang['common']['order_and_search']='Order and search';
 PhangoVar::$lang['common']['filter_by_category']='Filter by category';
 
 PhangoVar::$lang['common']['select']='select';
+
+PhangoVar::$lang['common']['error_you_need_this_language_field']='Error: you need fill this language field.';
+
+PhangoVar::$lang['common']['cannot_load_jquery']='Cannot load Jquery';
 
 PhangoVar::$lang['common']['password']='password';
 
