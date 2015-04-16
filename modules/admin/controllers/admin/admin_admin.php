@@ -3,7 +3,7 @@
 function AdminIndexAdmin()
 {
 	
-	echo load_view(array('title' => PhangoVar::$lang['admin']['welcome_to_admin'], 'content' => PhangoVar::$lang['admin']['welcome_text']), 'content');
+	echo load_view(array('title' => PhangoVar::$l_['admin']->lang('welcome_to_admin', 'Welcome to admin'), 'content' => PhangoVar::$l_['admin']->lang('welcome_text', 'Welcome text')), 'content');
 
 }
 

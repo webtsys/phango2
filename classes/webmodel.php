@@ -131,6 +131,12 @@ class PhangoVar {
 	static public $lang=array();
 	
 	/**
+	* An array used for show the strings with an agnostic method. When you use load_lang, a new element is saved in this array with the name of the lang file and you show the message string using static method from PhangoVar $l_['name_lang']->lang('code_lang', 'txt default lang');
+	*/
+	
+	static public $l_=array();
+	
+	/**
 	* An array where provided languages are saved
 	*/
 	
@@ -872,7 +878,7 @@ class Webmodel {
 			if( !( $query=webtsys_query($this->prepare_insert_sql($fields), $this->db_selected) ) )
 			{
 			
-				$this->std_error.=PhangoVar::$lang['error_model']['cant_insert'].' ';
+				$this->std_error.=PhangoVar::$l_['error_model']->lang('cant_insert', 'Can\'t insert').' ';
 				return 0;
 			
 			}
@@ -886,7 +892,7 @@ class Webmodel {
 		else
 		{	
 			
-			$this->std_error.=PhangoVar::$lang['error_model']['cant_insert'].' ';
+			$this->std_error.=PhangoVar::$l_['error_model']->lang('cant_insert', 'Can\'t insert').' ';
 
 			return 0;
 
@@ -973,7 +979,7 @@ class Webmodel {
 					if(!$this->components[$name_field]->process_update_field($this, $name_field, $conditions, $fields[$name_field]))
 					{
 						
-						$this->std_error.=PhangoVar::$lang['error_model']['cant_update'].' ';
+						$this->std_error.=PhangoVar::$l_['error_model']->lang('cant_update', 'Can\'t update').' ';
 
 						return 0;
 					
@@ -988,7 +994,7 @@ class Webmodel {
 			if(!($query=webtsys_query('update '.$this->name.' set '.implode(', ' , $arr_fields).' '.$conditions, $this->db_selected) ) )
 			{
 				
-				$this->std_error.=PhangoVar::$lang['error_model']['cant_update'].' ';
+				$this->std_error.=PhangoVar::$l_['error_model']->lang('cant_update', 'Can\'t update').' ';
 				return 0;
 			
 			}
@@ -1003,7 +1009,7 @@ class Webmodel {
 		{
 			//Validation of $post fail, add error to $model->std_error
 			
-			$this->std_error.=PhangoVar::$lang['error_model']['cant_update'].' ';
+			$this->std_error.=PhangoVar::$l_['error_model']->lang('cant_update', 'Can\'t update').' ';
 
 			return 0;
 
@@ -1491,11 +1497,11 @@ class Webmodel {
 					if($this->components[$key]->std_error=='')
 					{
 
-						$this->components[$key]->std_error=PhangoVar::$lang['common']['field_required'];
+						$this->components[$key]->std_error=PhangoVar::$l_['common']->lang('field_required', 'Field required');
 
 					}
 
-					$arr_std_error[]=PhangoVar::$lang['error_model']['check_error_field'].' '.$key.' -> '.$this->components[$key]->std_error. ' ';
+					$arr_std_error[]=PhangoVar::$l_['error_model']->lang('check_error_field', 'Error in field').' '.$key.' -> '.$this->components[$key]->std_error. ' ';
 					$set_error++;
 	
 				}
@@ -1506,12 +1512,12 @@ class Webmodel {
 	
 				//If isn't set the value and this value is required set std_error.
 
-				$arr_std_error[]=PhangoVar::$lang['error_model']['check_error_field_required'].' '.$key.' ';
+				$arr_std_error[]=PhangoVar::$l_['error_model']->lang('check_error_field_required', 'Error: Field required').' '.$key.' ';
 	
 				if($this->components[$key]->std_error=='')
 				{
 
-					$this->components[$key]->std_error=PhangoVar::$lang['common']['field_required'];
+					$this->components[$key]->std_error=PhangoVar::$l_['common']->lang('field_required', 'Field required');
 
 				}
 	
@@ -1947,7 +1953,7 @@ class ModelForm {
 		$this->type = $type;
 		$this->label = $label;
 		$this->std_error = '';
-		$this->txt_error = PhangoVar::$lang['common']['error_in_field'];
+		$this->txt_error = PhangoVar::$l_['common']->lang('error_in_field', 'Error in field');
 		$this->required = $required;
 
 		$this->html_field_name=$name_field;
@@ -3662,7 +3668,7 @@ function load_libraries($names, $path='')
 * 
 * Other elegant include function for load language files used by internacionalization. Use multiple files how arguments and search this files on i18n/$lang_code/ and i18n/modules/$name_module/i18n. You can create your files easily use check_language.php command.
 *
-* @param $lang_file 
+* @param string $lang_file A list of lang files
 */
 
 function load_lang()
@@ -3670,8 +3676,19 @@ function load_lang()
 	
 	if(isset($_SESSION['language']))
 	{
+	
+		if(in_array($_SESSION['language'], PhangoVar::$arr_i18n))
+		{
 
-		PhangoVar::$language=$_SESSION['language'];
+			PhangoVar::$language=$_SESSION['language'];
+			
+		}
+		else
+		{
+		
+			$_SESSION['language']=PhangoVar::$language;
+		
+		}
 
 	}
 	else
@@ -3685,7 +3702,7 @@ function load_lang()
 	
 	foreach($arg_list as $lang_file)
 	{
-
+		
 		$lang_file=basename($lang_file);
 
 		if(!isset(PhangoVar::$cache_lang[$lang_file]))
@@ -3710,7 +3727,9 @@ function load_lang()
 				
 			}
 			
-			$file_path=PhangoVar::$base_path.'modules/'.$module_path.'/i18n/'.PhangoVar::$language.'/'.$lang_file.'.php';
+			$path=PhangoVar::$base_path.'modules/'.$module_path.'/i18n/'.PhangoVar::$language.'/';
+			
+			$file_path=$path.$lang_file.'.php';
 			
 			if(is_file($file_path))
 			{
@@ -3719,9 +3738,10 @@ function load_lang()
 			else
 			{
 
-				//$output_error_lang=ob_get_contents();
+				$path=PhangoVar::$base_path.'i18n/'.PhangoVar::$language.'/';
+				$file_path=PhangoVar::$base_path.'i18n/'.PhangoVar::$language.'/'.$lang_file.'.php';
 			
-				if(!include(PhangoVar::$base_path.'i18n/'.PhangoVar::$language.'/'.$lang_file.'.php')) 
+				if(!include($file_path)) 
 				{
 					
 					$output=ob_get_contents();
@@ -3740,6 +3760,8 @@ function load_lang()
 
 			}
 			
+			PhangoVar::$l_[$lang_file]=new PhaLang($lang_file);
+
 			//ob_end_clean();
 
 			PhangoVar::$cache_lang[$lang_file]=1;
@@ -3749,6 +3771,34 @@ function load_lang()
 	}
 
 }
+
+class PhaLang {
+
+	public $name_lang='';
+
+	public function __construct($name_lang)
+	{
+	
+		$this->name_lang=$name_lang;
+	
+	}
+
+	public function lang($code_lang, $txt)
+	{
+
+		if(!isset(PhangoVar::$lang[$this->name_lang][$code_lang]))
+		{
+		
+			PhangoVar::$lang[$this->name_lang][$code_lang]=$txt;
+		
+		}
+		
+		return PhangoVar::$lang[$this->name_lang][$code_lang];
+
+	}
+
+}
+
 
 /**
 * Set raw variables from a array
@@ -3781,25 +3831,6 @@ function check_variables($arr_variables, $fields=array())
 }
 
 //Fill arr_check_table for check if exists model
-/*
-function load_check_model()
-{
-
-	$table='';
-	PhangoVar::$arr_check_table=array();
-
-	$query=webtsys_query(SQL_SHOW_TABLES);
-
-	while(list($table)=webtsys_fetch_row($query))
-	{
-
-		PhangoVar::$arr_check_table[$table]=1;
-
-	}
-
-	return PhangoVar::$arr_check_table;
-
-}*/
 
 /**
 * Function for strip values with keys inside $array_strip

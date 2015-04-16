@@ -57,7 +57,7 @@ class LoginClass {
 		if(get_class(PhangoVar::$model[$this->model_login])!='UserPhangoModel')
 		{
 		
-			show_error(PhangoVar::$lang['users']['need_class_special'], PhangoVar::$lang['users']['need_class_special_phango_class']);
+			show_error(PhangoVar::$l_['users']->lang('need_class_special', 'A special library is need, please, inform to admin'), PhangoVar::$l_['users']->lang('need_class_special_phango_class', 'Special class PhangoUserClass is needed'));
 		
 			die;
 		
@@ -110,7 +110,7 @@ class LoginClass {
 			
 			ModelForm::set_values_form($_POST, PhangoVar::$model[$this->model_login]->forms, 1);
 		
-			PhangoVar::$model[$this->model_login]->forms[$this->field_password]->std_error= PhangoVar::$lang['users']['user_error_nick_or_pass'];
+			PhangoVar::$model[$this->model_login]->forms[$this->field_password]->std_error= PhangoVar::$l_['users']->lang('user_error_nick_or_pass', 'Wrong user or password');
 		
 			unset($arr_user[$this->field_password]);
 			
@@ -199,7 +199,7 @@ class LoginClass {
 				
 				ModelForm::set_values_form($_POST, PhangoVar::$model[$this->model_login]->forms, 1);
 				
-				PhangoVar::$model[$this->model_login]->forms[$this->field_password]->std_error= PhangoVar::$lang['users']['user_error_nick_or_pass'];
+				PhangoVar::$model[$this->model_login]->forms[$this->field_password]->std_error= PhangoVar::$l_['users']->lang('user_error_nick_or_pass', 'Wrong user or password');
 			
 				return false;
 			
@@ -362,20 +362,20 @@ class LoginClass {
 				
 				$url_check_token=add_extra_fancy_url($this->url_recovery_send, array('token_recovery' => $token_recovery));
 				
-				$topic_email =  PhangoVar::$lang['users']['lost_name'];
-				$body_email =  PhangoVar::$lang['users']['hello_lost_pass']."\n\n". PhangoVar::$lang['users']['explain_code_pass']
-				."\n\n". PhangoVar::$lang['users']['copy_paste_code'].': '.$url_check_token."\n\n". PhangoVar::$lang['common']['thanks'];
+				$topic_email =  PhangoVar::$l_['users']->lang('lost_name', 'You requested a new password');
+				$body_email =  PhangoVar::$l_['users']->lang('hello_lost_pass', 'Hello, you have requested a new password.')."\n\n". PhangoVar::$l_['users']->lang('explain_code_pass', 'You have requested a new password. Copy and paste the following url into your browser, and a new password will be generated for you. If you did not request this operation, ignore this message.')
+				."\n\n". PhangoVar::$l_['users']->lang('copy_paste_code', 'Copy and paste the following url').': '.$url_check_token."\n\n". PhangoVar::$l_['common']->lang('thanks', 'Thanks');
 				
 				if ( send_mail($email, $topic_email, $body_email) )
 				{
 				
-					echo '<p>'. PhangoVar::$lang['users']['explain_email_code_pass'].'</p>';
+					echo '<p>'. PhangoVar::$l_['users']->lang('explain_email_code_pass', 'You have requested a new password. Copy and paste the following url into your browser, and a new password will be generated for you. If you did not request this operation, ignore this message.').'</p>';
 				
 				}
 				else
 				{
 				
-					echo '<p>'. PhangoVar::$lang['users']['cannot_email_code_pass'].'</p>';
+					echo '<p>'. PhangoVar::$l_['users']->lang('cannot_email_code_pass', 'We can not send to your email the instructions to change your password. Please contact the administrator of this site to solve the problem.').'</p>';
 				
 				}
 				
@@ -384,9 +384,9 @@ class LoginClass {
 			else
 			{
 
-				echo  "<p>" .  PhangoVar::$lang['users']['error_db_pass'].'</p>';
+				echo  "<p>" .  PhangoVar::$l_['users']->lang('error_db_pass', 'Error, mail format is wrong').'</p>';
 				
-				echo  "<p><a href=\"".$this->url_recovery."\"><b>" . PhangoVar::$lang['common']['go_back'] . "</b></a></p>";
+				echo  "<p><a href=\"".$this->url_recovery."\"><b>" . PhangoVar::$l_['common']->lang('go_back', 'Go back') . "</b></a></p>";
 
 			}
 		
@@ -413,8 +413,8 @@ class LoginClass {
 
 				$password=generate_random_password(); 
 				
-				$topic_email =  PhangoVar::$lang['users']['success_change_password'];
-				$body_email =  PhangoVar::$lang['users']['hello_lost_pass_successful']."\n\n".  PhangoVar::$lang['users']['user_data'] . "\n\n". PhangoVar::$lang['users']['user']." : $nick"."\n\n". PhangoVar::$lang['common']['email']." : $email"."\n\n"  .  PhangoVar::$lang['users']['new_pass'] . " : $password" . "\n\n" . PhangoVar::$lang['common']['thanks'];
+				$topic_email =  PhangoVar::$l_['users']->lang('success_change_password', 'The password was changed successfully.');
+				$body_email =  PhangoVar::$l_['users']->lang('hello_lost_pass_successful', 'Hello, we have changed your password and is shown below. With these data should be back online in the system.')."\n\n".  PhangoVar::$l_['users']->lang('user_data', 'User\'s data') . "\n\n". PhangoVar::$l_['users']->lang('user', 'User')." : $nick"."\n\n". PhangoVar::$l_['common']->lang('email', 'Email')." : $email"."\n\n"  .  PhangoVar::$l_['users']->lang('new_pass', 'New password') . " : $password" . "\n\n" . PhangoVar::$l_['common']->lang('thanks', 'Thanks');
 					
 				if ( $email != "" )
 				{
@@ -430,16 +430,16 @@ class LoginClass {
 					if ( send_mail($email, $topic_email, $body_email) )
 					{
 						
-						echo  "<p>" .  PhangoVar::$lang['users']['success_change_password'].'</p>';
-						echo  "<p>" .  PhangoVar::$lang['users']['success_change_password_explain'].'</p>';
+						echo  "<p>" .  PhangoVar::$l_['users']->lang('success_change_password', 'The password was changed successfully.').'</p>';
+						echo  "<p>" .  PhangoVar::$l_['users']->lang('success_change_password_explain', 'We have sended to your email, the new password.').'</p>';
 
 					} 
 					else
 					{
 
-						echo  "<p>" .  PhangoVar::$lang['users']['success_change_password'].'</p>';
+						echo  "<p>" .  PhangoVar::$l_['users']->lang('success_change_password', 'The password was changed successfully.').'</p>';
 						
-						echo  "<p>" .  PhangoVar::$lang['users']['error_sending_mail_change_password'].'</p>';
+						echo  "<p>" .  PhangoVar::$l_['users']->lang('error_sending_mail_change_password', 'We can not send your new password to your email at this time, we are showing your user data in plain text. For added security, change your password once achieved identified in the system again.').'</p>';
 						
 						echo '<pre>';
 						
@@ -453,7 +453,7 @@ class LoginClass {
 				else
 				{
 
-					echo  "<p>" .  PhangoVar::$lang['users']['error_db_pass'].'</p>';
+					echo  "<p>" .  PhangoVar::$l_['users']->lang('error_db_pass', 'Error, mail format is wrong').'</p>';
 
 				}
 				
@@ -461,7 +461,7 @@ class LoginClass {
 			else
 			{
 			
-				echo  "<p>" .  PhangoVar::$lang['users']['error_token_pass'].'</p>';
+				echo  "<p>" .  PhangoVar::$l_['users']->lang('error_token_pass', 'Error: incorrect code used to change a password.').'</p>';
 			
 			}
 
@@ -540,7 +540,7 @@ class LoginClass {
 			if($no_user>0)
 			{
 				
-				PhangoVar::$model[$this->model_login]->forms[$this->field_user]->std_error= PhangoVar::$lang['users']['user_or_email_exists'];
+				PhangoVar::$model[$this->model_login]->forms[$this->field_user]->std_error= PhangoVar::$l_['users']->lang('user_or_email_exists', 'User or email exists');
 			
 			}
 		
@@ -557,16 +557,16 @@ class LoginClass {
 		
 		//$this->arr_user_insert[]='accept_conditions';
 		
-		PhangoVar::$model[$this->model_login]->forms['repeat_password']=new ModelForm('repeat_password', 'repeat_password', 'PasswordForm',  PhangoVar::$lang['users']['repeat_password'], new PasswordField(), $required=1, $parameters='');
+		PhangoVar::$model[$this->model_login]->forms['repeat_password']=new ModelForm('repeat_password', 'repeat_password', 'PasswordForm',  PhangoVar::$l_['users']->lang('repeat_password', 'Repeat password'), new PasswordField(), $required=1, $parameters='');
 		
-		//PhangoVar::$model[$this->model_login]->InsertAfterFieldForm($this->field_password, 'repeat_password', new ModelForm('repeat_password', 'repeat_password', 'PasswordForm',  PhangoVar::$lang['users']['repeat_password'], new PasswordField(), $required=1, $parameters=''));
+		//PhangoVar::$model[$this->model_login]->InsertAfterFieldForm($this->field_password, 'repeat_password', new ModelForm('repeat_password', 'repeat_password', 'PasswordForm',  PhangoVar::$l_['users']->lang('repeat_password', 'Repeat password'), new PasswordField(), $required=1, $parameters=''));
 			
 		if(PhangoVar::$captcha_type!='')
 		{
 
 			load_libraries(array('fields/captchafield'));
 
-			PhangoVar::$model[$this->model_login]->forms['captcha']=new ModelForm('captcha', 'captcha', 'CaptchaForm', PhangoVar::$lang['common']['captcha'], new CaptchaField(), $required=1, $parameters='');
+			PhangoVar::$model[$this->model_login]->forms['captcha']=new ModelForm('captcha', 'captcha', 'CaptchaForm', PhangoVar::$l_['common']->lang('captcha', 'Captcha'), new CaptchaField(), $required=1, $parameters='');
 
 			$this->arr_user_insert[]='captcha';
 			
@@ -575,7 +575,7 @@ class LoginClass {
 		if($this->accept_conditions==1)
 		{
 		
-			PhangoVar::$model[$this->model_login]->forms['accept_conditions']=new ModelForm('form_login', 'accept_conditions', 'CheckBoxForm',  PhangoVar::$lang['users']['accept_cond_register']	, new BooleanField(), $required=1, $parameters='');
+			PhangoVar::$model[$this->model_login]->forms['accept_conditions']=new ModelForm('form_login', 'accept_conditions', 'CheckBoxForm',  PhangoVar::$l_['users']->lang('accept_cond_register', 'Accept registration conditions')	, new BooleanField(), $required=1, $parameters='');
 			
 			$this->arr_user_insert[]='accept_conditions';
 			
