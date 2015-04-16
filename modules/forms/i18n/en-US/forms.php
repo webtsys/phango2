@@ -1,6 +1,6 @@
 <?php
 
-PhangoVar::$lang['forms']['search_on_table']='search_on_table';
+PhangoVar::$lang['forms']['search_on_table']='Search on table';
 
 PhangoVar::$lang['forms']['add_new_images']='Add new images';
 

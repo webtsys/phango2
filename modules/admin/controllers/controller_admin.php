@@ -43,8 +43,8 @@ class AdminSwitchClass extends ControllerSwitchClass {
 			
 			//variables for define titles for admin page
 
-			$title_admin=PhangoVar::$lang['admin']['admin'];
-			$title_module=PhangoVar::$lang['admin']['home'];
+			$title_admin=PhangoVar::$l_['admin']->lang('admin', 'Admin');
+			$title_module=PhangoVar::$l_['admin']->lang('home', 'Home');
 			
 			$content='';
 
@@ -63,7 +63,7 @@ class AdminSwitchClass extends ControllerSwitchClass {
 
 			$module_admin[$module_id]='AdminIndex';
 
-			PhangoVar::$lang[$module_admin[$module_id].'_admin']['AdminIndex_admin_name']=ucfirst(PhangoVar::$lang['admin']['admin']);
+			PhangoVar::$lang[$module_admin[$module_id].'_admin']['AdminIndex_admin_name']=ucfirst(PhangoVar::$l_['admin']->lang('admin', 'Admin'));
 			
 			foreach(ModuleAdmin::$arr_modules_admin as $idmodule => $ser_admin_script)
 			{
@@ -248,7 +248,7 @@ class AdminSwitchClass extends ControllerSwitchClass {
 		
 			ob_end_clean();
 			
-			echo load_view(array('header' => $header, 'title' => PhangoVar::$lang['admin']['admin_zone'], 'content' => $content, 'name_modules' => $name_modules, 'urls' => $urls , 'extra_data' => $extra_data), 'admin/admin');
+			echo load_view(array('header' => $header, 'title' => PhangoVar::$l_['admin']->lang('admin_zone', 'Admin zone'), 'content' => $content, 'name_modules' => $name_modules, 'urls' => $urls , 'extra_data' => $extra_data), 'admin/admin');
 
 		}
 		else

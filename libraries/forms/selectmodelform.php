@@ -33,7 +33,7 @@ function SelectModelForm($name, $class, $value, $model_name, $identifier_field, 
 
 	}
 	
-	$arr_model=array($value, PhangoVar::$lang['common']['no_element_chosen'], 0);
+	$arr_model=array($value, PhangoVar::$l_['common']->lang('no_element_chosen', 'No element chosen'), 0);
 	
 	$query=PhangoVar::$model[$model_select]->select($where, array(PhangoVar::$model[$model_select]->idmodel, $identifier_field));
 

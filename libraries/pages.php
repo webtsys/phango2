@@ -80,7 +80,7 @@ function pages( $begin_page, $total_elements, $num_elements, $link ,$initial_num
 		$middle_link=add_extra_fancy_url($link, array($variable=>$x.$label) );
 		$last_link=add_extra_fancy_url($link, array( $variable=>( ( $total_page*$num_elements ) - $num_elements) ) );
 
-		$pages .= "<a class=\"link_pages\" href=\"$middle_link\" onclick=\"$func_jscript\">&gt;&gt;</a> <a class=\"link_pages\" href=\"$last_link\" onclick=\"$func_jscript\">".PhangoVar::$lang['common']['last']."</a>";
+		$pages .= "<a class=\"link_pages\" href=\"$middle_link\" onclick=\"$func_jscript\">&gt;&gt;</a> <a class=\"link_pages\" href=\"$last_link\" onclick=\"$func_jscript\">".PhangoVar::$l_['common']->lang('last', 'Last')."</a>";
 
 	}
 	

@@ -878,7 +878,7 @@ class Webmodel {
 			if( !( $query=webtsys_query($this->prepare_insert_sql($fields), $this->db_selected) ) )
 			{
 			
-				$this->std_error.=PhangoVar::$lang['error_model']['cant_insert'].' ';
+				$this->std_error.=PhangoVar::$l_['error_model']->lang('cant_insert', 'Can\'t insert').' ';
 				return 0;
 			
 			}
@@ -892,7 +892,7 @@ class Webmodel {
 		else
 		{	
 			
-			$this->std_error.=PhangoVar::$lang['error_model']['cant_insert'].' ';
+			$this->std_error.=PhangoVar::$l_['error_model']->lang('cant_insert', 'Can\'t insert').' ';
 
 			return 0;
 
@@ -979,7 +979,7 @@ class Webmodel {
 					if(!$this->components[$name_field]->process_update_field($this, $name_field, $conditions, $fields[$name_field]))
 					{
 						
-						$this->std_error.=PhangoVar::$lang['error_model']['cant_update'].' ';
+						$this->std_error.=PhangoVar::$l_['error_model']->lang('cant_update', 'Can\'t update').' ';
 
 						return 0;
 					
@@ -994,7 +994,7 @@ class Webmodel {
 			if(!($query=webtsys_query('update '.$this->name.' set '.implode(', ' , $arr_fields).' '.$conditions, $this->db_selected) ) )
 			{
 				
-				$this->std_error.=PhangoVar::$lang['error_model']['cant_update'].' ';
+				$this->std_error.=PhangoVar::$l_['error_model']->lang('cant_update', 'Can\'t update').' ';
 				return 0;
 			
 			}
@@ -1009,7 +1009,7 @@ class Webmodel {
 		{
 			//Validation of $post fail, add error to $model->std_error
 			
-			$this->std_error.=PhangoVar::$lang['error_model']['cant_update'].' ';
+			$this->std_error.=PhangoVar::$l_['error_model']->lang('cant_update', 'Can\'t update').' ';
 
 			return 0;
 
@@ -1497,11 +1497,11 @@ class Webmodel {
 					if($this->components[$key]->std_error=='')
 					{
 
-						$this->components[$key]->std_error=PhangoVar::$lang['common']['field_required'];
+						$this->components[$key]->std_error=PhangoVar::$l_['common']->lang('field_required', 'Field required');
 
 					}
 
-					$arr_std_error[]=PhangoVar::$lang['error_model']['check_error_field'].' '.$key.' -> '.$this->components[$key]->std_error. ' ';
+					$arr_std_error[]=PhangoVar::$l_['error_model']->lang('check_error_field', 'Error in field').' '.$key.' -> '.$this->components[$key]->std_error. ' ';
 					$set_error++;
 	
 				}
@@ -1512,12 +1512,12 @@ class Webmodel {
 	
 				//If isn't set the value and this value is required set std_error.
 
-				$arr_std_error[]=PhangoVar::$lang['error_model']['check_error_field_required'].' '.$key.' ';
+				$arr_std_error[]=PhangoVar::$l_['error_model']->lang('check_error_field_required', 'Error: Field required').' '.$key.' ';
 	
 				if($this->components[$key]->std_error=='')
 				{
 
-					$this->components[$key]->std_error=PhangoVar::$lang['common']['field_required'];
+					$this->components[$key]->std_error=PhangoVar::$l_['common']->lang('field_required', 'Field required');
 
 				}
 	
@@ -1953,7 +1953,7 @@ class ModelForm {
 		$this->type = $type;
 		$this->label = $label;
 		$this->std_error = '';
-		$this->txt_error = PhangoVar::$lang['common']['error_in_field'];
+		$this->txt_error = PhangoVar::$l_['common']->lang('error_in_field', 'Error in field');
 		$this->required = $required;
 
 		$this->html_field_name=$name_field;
