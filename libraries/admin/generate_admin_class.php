@@ -68,7 +68,7 @@ class GenerateAdminClass {
 	public $listmodel;
 	public $number_id;
 	public $arr_fields_no_showed;
-	public $where_sql_class
+	public $where_sql_class;
 	public $num_by_page;
 
 	public $search_asc;
