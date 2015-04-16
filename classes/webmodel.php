@@ -3677,7 +3677,7 @@ function load_lang()
 	if(isset($_SESSION['language']))
 	{
 	
-		if(isset(PhangoVar::$arr_i18n[$_SESSION['language']]))
+		if(in_array($_SESSION['language'], PhangoVar::$arr_i18n))
 		{
 
 			PhangoVar::$language=$_SESSION['language'];
