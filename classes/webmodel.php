@@ -3731,8 +3731,9 @@ function load_lang()
 			{
 
 				//$output_error_lang=ob_get_contents();
+				$file_path=PhangoVar::$base_path.'i18n/'.PhangoVar::$language.'/'.$lang_file.'.php';
 			
-				if(!include(PhangoVar::$base_path.'i18n/'.PhangoVar::$language.'/'.$lang_file.'.php')) 
+				if(!include($file_path)) 
 				{
 					
 					$output=ob_get_contents();
@@ -3751,6 +3752,10 @@ function load_lang()
 
 			}
 			
+			//Include function lang...
+			
+			if(is_file(
+			
 			//ob_end_clean();
 
 			PhangoVar::$cache_lang[$lang_file]=1;
@@ -3758,6 +3763,20 @@ function load_lang()
 		}
 
 	}
+
+}
+
+function var_lang($module, $code_lang, $txt)
+{
+
+	if(!isset(PhangoVar::$lang[$module][$code_lang]))
+	{
+	
+		PhangoVar::$lang[$module][$code_lang]=$txt;
+	
+	}
+	
+	return PhangoVar::$lang[$module][$code_lang];
 
 }
 
