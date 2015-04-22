@@ -365,7 +365,9 @@ class IntegerField extends PhangoField {
 
 }
 
-///Booleanfield is a field for boolean values.
+/**
+* Booleanfield is a field for boolean values.
+*/
 
 class BooleanField extends PhangoField {
 
@@ -450,7 +452,9 @@ class BooleanField extends PhangoField {
 
 }
 
-///Doublefield is a field for doubles values.
+/**
+* Doublefield is a field for doubles values.
+*/
 
 class DoubleField extends PhangoField {
 
@@ -507,6 +511,10 @@ class DoubleField extends PhangoField {
 
 
 }
+
+/**
+*
+*/
 
 class ChoiceField extends PhangoField {
 
@@ -655,7 +663,9 @@ class ChoiceField extends PhangoField {
 
 }
 
-//Textfield is a field for long text values.
+/**
+* Textfield is a field for long text values.
+*/
 
 class TextField extends PhangoField {
 
@@ -716,7 +726,9 @@ class TextField extends PhangoField {
 	
 }
 
-//TextHTMLfield is a field for long text values based in html.
+/**
+* TextHTMLfield is a field for long text values based in html.
+*/
 
 class TextHTMLField extends PhangoField {
 
@@ -835,7 +847,9 @@ class TextHTMLField extends PhangoField {
 	
 }
 
-//Serializefield is a field if you need save serialize values
+/**
+* Serializefield is a field if you need save serialize values
+*/
 
 class SerializeField extends PhangoField {
 
@@ -947,6 +961,10 @@ class SerializeField extends PhangoField {
 	
 }
 
+/**
+*
+*/
+
 class ArrayField extends SerializeField {
 
 	/**
@@ -976,7 +994,9 @@ class ArrayField extends SerializeField {
 
 }
 
-//Datefield is a field for save dates in timestamp, this value is a timestamp and you need use form_date or form_time for format DateField
+/** 
+* Datefield is a field for save dates in timestamp, this value is a timestamp and you need use form_date or form_time for format DateField
+*/
 
 class DateField extends PhangoField {
 
@@ -1110,6 +1130,10 @@ class DateField extends PhangoField {
 	}
 	
 }
+
+/**
+*
+*/
 
 class FileField extends PhangoField {
 
@@ -1263,8 +1287,11 @@ class FileField extends PhangoField {
 
 }
 
-//Imagefield is a field for upload images
-//This field don't have for now a maximum width and height. To fix in next releases.
+/**
+* Imagefield is a field for upload images
+* 
+* This field don't have for now a maximum width and height. To fix in next releases.
+*/
 
 class ImageField extends PhangoField {
 
@@ -1741,7 +1768,9 @@ class ImageField extends PhangoField {
 
 }
 
-//Keyfield is a indexed field in a sql statement...
+/**
+* Keyfield is a indexed field in a sql statement...
+*/
 
 class KeyField extends PhangoField {
 
@@ -1974,6 +2003,10 @@ class ForeignKeyField extends IntegerField{
 
 }
 
+/**
+*
+*/
+
 class ParentField extends IntegerField{
 
 	//field related in the model...
@@ -2103,7 +2136,9 @@ class ParentField extends IntegerField{
 
 }
 
-//Emailfield is a field that only accepts emails
+/**
+* Emailfield is a field that only accepts emails
+*/
 
 class EmailField extends PhangoField {
 

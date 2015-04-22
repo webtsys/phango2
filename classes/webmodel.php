@@ -3949,6 +3949,13 @@ function show_error($txt_error_normal, $txt_error_debug, $output_external='')
 		ob_clean();
 
 	}
+	else
+	{
+	
+		$txt_error_normal=strip_tags($txt_error_normal);
+		$txt_error_debug=strip_tags($txt_error_debug);
+	
+	}
 
 	echo load_view(array('Phango site is down', $arr_error[DEBUG]), 'common/'.$arr_view[PhangoVar::$utility_cli]);
 
@@ -4214,10 +4221,6 @@ function load_jscript_view_dynamic()
 			}
 			else
 			{
-					
-					/*$jscript=slugify(urlencode_redirect($jscript, 1), 1);
-	
-					$url=make_fancy_url(PhangoVar::$media_url, 'media', 'jscript', array('module' => $module_jscript, 'jscript' => $jscript));*/
 					
 					$url=get_url_media('jscript/'.$jscript, $module_jscript);
 					

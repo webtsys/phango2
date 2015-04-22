@@ -135,7 +135,7 @@ if(file_exists($post_install_script) && !file_exists($post_install_lock))
 		if(!file_put_contents($post_install_lock, 'installed'))
 		{
 		
-			echo "Done, but cannot create this file: ".$post_install_lock.". Check your permissions and create the file if the script executed satisfactorally \n";
+			echo "Done, but cannot create this file: ".$post_install_lock.". Check your permissions and create the file if the script executed satisfally \n";
 		
 		}
 		else
