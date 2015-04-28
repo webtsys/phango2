@@ -3580,7 +3580,7 @@ function load_extension()
 /**
 * Load libraries, well, simply an elegant include
 *
-* Very important function used for load the functions and method necessaries on your probles. Is simple, you create a file php and put in a libraries folder. Use the name without php used in file and magically the file is loaded. You can use this function in many places, phango use a little cache for know who file is loaded.
+* Very important function used for load the functions and method necessaries on your projects. Is simple, you create a file php and put in a libraries folder. Use the name without php used in file and magically the file is loaded. You can use this function in many places, phango use a little cache for know who file is loaded.
 *
 * @param string $names The name of php file without .php extension. If you want specific many libraries you can use an array 
 * @param string $path The base path where search the library if is not in standard path. By default the path is on PhangoVar::$base_path/libraries/ or PhangoVar::$base_path/modules/$module/libraries/
