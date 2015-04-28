@@ -288,21 +288,14 @@ function update_table($model)
 		
 			{
 			
-				/*if(isset($model[$key]->components[$new_field]->related_model) )
-				{*/
-				
-					//Drop foreignkeyfield
-					
-				//Bug, need fixed.
 				
 				if($keys[$new_field]!='')
 				{
 					
 					$query=webtsys_query('ALTER TABLE `'.$key.'` DROP FOREIGN KEY '.$new_field.'_'.$key.'IDX');
 					
-// 				}
+				}
 				
-				//}
 
 				$query=webtsys_query('alter table `'.$key.'` drop `'.$new_field.'`');
 			
