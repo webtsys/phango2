@@ -1,11 +1,18 @@
 <?php
 //Basic framework
 
-ob_start();
+//ob_start();
 
 //Include webmodel.php, where all base classes and functions live.
 
+include(__DIR__.'/classes/phangovar.php');
+include(__DIR__.'/classes/datetimenow.php');
 include(__DIR__.'/classes/webmodel.php');
+include(__DIR__.'/classes/controllerswitchclass.php');
+include(__DIR__.'/classes/utilities.php');
+include(__DIR__.'/classes/urls.php');
+include(__DIR__.'/classes/views.php');
+include(__DIR__.'/classes/loaders.php');
 
 //Adding config...
 
@@ -219,6 +226,6 @@ if(count($_POST)>0)
 
 load_controller();
 
-ob_end_flush();
+//ob_end_flush();
 
 ?>

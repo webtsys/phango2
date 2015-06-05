@@ -6,7 +6,14 @@ ob_start();
 
 ini_set('html_errors', 0);
 
-include('classes/webmodel.php');
+include(__DIR__.'/classes/phangovar.php');
+include(__DIR__.'/classes/datetimenow.php');
+include(__DIR__.'/classes/webmodel.php');
+include(__DIR__.'/classes/controllerswitchclass.php');
+include(__DIR__.'/classes/utilities.php');
+include(__DIR__.'/classes/urls.php');
+include(__DIR__.'/classes/views.php');
+include(__DIR__.'/classes/loaders.php');
 include('config.php');
 //Load extra libraries
 

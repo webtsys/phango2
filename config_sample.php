@@ -7,10 +7,6 @@ Well, I think that variables don't need explain but...
 
 **********************/
 
-//Don't touch, define a constant neccesary for diverses scripts...
-
-define('PAGE', '1');
-
 //Db config variables
 
 //Host database. You have to write the domain name for the mysql server, normally localhost.
@@ -66,10 +62,6 @@ define('DEBUG', '0');
 PhangoVar::$language = 'en-US';
 //Avaliables languages, you can append a new language in the array.
 PhangoVar::$arr_i18n = array('es-ES','en-US');
-
-//Touch this variables only if you know that you make.
-PhangoVar::$arr_i18n_ckeditor = array('es-ES' => 'es.js','en-US' => 'en.js');
-PhangoVar::$arr_i18n_tinycme = array('es-ES' => 'es.js','en-ES' => 'en.js');
 
 //Timezone, define timezone, you can choose timezones from this list: http://php.net/manual/es/timezones.php
 define('MY_TIMEZONE', 'America/New_York');
