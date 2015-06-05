@@ -470,8 +470,8 @@ function load_controller()
 
 						ob_clean();
 
-						$arr_no_controller[0]='<p>Incorrent num of parameters</p>';
-						$arr_no_controller[1]='<p>Incorrent num of parameters in '.PhangoVar::$script_action.' from <strong>'.$path_script_controller.'</strong></p>';
+						$arr_no_controller[0]='<p>Incorrect num of parameters</p>';
+						$arr_no_controller[1]='<p>Incorrect num of parameters in '.PhangoVar::$script_action.' from <strong>'.$path_script_controller.'</strong></p>';
 
 						echo show_error($arr_no_controller[0], $arr_no_controller[1], $output_external=$output);
 						
