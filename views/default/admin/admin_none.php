@@ -4,7 +4,7 @@ function Admin_NoneView($title, $content, $block_title, $block_content, $block_u
 $block_type, $block_id, $config_data, $headers='')
 {
 
-	global $base_url, $lang, $arr_cache_jscript, $arr_cache_header;
+	//global $base_url, $lang, $arr_cache_jscript, $arr_cache_header;
 
 	?>
 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -16,8 +16,9 @@ $block_type, $block_id, $config_data, $headers='')
 		<link href="<?php echo PhangoVar::$base_url; ?>/media/common/style/style.css" rel="stylesheet" type="text/css">
 		<?php echo $headers; ?>
 		<?php 
-		echo load_jscript_view(); 
-		echo load_header_view(); 		
+		<?php echo load_css_view(); ?>
+		<?php echo load_jscript_view(); ?>
+		<?php echo load_header_view(); ?> 		
 		?>
 		</head>
 		<body>
