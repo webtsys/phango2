@@ -34,7 +34,7 @@ class UserPhangoModel extends Webmodel {
 			
 				//$this->components['password']->required=0;
 				
-				$this->components[$this->password]->std_error=PhangoVar::$l_['users']->lang('pasword_not_equal_repeat_password', 'Passwords are not equal');
+				$this->components[$this->password]->std_error=i18n_lang('users', 'pasword_not_equal_repeat_password', 'Passwords are not equal');
 				
 				return false;
 			
@@ -46,7 +46,7 @@ class UserPhangoModel extends Webmodel {
 		else
 		{
 		
-			$this->std_error=PhangoVar::$l_['users']->lang('cannot_insert_user_email_or_user', 'A user already exists with this email or username');
+			$this->std_error=i18n_lang('users', 'cannot_insert_user_email_or_user', 'A user already exists with this email or username');
 		
 			return false;
 		
@@ -68,7 +68,7 @@ class UserPhangoModel extends Webmodel {
 				
 					//$this->components['password']->required=0;
 					
-					$this->components[$this->password]->std_error=PhangoVar::$l_['users']->lang('pasword_not_equal_repeat_password', 'Passwords are not equal');
+					$this->components[$this->password]->std_error=i18n_lang('users', 'pasword_not_equal_repeat_password', 'Passwords are not equal');
 					
 					return false;
 				
@@ -88,7 +88,7 @@ class UserPhangoModel extends Webmodel {
 			else
 			{
 			
-				$this->std_error=PhangoVar::$l_['users']->lang('cannot_insert_user_email_or_user', 'A user already exists with this email or username');
+				$this->std_error=i18n_lang('users', 'cannot_insert_user_email_or_user', 'A user already exists with this email or username');
 			
 				return false;
 			

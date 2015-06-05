@@ -426,13 +426,13 @@ class BooleanField extends PhangoField {
 		{
 			default:
 
-				return PhangoVar::$l_['common']->lang('no', 'No');
+				return i18n_lang('common', 'no', 'No');
 
 			break;
 
 			case 1:
 
-				return PhangoVar::$l_['common']->lang('yes', 'Yes');
+				return i18n_lang('common', 'yes', 'Yes');
 
 			break;
 
@@ -444,7 +444,7 @@ class BooleanField extends PhangoField {
 	function get_parameters_default()
 	{
 	
-		$arr_values=array($this->default_value, PhangoVar::$l_['common']->lang('no', 'No'), 0, PhangoVar::$l_['common']->lang('yes', 'Yes'), 1);;
+		$arr_values=array($this->default_value, i18n_lang('common', 'no', 'No'), 0, i18n_lang('common', 'yes', 'Yes'), 1);;
 
 		return array($this->name_component, '', $arr_values);
 
@@ -1201,7 +1201,7 @@ class FileField extends PhangoField {
 				else
 				{
 
-					$this->std_error=PhangoVar::$l_['common']->lang('error_cannot_upload_this_file_to_the_server', 'Error: Cannot upload this file to the server');
+					$this->std_error=i18n_lang('common', 'error_cannot_upload_this_file_to_the_server', 'Error: Cannot upload this file to the server');
 
 					return '';
 
@@ -1220,7 +1220,7 @@ class FileField extends PhangoField {
 		else
 		{
 		
-			$this->std_error=PhangoVar::$l_['error_model']->lang('check_error_enctype_for_upload_file', 'Please, check enctype form of file form');
+			$this->std_error=i18n_lang('error_model', 'check_error_enctype_for_upload_file', 'Please, check enctype form of file form');
 		
 			return '';
 		
@@ -1277,7 +1277,7 @@ class FileField extends PhangoField {
 			if(!unlink($this->path.'/'.$file_name))
 			{
 			
-				$this->std_error=PhangoVar::$l_['common']->lang('cannot_delete_file', 'Cannot delete the file');
+				$this->std_error=i18n_lang('common', 'cannot_delete_file', 'Cannot delete the file');
 			
 			}
 		
@@ -1396,7 +1396,7 @@ class ImageField extends PhangoField {
 					if($arr_image[0]<$this->min_size[0] || $arr_image[1]<$this->min_size[1])
 					{
 					
-						$this->std_error=PhangoVar::$l_['common']->lang('image_size_is_not_correct', 'Image size is wrong').'<br />'.PhangoVar::$l_['common']->lang('min_size', 'Minimal size').': '.$this->min_size[0].'x'.$this->min_size[1];
+						$this->std_error=i18n_lang('common', 'image_size_is_not_correct', 'Image size is wrong').'<br />'.i18n_lang('common', 'min_size', 'Minimal size').': '.$this->min_size[0].'x'.$this->min_size[1];
 						
 						$this->value='';
 						return '';
@@ -1411,7 +1411,7 @@ class ImageField extends PhangoField {
 				if(file_exists($this->path.'/'.$_FILES[$file]['name']))
 				{
 				
-					$this->std_error=PhangoVar::$l_['common']->lang('a_image_with_same_name_exists', 'There is an image with the same name');
+					$this->std_error=i18n_lang('common', 'a_image_with_same_name_exists', 'There is an image with the same name');
 					
 					return $image;
 				
@@ -1594,7 +1594,7 @@ class ImageField extends PhangoField {
 					else
 					{
 
-						$this->std_error=PhangoVar::$l_['common']->lang('error_cannot_upload_this_image_to_the_server', 'Error: Cannot upload this image to the server');
+						$this->std_error=i18n_lang('common', 'error_cannot_upload_this_image_to_the_server', 'Error: Cannot upload this image to the server');
 						
 						if(DEBUG==1)
 						{
@@ -1612,7 +1612,7 @@ class ImageField extends PhangoField {
 				else
 				{
 
-					$this->std_error.=PhangoVar::$l_['error_model']->lang('img_format_error', 'Img format error, only accept gif, jpg and png formats');
+					$this->std_error.=i18n_lang('error_model', 'img_format_error', 'Img format error, only accept gif, jpg and png formats');
 
 				}
 
@@ -1640,7 +1640,7 @@ class ImageField extends PhangoField {
 			else
 			{
 			
-				$this->std_error=PhangoVar::$l_['error_model']->lang('check_error_enctype_for_upload_file', 'Please, check enctype form of file form');
+				$this->std_error=i18n_lang('error_model', 'check_error_enctype_for_upload_file', 'Please, check enctype form of file form');
 				return '';
 			
 			}
@@ -1651,7 +1651,7 @@ class ImageField extends PhangoField {
 		else
 		{
 		
-			$this->std_error=PhangoVar::$l_['error_model']->lang('check_error_enctype_for_upload_file', 'Please, check enctype form of file form');
+			$this->std_error=i18n_lang('error_model', 'check_error_enctype_for_upload_file', 'Please, check enctype form of file form');
 		
 		}
 
@@ -1702,19 +1702,19 @@ class ImageField extends PhangoField {
 						if(!unlink($this->path.'/'.$key.'_'.$image_name))
 						{
 							
-							$this->std_error.=PhangoVar::$l_['common']->lang('cannot_delete_image', 'Cannot delete the image').': '.$key.'_'.$image_name;
+							$this->std_error.=i18n_lang('common', 'cannot_delete_image', 'Cannot delete the image').': '.$key.'_'.$image_name;
 						
 						}
 					
 					}
 				
-					$this->std_error.=PhangoVar::$l_['common']->lang('cannot_delete_image', 'Cannot delete the image').': '.$image_name;
+					$this->std_error.=i18n_lang('common', 'cannot_delete_image', 'Cannot delete the image').': '.$image_name;
 				
 				}
 				else
 				{
 				
-					$this->std_error.=PhangoVar::$l_['common']->lang('cannot_delete_image', 'Cannot delete the image').': '.$image_name;
+					$this->std_error.=i18n_lang('common', 'cannot_delete_image', 'Cannot delete the image').': '.$image_name;
 				
 				}
 				
@@ -1722,7 +1722,7 @@ class ImageField extends PhangoField {
 			else
 			{
 			
-				$this->std_error.=PhangoVar::$l_['common']->lang('cannot_delete_image', 'Cannot delete the image').': '.$image_name;
+				$this->std_error.=i18n_lang('common', 'cannot_delete_image', 'Cannot delete the image').': '.$image_name;
 			
 			}
 		
@@ -1986,7 +1986,7 @@ class ForeignKeyField extends IntegerField{
 		else
 		{
 		
-			$arr_values=array('', PhangoVar::$l_['common']->lang('any_option_chosen', 'Any option chosen'), '');
+			$arr_values=array('', i18n_lang('common', 'any_option_chosen', 'Any option chosen'), '');
 			
 			return array($this->name_component, '', $arr_values);
 			
@@ -2061,7 +2061,7 @@ class ParentField extends IntegerField{
 	{
 		
 
-		$arr_values=array('', PhangoVar::$l_['common']->lang('any_option_chosen', 'Any option chosen'), '');
+		$arr_values=array('', i18n_lang('common', 'any_option_chosen', 'Any option chosen'), '');
 		
 		return array($this->name_component, '', $arr_values);
 
@@ -2183,7 +2183,7 @@ class EmailField extends PhangoField {
 		else
 		{
 			
-			$this->std_error.=PhangoVar::$l_['error_model']->lang('email_format_error', 'Email format error').' ';
+			$this->std_error.=i18n_lang('error_model', 'email_format_error', 'Email format error').' ';
 			
 			return '';
 

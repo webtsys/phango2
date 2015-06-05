@@ -254,7 +254,7 @@ function load_libraries($names, $path='')
 *
 * @param string $lang_file A list of lang files
 */
-
+/*
 function load_lang()
 {
 	
@@ -335,8 +335,6 @@ function load_lang()
 					$check_error_lang[1]='Error: Don\'t exists PhangoVar::$lang['.$lang_file.']variable. Do you execute <strong>check_language.php</strong>?.';
 					$check_error_lang[0]='Error: Do you execute <strong>check_language.php</strong>?.';
 
-					/*echo load_view(array('Internationalization error', $check_error_lang[DEBUG]), 'common/common');
-					die();*/
 					show_error($check_error_lang[0], $check_error_lang[1], $output);
 					die;
 				
@@ -381,6 +379,6 @@ class PhaLang {
 
 	}
 
-}
+}*/
 
 ?>

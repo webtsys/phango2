@@ -49,7 +49,7 @@ function AdminView($header, $title, $content, $name_modules, $url_modules, $extr
 			<div id="header"><span id="title_phango">Phango</span> <span id="title_framework">Framework!</span> <?php echo $title; ?></div>
 			<div class="content_admin">
 				<div id="menu">
-					<div class="menu_title"><?php echo PhangoVar::$l_['admin']->lang('applications', 'Applications'); ?></div>
+					<div class="menu_title"><?php echo i18n_lang('admin', 'applications', 'Applications'); ?></div>
 					<?php
 
 					foreach($name_modules as $key_module => $name_module)

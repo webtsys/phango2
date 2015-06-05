@@ -13,6 +13,7 @@ include(__DIR__.'/classes/utilities.php');
 include(__DIR__.'/classes/urls.php');
 include(__DIR__.'/classes/views.php');
 include(__DIR__.'/classes/loaders.php');
+include(__DIR__.'/classes/i18n.php');
 
 //Adding config...
 

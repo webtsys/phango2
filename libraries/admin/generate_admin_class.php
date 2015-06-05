@@ -107,16 +107,16 @@ class GenerateAdminClass {
 		$this->show_id=1;
 		$this->yes_options=1;
 		$this->extra_fields=array();
-		$this->txt_list_new=PhangoVar::$l_['common']->lang('listing_new', 'List of').': '.PhangoVar::$model[$this->model_name]->label;
-		$this->txt_add_new_item=PhangoVar::$l_['common']->lang('add_new_item', 'Add new element').': '.PhangoVar::$model[$this->model_name]->label;
-		$this->txt_edit_item=PhangoVar::$l_['common']->lang('edit', 'Edit');
+		$this->txt_list_new=i18n_lang('common', 'listing_new', 'List of').': '.PhangoVar::$model[$this->model_name]->label;
+		$this->txt_add_new_item=i18n_lang('common', 'add_new_item', 'Add new element').': '.PhangoVar::$model[$this->model_name]->label;
+		$this->txt_edit_item=i18n_lang('common', 'edit', 'Edit');
 		$this->simple_redirect=0;
 		$this->class_add='add_class_item_link';
 		$this->goback_class='add_class_item_link';
 		$this->separator_element_opt='<br />';
 		$this->extra_menu_create='';
-		$this->search_asc=PhangoVar::$l_['common']->lang('ascent', 'Ascendent');
-		$this->search_desc=PhangoVar::$l_['common']->lang('descent', 'Descendent');
+		$this->search_asc=i18n_lang('common', 'ascent', 'Ascendent');
+		$this->search_desc=i18n_lang('common', 'descent', 'Descendent');
 		$this->show_goback=1;
 		$this->arr_fields_order=array();
 		$this->arr_fields_search=array();
@@ -341,7 +341,7 @@ class GenerateAdminClass {
 
 					ob_end_clean();
 
-					echo load_view(array(PhangoVar::$l_['common']->lang('edit', 'Edit'), $cont_index), 'content');
+					echo load_view(array(i18n_lang('common', 'edit', 'Edit'), $cont_index), 'content');
 					
 				break;
 
@@ -359,7 +359,7 @@ class GenerateAdminClass {
 
 						ob_start();
 						
-						echo '<p class="error">'.PhangoVar::$l_['common']->lang('cannot_update_insert_in_model', 'Cannot insert or update this item in the database').' '.$model_name.': '.PhangoVar::$model[$model_name]->std_error.'</p>';
+						echo '<p class="error">'.i18n_lang('common', 'cannot_update_insert_in_model', 'Cannot insert or update this item in the database').' '.$model_name.': '.PhangoVar::$model[$model_name]->std_error.'</p>';
 
 						$post=filter_fields_array($arr_fields, $_POST);
 						
@@ -371,7 +371,7 @@ class GenerateAdminClass {
 
 						ob_end_clean();
 
-						echo load_view(array(PhangoVar::$l_['common']->lang('edit', 'Edit'), $cont_index), 'content');
+						echo load_view(array(i18n_lang('common', 'edit', 'Edit'), $cont_index), 'content');
 
 					}
 					else
@@ -380,7 +380,7 @@ class GenerateAdminClass {
 						//die(header('Location: '.$url_admin.'/success/1'));
 						
 						
-						$text_output=PhangoVar::$l_['common']->lang('success', 'Success');
+						$text_output=i18n_lang('common', 'success', 'Success');
 						
 						ob_end_clean();
 						
@@ -388,13 +388,13 @@ class GenerateAdminClass {
 						{
 							
 							load_libraries(array('redirect'));
-							die( redirect_webtsys( $url_back, PhangoVar::$l_['common']->lang('redirect', 'Redirect'), $text_output, PhangoVar::$l_['common']->lang('press_here_redirecting', 'Press here for redirecting')) );
+							die( redirect_webtsys( $url_back, i18n_lang('common', 'redirect', 'Redirect'), $text_output, i18n_lang('common', 'press_here_redirecting', 'Press here for redirecting')) );
 						}
 						else
 						{
 						*/
 							load_libraries(array('redirect'));
-							simple_redirect( $url_back, PhangoVar::$l_['common']->lang('redirect', 'Redirect'), PhangoVar::$l_['common']->lang('success', 'Success'), PhangoVar::$l_['common']->lang('press_here_redirecting', 'Press here for redirecting'));
+							simple_redirect( $url_back, i18n_lang('common', 'redirect', 'Redirect'), i18n_lang('common', 'success', 'Success'), i18n_lang('common', 'press_here_redirecting', 'Press here for redirecting'));
 							
 							return;
 
@@ -410,7 +410,7 @@ class GenerateAdminClass {
 			{
 		
 				?>
-				<p><a href="<?php echo $url_back; ?>" class="<?php echo $this->goback_class; ?>"><?php echo PhangoVar::$l_['common']->lang('go_back', 'Go back'); ?></a></p>
+				<p><a href="<?php echo $url_back; ?>" class="<?php echo $this->goback_class; ?>"><?php echo i18n_lang('common', 'go_back', 'Go back'); ?></a></p>
 				<?php
 
 			}
@@ -563,7 +563,7 @@ class GenerateAdminClass {
 				echo '<p><label for="'.$field_position.'">'.$name.'</label><input type="text" name="position['.$id.']" value="'.$position.'" size="3"/></p>';
 
 			}
-			echo '<input type="submit" value="'.PhangoVar::$l_['common']->lang('send', 'Send').'"/>';
+			echo '<input type="submit" value="'.i18n_lang('common', 'send', 'Send').'"/>';
 			echo '</div>';
 			echo '</form>';
 			
@@ -571,7 +571,7 @@ class GenerateAdminClass {
 
 			ob_end_clean();
 
-			echo load_view(array(PhangoVar::$l_['common']->lang('order', 'Order'), $cont_order), 'content');
+			echo load_view(array(i18n_lang('common', 'order', 'Order'), $cont_order), 'content');
 
 		break;
 
@@ -599,14 +599,14 @@ class GenerateAdminClass {
 
 			load_libraries(array('redirect'));
 
-			//die( redirect_webtsys( $url, PhangoVar::$l_['common']->lang('redirect', 'Redirect'), PhangoVar::$l_['common']->lang('success', 'Success'), PhangoVar::$l_['common']->lang('press_here_redirecting', 'Press here for redirecting')) );
+			//die( redirect_webtsys( $url, i18n_lang('common', 'redirect', 'Redirect'), i18n_lang('common', 'success', 'Success'), i18n_lang('common', 'press_here_redirecting', 'Press here for redirecting')) );
 			
-			simple_redirect($url, PhangoVar::$l_['common']->lang('redirect', 'Redirect'), PhangoVar::$l_['common']->lang('success', 'Success'), PhangoVar::$l_['common']->lang('press_here_redirecting', 'Press here for redirecting'), $content_view='content');
+			simple_redirect($url, i18n_lang('common', 'redirect', 'Redirect'), i18n_lang('common', 'success', 'Success'), i18n_lang('common', 'press_here_redirecting', 'Press here for redirecting'), $content_view='content');
 			
 			//die;
 			
 			/*load_libraries(array('redirect'));
-			simple_redirect( $url, PhangoVar::$l_['common']->lang('redirect', 'Redirect'), PhangoVar::$l_['common']->lang('success', 'Success'), PhangoVar::$l_['common']->lang('press_here_redirecting', 'Press here for redirecting'));*/
+			simple_redirect( $url, i18n_lang('common', 'redirect', 'Redirect'), i18n_lang('common', 'success', 'Success'), i18n_lang('common', 'press_here_redirecting', 'Press here for redirecting'));*/
 
 		break;
 
@@ -616,7 +616,7 @@ class GenerateAdminClass {
 	else
 	{
 
-		echo '<p>'.PhangoVar::$l_['common']->lang('no_exists_elements_to_order', 'There is no item to order').'</p>';
+		echo '<p>'.i18n_lang('common', 'no_exists_elements_to_order', 'There is no item to order').'</p>';
 
 	}
 
@@ -647,8 +647,8 @@ class ListModelClass {
 		$this->extra_fields=$extra_fields; 
 		$this->separator_element=$separator_element; 
 		$this->simple_redirect=$simple_redirect;
-		$this->search_asc=PhangoVar::$l_['common']->lang('ascent', 'Ascendent');
-		$this->search_desc=PhangoVar::$l_['common']->lang('descent', 'Descendent');
+		$this->search_asc=i18n_lang('common', 'ascent', 'Ascendent');
+		$this->search_desc=i18n_lang('common', 'descent', 'Descendent');
 		$this->show_goback=1;
 		$this->separator_element_opt='<br />';
 		$this->arr_fields_order=$this->arr_fields;
@@ -804,7 +804,7 @@ class ListModelClass {
 
 			ob_end_clean();
 
-			echo load_view(array(PhangoVar::$l_['common']->lang('edit', 'Edit'), $cont_index), 'content');*/
+			echo load_view(array(i18n_lang('common', 'edit', 'Edit'), $cont_index), 'content');*/
 			
 		break;
 
@@ -821,10 +821,10 @@ class ListModelClass {
 				//die(header('Location: '.$url_options_delete));
 				/*ob_end_clean();
 				load_libraries(array('redirect'));
-				die( redirect_webtsys( $url_options_delete, PhangoVar::$l_['common']->lang('redirect', 'Redirect'), PhangoVar::$l_['common']->lang('success', 'Success'), PhangoVar::$l_['common']->lang('press_here_redirecting', 'Press here for redirecting') , $arr_block) );*/
+				die( redirect_webtsys( $url_options_delete, i18n_lang('common', 'redirect', 'Redirect'), i18n_lang('common', 'success', 'Success'), i18n_lang('common', 'press_here_redirecting', 'Press here for redirecting') , $arr_block) );*/
 				
 				load_libraries(array('redirect'));
-				simple_redirect( $url_options_delete, PhangoVar::$l_['common']->lang('redirect', 'Redirect'), PhangoVar::$l_['common']->lang('success', 'Success'), PhangoVar::$l_['common']->lang('press_here_redirecting', 'Press here for redirecting'));
+				simple_redirect( $url_options_delete, i18n_lang('common', 'redirect', 'Redirect'), i18n_lang('common', 'success', 'Success'), i18n_lang('common', 'press_here_redirecting', 'Press here for redirecting'));
 
 			}
 			else

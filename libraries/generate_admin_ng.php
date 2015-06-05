@@ -18,7 +18,7 @@ function BasicOptionsListModel($url_options, $model_name, $id)
 	<script language="javascript">
 		function warning()
 		{
-			if(confirm('<?php echo PhangoVar::$l_['common']->lang('delete_model', 'Delete element'); ?>'))
+			if(confirm('<?php echo i18n_lang('common', 'delete_model', 'Delete element'); ?>'))
 			{
 				return true;
 			}
@@ -33,7 +33,7 @@ function BasicOptionsListModel($url_options, $model_name, $id)
 	$url_options_edit=add_extra_fancy_url($url_options, array('op_edit' =>1, PhangoVar::$model[$model_name]->idmodel => $id));
 	$url_options_delete=add_extra_fancy_url($url_options, array('op_edit' =>2, PhangoVar::$model[$model_name]->idmodel => $id));
 
-	$arr_options=array('<a href="'.$url_options_edit.'">'.PhangoVar::$l_['common']->lang('edit', 'Edit').'</a>', '<a href="'.$url_options_delete.'" onclick="javascript: if(warning()==false) { return false; }">'.PhangoVar::$l_['common']->lang('delete', 'Delete').'</a>');
+	$arr_options=array('<a href="'.$url_options_edit.'">'.i18n_lang('common', 'edit', 'Edit').'</a>', '<a href="'.$url_options_delete.'" onclick="javascript: if(warning()==false) { return false; }">'.i18n_lang('common', 'delete', 'Delete').'</a>');
 
 	return $arr_options;
 
@@ -99,9 +99,9 @@ function SearchInField($model_name, $arr_fields_order, $arr_fields_search, $wher
 	$arr_order[1]='DESC';
 
 	$arr_order_select[]=$_GET['order_desc'];
-	$arr_order_select[]=PhangoVar::$l_['common']->lang('ascent', 'Ascendent');
+	$arr_order_select[]=i18n_lang('common', 'ascent', 'Ascendent');
 	$arr_order_select[]=0;
-	$arr_order_select[]=PhangoVar::$l_['common']->lang('descent', 'Descendent');
+	$arr_order_select[]=i18n_lang('common', 'descent', 'Descendent');
 	$arr_order_select[]=1;
 
 	$arr_order_field=array($_GET['order_field']);
@@ -223,7 +223,7 @@ function GeneratePositionModel($model_name, $field_name, $field_position, $url, 
 				echo '<p><label for="'.$field_position.'">'.$name.'</label><input type="text" name="position['.$id.']" value="'.$position.'" size="3"/></p>';
 
 			}
-			echo '<input type="submit" value="'.PhangoVar::$l_['common']->lang('send', 'Send').'"/>';
+			echo '<input type="submit" value="'.i18n_lang('common', 'send', 'Send').'"/>';
 			echo '</div>';
 			echo '</form>';
 			
@@ -231,7 +231,7 @@ function GeneratePositionModel($model_name, $field_name, $field_position, $url, 
 
 			ob_end_clean();
 
-			echo load_view(array(PhangoVar::$l_['common']->lang('order', 'Order'), $cont_order), 'content');
+			echo load_view(array(i18n_lang('common', 'order', 'Order'), $cont_order), 'content');
 
 		break;
 
@@ -259,10 +259,10 @@ function GeneratePositionModel($model_name, $field_name, $field_position, $url, 
 
 			load_libraries(array('redirect'));
 
-			die( redirect_webtsys( $url, PhangoVar::$l_['common']->lang('redirect', 'Redirect'), PhangoVar::$l_['common']->lang('success', 'Success'), PhangoVar::$l_['common']->lang('press_here_redirecting', 'Press here for redirecting')) );
+			die( redirect_webtsys( $url, i18n_lang('common', 'redirect', 'Redirect'), i18n_lang('common', 'success', 'Success'), i18n_lang('common', 'press_here_redirecting', 'Press here for redirecting')) );
 			
 			/*load_libraries(array('redirect'));
-			simple_redirect( $url, PhangoVar::$l_['common']->lang('redirect', 'Redirect'), PhangoVar::$l_['common']->lang('success', 'Success'), PhangoVar::$l_['common']->lang('press_here_redirecting', 'Press here for redirecting'));*/
+			simple_redirect( $url, i18n_lang('common', 'redirect', 'Redirect'), i18n_lang('common', 'success', 'Success'), i18n_lang('common', 'press_here_redirecting', 'Press here for redirecting'));*/
 
 		break;
 
@@ -272,7 +272,7 @@ function GeneratePositionModel($model_name, $field_name, $field_position, $url, 
 	else
 	{
 
-		echo '<p>'.PhangoVar::$l_['common']->lang('no_exists_elements_to_order', 'There is no item to order').'</p>';
+		echo '<p>'.i18n_lang('common', 'no_exists_elements_to_order', 'There is no item to order').'</p>';
 
 	}
 
@@ -294,8 +294,8 @@ class SearchInFieldClass {
 		$this->url_options=$url_options;
 		$this->yes_id=$yes_id;
 		$this->show_form=$show_form;
-		$this->lang_asc=PhangoVar::$l_['common']->lang('ascent', 'Ascendent');
-		$this->lang_desc=PhangoVar::$l_['common']->lang('descent', 'Descendent');
+		$this->lang_asc=i18n_lang('common', 'ascent', 'Ascendent');
+		$this->lang_desc=i18n_lang('common', 'descent', 'Descendent');
 	
 	
 	}

@@ -23,7 +23,7 @@ function hierarchy_links($model_name, $parentfield_name, $field_name, $idmodel)
 	//Cache system?
 	
 	$arr_id_father=array(0 => 0);
-	$arr_id_name=array(0 => PhangoVar::$l_['common']->lang('home', 'Home'));
+	$arr_id_name=array(0 => i18n_lang('common', 'home', 'Home'));
 	$arr_hierarchy=array();
 	
 	$query=PhangoVar::$model[$model_name]->select('', array(PhangoVar::$model[$model_name]->idmodel, $parentfield_name, $field_name), 1);

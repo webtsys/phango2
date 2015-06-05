@@ -14,7 +14,7 @@ function InsertUserFormView($model_user, $model_login)
 		
 
 	?>
-	<p><input type="submit" value="<?php echo PhangoVar::$l_['users']->lang('register', 'Register in the web'); ?>"/></p>
+	<p><input type="submit" value="<?php echo i18n_lang('users', 'register', 'Register in the web'); ?>"/></p>
 	</form>
 	<?php
 

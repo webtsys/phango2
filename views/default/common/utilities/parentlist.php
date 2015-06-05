@@ -17,8 +17,8 @@ function ParentListView($model_name, $arr_cat, $arr_list_father, $idfather, $url
 	if($idfather==0)
 	{
 	
-		$first_url[$_GET[$idfield]]='<ul><li><a href="'.$url_cat.'">'.PhangoVar::$l_['common']->lang('home', 'Home').'</a><ul>';
-		$first_url[0]='<ul><li><strong>'.PhangoVar::$l_['common']->lang('home', 'Home').'</strong></li><ul>';
+		$first_url[$_GET[$idfield]]='<ul><li><a href="'.$url_cat.'">'.i18n_lang('common', 'home', 'Home').'</a><ul>';
+		$first_url[0]='<ul><li><strong>'.i18n_lang('common', 'home', 'Home').'</strong></li><ul>';
 		
 		echo $first_url[$_GET[$idfield]];
 		

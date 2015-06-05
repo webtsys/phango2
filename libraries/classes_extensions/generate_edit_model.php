@@ -26,7 +26,7 @@ function generate_edit_model_method_class($class, $idrow, $arr_fields, $url_admi
 	
 	$url_post=add_extra_fancy_url($url_admin, array('op_update' =>1));
 	
-	$label=PhangoVar::$l_['common']->lang('add_new_item', 'Add new element').' - '.$class->label;
+	$label=i18n_lang('common', 'add_new_item', 'Add new element').' - '.$class->label;
 	
 	$update_method='insert';
 	
@@ -50,14 +50,14 @@ function generate_edit_model_method_class($class, $idrow, $arr_fields, $url_admi
 		
 		$update_method='update';
 		
-		$label=PhangoVar::$l_['common']->lang('edit', 'Edit').' - '.$class->label;
+		$label=i18n_lang('common', 'edit', 'Edit').' - '.$class->label;
 	
 	}
 	else 
 	if($yes_insert==0)
 	{
 	
-		echo PhangoVar::$l_['common']->lang('cannot_update_insert_in_model', 'Cannot insert or update this item in the database');
+		echo i18n_lang('common', 'cannot_update_insert_in_model', 'Cannot insert or update this item in the database');
 	
 		return '';
 	
@@ -79,7 +79,7 @@ function generate_edit_model_method_class($class, $idrow, $arr_fields, $url_admi
 		echo load_view(array($label, $cont_index), 'content');
 		
 		?>
-		<p><a href="<?php echo $url_back; ?>"><?php echo PhangoVar::$l_['common']->lang('go_back', 'Go back'); ?></a></p>
+		<p><a href="<?php echo $url_back; ?>"><?php echo i18n_lang('common', 'go_back', 'Go back'); ?></a></p>
 		<?php
 		
 		break;
@@ -92,7 +92,7 @@ function generate_edit_model_method_class($class, $idrow, $arr_fields, $url_admi
 			{
 			
 				load_libraries(array('redirect'));
-				simple_redirect( $url_back, PhangoVar::$l_['common']->lang('redirect', 'Redirect'), PhangoVar::$l_['common']->lang('success', 'Success'), PhangoVar::$l_['common']->lang('press_here_redirecting', 'Press here for redirecting'));
+				simple_redirect( $url_back, i18n_lang('common', 'redirect', 'Redirect'), i18n_lang('common', 'success', 'Success'), i18n_lang('common', 'press_here_redirecting', 'Press here for redirecting'));
 			
 			}
 			else
@@ -100,7 +100,7 @@ function generate_edit_model_method_class($class, $idrow, $arr_fields, $url_admi
 			
 				ob_start();
 					
-				echo '<p class="error">'.PhangoVar::$l_['common']->lang('cannot_update_insert_in_model', 'Cannot insert or update this item in the database').' '.$class->name.': '.$class->std_error.'</p>';
+				echo '<p class="error">'.i18n_lang('common', 'cannot_update_insert_in_model', 'Cannot insert or update this item in the database').' '.$class->name.': '.$class->std_error.'</p>';
 
 				$post=filter_fields_array($arr_fields, $_POST);
 				
@@ -128,7 +128,7 @@ function generate_edit_model_method_class($class, $idrow, $arr_fields, $url_admi
 				{
 				
 					load_libraries(array('redirect'));
-					simple_redirect( $url_back , PhangoVar::$l_['common']->lang('redirect', 'Redirect'), PhangoVar::$l_['common']->lang('success', 'Success'), PhangoVar::$l_['common']->lang('press_here_redirecting', 'Press here for redirecting'));
+					simple_redirect( $url_back , i18n_lang('common', 'redirect', 'Redirect'), i18n_lang('common', 'success', 'Success'), i18n_lang('common', 'press_here_redirecting', 'Press here for redirecting'));
 				
 				}
 			

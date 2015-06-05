@@ -143,7 +143,7 @@ function check_i18n_file($file_path)
 	
 	//$pattern_file="|".preg_quote("PhangoVar::\$lang")."\['(.*)'\]\['(.*)'\]|U";
 	
-	//PhangoVar::$l_['error_model']->lang('cant_insert', 'Can\'t insert')
+	//i18n_lang('error_model', 'cant_insert', 'Can\'t insert')
 	
 	$pattern_file="|".preg_quote("PhangoVar::\$l_")."\['(.*)'\]->lang\('(.*)', '(.*)'\)|U";
 		
