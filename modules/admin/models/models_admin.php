@@ -42,6 +42,8 @@ class ChoiceAdminField extends ChoiceField {
 	public function show_formatted($value)
 	{
 	
+		settype($value, 'integer');
+		
 		return ChoiceAdminField::$arr_options_formated[$value];
 	
 	}
