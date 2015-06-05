@@ -17,7 +17,9 @@ if(DEBUG==1)
 		
 		if($error!='')
 		{
-			throw new Exception('Error: '.$sql_fail.' -> '.$error);
+			$exception=new Exception('Error: '.$sql_fail.' -> '.$error);
+			
+			echo $exception->getMessage().' Trace :'.$exception->getTraceAsString();
 			
 		}
 

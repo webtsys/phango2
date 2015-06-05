@@ -558,4 +558,31 @@ function get_base_url_media($module, $directory)
 
 }
 
+function set_flash($text)
+{
+
+	$_SESSION['flash_txt']=$text;
+
+}
+	
+function show_flash()
+{
+
+	if(isset($_SESSION['flash_txt']))
+	{
+		if($_SESSION['flash_txt']!='')
+		{
+			$text=$_SESSION['flash_txt'];
+			
+			$_SESSION['flash_txt']='';
+		
+			return load_view(array($text), 'common/utilities/flash');
+			
+		}
+	}
+	
+	return '';
+
+}
+
 ?>
