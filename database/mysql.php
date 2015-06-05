@@ -14,10 +14,11 @@ if(DEBUG==1)
 	{
 
 		$error=mysqli_error(PhangoVar::$connection[$server_data]);
-
+		
 		if($error!='')
 		{
-			echo '<p>Error: '.$sql_fail.' -> '.$error.'</p>';
+			throw new Exception('Error: '.$sql_fail.' -> '.$error);
+			
 		}
 
 	}

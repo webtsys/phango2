@@ -72,7 +72,7 @@ PhangoVar::$app_index = 'welcome';
 
 //In this array you can append the modules that you want execute. Delete media when your app goes to production.
 
-PhangoVar::$activated_modules = array('welcome', 'media');
+PhangoVar::$activated_modules = array('welcome', 'media', 'lang');
 
 //Constant for development, delete if you want to go to production.
 

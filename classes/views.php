@@ -171,12 +171,6 @@ function load_libraries_views($template, $func_views=array())
 				$output=ob_get_contents();
 
 				ob_clean();
-
-				/*include(PhangoVar::$base_path.'views/default/common/common.php');
-				
-				CommonView('Phango Framework error','<p>Error while loading template library <strong>'.$template.'</strong>, check config.php or that template library exists... </p><p>Output: '.$output_error_view.$output.'</p>');
-				
-				ob_end_flush();*/
 				
 				$check_error_lang[0]='Error while loading template library, check config.php or that template library exists... <p></p>';
 				$check_error_lang[1]='<p>Error while loading template library <strong>'.$template.'</strong>, check config.php or that template library exists... </p><p>Output: '.$output_error_view.$output;

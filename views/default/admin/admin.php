@@ -4,6 +4,7 @@ function AdminView($header, $title, $content, $name_modules, $url_modules, $extr
 {
 
 	PhangoVar::$arr_cache_jscript[]='jquery.min.js';
+	PhangoVar::$arr_cache_css[]='admin.css';
 	
 	?>
 	<!DOCTYPE html>
@@ -12,7 +13,6 @@ function AdminView($header, $title, $content, $name_modules, $url_modules, $extr
 		<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<title><?php echo $title; ?></title>
-		<link href="<?php echo PhangoVar::$base_url; ?>/media/common/style/style.css" rel="stylesheet" type="text/css">
 		<?php echo load_css_view(); ?>
 		<?php echo load_jscript_view(); ?>
 		<?php echo load_header_view(); ?>

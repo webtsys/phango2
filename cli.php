@@ -6,8 +6,17 @@ ob_start();
 
 ini_set('html_errors', 0);
 
-include('classes/webmodel.php');
+include(__DIR__.'/classes/phangovar.php');
+include(__DIR__.'/classes/datetimenow.php');
+include(__DIR__.'/classes/webmodel.php');
+include(__DIR__.'/classes/controllerswitchclass.php');
+include(__DIR__.'/classes/utilities.php');
+include(__DIR__.'/classes/urls.php');
+include(__DIR__.'/classes/views.php');
+include(__DIR__.'/classes/loaders.php');
+
 include('config.php');
+
 load_libraries(array('database/'.TYPE_DB), PhangoVar::$base_path);
 
 load_lang('common');
@@ -45,34 +54,6 @@ if(!isset($options['m']) && !isset($options['c']))
 $module=@form_text(basename($options['m']));
 
 $cli_controller=@form_text(basename($options['c']));
-
-//Connect to database
-/*
-$connection='';
-
-$connection=webtsys_connect($host_db['default'], $login_db['default'], $pass_db['default']);
-
-if(! (  $connection && webtsys_select_db($db['default']) ) )
-{
-
-	die("Error: ".webtsys_error()." - I can't connect to database\n");
-
-}
-
-//Load cache for can use load_model
-
-$query=webtsys_query(SQL_SHOW_TABLES);
-
-while(list($table)=webtsys_fetch_row($query))
-{
-
-	$arr_check_table[$table]=1;
-
-}
-
-load_model('config');
-
-$config_data=$model['config_webtsys']->select_a_row_where('');*/
 
 //Include cli_controller
 
