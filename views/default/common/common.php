@@ -3,6 +3,8 @@
 function CommonView($title, $content)
 {
 
+PhangoVar::$arr_cache_css[]='admin.css';
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -10,9 +12,9 @@ function CommonView($title, $content)
 	<head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<title><?php echo $title; ?></title>
-	<link href="<?php echo PhangoVar::$base_url; ?>/media/common/style/style.css" rel="stylesheet" type="text/css">
 	<?php 
 	
+	echo load_css_view();
 	echo load_jscript_view(); 
 	echo load_header_view();
 		
