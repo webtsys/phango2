@@ -1,5 +1,14 @@
 <?php
 
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package phangovar
+*
+*/
+
+
 // First, define basic variables
 
 /**

@@ -1,5 +1,14 @@
 <?php
 
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package urls
+*
+*/
+
+
 //Function for make pretty urls...
 
 //If active fancy urls...

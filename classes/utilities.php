@@ -1,6 +1,15 @@
 <?php
 
 /**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package utilities
+*
+*/
+
+
+/**
 * Function used for add slashes from _POST and _GET variables.
 *
 *

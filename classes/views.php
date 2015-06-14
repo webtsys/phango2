@@ -1,6 +1,15 @@
 <?php
 
 /**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package views
+*
+*/
+
+
+/**
 * Very important function used for load views. Is the V in the MVC paradigm. Phango is an MVC framework and has separate code and html.
 *
 * load_view is used for load the views. Views in Phango are php files with a function that have a special name with "View" suffix. For example, if you create a view file with the name blog.php, inside you need create a php function called BlogView(). The arguments of this function can be that you want, how on any normal php function. The view files need to be saved on a "view" folders inside of a theme folder, or a "views/module_name" folder inside of a module being "module_name" the name of the module.

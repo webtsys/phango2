@@ -1,4 +1,13 @@
 <?php
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package datetime
+*
+*/
+
+
 
 /**
 * Simple class for save datetime of the script.

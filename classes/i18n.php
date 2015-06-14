@@ -1,5 +1,18 @@
 <?php
 
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package i18n
+*
+*/
+
+/**
+* Function used for load a lang file from a module
+*
+*
+*/
 	
 function load_lang()
 {

@@ -1,6 +1,15 @@
 <?php
 
 /**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package loaders
+*
+*/
+
+
+/**
 * Function for load config for modules.
 *
 *

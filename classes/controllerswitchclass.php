@@ -1,4 +1,11 @@
 <?php
+/**
+*
+* @author  Antonio de la Rosa <webmaster@web-t-sys.com>
+* @file
+* @package router
+*
+*/
 
 /**
 * A New class for use methods and not switchs for complex controllers different to old methods in older versions of phango. 
