@@ -4,7 +4,7 @@
 *
 * @author  Antonio de la Rosa <webmaster@web-t-sys.com>
 * @file
-* @package CoreAdmin
+* @package admin
 *
 * A set of classes for create listings and simple admin interfaces for models.
 *

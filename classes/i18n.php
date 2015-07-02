@@ -11,7 +11,8 @@
 /**
 * Function used for load a lang file from a module
 *
-*
+* @param string $multiple A multiple string params with the name of the module where search the lang. If module not exists, phango search the file in i18n/ directory
+* @example load_lang('shop', 'common'); Load the lang files from module shop. Common don't have any module, and will be loaded from i18n/ folder
 */
 	
 function load_lang()
@@ -99,6 +100,14 @@ function load_lang()
 	}
 
 }
+
+/**
+* Function that return the value of the code_lang
+*
+* @param string $app The module where search the code lang
+* @param string $code_lang Code lang to return the value
+* @param string $default_lang The module where search the code lang
+*/
 
 function i18n_lang($app, $code_lang, $default_lang) 
 {
