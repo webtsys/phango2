@@ -143,6 +143,8 @@ class GenerateAdminClass {
 	
 		//PhangoVar::$model[$this->model_name]->generate_admin($this->arr_fields, $this->arr_fields_edit, $this->url_options, $this->options_func, $this->where_sql, $this->arr_fields_form, $this->type_list, $this->no_search);
 		
+		echo show_flash();
+		
 		settype($_GET['op_edit'], 'integer');
 		settype($_GET['op_action'], 'integer');
 		settype($_GET[PhangoVar::$model[$this->model_name]->idmodel], 'integer');
@@ -282,6 +284,8 @@ class GenerateAdminClass {
 		
 		$this->url_options=add_extra_fancy_url($this->url_options, array('op_action' => 1));
 	
+                echo show_flash();
+	
 		$this->insert_model_form();
 		
 	}
@@ -393,8 +397,10 @@ class GenerateAdminClass {
 						else
 						{
 						*/
-							load_libraries(array('redirect'));
-							simple_redirect( $url_back, i18n_lang('common', 'redirect', 'Redirect'), i18n_lang('common', 'success', 'Success'), i18n_lang('common', 'press_here_redirecting', 'Press here for redirecting'));
+							/*load_libraries(array('redirect'));
+							simple_redirect( $url_back, i18n_lang('common', 'redirect', 'Redirect'), i18n_lang('common', 'success', 'Success'), i18n_lang('common', 'press_here_redirecting', 'Press here for redirecting'));*/
+							
+							redirection($url_back, i18n_lang('common', 'success', 'Success'));
 							
 							return;
 
@@ -597,11 +603,13 @@ class GenerateAdminClass {
 			
 			ob_end_clean();
 
-			load_libraries(array('redirect'));
+			//load_libraries(array('redirect'));
 
 			//die( redirect_webtsys( $url, i18n_lang('common', 'redirect', 'Redirect'), i18n_lang('common', 'success', 'Success'), i18n_lang('common', 'press_here_redirecting', 'Press here for redirecting')) );
 			
-			simple_redirect($url, i18n_lang('common', 'redirect', 'Redirect'), i18n_lang('common', 'success', 'Success'), i18n_lang('common', 'press_here_redirecting', 'Press here for redirecting'), $content_view='content');
+			/*simple_redirect($url, i18n_lang('common', 'redirect', 'Redirect'), i18n_lang('common', 'success', 'Success'), i18n_lang('common', 'press_here_redirecting', 'Press here for redirecting'), $content_view='content');*/
+							
+                        redirection($url, i18n_lang('common', 'success', 'Success'));
 			
 			//die;
 			
@@ -823,8 +831,11 @@ class ListModelClass {
 				load_libraries(array('redirect'));
 				die( redirect_webtsys( $url_options_delete, i18n_lang('common', 'redirect', 'Redirect'), i18n_lang('common', 'success', 'Success'), i18n_lang('common', 'press_here_redirecting', 'Press here for redirecting') , $arr_block) );*/
 				
-				load_libraries(array('redirect'));
-				simple_redirect( $url_options_delete, i18n_lang('common', 'redirect', 'Redirect'), i18n_lang('common', 'success', 'Success'), i18n_lang('common', 'press_here_redirecting', 'Press here for redirecting'));
+				/*load_libraries(array('redirect'));
+				simple_redirect( $url_options_delete, i18n_lang('common', 'redirect', 'Redirect'), i18n_lang('common', 'success', 'Success'), i18n_lang('common', 'press_here_redirecting', 'Press here for redirecting'));*/
+				
+							
+                                redirection($url_options_delete, i18n_lang('common', 'success', 'Success'));
 
 			}
 			else

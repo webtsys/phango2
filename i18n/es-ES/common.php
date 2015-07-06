@@ -26,11 +26,11 @@ PhangoVar::$lang['common']['descent']='Descendente';
 
 PhangoVar::$lang['common']['cannot_update_insert_in_model']='No puedo actualizar o insertar este elmento en la bsae de datos';
 
-PhangoVar::$lang['common']['success']='success';
+PhangoVar::$lang['common']['success']='Se ejecutó la operación con éxito';
 
-PhangoVar::$lang['common']['redirect']='redirect';
+PhangoVar::$lang['common']['redirect']='Redirigiendo';
 
-PhangoVar::$lang['common']['press_here_redirecting']='press_here_redirecting';
+PhangoVar::$lang['common']['press_here_redirecting']='Pulse aquí para hacer la redirección';
 
 PhangoVar::$lang['common']['send']='Enviar';
 

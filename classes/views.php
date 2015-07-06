@@ -567,12 +567,23 @@ function get_base_url_media($module, $directory)
 
 }
 
+/**
+* Function used for set a message that can be showed with show_flash function. The message is deleted after show_flash execution
+*
+* @param string $text String with the text to show.
+*/
+
 function set_flash($text)
 {
 
 	$_SESSION['flash_txt']=$text;
 
 }
+
+/**
+* Function used for show the message setted buy set_flash function. The message is delete when show_flash function is runned
+*
+*/
 	
 function show_flash()
 {
@@ -591,6 +602,19 @@ function show_flash()
 	}
 	
 	return '';
+
+}
+
+/**
+*
+*/
+
+function redirection($url, $text)
+{
+
+    set_flash($text);
+
+    die(header('Location: '.$url));
 
 }
 
