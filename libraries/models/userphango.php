@@ -60,7 +60,7 @@ class UserPhangoModel extends Webmodel {
 		if(isset($post[$this->username]) && $post[$this->email])
 		{
 	
-			if($this->check_user_exists($post[$this->username], $post[$this->email], $post['IdUser_admin']))
+			if($this->check_user_exists($post[$this->username], $post[$this->email], $post[$this->idmodel]))
 			{
 			
 				if(!$this->check_password($post['password'], $post['repeat_password']))
