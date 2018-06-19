@@ -1,6 +1,6 @@
 <?php
 
-if(!function_exists('mysql_query'))
+if(!function_exists('mysqli_query'))
 {
 
 	show_error('Error: database don\'t supported by php', 'Error: Mysql database don\'t supported by php', $output_external='');
@@ -71,8 +71,8 @@ function webtsys_close( $idconnection )
 function webtsys_fetch_array( $query ,$assoc_type=0)
 {
 	
-	$arr_assoc[0]=MYSQL_ASSOC;
-	$arr_assoc[1]=MYSQL_NUM;
+	$arr_assoc[0]=MYSQLI_ASSOC;
+	$arr_assoc[1]=MYSQLI_NUM;
 	
 	$arr_final = mysqli_fetch_array( $query ,$arr_assoc[$assoc_type]);
 
